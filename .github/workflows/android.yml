@@ -1,0 +1,25 @@
+name: Android
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm ci && npx jetify
+      - run: chmod +x ./gradlew && ./gradlew assembleDebug -Dorg.gradle.logging.level=info
+        working-directory: android
+        name: Build Android APK (debug)
