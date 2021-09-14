@@ -33,13 +33,3 @@ function Navigator() {
   );
 }
 export default Navigator;
-
-<RootStack.Navigator
-  screenOptions={{
-    headerShown: false,
-  }}
-  initialRouteName="Login">
-  <RootStack.Screen name="Login" component={AuthNavigator} />
-
-  <RootStack.Screen name="Home" component={AppNavigator} />
-</RootStack.Navigator>;
