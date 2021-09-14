@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react';
+import Navigator from './navigation';
 
-import LoginScreen from './screens/LoginScreen'
+class App extends Component {
+  render() {
+    return <Navigator />;
+  }
+}
 
-const App = () => <LoginScreen />
-
-export default App
+export default App;
