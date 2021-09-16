@@ -7,16 +7,18 @@ import SearchScreen from '../../screens/SearchScreen';
 import UserScreen from '../../screens/UserScreen';
 import ActivityScreen from '../../screens/ActivityScreen';
 
+import * as color from '../../utils/colors';
+
 const HomeTab = createMaterialBottomTabNavigator();
 
 const AppNavigator = () => {
   return (
     <HomeTab.Navigator
       initialRouteName="Feed"
-      activeColor="#f0edf6"
-      inactiveColor="#3e2465"
+      activeColor={color.iconActiveColor}
+      inactiveColor={color.iconInActiveColor}
       labeled={false}
-      barStyle={{backgroundColor: '#694fad'}}
+      barStyle={{backgroundColor: color.BottomNav}}
       screenOptions={{
         headerShown: false,
       }}>
