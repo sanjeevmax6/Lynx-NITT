@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {scale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
@@ -25,9 +25,8 @@ const SearchScreen = () => {
       />
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: {fontSize: scale(11), fontWeight: 'bold'},
+          tabBarLabelStyle: {fontSize: scale(10), fontWeight: 'bold'},
           lazy: 'true',
-          // tabBarItemStyle: { width: 100, },
           tabBarStyle: {},
           tabBarPressColor: color.tabBarPressColor,
           tabBarIndicatorStyle: {backgroundColor: color.sliderColor},

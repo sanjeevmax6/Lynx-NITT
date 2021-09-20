@@ -11,8 +11,8 @@ export const GRAY_DARK = '#8a8a8a';
 
 //Bottom Nav
 export const BottomNav = Primary;
-export const iconActiveColor = Secondary;
-export const iconInActiveColor = WHITE;
+export const iconActiveColor = WHITE;
+export const iconInActiveColor = Secondary;
 
 //Search Screen
 export const sliderColor = BLACK;
