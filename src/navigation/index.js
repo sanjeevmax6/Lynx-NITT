@@ -17,7 +17,7 @@ function Navigator() {
   //   AppContext = React.createContext();
   // }, []);
   const [isLoading, setIsLoading] = useState(false);
-  const [userToken, setUserToken] = useState('123');
+  const [userToken, setUserToken] = useState('xyz');
   if (isLoading) {
     return <SplashScreen />;
   }
@@ -34,12 +34,12 @@ function Navigator() {
           headerShown: false,
         }}>
         {userToken == null ? (
-          <RootStack.Screen name="Login" component={AppContextWrapper} />
+          <RootStack.Screen name="Login" component={LoginScreen} />
         ) : (
           <RootStack.Screen
             name="Home"
             component={AppNavigator}
-            initialParams={{Token: userToken}}
+            initialParams={{token: userToken}}
           />
         )}
       </RootStack.Navigator>
