@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  ToastAndroid,
+} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {Button} from 'react-native-paper';
@@ -9,12 +16,14 @@ import FontAwesome, {
   RegularIcons,
   BrandIcons,
   parseIconFromClassName,
+  MaterialCommunityIcons,
 } from 'react-native-fontawesome';
 
-const LoginScreen = ({props}) => {
+const LoginScreen = ({navigation}) => {
   const [user, setUser] = useState();
-  const [pass, setPass] = useState();
-  const [passwordToggle, setaPasswordToggle] = useState(true);
+  const [password, setPassword] = useState();
+  const [eyeIcon, setEyeIcon] = useState('eye-off');
+  const [passwordToggle, setPasswordToggle] = useState(true);
 
   const dummy = () => {
     console.log('Icon toggled');
@@ -25,7 +34,7 @@ const LoginScreen = ({props}) => {
         <ScrollView keyboardShouldPersistTaps="always">
           <View style={styles.textInput}>
             <TextInput
-              label="UserName"
+              label="Username"
               placeholder="Enter your username"
               mode="outlined"
               value={user}
@@ -34,32 +43,30 @@ const LoginScreen = ({props}) => {
           </View>
           <View style={styles.textInput}>
             <TextInput
-              label="Roll Number"
-              placeholder="Enter your Roll Number"
+              label="Password"
+              placeholder="Enter your password"
               mode="outlined"
               secureTextEntry={passwordToggle}
               right={
                 <TextInput.Icon
-                  name={
-                    <FontAwesome
-                      style={{color: '#000000'}}
-                      icon={parseIconFromClassName('fa-eye')}
-                    />
-                  }
-                  onPress={() => setaPasswordToggle(!passwordToggle)}
+                  name={eyeIcon}
+                  onPress={() => {
+                    setPasswordToggle(!passwordToggle);
+                    setEyeIcon(eyeIcon === 'eye' ? 'eye-off' : 'eye');
+                  }}
                 />
               }
-              value={pass}
-              onChangeText={pass => setPass(pass)}
+              value={password}
+              onChangeText={password => setPassword(password)}
             />
           </View>
           <View style={styles.loginButton}>
             <Button
-              icon="camera"
               mode="outlined"
               loading={false}
-              icon={<FontAwesome icon={SolidIcons.smile} />}
-              onPress={() => console.log(this.props.route.params.userToken)}>
+              onPress={() => {
+                ToastAndroid.show('Processing Login', ToastAndroid.SHORT);
+              }}>
               Login
             </Button>
           </View>
