@@ -1,45 +1,84 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
-import {FAB, Text, Button} from 'react-native-paper';
+import {View, FlatList, ScrollView} from 'react-native';
+import {FAB, Text, Button, Avatar} from 'react-native-paper';
 import {
   scale,
   ScaledSheet,
-  s,
-  vs,
-  ms,
   verticalScale,
+  moderateScale,
 } from 'react-native-size-matters';
 import RecentEventCard from './RecentEventCard';
-import UserInfo from './UserInfo';
+import * as color from '../../utils/colors';
 
 const UserScreen = () => {
   const Item = () => <RecentEventCard />;
+  const renderTopLayout = () => (
+    <View>
+      <View style={styles.toprow}>
+        <View style={styles.userblk}>
+          <Avatar.Image
+            size={moderateScale(150)}
+            style={styles.profImg}
+            source={require('../../assests/images/user.png')}
+          />
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginTop: verticalScale(10),
+              fontSize: scale(18),
+            }}>
+            Firstname Lastname
+          </Text>
+        </View>
+        <View style={styles.followers}>
+          <Text style={styles.followTxt}>50</Text>
+          <Text style={styles.followTxt}>Posts</Text>
+          <Text
+            style={{
+              ...styles.followTxt,
+              marginTop: verticalScale(25),
+            }}>
+            500
+          </Text>
+          <Text style={styles.followTxt}>Followers</Text>
+        </View>
+      </View>
+      <Button
+        mode="outlined"
+        onPress={() => console.log('Pressed')}
+        style={styles.editBtn}>
+        Edit Profile
+      </Button>
+      <Text
+        style={{
+          marginTop: verticalScale(20),
+          fontSize: scale(20),
+          marginBottom: verticalScale(5),
+        }}>
+        Recent Events
+      </Text>
+    </View>
+  );
+
+  const renderBottomLayout = () => (
+    <View>
+      <Button
+        mode="text"
+        labelStyle={styles.moreLabel}
+        style={styles.moreBtn}
+        onPress={() => console.log('More')}>
+        More Events
+      </Button>
+    </View>
+  );
   return (
     <View style={styles.maincontainer}>
-      <View style={styles.userinfo}>
-        <UserInfo />
-      </View>
-      <View style={styles.bottomsec}>
-        <Button mode="outlined" onPress={() => console.log('Pressed')}>
-          Edit Profile
-        </Button>
-        <Text
-          style={{
-            marginTop: verticalScale(20),
-            fontSize: scale(20),
-            marginBottom: verticalScale(5),
-          }}>
-          Recent Events
-        </Text>
-        <FlatList renderItem={Item} data={[{}, {}, {}, {}, {}, {}]} />
-        <Button
-          mode="text"
-          labelStyle={styles.moreLabel}
-          style={styles.moreBtn}
-          onPress={() => console.log('More')}>
-          More Events
-        </Button>
-      </View>
+      <FlatList
+        renderItem={Item}
+        data={[{}, {}, {}, {}, {}, {}]}
+        ListHeaderComponent={renderTopLayout}
+        ListFooterComponent={renderBottomLayout}
+      />
       <FAB
         style={styles.fab}
         small={false}
@@ -54,14 +93,41 @@ const styles = ScaledSheet.create({
   maincontainer: {
     flex: 1,
     flexDirection: 'column',
+    marginHorizontal: '15@s',
   },
-  userinfo: {
-    flex: 3,
+  userblk: {
     flexDirection: 'column',
   },
-  bottomsec: {
-    flex: 6,
-    marginHorizontal: '15@s',
+  toprow: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+    marginTop: '25@vs',
+  },
+  profImg: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: color.WHITE,
+  },
+  followers: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  followTxt: {
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: scale(15),
+  },
+  editBtn: {
+    marginTop: '20@vs',
+  },
+  moreBtn: {
+    marginVertical: '5@vs',
+  },
+  moreLabel: {
+    fontSize: '15@ms',
   },
   fab: {
     position: 'absolute',
@@ -69,12 +135,6 @@ const styles = ScaledSheet.create({
     marginVertical: '16@vs',
     right: 0,
     bottom: 0,
-  },
-  moreBtn: {
-    marginBottom: '5@vs',
-  },
-  moreLabel: {
-    fontSize: '15@ms',
   },
 });
 
