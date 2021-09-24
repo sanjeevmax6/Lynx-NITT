@@ -6,6 +6,7 @@ import {
   ScaledSheet,
   verticalScale,
   moderateScale,
+  ms,
 } from 'react-native-size-matters';
 import RecentEventCard from './RecentEventCard';
 import * as color from '../../utils/colors';
@@ -31,16 +32,22 @@ const UserScreen = () => {
           </Text>
         </View>
         <View style={styles.followers}>
-          <Text style={styles.followTxt}>50</Text>
-          <Text style={styles.followTxt}>Posts</Text>
-          <Text
-            style={{
-              ...styles.followTxt,
-              marginTop: verticalScale(25),
-            }}>
-            500
-          </Text>
-          <Text style={styles.followTxt}>Followers</Text>
+          <View>
+            <Text style={{...styles.followTxt, fontSize: moderateScale(20)}}>
+              50
+            </Text>
+            <Text style={styles.followTxt}>Posts</Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                ...styles.followTxt,
+                fontSize: moderateScale(20),
+              }}>
+              500
+            </Text>
+            <Text style={styles.followTxt}>Followers</Text>
+          </View>
         </View>
       </View>
       <Button
@@ -112,13 +119,13 @@ const styles = ScaledSheet.create({
   },
   followers: {
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center',
+    paddingVertical: '10@vs',
+    justifyContent: 'space-around',
   },
   followTxt: {
     alignSelf: 'center',
     fontWeight: 'bold',
-    fontSize: scale(15),
+    fontSize: '15@ms',
   },
   editBtn: {
     marginTop: '20@vs',
@@ -131,7 +138,6 @@ const styles = ScaledSheet.create({
   },
   fab: {
     position: 'absolute',
-    marginHorizontal: '16@s',
     marginVertical: '16@vs',
     right: 0,
     bottom: 0,
