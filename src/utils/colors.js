@@ -19,3 +19,8 @@ export const sliderColor = BLACK;
 export const tabBarActiveTintColor = BLACK;
 export const tabBarInactiveTintColor = GRAY_DARK;
 export const tabBarPressColor = GRAY_LIGHT;
+
+//Calendar Screen
+export const cardborder = 'grey';
+export const cardstrip = 'black';
+export const imgbck = 'white';
