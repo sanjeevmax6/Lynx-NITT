@@ -19,11 +19,26 @@ import FontAwesome, {
   MaterialCommunityIcons,
 } from 'react-native-fontawesome';
 
+import {updateToken} from '../../redux/reducers/loginScreen';
+import {useDispatch, useSelector} from 'react-redux';
+
+import store from '../../redux/store';
+
 const LoginScreen = ({navigation}) => {
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
+  const [temp, setTemp] = useState();
+
+  const dispatch = useDispatch();
+
+  const onLogin = token => {
+    // console.log(token);
+    dispatch(updateToken(token));
+    setTemp(store.getState().logScreen.login.userToken);
+    // console.log(temp);
+  };
 
   const dummy = () => {
     console.log('Icon toggled');
@@ -38,7 +53,9 @@ const LoginScreen = ({navigation}) => {
               placeholder="Enter your username"
               mode="outlined"
               value={user}
-              onChangeText={user => setUser(user)}
+              onChangeText={user => {
+                setUser(user);
+              }}
             />
           </View>
           <View style={styles.textInput}>
@@ -65,7 +82,7 @@ const LoginScreen = ({navigation}) => {
               mode="outlined"
               loading={false}
               onPress={() => {
-                ToastAndroid.show('Processing Login', ToastAndroid.SHORT);
+                onLogin(user);
               }}>
               Login
             </Button>

@@ -7,12 +7,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const EventsCard = ({date, time, name, desc, eventImage, location}) => {
   return (
     <TouchableOpacity style={styles.card}>
-      <Image source={{uri: eventImage}} style={styles.image} />
+      <Image
+        source={{uri: eventImage || '../assests/images/spider.png'}}
+        style={styles.image}
+      />
       <View style={styles.cardDetails}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.desc}>{desc}</Text>
         <Text style={styles.date}>
-          {date} - {time}
+          {date} | {time}
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.location}>{location}</Text>
