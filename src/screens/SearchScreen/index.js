@@ -24,6 +24,7 @@ const SearchScreen = () => {
   const onChangeSearch = query => {
     setSearchQuery(query);
     dispatch(updateQuery(query));
+    console.log(store.getState().searchScreen.ui.currentScreen.toUpperCase());
   };
   const [placeHolder, setPlaceHolder] = useState(
     'SEARCH ' + store.getState().searchScreen.ui.currentScreen.toUpperCase(),

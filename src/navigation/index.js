@@ -9,24 +9,22 @@ import AuthNavigator from './auth-navigator';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 
+import store from '../redux/store';
+
 const RootStack = createNativeStackNavigator();
 
-function Navigator() {
-  const AppContext = React.createContext();
-  // useEffect(() => {
-  //   AppContext = React.createContext();
-  // }, []);
+function Navigator(isUserLoggedIn) {
+  const [userToken, setUserToken] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [userToken, setUserToken] = useState('xyz');
+
+  store.subscribe(() => {
+    console.log(userToken);
+    setUserToken(store.getState().logScreen.login.userToken);
+    console.log(userToken);
+  });
   if (isLoading) {
     return <SplashScreen />;
   }
-
-  const AppContextWrapper = () => (
-    <AppContext.Consumer>
-      {userToken => <LoginScreen {...userToken} />}
-    </AppContext.Consumer>
-  );
   return (
     <NavigationContainer>
       <RootStack.Navigator
@@ -46,16 +44,5 @@ function Navigator() {
     </NavigationContainer>
   );
 }
+
 export default Navigator;
-
-{
-  /* <RootStack.Navigator
-  screenOptions={{
-    headerShown: false,
-  }}
-  initialRouteName="Login">
-  <RootStack.Screen name="Login" component={AuthNavigator} />
-
-  <RootStack.Screen name="Home" component={AppNavigator} />
-</RootStack.Navigator>; */
-}
