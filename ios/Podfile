@@ -12,6 +12,7 @@ target 'NITT_APP' do
     :hermes_enabled => false
   )
 
+
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'NITT_APPTests' do
