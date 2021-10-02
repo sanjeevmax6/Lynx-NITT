@@ -18,6 +18,7 @@ const AppNavigator = () => {
       activeColor={color.iconActiveColor}
       inactiveColor={color.iconInActiveColor}
       labeled={false}
+      sceneAnimationEnabled={true}
       barStyle={{backgroundColor: color.BottomNav}}
       screenOptions={{
         headerShown: false,

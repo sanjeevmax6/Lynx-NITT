@@ -1,8 +1,12 @@
-export const Primary = '#114b5f';
-export const Secondary = '#28afb0';
+export const Primary = '#003049';
+export const Secondary = '#295E7A';
+export const Accent = '#e28f3c';
+export const Tertiary = '#bc4749';
 
 export const WHITE = '#FFFFFF';
 export const BLACK = '#000000';
+
+export const StatusBar = Secondary;
 
 //GreyScale
 export const GRAY_LIGHT = '#e6e6e6';
@@ -11,8 +15,8 @@ export const GRAY_DARK = '#8a8a8a';
 
 //Bottom Nav
 export const BottomNav = Primary;
-export const iconActiveColor = WHITE;
-export const iconInActiveColor = Secondary;
+export const iconActiveColor = Tertiary;
+export const iconInActiveColor = GRAY_MEDIUM;
 
 //Search Screen
 export const sliderColor = BLACK;
@@ -25,6 +29,17 @@ export const cardborder = 'grey';
 export const cardstrip = 'black';
 export const imgbck = 'white';
 
+
+//event card
+export const EventCard_Bookmark = Tertiary;
+export const EventCard_ShareIcon = Tertiary;
+export const EventCard_Title = BLACK;
+export const EventCard_Date = BLACK;
+
+//eventScreen
+export const EventScreen_headerBackground = StatusBar;
+export const EventScreen_headerText = WHITE;
+
 //eventDescription
 export const EventDescriptionScreen_url = '#3366BB';
 export const EventDescriptionScreen_Title = Primary;
@@ -35,3 +50,4 @@ export const EventDescriptionScreen_CalendarIcon = Secondary;
 export const EventDescriptionScreen_Follow = Secondary;
 export const EventDescriptionScreen_Button = Secondary;
 export const EventDescriptionScreen_ModalView = Primary;
+

@@ -10,35 +10,40 @@ import {
   vs,
   s,
 } from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/AntDesign';
 import * as color from '../../utils/colors';
-
-const RecentEventCard = () => {
+import {ICON_SIZE} from '../../utils/UI_CONSTANTS';
+const RecentEventCard = ({name, date, time, id, url}) => {
   return (
-    <View style={styles.cardlayout}>
-      <Image
-        style={styles.poster}
-        source={require('../../assests/images/poster.png')}
-      />
-      <View style={styles.eventinfo}>
+    <View style={styles.cardLayout}>
+      <Image style={styles.poster} source={{uri: url}} />
+      <View style={styles.eventInfo}>
         <Text
           style={{
-            fontSize: scale(15),
+            fontSize: scale(14),
             fontWeight: 'bold',
-          }}>
-          Spider week
+            paddingRight: scale(10),
+          }}
+          numberOfLines={1}>
+          {name}
         </Text>
-        <Text style={{fontSize: scale(14)}}>22-09-2021 12:30</Text>
+        <Text style={{fontSize: scale(12)}}>
+          {date} | {time}
+        </Text>
       </View>
-      <View style={styles.notiview}>
-        <Icon name={'bell'} size={scale(20)} />
+      <View style={styles.notificationView}>
+        <Icon
+          name={'notification'}
+          size={scale(ICON_SIZE)}
+          style={{color: color.Tertiary}}
+        />
       </View>
     </View>
   );
 };
 
 const styles = ScaledSheet.create({
-  cardlayout: {
+  cardLayout: {
     flexDirection: 'row',
     padding: '10@ms',
     marginTop: '10@vs',
@@ -47,15 +52,16 @@ const styles = ScaledSheet.create({
     borderRadius: '5@s',
   },
   poster: {
-    height: '50@vs',
-    width: '50@s',
+    height: '60@vs',
+    width: '60@s',
+    borderRadius: '2@sr',
   },
-  eventinfo: {
+  eventInfo: {
     marginLeft: '10@s',
     justifyContent: 'space-evenly',
     flex: 1,
   },
-  notiview: {
+  notificationView: {
     alignSelf: 'center',
     marginRight: 0,
   },
