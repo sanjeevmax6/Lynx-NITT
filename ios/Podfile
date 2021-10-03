@@ -15,6 +15,10 @@ target 'NITT_APP' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'NITT_APPTests' do
     inherit! :complete
     # Pods for testing

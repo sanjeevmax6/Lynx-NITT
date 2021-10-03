@@ -101,8 +101,8 @@ const CalendarScreen = () => {
         '2021-09-27': [{}],
         '2021-10-27': [{}],
       }}
-      pastScrollRange={6}
-      futureScrollRange={6}
+      pastScrollRange={1}
+      futureScrollRange={1}
       renderDay={renderEventDay}
       renderEmptyData={renderEmptyDate}
       showClosingKnob={true}
