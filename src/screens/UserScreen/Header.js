@@ -17,7 +17,7 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const Header = ({name, followers, url, description}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [coverColor, setCoverColor] = useState(colors.Tertiary);
+  const [coverColor, setCoverColor] = useState('');
   const [coverIconColor, setCoverIconColor] = useState(colors.Tertiary);
 
   const getColors = async () => {

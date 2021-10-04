@@ -15,13 +15,13 @@ const NoEventCard = props => {
     <View style={styles.cardcontainer}>
       <View
         style={{
-          width: scale(6),
+          width: scale(5),
           backgroundColor: color.cardstrip,
           borderRadius: scale(5),
         }}
       />
       <View style={styles.eventinfo}>
-        <Text style={styles.eventName}>No Event</Text>
+        <Text style={styles.eventName}>No Events</Text>
       </View>
     </View>
   );
@@ -35,6 +35,7 @@ const styles = ScaledSheet.create({
     borderRadius: '5@s',
     marginTop: '5@vs',
     padding: '5@s',
+    marginHorizontal: '10@s',
   },
   eventinfo: {
     flexDirection: 'column',
@@ -44,7 +45,7 @@ const styles = ScaledSheet.create({
     marginVertical: '3@vs',
   },
   eventName: {
-    fontSize: '17@s',
+    fontSize: '16@s',
     fontWeight: 'bold',
   },
 });

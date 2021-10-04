@@ -45,8 +45,8 @@ export default Dashboard;
 const styles = ScaledSheet.create({
   dashboard: {
     backgroundColor: colors.Tertiary,
-    marginTop: '6@vs',
     paddingBottom: '6@vs',
+    borderRadius: '5@ms',
   },
   head: {
     color: colors.WHITE,

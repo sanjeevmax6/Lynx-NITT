@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import Dashboard from './dashboard';
@@ -84,26 +84,40 @@ const data = {
   ],
 };
 
+const renderTopLayout = () => (
+  <View>
+    <Header
+      name={data.name}
+      followers={data.followers}
+      url={data.url}
+      description={data.description}
+    />
+    <Dashboard
+      profileView={data.totalProfileView}
+      eventView={data.totalEventView}
+    />
+    <Text style={styles.head}>YOUR EVENTS</Text>
+  </View>
+);
+
 const UserScreen = () => {
   return (
     <SafeAreaView style={{backgroundColor: colors.GRAY_MEDIUM, flex: 1}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Header
-          name={data.name}
-          followers={data.followers}
-          url={data.url}
-          description={data.description}
-        />
-        <Dashboard
-          profileView={data.totalProfileView}
-          eventView={data.totalEventView}
-        />
-        <EventsView eventArray={data.events.reverse()} />
-      </ScrollView>
+      <EventsView
+        eventArray={data.events.reverse()}
+        topLayout={renderTopLayout}
+      />
     </SafeAreaView>
   );
 };
 
 export default UserScreen;
 
-const styles = ScaledSheet.create({});
+const styles = ScaledSheet.create({
+  head: {
+    color: colors.BLACK,
+    fontWeight: 'bold',
+    fontSize: '14@s',
+    paddingTop: '10@vs',
+  },
+});

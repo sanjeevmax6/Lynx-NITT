@@ -41,6 +41,7 @@ const styles = ScaledSheet.create({
     borderRadius: '5@s',
     marginTop: '5@vs',
     padding: '5@s',
+    marginHorizontal: '10@s',
   },
   eventinfo: {
     flexDirection: 'column',
@@ -54,7 +55,7 @@ const styles = ScaledSheet.create({
     marginRight: '5@s',
   },
   eventName: {
-    fontSize: '17@s',
+    fontSize: '16@s',
     fontWeight: 'bold',
   },
   time: {},

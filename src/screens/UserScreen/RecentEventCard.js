@@ -52,8 +52,8 @@ const styles = ScaledSheet.create({
     borderRadius: '5@s',
   },
   poster: {
-    height: '60@vs',
-    width: '60@s',
+    height: '60@msr',
+    width: '60@msr',
     borderRadius: '2@sr',
   },
   eventInfo: {

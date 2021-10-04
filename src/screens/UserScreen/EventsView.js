@@ -4,15 +4,13 @@ import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import RecentEventCard from './RecentEventCard';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-const EventsView = ({eventArray}) => {
+const EventsView = ({eventArray, topLayout}) => {
   return (
     <View style={styles.card}>
       <View
         style={{
           marginHorizontal: scale(HorizontalPadding),
-          paddingTop: verticalScale(10),
         }}>
-        <Text style={styles.head}>YOUR EVENTS</Text>
         <FlatList
           data={eventArray}
           showsVerticalScrollIndicator={false}
@@ -20,6 +18,7 @@ const EventsView = ({eventArray}) => {
           showsHorizontalScrollIndicator={false}
           bounces={false}
           bouncesZoom={false}
+          ListHeaderComponent={topLayout}
           renderItem={({item}) => (
             <View>
               <RecentEventCard
@@ -43,13 +42,6 @@ export default EventsView;
 const styles = ScaledSheet.create({
   card: {
     backgroundColor: 'white',
-    marginTop: '6@vs',
-    paddingBottom: '6@vs',
-  },
-  head: {
-    color: colors.BLACK,
-    fontWeight: 'bold',
-    fontSize: '14@s',
     paddingBottom: '6@vs',
   },
 });
