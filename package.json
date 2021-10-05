@@ -25,6 +25,7 @@
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-document-picker": "^6.0.4",
     "react-native-image-colors": "^1.4.0",
+    "react-native-image-pan-zoom": "^2.1.12",
     "react-native-pager-view": "^5.4.4",
     "react-native-paper": "^4.9.2",
     "react-native-safe-area-context": "^3.3.2",

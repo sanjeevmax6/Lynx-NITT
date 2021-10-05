@@ -1,28 +1,34 @@
 import React from 'react';
 import {Dimensions, View} from 'react-native';
-import {Card, Paragraph, Button} from 'react-native-paper';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {Card, Paragraph, Button, Image, Text} from 'react-native-paper';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
 const WIDTH = Dimensions.get('window').width;
-const ClubCard = ({name, imgURL, isFollowing}) => {
+const ClubCard = ({
+  name,
+  imgURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAD1BMVEUJAAAACAkJAAUBCQABAAk/Y8DWAAAA/0lEQVR4nO3QNwEAIBAAsaf414yHW1gSCZlpTrOa2+wmljhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx8vXkAW0liTrVxGJyAAAAAElFTkSuQmCC',
+  isFollowing,
+  followers = 1008,
+}) => {
   return (
-    <Card style={{marginVertical: verticalScale(10)}}>
-      <View style={styles.card}>
-        <Card.Cover source={{uri: imgURL}} style={styles.clubImg} />
-        <Card.Content>
-          <View>
-            <Paragraph style={styles.clubtitle}>{name}</Paragraph>
-          </View>
-        </Card.Content>
-        <Card.Actions>
-          <View>
-            <Button
-              mode="outlined"
-              color={colors.EventDescriptionScreen_Follow}>
-              {isFollowing ? 'Following' : 'Follow'}
-            </Button>
-          </View>
-        </Card.Actions>
+    <Card>
+      <View
+        style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
+        <Card.Cover source={{uri: imgURL}} style={styles.image} />
+        <View style={styles.cardDetails}>
+          <Text numberOfLines={2} style={styles.title}>
+            {name}
+          </Text>
+          <Text style={styles.followers}>{followers} FOLLOWERS</Text>
+          <Button
+            mode="outlined"
+            color={colors.EventDescriptionScreen_Follow}
+            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+            style={{alignSelf: 'baseline'}}>
+            {isFollowing ? 'Following' : 'Follow'}
+          </Button>
+        </View>
       </View>
     </Card>
   );
@@ -31,20 +37,33 @@ const ClubCard = ({name, imgURL, isFollowing}) => {
 export default ClubCard;
 
 const styles = ScaledSheet.create({
-  clubImg: {
-    width: '100@msr',
-    height: '100@msr',
-    marginVertical: '5@vsr',
+  image: {
+    marginTop: '5@s',
+    width: '100@s',
+    marginBottom: '5@s',
+    marginRight: '5@s',
+    height: '100@s',
+    borderRadius: '8@s',
+    elevation: 1,
+    shadowColor: 'black',
   },
-  clubtitle: {
-    width: WIDTH * 0.35,
+  title: {
+    color: colors.EventCard_Title,
+    fontSize: '16@s',
     fontWeight: 'bold',
-    fontSize: '14@s',
-    marginVertical: '40@vs',
   },
-  card: {
-    width: WIDTH,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+  cardDetails: {
+    flexGrow: 1,
+    width: 0,
+    margin: '5@s',
+    marginRight: 0,
+    justifyContent: 'center',
+    //backgroundColor: 'red',
+  },
+  followers: {
+    color: colors.Tertiary,
+    fontSize: scale(10),
+    fontWeight: 'bold',
+    marginBottom: '3@vs',
   },
 });

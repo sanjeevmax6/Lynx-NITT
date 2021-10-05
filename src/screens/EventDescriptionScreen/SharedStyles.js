@@ -1,21 +1,23 @@
-import {ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const sharedStyles = ScaledSheet.create({
   fragment: {
-    marginHorizontal: '10@s',
-    marginVertical: '15@vs',
+    paddingHorizontal: scale(HorizontalPadding),
+    paddingBottom: '10@vs',
   },
   title: {
-    marginBottom: '10@vs',
-    fontSize: '16@s',
+    paddingVertical: '10@vs',
+    fontSize: '18@s',
     fontWeight: 'bold',
+    // backgroundColor: 'red',
     color: colors.EventDescriptionScreen_Title,
   },
   url: {
-    paddingVertical: '4@vs',
+    paddingBottom: '6@vs',
     color: colors.EventDescriptionScreen_url,
-    fontSize: '14@s',
+    fontSize: '12@s',
   },
 });
 export default sharedStyles;

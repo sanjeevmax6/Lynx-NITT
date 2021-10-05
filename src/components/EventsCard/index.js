@@ -7,7 +7,7 @@ import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 
 const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <View style={styles.card}>
       <View style={{justifyContent: 'center'}}>
         <Image
           source={{uri: eventImage || '../assests/images/spider.png'}}
@@ -48,7 +48,7 @@ const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

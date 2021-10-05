@@ -83,7 +83,7 @@ const ActivityCard = ({
             color={color.Accent}
             style={styles.btn}
             contentStyle={{padding: 0}}
-            labelStyle={{fontSize: 12, padding: 0, fontWeight: 'bold'}}>
+            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}>
             View event
           </Button>
         </View>

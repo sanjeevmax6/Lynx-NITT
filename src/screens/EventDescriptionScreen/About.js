@@ -7,7 +7,7 @@ import {
   Dimensions,
   Modal,
 } from 'react-native';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import sharedStyles from './SharedStyles';
@@ -40,7 +40,7 @@ const About = ({about, date, time}) => {
               <Text style={styles.modalText}>{about}</Text>
             </ScrollView>
             <TouchableOpacity
-              style={styles.openButton}
+              style={styles.closeButton}
               onPress={() => {
                 setModalVisible(!modalVisible);
               }}>
@@ -50,10 +50,13 @@ const About = ({about, date, time}) => {
         </View>
       </Modal>
 
-      <View style={sharedStyles.fragment}>
+      <View style={{...sharedStyles.fragment, backgroundColor: colors.WHITE}}>
         <Text style={sharedStyles.title}>About</Text>
         <Text
-          style={{fontSize: scale(12)}}
+          style={{
+            fontSize: scale(12),
+            textAlign: 'justify',
+          }}
           onTextLayout={onTextLayout}
           numberOfLines={
             numOfLines == 0
@@ -67,15 +70,27 @@ const About = ({about, date, time}) => {
         {numOfLines > NO_OF_LINES && (
           <View>
             <TouchableOpacity onPress={onModalToggle}>
-              <Text style={sharedStyles.url}>See More</Text>
+              <Text
+                style={{
+                  paddingVertical: verticalScale(4),
+                  fontWeight: 'bold',
+                  color: colors.Accent,
+                }}>
+                See More
+              </Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
-      <View style={sharedStyles.fragment}>
+      <View
+        style={{
+          ...sharedStyles.fragment,
+          backgroundColor: colors.WHITE,
+          paddingTop: 0,
+        }}>
         <View style={{flexDirection: 'row'}}>
           <Icon
-            style={{paddingHorizontal: scale(10)}}
+            style={{paddingHorizontal: scale(0)}}
             name="calendar-o"
             color={colors.EventDescriptionScreen_CalendarIcon}
             size={scale(20)}
@@ -122,12 +137,12 @@ const styles = ScaledSheet.create({
     color: 'white',
     fontSize: scale(16),
   },
-  openButton: {
+  closeButton: {
     borderRadius: scale(20),
     padding: scale(10),
     elevation: 2,
     backgroundColor: colors.EventDescriptionScreen_Button,
-    marginTop: 5,
+    marginTop: verticalScale(6),
   },
   textStyle: {
     color: 'white',

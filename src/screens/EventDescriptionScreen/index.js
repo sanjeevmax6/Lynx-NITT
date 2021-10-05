@@ -8,49 +8,30 @@ import Tags from './Tags';
 import Links from './Links';
 import ClubCard from './ClubCard';
 import * as colors from '../../utils/colors';
-
-const EventDescriptionScreen = () => {
-  const DATA = {
-    title: 'SPIDER WEEK',
-    about:
-      'The Homebrew Bionics is a community that explores the possibilities of developing open-source, affordable prosthetic devices that are rapidly fabricable. If you are someone who would love to contribute, k',
-    links: [
-      'https://spider.nitt.edu/',
-      'https://spider.nitt.edu/projects/',
-      'https://spider.nitt.edu/members/',
-    ],
-    tags: ['Computer Science', 'Machine Learning', 'Neural Network'],
-    images: [
-      'https://avatars.githubusercontent.com/u/7608907?s=280&v=4',
-      'https://spider.nitt.edu/images/team.jpg',
-      'https://inductions.spider.nitt.edu/assets/img/logo.png',
-    ],
-    date: '28/9/2021',
-    time: '15:00',
-  };
-
-  const Organizer = {
-    name: 'Spider R&D',
-    imgURL:
-      'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
-    isFollowing: false,
-  };
-
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+const EventDescriptionScreen = ({route, navigation}) => {
+  const {data} = route.params;
   return (
     <View>
       <ScrollView>
-        <Images images={DATA.images} />
-        <Text style={styles.eventName}>{DATA.title}</Text>
+        <Images images={data.images} navigation={navigation} />
+        <Divider style={styles.divider} />
+
+        <Text style={styles.eventName}>{data.title}</Text>
+        <Divider style={styles.divider} />
+
         <ClubCard
-          name={Organizer.name}
-          imgURL={Organizer.imgURL}
-          isFollowing={Organizer.isFollowing}
+          name={data.organizer.name}
+          imgURL={data.organizer.imgURL}
+          isFollowing={data.organizer.isFollowing}
         />
-        <About about={DATA.about} date={DATA.date} time={DATA.time} />
         <Divider style={styles.divider} />
-        <Links links={DATA.links} />
+
+        <About about={data.description} date={data.dates} time={data.time} />
         <Divider style={styles.divider} />
-        <Tags tags={DATA.tags} />
+        <Links links={data.links} />
+        <Divider style={styles.divider} />
+        <Tags tags={data.tags} />
       </ScrollView>
     </View>
   );
@@ -59,15 +40,18 @@ const EventDescriptionScreen = () => {
 export default EventDescriptionScreen;
 const styles = ScaledSheet.create({
   eventName: {
-    fontSize: '28@s',
-    paddingTop: '40@vs',
-    paddingBottom: '20@vs',
-    paddingLeft: '8@msr',
-    fontWeight: '900',
+    fontSize: '18@s',
+    paddingTop: '10@vs',
+    paddingBottom: '10@vs',
+    paddingHorizontal: HorizontalPadding,
+    fontWeight: 'bold',
+    backgroundColor: colors.WHITE,
+
     color: colors.EventDescriptionScreen_Title,
   },
   divider: {
-    marginTop: '10@vs',
+    // marginTop: '10@vs',
     height: '2@vs',
+    backgroundColor: colors.GRAY_LIGHT,
   },
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CalendarScreen from '../../screens/CalendarScreen';
+import FeedNavigator from '../feed-navigator';
 import FeedScreen from '../../screens/FeedScreen';
 import SearchScreen from '../../screens/SearchScreen';
 import UserScreen from '../../screens/UserScreen';
@@ -25,7 +26,7 @@ const AppNavigator = () => {
       }}>
       <HomeTab.Screen
         name="Feed"
-        component={FeedScreen}
+        component={FeedNavigator}
         options={{
           tabBarLabel: 'Feeds',
           tabBarIcon: ({color}) => (
