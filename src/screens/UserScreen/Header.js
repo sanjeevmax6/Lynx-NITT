@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import * as colors from '../../utils/colors';
@@ -59,8 +60,11 @@ const Header = ({name, followers, url, description}) => {
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.modalScreen}>
+          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <View style={{height: '100%'}} />
+          </TouchableWithoutFeedback>
           <View style={styles.modalView}>
-            <ModalContent />
+            <ModalContent ModalVisible={setModalVisible} />
           </View>
         </View>
       </Modal>
@@ -137,6 +141,7 @@ const styles = ScaledSheet.create({
   modalScreen: {
     width: '100%',
     height: '100%',
+    flex: 1,
     backgroundColor: 'rgba(0,0,0,0.57)',
   },
   followers: {

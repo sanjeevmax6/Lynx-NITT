@@ -7,20 +7,21 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const EventsView = ({eventArray, topLayout}) => {
   return (
     <View style={styles.card}>
-      <View
-        style={{
-          marginHorizontal: scale(HorizontalPadding),
-        }}>
+      <View>
         <FlatList
           data={eventArray}
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled
+          ListFooterComponent={<View style={{padding: verticalScale(4)}} />}
           showsHorizontalScrollIndicator={false}
           bounces={false}
           bouncesZoom={false}
           ListHeaderComponent={topLayout}
           renderItem={({item}) => (
-            <View>
+            <View
+              style={{
+                marginHorizontal: scale(HorizontalPadding),
+              }}>
               <RecentEventCard
                 name={item.name}
                 url={item.image}
@@ -41,7 +42,7 @@ export default EventsView;
 
 const styles = ScaledSheet.create({
   card: {
-    backgroundColor: 'white',
-    paddingBottom: '6@vs',
+    backgroundColor: colors.WHITE,
+    //paddingBottom: '6@vs',
   },
 });

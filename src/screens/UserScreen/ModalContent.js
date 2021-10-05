@@ -1,16 +1,29 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
-const ModalContent = () => {
+const ModalContent = ({ModalVisible}) => {
   return (
     <View style={{flex: 1, width: '100%'}}>
+      <TouchableOpacity onPress={() => ModalVisible(false)}>
+        <Icon
+          name="keyboard-arrow-down"
+          color={colors.EventCard_ShareIcon}
+          size={scale(ICON_SIZE_LARGE)}
+          style={{
+            alignSelf: 'center',
+            paddingRight: scale(0),
+            // backgroundColor: 'red',
+          }}
+        />
+      </TouchableOpacity>
       <View
         style={{
           flexDirection: 'row',
           padding: scale(10),
+          paddingTop: 0,
           paddingLeft: scale(HorizontalPadding),
         }}>
         <Icon

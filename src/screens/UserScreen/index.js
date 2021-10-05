@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import React from 'react';
+import {SafeAreaView, View, Text} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import Dashboard from './dashboard';
 import EventsView from './EventsView';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 import Header from './Header';
 const data = {
@@ -119,5 +120,7 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
     fontSize: '14@s',
     paddingTop: '10@vs',
+
+    paddingHorizontal: scale(HorizontalPadding),
   },
 });
