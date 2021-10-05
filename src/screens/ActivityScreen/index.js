@@ -17,14 +17,15 @@ import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
 const ActivityScreen = () => {
   const DATA = [
     {
-      key: '1',
-      date: '05/27/2021',
-      time: '10:00',
+      key: '4',
+      date: '09/30/2021',
+      time: '15:00',
+
       description:
-        "We heartily welcome Madhav Aggarwal as the Students' Council President for the academic year 2021",
-      url: 'https://media-exp1.licdn.com/dms/image/C5603AQHdfgCOizSk0w/profile-displayphoto-shrink_400_400/0/1623262202130?e=1638403200&v=beta&t=6WoyAH77V-qVfI8yze8B0-Gx6hrd4HzOHv2CMbubWQ0',
-      organizer: 'Student Council',
-      type: 0,
+        'Bitcoin is a decentralized digital currency, Dive into the future Now!',
+      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcRSbmMXj50jV_DdSFqjzq7I2zwuOba-Osf9OA&usqp=CAU',
+      organizer: 'SPIDER',
+      type: 1,
     },
     {
       key: '2',
@@ -36,6 +37,40 @@ const ActivityScreen = () => {
       organizer: 'SPIDER',
       type: 1,
     },
+
+    {
+      key: '62',
+      date: '06/13/2021',
+      time: '12:00',
+
+      description:
+        'Promoting Fit India activity and Confederation of Indian Industry, Young Indians',
+      url: 'https://media-exp1.licdn.com/dms/image/C5622AQGvwatzd-yw2w/feedshare-shrink_800/0/1632288990441?e=1635984000&v=beta&t=Np6ibVBGl6_MrN3IcFQFN6yYVyj-RyXytA90jgcR1iI',
+      organizer: 'ADMIN',
+      type: 1,
+    },
+    {
+      key: '62',
+      date: '06/21/2021',
+      time: '12:00',
+
+      description:
+        'The dates of the fees payment without fine for the odd sem has been increase to 15/07/2021',
+      //url: 'https://media-exp1.licdn.com/dms/image/C5622AQEsxoiwqIwVUQ/feedshare-shrink_800/0/1631092819512?e=1635984000&v=beta&t=Ar_V9NJNtbnbCt9lKWbENegC4MzpsNxOxENzNd7Yd-g',
+      organizer: 'Student Council',
+      type: 0,
+    },
+    {
+      key: '1',
+      date: '05/27/2021',
+      time: '10:00',
+      description:
+        "We heartily welcome Madhav Aggarwal as the Students' Council President for the academic year 2021",
+      url: 'https://media-exp1.licdn.com/dms/image/C5603AQHdfgCOizSk0w/profile-displayphoto-shrink_400_400/0/1623262202130?e=1638403200&v=beta&t=6WoyAH77V-qVfI8yze8B0-Gx6hrd4HzOHv2CMbubWQ0',
+      organizer: 'Student Council',
+      type: 0,
+    },
+
     {
       key: '3',
       date: '05/18/2021',
@@ -46,26 +81,13 @@ const ActivityScreen = () => {
       organizer: 'SPIDER',
     },
     {
-      key: '4',
-      date: '09/30/2021',
-      time: '15:00',
-      names:
-        "Cryptocurrency: Story of Bitcon it's past and future and improvements along with difficulties By: XYS PQST",
-      description:
-        'Bitcoin is a decentralized digital currency, Dive into the future Now!',
-      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcRSbmMXj50jV_DdSFqjzq7I2zwuOba-Osf9OA&usqp=CAU',
-      organizer: 'SPIDER',
-      type: 1,
-    },
-
-    {
-      key: '226',
-      date: '01/01/2021',
-      time: '12:00',
+      key: '7',
+      date: '03/15/2021',
+      time: '17:00',
 
       description:
-        'Has the world of blockchain technology fascinated you? Learn about the modern technological marvel! Register Now! 💥',
-      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcSUHFwJlmZ0VZPa0FMhhzZ_3yM_Xlwx0ifsEw&usqp=CAU',
+        'The Internet is a worldwide collection of networks that links millions of businesses, government agencies, educational institutions. Dive in!',
+      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcQjyudszQUse-zKQfNaYxP26URn91W6gOQDhg&usqp=CAU',
       organizer: 'SPIDER',
       type: 1,
     },
@@ -81,39 +103,6 @@ const ActivityScreen = () => {
     },
     {
       key: '62',
-      date: '06/13/2021',
-      time: '12:00',
-
-      description:
-        'Promoting Fit India activity and Confederation of Indian Industry, Young Indians',
-      url: 'https://media-exp1.licdn.com/dms/image/C5622AQGvwatzd-yw2w/feedshare-shrink_800/0/1632288990441?e=1635984000&v=beta&t=Np6ibVBGl6_MrN3IcFQFN6yYVyj-RyXytA90jgcR1iI',
-      organizer: 'ADMIN',
-      type: 1,
-    },
-    {
-      key: '7',
-      date: '03/15/2021',
-      time: '17:00',
-
-      description:
-        'The Internet is a worldwide collection of networks that links millions of businesses, government agencies, educational institutions. Dive in!',
-      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcQjyudszQUse-zKQfNaYxP26URn91W6gOQDhg&usqp=CAU',
-      organizer: 'SPIDER',
-      type: 1,
-    },
-    {
-      key: '62',
-      date: '06/21/2021',
-      time: '12:00',
-
-      description:
-        'The dates of the fees payment without fine for the odd sem has been increase to 15/07/2021',
-      //url: 'https://media-exp1.licdn.com/dms/image/C5622AQEsxoiwqIwVUQ/feedshare-shrink_800/0/1631092819512?e=1635984000&v=beta&t=Ar_V9NJNtbnbCt9lKWbENegC4MzpsNxOxENzNd7Yd-g',
-      organizer: 'Student Council',
-      type: 0,
-    },
-    {
-      key: '62',
       date: '01/11/2021',
       time: '12:00',
 
@@ -122,6 +111,17 @@ const ActivityScreen = () => {
       url: 'https://media-exp1.licdn.com/dms/image/C5622AQEsxoiwqIwVUQ/feedshare-shrink_800/0/1631092819512?e=1635984000&v=beta&t=Ar_V9NJNtbnbCt9lKWbENegC4MzpsNxOxENzNd7Yd-g',
       organizer: 'ADMIN',
       type: 0,
+    },
+    {
+      key: '226',
+      date: '01/01/2021',
+      time: '12:00',
+
+      description:
+        'Has the world of blockchain technology fascinated you? Learn about the modern technological marvel! Register Now! 💥',
+      url: 'https://encrypted-tbn0.gstatic.com/url?q=tbn:ANd9GcSUHFwJlmZ0VZPa0FMhhzZ_3yM_Xlwx0ifsEw&usqp=CAU',
+      organizer: 'SPIDER',
+      type: 1,
     },
     {
       key: '62',

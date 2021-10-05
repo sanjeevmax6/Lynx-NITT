@@ -67,7 +67,7 @@ const ActivityCard = ({
               flexDirection: 'row',
               //alignItems: 'flex-end',
             }}>
-            <Text style={{fontSize: scale(12)}}>
+            <Text style={{fontSize: scale(12), fontWeight: '500'}}>
               {date} | {time}
             </Text>
             <Text style={{textAlign: 'right', flex: 1, fontSize: scale(12)}}>
