@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, View, TouchableOpacity} from 'react-native';
 import {Card, Paragraph, Button, Image, Text} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -10,16 +10,27 @@ const ClubCard = ({
   imgURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAD1BMVEUJAAAACAkJAAUBCQABAAk/Y8DWAAAA/0lEQVR4nO3QNwEAIBAAsaf414yHW1gSCZlpTrOa2+wmljhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx8vXkAW0liTrVxGJyAAAAAElFTkSuQmCC',
   isFollowing,
   followers = 1008,
+  navigation,
 }) => {
   return (
     <Card>
       <View
         style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
-        <Card.Cover source={{uri: imgURL}} style={styles.image} />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ClubDescription');
+          }}>
+          <Card.Cover source={{uri: imgURL}} style={styles.image} />
+        </TouchableOpacity>
         <View style={styles.cardDetails}>
-          <Text numberOfLines={2} style={styles.title}>
-            {name}
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ClubDescription');
+            }}>
+            <Text numberOfLines={2} style={styles.title}>
+              {name}
+            </Text>
+          </TouchableOpacity>
           <Text style={styles.followers}>{followers} FOLLOWERS</Text>
           <Button
             mode="outlined"

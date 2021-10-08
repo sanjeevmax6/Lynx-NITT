@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import FeedScreen from '../../screens/FeedScreen';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
+import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
+import * as color from '../../utils/colors';
 
 const FeedStack = createNativeStackNavigator();
 
@@ -26,7 +28,18 @@ function FeedNavigator() {
       />
       <FeedStack.Screen
         name="ImageScreen"
-        component={ImageZoomScreen}
+        children={ImageZoomScreen}
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
+          title: '',
+          headerTintColor: color.WHITE,
+        }}
+      />
+      <FeedStack.Screen
+        name="ClubDescription"
+        component={ClubDescriptionScreen}
         options={{
           headerShown: false,
         }}

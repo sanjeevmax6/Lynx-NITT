@@ -24,6 +24,7 @@ const EventDescriptionScreen = ({route, navigation}) => {
           name={data.organizer.name}
           imgURL={data.organizer.imgURL}
           isFollowing={data.organizer.isFollowing}
+          navigation={navigation}
         />
         <Divider style={styles.divider} />
 

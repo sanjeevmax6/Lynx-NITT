@@ -54,3 +54,6 @@ export const EventDescriptionScreen_ModalView = '#00507A';
 
 export const EventDescriptionScreen_TagBackGround = '#DFE7FD';
 export const EventDescriptionScreen_TagText = Tertiary;
+
+//clubDescription
+export const ClubDescriptionScreen_ICON = Primary;
