@@ -18,9 +18,9 @@ function Navigator(isUserLoggedIn) {
   const [isLoading, setIsLoading] = useState(false);
 
   store.subscribe(() => {
-    console.log(userToken);
+    //console.log(userToken);
     setUserToken(store.getState().logScreen.login.userToken);
-    console.log(userToken);
+    // console.log(userToken);
   });
   if (isLoading) {
     return <SplashScreen />;
