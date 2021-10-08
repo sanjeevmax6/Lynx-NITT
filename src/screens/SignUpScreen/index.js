@@ -55,21 +55,25 @@ const LoginScreen = ({navigation}) => {
   }, []);
 
   const keyboardWillShow = event => {
-    marginHt.setValue(headerHt / 8);
+    marginHt.setValue(headerHt / 4);
     Animated.timing(imageHeight, {
       duration: 10,
       useNativeDriver: false,
-      toValue: verticalScale(100),
-    }).start();
+      toValue: verticalScale(120),
+    }).start(({finished}) => {
+      console.log(headerHt);
+    });
   };
 
   const keyboardWillHide = event => {
-    marginHt.setValue(headerHt / 2);
     Animated.timing(imageHeight, {
       duration: 10,
       toValue: verticalScale(150),
       useNativeDriver: false,
-    }).start();
+    }).start(({finished}) => {
+      console.log(headerHt);
+      marginHt.setValue(headerHt / 2);
+    });
   };
 
   const dispatch = useDispatch();
@@ -87,9 +91,8 @@ const LoginScreen = ({navigation}) => {
         <View
           style={styles.headertextcontainer}
           onLayout={event => {
-            var ht = event.nativeEvent.layout.height;
-            setheaderHt(ht);
-            marginHt.setValue(ht / 2);
+            setheaderHt(event.nativeEvent.layout.height);
+            marginHt.setValue(event.nativeEvent.layout.height / 2);
           }}>
           <Text style={styles.logintext}>Login</Text>
           <TouchableOpacity>

@@ -27,7 +27,9 @@ const EventCard = props => {
       <Avatar.Image
         size={moderateScale(50)}
         style={styles.profImg}
-        source={require('../../assests/images/user.png')}
+        source={{
+          uri: 'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+        }}
       />
     </View>
   );

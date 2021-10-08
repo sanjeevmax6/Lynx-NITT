@@ -1,9 +1,8 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import CalendarScreen from '../../screens/CalendarScreen';
+import CalendarNavigator from '../calendar-navigator';
 import FeedNavigator from '../feed-navigator';
-import FeedScreen from '../../screens/FeedScreen';
 import SearchScreen from '../../screens/SearchScreen';
 import UserScreen from '../../screens/UserScreen';
 import ActivityScreen from '../../screens/ActivityScreen';
@@ -46,7 +45,7 @@ const AppNavigator = () => {
       />
       <HomeTab.Screen
         name="Calendar"
-        component={CalendarScreen}
+        component={CalendarNavigator}
         options={{
           tabBarLabel: 'Calendar',
           tabBarIcon: ({color}) => (

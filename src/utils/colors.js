@@ -25,8 +25,10 @@ export const tabBarInactiveTintColor = GRAY_DARK;
 export const tabBarPressColor = GRAY_LIGHT;
 
 //Calendar Screen
+export const CalBack = 'white';
+//Calendar Card
 export const cardborder = 'grey';
-export const cardstrip = 'black';
+export const cardstrip = Accent;
 export const imgbck = 'white';
 
 //event card

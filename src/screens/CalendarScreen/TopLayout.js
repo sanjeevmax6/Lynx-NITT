@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {Text, FAB, IconButton} from 'react-native-paper';
+import {Text, FAB, IconButton, Divider} from 'react-native-paper';
 import DatePicker from 'react-native-modern-datepicker';
 import {
   scale,
@@ -62,9 +62,6 @@ const TopLayout = props => {
     <View>
       <Animated.View style={[{height: animation}]}>
         {b && (
-          // Change these lines in node_modules/react-native-modern-datepicker/src/datepicker/DatePicker.js
-          //const [minHeight, setMinHeight] = useState(contextValue.minHeight); -- Line 60
-          // onLayout={({nativeEvent}) => {setMinHeight(contextValue.minHeight);} -- Line 92
           <DatePicker
             selected={selDate}
             mode="calendar"
@@ -75,6 +72,7 @@ const TopLayout = props => {
           />
         )}
       </Animated.View>
+      <Divider style={{height: 0.8}} />
       <TouchableOpacity style={styles.dateLayout} onPress={toggle}>
         <Text style={styles.dateText}>{day}</Text>
         <IconButton icon={icon} size={scale(15)} />
