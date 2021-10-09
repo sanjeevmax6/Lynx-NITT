@@ -32,7 +32,7 @@ const EventDescriptionScreen = ({route, navigation}) => {
         <Divider style={styles.divider} />
         <Links links={data.links} />
         <Divider style={styles.divider} />
-        <Tags tags={data.tags} />
+        <Tags tags={data.tags} navigation={navigation} />
       </ScrollView>
     </View>
   );

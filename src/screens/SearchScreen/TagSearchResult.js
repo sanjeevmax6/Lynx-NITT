@@ -5,9 +5,11 @@ import {useIsFocused} from '@react-navigation/native';
 import {updateScreen} from '../../redux/reducers/searchScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const TagSearchResult = () => {
-  const dispatch = useDispatch();
+const TagSearchResult = ({route}) => {
+  const {searchText} = route.params == undefined ? '' : route.params;
+  console.log({searchText});
 
+  const dispatch = useDispatch();
   const text = useSelector(st => {
     return st.searchScreen.ui.searchQuery;
   });

@@ -5,7 +5,8 @@ import {Text, View} from 'react-native';
 import styles from './SharedStyles';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-const Tags = ({tags}) => {
+import searchScreen from '../../redux/reducers/searchScreen';
+const Tags = ({tags, navigation}) => {
   return (
     <View style={{...styles.fragment, backgroundColor: colors.WHITE}}>
       <Text style={styles.title}>Tags</Text>
@@ -25,7 +26,12 @@ const Tags = ({tags}) => {
                 style={{
                   backgroundColor: colors.EventDescriptionScreen_TagBackGround,
                 }}
-                onPress={() => console.log('Pressed')}
+                onPress={() => {
+                  navigation.navigate('Search', {
+                    screen: 'Tags',
+                    params: {searchText: item},
+                  });
+                }}
                 textStyle={{
                   fontSize: scale(12),
                   fontWeight: 'bold',

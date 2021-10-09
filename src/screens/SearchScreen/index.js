@@ -67,7 +67,10 @@ const SearchScreen = () => {
           }}>
           <Tab.Screen name="Clubs" children={() => <ClubSearchResult />} />
           <Tab.Screen name="Events" children={() => <EventSearchResult />} />
-          <Tab.Screen name="Tags" children={() => <TagSearchResult />} />
+          <Tab.Screen
+            name="Tags"
+            children={route => <TagSearchResult {...route} />}
+          />
           <Tab.Screen name="Academics" children={() => <AcadSearchResult />} />
         </Tab.Navigator>
       </View>
