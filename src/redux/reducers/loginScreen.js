@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   login: {
     userLoggedIn: '',
-    userToken: '',
+    userToken: null,
   },
 };
 

@@ -14,25 +14,30 @@ import store from '../redux/store';
 const RootStack = createNativeStackNavigator();
 
 function Navigator(isUserLoggedIn) {
-  const [userToken, setUserToken] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [userToken, setUserToken] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   store.subscribe(() => {
-    //console.log(userToken);
     setUserToken(store.getState().logScreen.login.userToken);
-    // console.log(userToken);
+    setIsLoading(store.getState().splashScreen.splash.isLoading);
+    console.log(isLoading);
+    console.log(userToken);
   });
-  if (isLoading) {
-    return <SplashScreen />;
-  }
+  // if (isLoading) {
+  //   return <SplashScreen />;
+  // }
   return (
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        {userToken == null ? (
-          <RootStack.Screen name="Login" component={LoginScreen} />
+        {!userToken ? (
+          isLoading ? (
+            <RootStack.Screen name="Splash" component={SplashScreen} />
+          ) : (
+            <RootStack.Screen name="Login" component={LoginScreen} />
+          )
         ) : (
           <RootStack.Screen
             name="Home"

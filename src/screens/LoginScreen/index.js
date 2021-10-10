@@ -76,7 +76,10 @@ const LoginScreen = ({navigation}) => {
 
   const onLogin = token => {
     // console.log(token);
-    dispatch(updateToken(token));
+    if (token) {
+      dispatch(updateToken(true));
+    }
+
     setTemp(store.getState().logScreen.login.userToken);
     // console.log(temp);
   };
