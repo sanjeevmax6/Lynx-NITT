@@ -57,3 +57,25 @@ export const EventDescriptionScreen_TagText = Tertiary;
 
 //clubDescription
 export const ClubDescriptionScreen_ICON = Primary;
+
+//Creation Page
+export const CreationScreen_Icon = Primary;
+export const CreationScreen_Button = Secondary;
+export const CreationScreen_ButtonText = WHITE;
+export const CreationScreen_IconTrashCan = 'red';
+export const CreationScreen_LinkItemBg = 'gold';
+export const CreationScreen_LinkItemText = 'blue';
+export const CreationScreen_DeleteItemBg = WHITE;
+export const CreationScreen_FileItemBg = 'tomato';
+export const CreationScreen_FileItemText = BLACK;
+export const CreationScreen_SwitchViewBg = Secondary;
+
+//Calendar Page
+
+export const CalenderScreen_backgroundColor = WHITE;
+export const CalenderScreen_textHeaderColor = Tertiary;
+export const CalenderScreen_textDefaultColor = Accent;
+export const CalenderScreen_selectedTextColor = Tertiary;
+export const CalenderScreen_mainColor = Accent;
+export const CalenderScreen_textSecondaryColor = Tertiary;
+export const CalenderScreen_borderColor = Tertiary;

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
@@ -145,7 +145,7 @@ const EventCreationScreen = () => {
                 <MaterialCommunityIcons
                   name="calendar"
                   size={25}
-                  color={color.Primary}
+                  color={colors.CreationScreen_Icon}
                 />
                 <Text style={styles.buttonTextTheme}>
                   Event on: {moment(date).format(DATE_FORMAT)}
@@ -178,7 +178,7 @@ const EventCreationScreen = () => {
                     <MaterialCommunityIcons
                       name="clock"
                       size={25}
-                      color={color.Primary}
+                      color={colors.CreationScreen_Icon}
                     />
                     <Text style={styles.buttonTextTheme}>
                       Start: {moment(startTime).format(TIME_FORMAT)}
@@ -195,7 +195,7 @@ const EventCreationScreen = () => {
                     <MaterialCommunityIcons
                       name="clock"
                       size={25}
-                      color={color.Primary}
+                      color={colors.CreationScreen_Icon}
                     />
                     <Text style={styles.buttonTextTheme}>
                       End: {moment(endTime).format(TIME_FORMAT)}
@@ -213,7 +213,7 @@ const EventCreationScreen = () => {
                 <MaterialCommunityIcons
                   name="upload"
                   size={25}
-                  color={color.Primary}
+                  color={colors.CreationScreen_Icon}
                 />
                 <Text style={styles.buttonTextTheme}>Upload media</Text>
               </View>
@@ -233,7 +233,7 @@ const EventCreationScreen = () => {
             <MaterialCommunityIcons
               name="cancel"
               size={25}
-              color={color.Primary}
+              color={colors.CreationScreen_Icon}
             />
             <Text style={styles.buttonTextTheme}>Cancel</Text>
           </View>
@@ -243,7 +243,7 @@ const EventCreationScreen = () => {
             <MaterialCommunityIcons
               name="plus-circle"
               size={25}
-              color={color.Primary}
+              color={colors.CreationScreen_Icon}
             />
             <Text style={styles.buttonTextTheme}>Create</Text>
           </View>
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   buttonViewTheme: {
     fontSize: 16,
     padding: moderateScale(8),
-    backgroundColor: color.Secondary,
+    backgroundColor: colors.CreationScreen_Button,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   switchView: {
     fontSize: 16,
     padding: moderateScale(8),
-    backgroundColor: color.Secondary,
+    backgroundColor: colors.CreationScreen_SwitchViewBg,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   buttonTextTheme: {
     fontSize: 16,
     marginLeft: scale(10),
-    color: color.WHITE,
+    color: colors.CreationScreen_ButtonText,
   },
   footer: {
     flexDirection: 'row',

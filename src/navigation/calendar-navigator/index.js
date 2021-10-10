@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import EventsCreationScreen from '../../screens/EventsCreationScreen';
 import CalendarScreen from '../../screens/CalendarScreen';
-
+import AnnouncementCreationScreen from '../../screens/AnnouncementCreationScreen';
 const CalendarStack = createNativeStackNavigator();
 
 function CalendarNavigator() {
@@ -29,6 +29,14 @@ function CalendarNavigator() {
         component={EventsCreationScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <CalendarStack.Screen
+        name="CreateAnnouncementScreen"
+        component={AnnouncementCreationScreen}
+        options={{
+          title: 'Announcement',
+          headerShown: true,
         }}
       />
     </CalendarStack.Navigator>

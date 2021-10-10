@@ -16,7 +16,8 @@ import {
   ms,
 } from 'react-native-size-matters';
 import moment from 'moment';
-
+import * as colors from '../../utils/colors';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 let width = Dimensions.get('window').width;
 
 const TopLayout = props => {
@@ -66,9 +67,23 @@ const TopLayout = props => {
             selected={selDate}
             mode="calendar"
             minuteInterval={30}
-            style={{borderRadius: 10}}
+            style={{
+              backgroundColor: colors.CalenderScreen_backgroundColor,
+            }}
             minHeight={maxHeight}
             onSelectedChange={onSelectedChange}
+            selectorStartingYear={new Date().getFullYear() - 1}
+            selectorEndingYear={new Date().getFullYear() + 1}
+            options={{
+              textHeaderColor: colors.CalenderScreen_textHeaderColor,
+              textDefaultColor: colors.CalenderScreen_textDefaultColor,
+              selectedTextColor: colors.CalenderScreen_selectedTextColor,
+              mainColor: colors.CalenderScreen_mainColor,
+              textSecondaryColor: colors.CalenderScreen_textSecondaryColor,
+              textHeaderFontSize: scale(16),
+              textFontSize: scale(16),
+              borderColor: colors.CalenderScreen_borderColor,
+            }}
           />
         )}
       </Animated.View>

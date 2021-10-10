@@ -6,6 +6,7 @@ import EventCard from './EventCard';
 import NoEventCard from './NoEventCard';
 import TopLayout from './TopLayout';
 import * as colors from '../../utils/colors';
+import FabGroup from './FabGroup';
 
 const CalendarScreen = ({navigation}) => {
   const [date, setDate] = useState();
@@ -210,7 +211,8 @@ const CalendarScreen = ({navigation}) => {
         ListHeaderComponent={renderTopLayout}
         ListEmptyComponent={renderEmptyItem}
       />
-      <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} />
+      {/* <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} /> */}
+      <FabGroup navigation={navigation} />
     </View>
   );
 };
