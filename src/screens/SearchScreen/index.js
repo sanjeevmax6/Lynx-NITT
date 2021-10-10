@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, SafeAreaView} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {scale} from 'react-native-size-matters';
@@ -11,43 +11,32 @@ import ClubSearchResult from './ClubSearchResult';
 import TagSearchResult from './TagSearchResult';
 import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
-import store from '../../redux/store';
-import {updateQuery} from '../../redux/reducers/searchScreen';
-import {useDispatch, useSelector} from 'react-redux';
 
-// import {useSelector} from 'react-redux';
-
-const SearchScreen = () => {
-  const dispatch = useDispatch();
+const SearchScreen = ({route}) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [Screen, setScreen] = useState('CLUB');
 
+  if (route.params != undefined) {
+    if (route.params.params.searchText != '') {
+      setSearchQuery(route.params.params.searchText);
+      route.params.params.searchText = '';
+    }
+  }
   const onChangeSearch = query => {
     setSearchQuery(query);
-    dispatch(updateQuery(query));
-    //console.log(store.getState().searchScreen.ui.currentScreen.toUpperCase());
   };
-  const [placeHolder, setPlaceHolder] = useState(
-    'SEARCH ' + store.getState().searchScreen.ui.currentScreen.toUpperCase(),
-  );
-
-  store.subscribe(() => {
-    if (store.getState().searchScreen.ui.searchQuery === '')
-      setPlaceHolder(
-        'SEARCH ' +
-          store.getState().searchScreen.ui.currentScreen.toUpperCase(),
-      );
-  });
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <Searchbar
           style={{elevation: 0, margin: 0, padding: 0, color: 'red'}}
-          placeholder={placeHolder}
+          placeholder={'SEARCH ' + Screen}
           onChangeText={onChangeSearch}
           autoFocus={true}
+          value={searchQuery}
           iconColor={color.BLACK}
         />
+
         <Tab.Navigator
           screenOptions={{
             tabBarLabelStyle: {
@@ -65,13 +54,42 @@ const SearchScreen = () => {
             tabBarActiveTintColor: color.tabBarActiveTintColor,
             tabBarInactiveTintColor: color.tabBarInactiveTintColor,
           }}>
-          <Tab.Screen name="Clubs" children={() => <ClubSearchResult />} />
-          <Tab.Screen name="Events" children={() => <EventSearchResult />} />
+          <Tab.Screen
+            name="Clubs"
+            children={() => (
+              <ClubSearchResult
+                searchQuery={searchQuery}
+                setScreen={setScreen}
+              />
+            )}
+          />
+          <Tab.Screen
+            name="Events"
+            children={() => (
+              <EventSearchResult
+                searchQuery={searchQuery}
+                setScreen={setScreen}
+              />
+            )}
+          />
           <Tab.Screen
             name="Tags"
-            children={route => <TagSearchResult {...route} />}
+            children={route => (
+              <TagSearchResult
+                searchQuery={searchQuery}
+                setScreen={setScreen}
+              />
+            )}
           />
-          <Tab.Screen name="Academics" children={() => <AcadSearchResult />} />
+          <Tab.Screen
+            name="Academics"
+            children={() => (
+              <AcadSearchResult
+                searchQuery={searchQuery}
+                setScreen={setScreen}
+              />
+            )}
+          />
         </Tab.Navigator>
       </View>
     </SafeAreaView>

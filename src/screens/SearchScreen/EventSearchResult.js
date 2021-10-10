@@ -1,24 +1,19 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
-import {updateScreen} from '../../redux/reducers/searchScreen';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const EventSearchResult = () => {
-  const dispatch = useDispatch();
+const EventSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
-  let text = useSelector(st => {
-    return st.searchScreen.ui.searchQuery;
-  });
 
   const isFocused = useIsFocused();
   if (isFocused) {
-    dispatch(updateScreen('Event'));
-    if (text != '') {
-      if (text != API) {
-        setAPI(text);
-        console.log('Doing API CALL IN EVENTS SEARCH: ' + text);
+    setScreen('EVENT');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN EVENTS SEARCH: ' + searchQuery);
       }
     }
   }
@@ -27,7 +22,8 @@ const EventSearchResult = () => {
     <SafeAreaView>
       <View>
         <Text style={{textAlign: 'center'}}>
-          Searching for <Text style={{fontWeight: 'bold'}}>"{text}" ... </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
       </View>
     </SafeAreaView>

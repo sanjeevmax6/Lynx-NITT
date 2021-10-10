@@ -1,26 +1,18 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
-import {updateScreen} from '../../redux/reducers/searchScreen';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const TagSearchResult = ({route}) => {
-  const {searchText} = route.params == undefined ? '' : route.params;
-  console.log({searchText});
-
-  const dispatch = useDispatch();
-  const text = useSelector(st => {
-    return st.searchScreen.ui.searchQuery;
-  });
+const TagSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
   const isFocused = useIsFocused();
   if (isFocused) {
-    dispatch(updateScreen('Tag'));
-    if (text != '') {
-      if (text != API) {
-        setAPI(text);
-        console.log('Doing API CALL IN TAG SEARCH: ' + text);
+    setScreen('TAG');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN TAG SEARCH: ' + searchQuery);
       }
     }
   }
@@ -29,7 +21,8 @@ const TagSearchResult = ({route}) => {
     <SafeAreaView>
       <View>
         <Text style={{textAlign: 'center'}}>
-          Searching for <Text style={{fontWeight: 'bold'}}>"{text}" ... </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
       </View>
     </SafeAreaView>

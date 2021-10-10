@@ -1,24 +1,17 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
-import {updateScreen} from '../../redux/reducers/searchScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const ClubSearchResult = () => {
-  const dispatch = useDispatch();
-
-  const text = useSelector(st => {
-    return st.searchScreen.ui.searchQuery;
-  });
+const ClubSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
   const isFocused = useIsFocused();
   if (isFocused) {
-    dispatch(updateScreen('Club'));
-    if (text != '') {
-      if (text != API) {
-        setAPI(text);
-        console.log('Doing API CALL IN CLUB SEARCH: ' + text);
+    setScreen('CLUB');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN CLUB SEARCH: ' + searchQuery);
       }
     }
   }
@@ -27,7 +20,8 @@ const ClubSearchResult = () => {
     <SafeAreaView>
       <View>
         <Text style={{textAlign: 'center'}}>
-          Searching for <Text style={{fontWeight: 'bold'}}>"{text}" ... </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
       </View>
     </SafeAreaView>
