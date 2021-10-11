@@ -3,7 +3,7 @@ import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {moderateScale, scale} from 'react-native-size-matters';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as colors from '../../utils/colors';
+import * as color from '../../utils/colors';
 
 const LinkItem = ({item, deleteItem}) => {
   return (
@@ -12,11 +12,7 @@ const LinkItem = ({item, deleteItem}) => {
       <TouchableOpacity
         style={styles.deleteItem}
         onPress={() => deleteItem(item)}>
-        <MaterialCommunityIcons
-          name="trash-can"
-          color={colors.CreationScreen_IconTrashCan}
-          size={20}
-        />
+        <MaterialCommunityIcons name="trash-can" color="red" size={20} />
       </TouchableOpacity>
     </View>
   );
@@ -25,16 +21,17 @@ const LinkItem = ({item, deleteItem}) => {
 const styles = StyleSheet.create({
   linkItem: {
     flex: 1,
-    backgroundColor: colors.CreationScreen_LinkItemBg,
-    margin: moderateScale(5),
-    marginHorizontal: scale(10),
+    backgroundColor: color.GRAY_MEDIUM,
+    marginVertical: moderateScale(1),
+    marginHorizontal: scale(5),
     flexDirection: 'row',
     alignItems: 'center',
+    borderRadius: moderateScale(10),
   },
   linkItemText: {
     padding: moderateScale(10),
-    fontSize: 14,
-    color: colors.CreationScreen_LinkItemText,
+    fontSize: 16,
+    color: 'blue',
     textDecorationLine: 'underline',
   },
   deleteItem: {
@@ -42,7 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     right: scale(20),
     position: 'absolute',
-    backgroundColor: colors.CreationScreen_DeleteItemBg,
+    backgroundColor: 'white',
   },
 });
 

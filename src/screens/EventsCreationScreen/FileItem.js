@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {moderateScale, scale} from 'react-native-size-matters';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as colors from '../../utils/colors';
+import * as color from '../../utils/colors';
+
 const FileItem = ({item, deleteItem}) => {
   return (
     <View style={styles.fileItem}>
@@ -11,11 +12,7 @@ const FileItem = ({item, deleteItem}) => {
       <TouchableOpacity
         style={styles.deleteItem}
         onPress={() => deleteItem(item.uri)}>
-        <MaterialCommunityIcons
-          name="trash-can"
-          color={colors.CreationScreen_IconTrashCan}
-          size={23}
-        />
+        <MaterialCommunityIcons name="trash-can" color="red" size={23} />
       </TouchableOpacity>
     </View>
   );
@@ -24,23 +21,23 @@ const FileItem = ({item, deleteItem}) => {
 const styles = StyleSheet.create({
   fileItem: {
     flex: 1,
-    backgroundColor: colors.CreationScreen_FileItemBg,
-    margin: moderateScale(5),
-    marginHorizontal: scale(20),
+    borderRadius: moderateScale(10),
+    backgroundColor: color.GRAY_MEDIUM,
+    marginVertical: verticalScale(1),
+    marginHorizontal: scale(10),
     flexDirection: 'row',
     alignItems: 'center',
   },
   fileItemText: {
-    padding: moderateScale(20),
-    fontSize: 16,
-    color: colors.CreationScreen_FileItemText,
+    padding: moderateScale(10),
+    fontSize: 14,
   },
   deleteItem: {
     padding: moderateScale(5),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     right: scale(20),
     position: 'absolute',
-    backgroundColor: colors.CreationScreen_DeleteItemBg,
+    backgroundColor: 'white',
   },
 });
 
