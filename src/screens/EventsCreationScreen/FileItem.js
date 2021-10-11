@@ -4,6 +4,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as color from '../../utils/colors';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const FileItem = ({item, deleteItem}) => {
   return (
@@ -12,7 +13,11 @@ const FileItem = ({item, deleteItem}) => {
       <TouchableOpacity
         style={styles.deleteItem}
         onPress={() => deleteItem(item.uri)}>
-        <MaterialCommunityIcons name="trash-can" color="red" size={23} />
+        <MaterialCommunityIcons
+          name="trash-can"
+          color={color.Accent}
+          size={23}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -21,16 +26,17 @@ const FileItem = ({item, deleteItem}) => {
 const styles = StyleSheet.create({
   fileItem: {
     flex: 1,
-    borderRadius: moderateScale(10),
-    backgroundColor: color.GRAY_MEDIUM,
+    borderRadius: moderateScale(6),
+    backgroundColor: color.Primary,
     marginVertical: verticalScale(1),
-    marginHorizontal: scale(10),
+    marginHorizontal: scale(HorizontalPadding),
     flexDirection: 'row',
     alignItems: 'center',
   },
   fileItemText: {
     padding: moderateScale(10),
-    fontSize: 14,
+    fontSize: scale(12),
+    color: color.WHITE,
   },
   deleteItem: {
     padding: moderateScale(5),

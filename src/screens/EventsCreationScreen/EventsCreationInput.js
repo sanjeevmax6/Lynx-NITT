@@ -1,10 +1,10 @@
 import React from 'react';
 import {TextInput, Divider} from 'react-native-paper';
 import {View, StyleSheet, FlatList} from 'react-native';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
-
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const EventCreationInputs = ({inputStates}) => {
   const addLink = () => {
     if (inputStates.link !== '') {
@@ -25,36 +25,55 @@ const EventCreationInputs = ({inputStates}) => {
     <View style={styles.container}>
       <View style={styles.viewScale}>
         <TextInput
-          backgroundColor="#00000000"
-          underlineColor="#00000000"
+          underlineColor="transparent"
           label="Event Title"
+          style={{
+            backgroundColor: color.GRAY_LIGHT,
+            marginHorizontal: HorizontalPadding,
+            borderTopLeftRadius: moderateScale(12),
+          }}
           placeholder="Event Title (max 300)"
           value={inputStates.title}
           onChangeText={nTitle => inputStates.setTitle(nTitle)}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={color.Tertiary} />}
         />
       </View>
       <View style={styles.viewScale}>
         <TextInput
-          backgroundColor="#00000000"
-          underlineColor="#00000000"
+          underlineColor="transparent"
+          style={{
+            backgroundColor: color.GRAY_LIGHT,
+            marginHorizontal: HorizontalPadding,
+            // borderTopLeftRadius: moderateScale(9),
+          }}
           label="Event Description"
           placeholder="Event Description"
           value={inputStates.desc}
           onChangeText={nDesc => inputStates.setDesc(nDesc)}
           multiline={true}
-          left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'text-subject'} color={color.Tertiary} />}
         />
       </View>
       <View style={styles.viewScale}>
         <TextInput
-          underlineColor="#00000000"
+          underlineColor="transparent"
+          style={{
+            backgroundColor: color.GRAY_LIGHT,
+            marginHorizontal: HorizontalPadding,
+            borderBottomRightRadius: moderateScale(12),
+          }}
           label="Event Links"
           placeholder="Event Links"
           value={inputStates.link}
           onChangeText={nLinks => inputStates.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
-          right={<TextInput.Icon name={'plus'} onPress={() => addLink()} />}
+          left={<TextInput.Icon name={'link'} color={color.Tertiary} />}
+          right={
+            <TextInput.Icon
+              name={'plus'}
+              color={color.Tertiary}
+              onPress={() => addLink()}
+            />
+          }
         />
         {inputStates.links.length > 0 && (
           <View style={styles.viewScale}>
@@ -77,7 +96,7 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(4),
   },
   viewScale: {
-    paddingHorizontal: scale(2),
+    paddingHorizontal: scale(0),
     paddingVertical: verticalScale(4),
   },
 });

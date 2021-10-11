@@ -5,6 +5,7 @@ import moment from 'moment';
 import * as color from '../../utils/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {TextInput} from 'react-native-paper';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const TIME_FORMAT = 'h:mm A';
 const DATE_FORMAT = 'MMMM DD, YYYY';
@@ -33,8 +34,8 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
       <View style={styles.switchView}>
         <Text style={styles.buttonTextTheme}>All day event? </Text>
         <Switch
-          trackColor={{false: '#767577', true: '#767577'}}
-          thumbColor={timeStates.allDaySwitch ? '#f4f3f4' : '#f4f3f4'}
+          trackColor={{false: color.Primary, true: color.Accent}}
+          thumbColor={timeStates.allDaySwitch ? color.WHITE : color.WHITE}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={timeStates.allDaySwitch}
@@ -46,8 +47,12 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
         onPress={() => dateStates.setDatePicker(true)}>
         <TextInput
           disabled={true}
+          style={{
+            backgroundColor: color.GRAY_LIGHT,
+            borderTopLeftRadius: moderateScale(6),
+          }}
           left={
-            <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
+            <TextInput.Icon name="calendar" size={25} color={color.Tertiary} />
           }>
           Event on: {moment(dateStates.date).format(DATE_FORMAT)}
         </TextInput>
@@ -61,8 +66,11 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
           }}>
           <TextInput
             disabled={true}
+            style={{
+              backgroundColor: color.GRAY_LIGHT,
+            }}
             left={
-              <TextInput.Icon name="clock" size={25} color={color.BLACK} />
+              <TextInput.Icon name="clock" size={25} color={color.Tertiary} />
             }>
             Time: {moment(timeStates.time).format(TIME_FORMAT)}
           </TextInput>
@@ -98,8 +106,9 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(4),
   },
   viewScale: {
-    paddingHorizontal: scale(2),
+    //paddingHorizontal: scale(2),
     paddingVertical: verticalScale(4),
+    marginHorizontal: scale(HorizontalPadding),
   },
   buttonViewTheme: {
     fontSize: 16,
@@ -110,19 +119,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonTextTheme: {
-    fontSize: 16,
+    fontSize: scale(14),
     marginLeft: scale(10),
     color: color.WHITE,
   },
   switchView: {
-    fontSize: 16,
-    padding: moderateScale(8),
-    backgroundColor: color.GRAY_DARK,
-    borderRadius: moderateScale(5),
+    paddingVertical: verticalScale(8),
+    backgroundColor: color.Tertiary,
+    borderRadius: moderateScale(6),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: scale(10),
+    marginHorizontal: scale(HorizontalPadding),
+
     marginVertical: verticalScale(2),
   },
 });
