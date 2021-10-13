@@ -6,31 +6,38 @@ import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
-const EventsCreationScreenHeader = ({navigation, isValid}) => {
+const AnnouncementCreationScreenHeader = ({navigation, validLength}) => {
   return (
     <View style={styles.header}>
       <View style={styles.twoButtonLeft}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('', 'Are you sure you want to discard this event?', [
-              {
-                text: 'DISCARD',
-                onPress: () => navigation.goBack(),
-                style: 'cancel',
-              },
-              {text: 'KEEP EDITING', onPress: () => console.log('OK Pressed')},
-            ]);
+            Alert.alert(
+              '',
+              'Are you sure you want to discard this announcement?',
+              [
+                {
+                  text: 'DISCARD',
+                  onPress: () => navigation.goBack(),
+                  style: 'cancel',
+                },
+                {
+                  text: 'KEEP EDITING',
+                  onPress: () => console.log('OK Pressed'),
+                },
+              ],
+            );
           }}
           style={styles.button}>
           <Icon name="close" size={HeaderHeight - 9} color={color.Tertiary} />
         </TouchableOpacity>
       </View>
-      <Text style={styles.headerText}>Create Event</Text>
+      <Text style={styles.headerText}>Create Announcement</Text>
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
             console.log('Create pressed');
-            if (!isValid)
+            if (!validLength)
               Alert.alert('', 'The text entered exceeds the maximum length', [
                 {
                   text: 'KEEP EDITING',
@@ -82,4 +89,4 @@ const styles = StyleSheet.create({
   twoButtonRight: {},
 });
 
-export default EventsCreationScreenHeader;
+export default AnnouncementCreationScreenHeader;

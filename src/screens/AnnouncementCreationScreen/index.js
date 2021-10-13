@@ -1,26 +1,41 @@
 import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import {Divider, Button} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FileItem from './FileItem';
-import LinkItem from './LinkItem';
-
+import AnnouncementCreationInputs from './AnnouncementCreationInput';
+import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const AnnouncementCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [link, setLink] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [links, setLinks] = useState([]);
+  const maxSubjectLength = 150;
+  const maxAnnouncementLength = 300;
+  const [subjectLength, setSubjectLength] = useState(maxSubjectLength);
+  const [announcementLength, setAnnouncementLength] = useState(
+    maxAnnouncementLength,
+  );
+  const inputStates = {
+    title,
+    setTitle,
+    desc,
+    setDesc,
+    link,
+    setLink,
+    links,
+    setLinks,
+    subjectLength,
+    setSubjectLength,
+    announcementLength,
+    setAnnouncementLength,
+    maxSubjectLength,
+    maxAnnouncementLength,
+  };
 
   const selectFiles = async () => {
     try {
@@ -42,76 +57,29 @@ const AnnouncementCreationScreen = ({navigation}) => {
     });
   };
 
-  const removeLink = link => {
-    setLinks(prevList => {
-      return prevList.filter(item => item != link);
-    });
-  };
-
-  const addLink = () => {
-    if (link !== '') {
-      setLinks(prevList => {
-        console.log([link, ...prevList]);
-        return [link, ...prevList];
-      });
-      setLink('');
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      {/* SelectedFilesList */}
+      <AnnouncementCreationScreenHeader
+        navigation={navigation}
+        validLength={subjectLength >= 0 && announcementLength >= 0}
+      />
       <FlatList
+        showsVerticalScrollIndicator={false}
+        ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
+        ListFooterComponent={<View style={{height: verticalScale(6)}} />}
         ListHeaderComponent={
           <>
-            {/* Text Inputs */}
-            <View style={styles.viewScale}>
-              <TextInput
-                label="Announcement Subject"
-                placeholder="Announcement Subject (max 300)"
-                value={title}
-                onChangeText={nTitle => setTitle(nTitle)}
-              />
+            <AnnouncementCreationInputs inputStates={inputStates} />
+            <Divider style={styles.divider} />
+            <View style={styles.uploadButton}>
+              <Button
+                icon="upload"
+                mode="text"
+                onPress={() => selectFiles()}
+                color={colors.WHITE}>
+                Add Attachments
+              </Button>
             </View>
-            <View style={styles.viewScale}>
-              <TextInput
-                label="Announcement"
-                placeholder="Announcement"
-                value={desc}
-                onChangeText={nDesc => setDesc(nDesc)}
-                multiline={true}
-              />
-            </View>
-            <View style={styles.viewScale}>
-              <TextInput
-                label="Links"
-                placeholder="Links"
-                value={link}
-                onChangeText={nLinks => setLink(nLinks)}
-                right={
-                  <TextInput.Icon name={'plus'} onPress={() => addLink()} />
-                }
-              />
-              <FlatList
-                data={links}
-                renderItem={({item}) => (
-                  <LinkItem item={item} deleteItem={removeLink} />
-                )}
-              />
-            </View>
-            {/* Upload DOCS */}
-            <TouchableOpacity
-              style={styles.viewScale}
-              onPress={() => selectFiles()}>
-              <View style={styles.buttonViewTheme}>
-                <MaterialCommunityIcons
-                  name="upload"
-                  size={25}
-                  color={colors.CreationScreen_Icon}
-                />
-                <Text style={styles.buttonTextTheme}>Upload Files</Text>
-              </View>
-            </TouchableOpacity>
           </>
         }
         data={selectedFiles}
@@ -119,32 +87,6 @@ const AnnouncementCreationScreen = ({navigation}) => {
           <FileItem item={item} deleteItem={removeFile} />
         )}
       />
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.twoButtonLeft}
-          onPress={() => navigation.goBack()}>
-          <View style={styles.buttonViewTheme}>
-            <MaterialCommunityIcons
-              name="cancel"
-              size={25}
-              color={colors.CreationScreen_Icon}
-            />
-            <Text style={styles.buttonTextTheme}>Cancel</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.twoButtonRight}>
-          <View style={styles.buttonViewTheme}>
-            <MaterialCommunityIcons
-              name="plus-circle"
-              size={25}
-              color={colors.CreationScreen_Icon}
-            />
-            <Text style={styles.buttonTextTheme}>Create</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };
@@ -152,12 +94,16 @@ const AnnouncementCreationScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: verticalScale(20),
     justifyContent: 'center',
+    backgroundColor: colors.WHITE,
   },
   viewScale: {
     paddingHorizontal: scale(20),
     paddingVertical: verticalScale(5),
+  },
+  divider: {
+    height: verticalScale(2),
+    backgroundColor: colors.GRAY_MEDIUM,
   },
   buttonViewTheme: {
     fontSize: 16,
@@ -190,6 +136,12 @@ const styles = StyleSheet.create({
     paddingRight: scale(20),
     paddingLeft: scale(5),
     paddingVertical: verticalScale(5),
+  },
+  uploadButton: {
+    backgroundColor: colors.Tertiary,
+    borderRadius: moderateScale(6),
+    marginVertical: verticalScale(9),
+    marginHorizontal: HorizontalPadding,
   },
 });
 

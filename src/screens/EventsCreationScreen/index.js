@@ -25,6 +25,12 @@ const EventCreationScreen = ({navigation}) => {
   const [profilePicUri, setProfilePicUri] = useState('');
   const [isProfilePicSelected, setProfilePicSelected] = useState(false);
 
+  const maxTitleLength = 150;
+  const maxDescLength = 300;
+
+  const [titleLength, setTitleLength] = useState(maxTitleLength);
+  const [descLength, setDescLength] = useState(maxDescLength);
+
   const inputStates = {
     title,
     setTitle,
@@ -34,6 +40,12 @@ const EventCreationScreen = ({navigation}) => {
     setLink,
     links,
     setLinks,
+    titleLength,
+    setTitleLength,
+    descLength,
+    setDescLength,
+    maxDescLength,
+    maxTitleLength,
   };
 
   const dateStates = {
@@ -81,7 +93,10 @@ const EventCreationScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <EventsCreationScreenHeader navigation={navigation} />
+      <EventsCreationScreenHeader
+        navigation={navigation}
+        isValid={titleLength >= 0 && descLength >= 0}
+      />
       <FlatList
         showsVerticalScrollIndicator={false}
         ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextInput, Divider} from 'react-native-paper';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-const EventCreationInputs = ({inputStates}) => {
+const AnnouncementCreationInputs = ({inputStates}) => {
   const addLink = () => {
     if (inputStates.link !== '') {
       inputStates.setLinks(prevList => {
@@ -20,11 +20,14 @@ const EventCreationInputs = ({inputStates}) => {
       return prevList.filter(item => item != link);
     });
   };
-  const onChangeTitleLength = text => {
-    inputStates.setTitleLength(inputStates.maxTitleLength - text.length);
+
+  const onChangeSubjectLength = text => {
+    inputStates.setSubjectLength(inputStates.maxSubjectLength - text.length);
   };
-  const onChangeDescLength = text => {
-    inputStates.setDescLength(inputStates.maxDescLength - text.length);
+  const onChangeAnnouncementLength = text => {
+    inputStates.setAnnouncementLength(
+      inputStates.maxAnnouncementLength - text.length,
+    );
   };
 
   return (
@@ -32,26 +35,26 @@ const EventCreationInputs = ({inputStates}) => {
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
-          label="Event Title"
+          label="Announcement Subject"
           style={{
             backgroundColor: color.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             borderTopLeftRadius: moderateScale(12),
           }}
-          placeholder="Event Title (max 150)"
+          placeholder="Announcement Subject (max 150)"
           value={inputStates.title}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
-            onChangeTitleLength(nTitle);
+            onChangeSubjectLength(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={color.Tertiary} />}
         />
         <Text
           style={[
             styles.wordCount,
-            {color: inputStates.titleLength < 0 ? 'red' : 'black'},
+            {color: inputStates.subjectLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.titleLength}
+          {inputStates.subjectLength}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -62,12 +65,12 @@ const EventCreationInputs = ({inputStates}) => {
             marginHorizontal: HorizontalPadding,
             // borderTopLeftRadius: moderateScale(9),
           }}
-          label="Event Description"
-          placeholder="Event Description (max 3000)"
+          label="Announcement"
+          placeholder="Announcement (max 300)"
           value={inputStates.desc}
           onChangeText={nDesc => {
             inputStates.setDesc(nDesc);
-            onChangeDescLength(nDesc);
+            onChangeAnnouncementLength(nDesc);
           }}
           multiline={true}
           left={<TextInput.Icon name={'text-subject'} color={color.Tertiary} />}
@@ -75,9 +78,9 @@ const EventCreationInputs = ({inputStates}) => {
         <Text
           style={[
             styles.wordCount,
-            {color: inputStates.descLength < 0 ? 'red' : 'black'},
+            {color: inputStates.announcementLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.descLength}
+          {inputStates.announcementLength}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -88,8 +91,8 @@ const EventCreationInputs = ({inputStates}) => {
             marginHorizontal: HorizontalPadding,
             borderBottomRightRadius: moderateScale(12),
           }}
-          label="Event Links"
-          placeholder="Event Links"
+          label="Links"
+          placeholder="Links"
           value={inputStates.link}
           onChangeText={nLinks => inputStates.setLink(nLinks)}
           left={<TextInput.Icon name={'link'} color={color.Tertiary} />}
@@ -132,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventCreationInputs;
+export default AnnouncementCreationInputs;

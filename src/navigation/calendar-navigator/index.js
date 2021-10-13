@@ -35,8 +35,7 @@ function CalendarNavigator() {
         name="CreateAnnouncementScreen"
         component={AnnouncementCreationScreen}
         options={{
-          title: 'Announcement',
-          headerShown: true,
+          headerShown: false,
         }}
       />
     </CalendarStack.Navigator>
