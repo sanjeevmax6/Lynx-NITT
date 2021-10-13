@@ -79,3 +79,6 @@ export const CalenderScreen_selectedTextColor = Tertiary;
 export const CalenderScreen_mainColor = Accent;
 export const CalenderScreen_textSecondaryColor = Tertiary;
 export const CalenderScreen_borderColor = Tertiary;
+
+//Splash Screen
+export const spashScreenBackground = Secondary;

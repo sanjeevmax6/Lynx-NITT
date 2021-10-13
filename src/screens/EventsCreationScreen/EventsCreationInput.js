@@ -39,6 +39,7 @@ const EventCreationInputs = ({inputStates}) => {
             borderTopLeftRadius: moderateScale(12),
           }}
           placeholder="Event Title (max 150)"
+          multiline={true}
           value={inputStates.title}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
@@ -63,7 +64,8 @@ const EventCreationInputs = ({inputStates}) => {
             // borderTopLeftRadius: moderateScale(9),
           }}
           label="Event Description"
-          placeholder="Event Description (max 3000)"
+          multiline={true}
+          placeholder="Event Description (max 300)"
           value={inputStates.desc}
           onChangeText={nDesc => {
             inputStates.setDesc(nDesc);

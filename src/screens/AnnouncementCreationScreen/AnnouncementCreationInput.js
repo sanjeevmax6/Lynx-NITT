@@ -43,6 +43,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           }}
           placeholder="Announcement Subject (max 150)"
           value={inputStates.title}
+          multiline={true}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
             onChangeSubjectLength(nTitle);
@@ -67,6 +68,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           }}
           label="Announcement"
           placeholder="Announcement (max 300)"
+          multiline={true}
           value={inputStates.desc}
           onChangeText={nDesc => {
             inputStates.setDesc(nDesc);
