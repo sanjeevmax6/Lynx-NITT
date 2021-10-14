@@ -16,7 +16,7 @@ import ModalContent from './ModalContent';
 import ImageColors from 'react-native-image-colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
-const Header = ({name, followers, url, description}) => {
+const Header = ({name, followers, url, description, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [coverColor, setCoverColor] = useState('');
   const [coverIconColor, setCoverIconColor] = useState(colors.Tertiary);
@@ -64,7 +64,10 @@ const Header = ({name, followers, url, description}) => {
             <View style={{height: '100%'}} />
           </TouchableWithoutFeedback>
           <View style={styles.modalView}>
-            <ModalContent ModalVisible={setModalVisible} />
+            <ModalContent
+              ModalVisible={setModalVisible}
+              navigation={navigation}
+            />
           </View>
         </View>
       </Modal>

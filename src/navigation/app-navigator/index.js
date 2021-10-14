@@ -9,6 +9,7 @@ import ActivityScreen from '../../screens/ActivityScreen';
 import ActivityNavigator from '../activity-navigator';
 
 import * as color from '../../utils/colors';
+import UserNavigator from '../user-navigator';
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -70,7 +71,7 @@ const AppNavigator = () => {
       />
       <HomeTab.Screen
         name="User"
-        component={UserScreen}
+        component={UserNavigator}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (

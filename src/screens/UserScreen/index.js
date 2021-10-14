@@ -85,13 +85,14 @@ const data = {
   ],
 };
 
-const renderTopLayout = () => (
+const renderTopLayout = navigation => (
   <View>
     <Header
       name={data.name}
       followers={data.followers}
       url={data.url}
       description={data.description}
+      navigation={navigation}
     />
     <Dashboard
       profileView={data.totalProfileView}
@@ -101,12 +102,12 @@ const renderTopLayout = () => (
   </View>
 );
 
-const UserScreen = () => {
+const UserScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{backgroundColor: colors.GRAY_MEDIUM, flex: 1}}>
       <EventsView
         eventArray={data.events.reverse()}
-        topLayout={renderTopLayout}
+        topLayout={renderTopLayout(navigation)}
       />
     </SafeAreaView>
   );
