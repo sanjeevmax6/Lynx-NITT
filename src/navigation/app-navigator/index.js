@@ -6,6 +6,7 @@ import FeedNavigator from '../feed-navigator';
 import SearchScreen from '../../screens/SearchScreen';
 import UserScreen from '../../screens/UserScreen';
 import ActivityScreen from '../../screens/ActivityScreen';
+import ActivityNavigator from '../activity-navigator';
 
 import * as color from '../../utils/colors';
 
@@ -59,7 +60,7 @@ const AppNavigator = () => {
       />
       <HomeTab.Screen
         name="Activity"
-        component={ActivityScreen}
+        component={ActivityNavigator}
         options={{
           tabBarLabel: 'Activity',
           tabBarIcon: ({color}) => (

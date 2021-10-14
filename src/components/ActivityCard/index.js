@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, Dimensions, Text, Image} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  Dimensions,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {Card, Paragraph, Button} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -17,6 +24,11 @@ const ActivityCard = ({
   id,
   type = 0,
   url = 'https://images-na.ssl-images-amazon.com/images/I/51K4bzCIe3L.png',
+  organizerUrl = 'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+
+  organizerFollower = 150,
+  navigation,
+  data,
 }) => {
   const getTimeGap = d => {
     let date = new Date(d);
@@ -44,38 +56,56 @@ const ActivityCard = ({
     } else return Math.floor(Difference_In_Days / 365) + ' yr';
   };
   //console.log(getTimeGap(date));
+
   return (
     <View style={{paddingVertical: 6}}>
-      <View style={styles.cardLayout}>
-        <Image style={styles.poster} source={{uri: url}} />
-        <View style={styles.eventInfo}>
-          <Text numberOfLines={3}>
-            <Text style={styles.notifier}>{notifier}</Text>
-            <Text style={styles.notifier}>: </Text>
-            <Text
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (type == 0) {
+            navigation.navigate('AnnouncementDetail', {
+              data: {
+                organizer: notifier,
+                url: url,
+                links: 'awkjvbav',
+                description: notification,
+                time: getTimeGap(date),
+                organizerUrl: organizerUrl,
+                organizerFollower: organizerFollower,
+              },
+            });
+          }
+        }}>
+        <View style={styles.cardLayout}>
+          <Image style={styles.poster} source={{uri: url}} />
+          <View style={styles.eventInfo}>
+            <Text numberOfLines={3}>
+              <Text style={styles.notifier}>{notifier}</Text>
+              <Text style={styles.notifier}>: </Text>
+              <Text
+                style={{
+                  fontSize: scale(12),
+                  //fontWeight: 'bold',
+                  paddingRight: 10,
+                }}>
+                {notification}
+              </Text>
+            </Text>
+            <View
               style={{
-                fontSize: scale(12),
-                //fontWeight: 'bold',
-                paddingRight: 10,
+                //backgroundColor: 'red',
+                flexDirection: 'row',
+                //alignItems: 'flex-end',
               }}>
-              {notification}
-            </Text>
-          </Text>
-          <View
-            style={{
-              //backgroundColor: 'red',
-              flexDirection: 'row',
-              //alignItems: 'flex-end',
-            }}>
-            <Text style={{fontSize: scale(12), fontWeight: '500'}}>
-              {date} | {time}
-            </Text>
-            <Text style={{textAlign: 'right', flex: 1, fontSize: scale(12)}}>
-              {getTimeGap(date)}
-            </Text>
+              <Text style={{fontSize: scale(12), fontWeight: '500'}}>
+                {date} | {time}
+              </Text>
+              <Text style={{textAlign: 'right', flex: 1, fontSize: scale(12)}}>
+                {getTimeGap(date)}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
       {type === 1 ? (
         <View style={styles.button}>
           <Button
@@ -83,6 +113,11 @@ const ActivityCard = ({
             color={color.Accent}
             style={styles.btn}
             contentStyle={{padding: 0}}
+            onPress={() => {
+              navigation.navigate('EventDescriptionScreen', {
+                data: data,
+              });
+            }}
             labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}>
             View event
           </Button>

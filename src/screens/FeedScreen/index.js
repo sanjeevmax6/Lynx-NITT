@@ -6,6 +6,7 @@ import {
   FlatList,
   Animated,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -190,6 +191,7 @@ const FeedScreen = ({navigation}) => {
   });
   return (
     <View style={{flex: 1}}>
+    <SafeAreaView>
       <Animated.View
         style={{
           elevation: 1,
@@ -264,6 +266,7 @@ const FeedScreen = ({navigation}) => {
         numColumns={1}
         keyExtractor={(item, index) => index}
       />
+    </SafeAreaView>
     </View>
   );
 };

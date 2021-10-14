@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView, SafeAreaView} from 'react-native';
 import {Divider} from 'react-native-paper';
 import {ScaledSheet} from 'react-native-size-matters';
 import Images from './Images';
@@ -13,6 +13,7 @@ const EventDescriptionScreen = ({route, navigation}) => {
   const {data} = route.params;
   return (
     <View>
+    <SafeAreaView>
       <ScrollView>
         <Images images={data.images} navigation={navigation} />
         <Divider style={styles.divider} />
@@ -34,6 +35,7 @@ const EventDescriptionScreen = ({route, navigation}) => {
         <Divider style={styles.divider} />
         <Tags tags={data.tags} navigation={navigation} />
       </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

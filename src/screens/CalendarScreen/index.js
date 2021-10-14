@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity,View, SafeAreaView} from 'react-native';
 import {FAB} from 'react-native-paper';
 import {ScaledSheet} from 'react-native-size-matters';
 import EventCard from './EventCard';
@@ -203,6 +203,7 @@ const CalendarScreen = ({navigation}) => {
 
   return (
     <View style={styles.calContainer}>
+    <SafeAreaView>
       <FlatList
         renderItem={Item}
         ref={agendaList}
@@ -213,6 +214,7 @@ const CalendarScreen = ({navigation}) => {
       />
       {/* <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} /> */}
       <FabGroup navigation={navigation} />
+    </SafeAreaView>
     </View>
   );
 };
