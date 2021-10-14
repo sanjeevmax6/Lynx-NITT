@@ -19,14 +19,14 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
 
   const onChangeTime = newTime => {
     const currentTime = newTime || timeStates.time;
-    timeStates.setTime(currentTime);
     timeStates.setTimePicker(false);
+    timeStates.setTime(currentTime);
   };
 
   const onChangeDate = newDate => {
     const currentDate = newDate || dateStates.date;
-    dateStates.setDate(currentDate);
     dateStates.setDatePicker(false);
+    dateStates.setDate(currentDate);
   };
 
   return (

@@ -91,7 +91,7 @@ const EditProfileInputs = ({inputStates}) => {
           placeholder="Aadhar Number"
           value={inputStates.aadharNumber}
           onChangeText={nAadharNumber => {
-            onChangeAadhar(nAadharNumber);
+            inputStates.setAadharNumber(nAadharNumber);
           }}
           keyboardType="number-pad"
           maxLength={12}
