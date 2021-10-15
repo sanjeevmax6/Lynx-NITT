@@ -34,8 +34,7 @@ const LoginScreen = ({navigation}) => {
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
   const imageHeight = useRef(new Animated.Value(verticalScale(150))).current;
-  const [headerHt, setheaderHt] = useState(0);
-  const marginHt = useRef(new Animated.Value(verticalScale(0))).current;
+  const marginHt = useRef(new Animated.Value(verticalScale(27))).current;
   const [temp, setTemp] = useState();
 
   useEffect(() => {
@@ -55,19 +54,24 @@ const LoginScreen = ({navigation}) => {
   }, []);
 
   const keyboardWillShow = event => {
-    marginHt.setValue(headerHt / 8);
     Animated.timing(imageHeight, {
-      duration: 10,
       useNativeDriver: false,
       toValue: verticalScale(100),
+    }).start();
+    Animated.timing(marginHt, {
+      toValue: verticalScale(7),
+      useNativeDriver: false,
     }).start();
   };
 
   const keyboardWillHide = event => {
-    marginHt.setValue(headerHt / 2);
     Animated.timing(imageHeight, {
-      duration: 10,
       toValue: verticalScale(150),
+      useNativeDriver: false,
+    }).start();
+
+    Animated.timing(marginHt, {
+      toValue: verticalScale(27),
       useNativeDriver: false,
     }).start();
   };
@@ -84,22 +88,21 @@ const LoginScreen = ({navigation}) => {
     // console.log(temp);
   };
 
+  const signup = () => {
+    navigation.push('SignUp');
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <View
-          style={styles.headertextcontainer}
-          onLayout={event => {
-            var ht = event.nativeEvent.layout.height;
-            setheaderHt(ht);
-            marginHt.setValue(ht / 2);
-          }}>
+        <View style={styles.headertextcontainer}>
           <Text style={styles.logintext}>Login</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={signup}>
             <Text style={styles.signuptext}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-        <Animated.View style={[styles.inputLayout, {marginBottom: headerHt}]}>
+        <Animated.View
+          style={[styles.inputLayout, {marginBottom: verticalScale(55)}]}>
           <Animated.View
             style={[styles.profileImgView, {marginBottom: marginHt}]}>
             <Animated.Image
@@ -116,6 +119,11 @@ const LoginScreen = ({navigation}) => {
               placeholder="Enter your username"
               mode="outlined"
               value={user}
+              theme={{
+                colors: {
+                  primary: 'black',
+                },
+              }}
               onChangeText={user => {
                 setUser(user);
               }}
@@ -127,6 +135,11 @@ const LoginScreen = ({navigation}) => {
               placeholder="Enter your password"
               mode="outlined"
               secureTextEntry={passwordToggle}
+              theme={{
+                colors: {
+                  primary: 'black',
+                },
+              }}
               right={
                 <TextInput.Icon
                   name={eyeIcon}
@@ -145,6 +158,7 @@ const LoginScreen = ({navigation}) => {
               style={styles.loginButton}
               mode="outlined"
               loading={false}
+              color="#3e863e"
               onPress={() => {
                 onLogin(user);
               }}>

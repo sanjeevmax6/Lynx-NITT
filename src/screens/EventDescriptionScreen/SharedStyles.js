@@ -8,7 +8,7 @@ const sharedStyles = ScaledSheet.create({
     paddingBottom: '10@vs',
   },
   title: {
-    paddingVertical: '10@vs',
+    paddingVertical: '6@vs',
     fontSize: '18@s',
     fontWeight: 'bold',
     // backgroundColor: 'red',

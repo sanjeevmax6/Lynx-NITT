@@ -16,7 +16,7 @@ const NoEventCard = props => {
       <View
         style={{
           width: scale(5),
-          backgroundColor: color.cardstrip,
+          backgroundColor: '#444444',
           borderRadius: scale(5),
         }}
       />

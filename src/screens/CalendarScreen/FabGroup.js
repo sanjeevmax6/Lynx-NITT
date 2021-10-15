@@ -12,10 +12,10 @@ const FabGroup = ({navigation}) => {
       open={open}
       theme={{
         colors: {
-          text: colors.Primary,
+          text: colors.FontColor,
         },
       }}
-      icon={open ? 'calendar-today' : 'plus'}
+      icon={open ? 'window-close' : 'plus'}
       actions={[
         {
           icon: 'bullhorn',

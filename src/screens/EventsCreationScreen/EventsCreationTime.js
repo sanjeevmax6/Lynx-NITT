@@ -51,8 +51,13 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
             backgroundColor: color.GRAY_LIGHT,
             borderTopLeftRadius: moderateScale(6),
           }}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           left={
-            <TextInput.Icon name="calendar" size={25} color={color.Tertiary} />
+            <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
           }>
           Event on: {moment(dateStates.date).format(DATE_FORMAT)}
         </TextInput>
@@ -69,8 +74,13 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
             style={{
               backgroundColor: color.GRAY_LIGHT,
             }}
+            theme={{
+              colors: {
+                primary: 'black',
+              },
+            }}
             left={
-              <TextInput.Icon name="clock" size={25} color={color.Tertiary} />
+              <TextInput.Icon name="clock" size={25} color={color.BLACK} />
             }>
             Time: {moment(timeStates.time).format(TIME_FORMAT)}
           </TextInput>

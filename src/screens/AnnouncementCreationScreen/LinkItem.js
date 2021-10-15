@@ -15,7 +15,7 @@ const LinkItem = ({item, deleteItem}) => {
         onPress={() => deleteItem(item)}>
         <MaterialCommunityIcons
           name="trash-can"
-          color={colors.Accent}
+          color={colors.Tertiary}
           size={20}
         />
       </TouchableOpacity>

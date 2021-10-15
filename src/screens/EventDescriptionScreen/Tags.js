@@ -19,12 +19,12 @@ const Tags = ({tags, navigation}) => {
                 //backgroundColor: 'red',
                 marginBottom: scale(HorizontalPadding),
                 marginRight: scale(HorizontalPadding),
-
                 marginLeft: 0,
               }}>
               <Chip
                 style={{
                   backgroundColor: colors.EventDescriptionScreen_TagBackGround,
+                  marginTop: verticalScale(3),
                 }}
                 onPress={() => {
                   navigation.navigate('Search', {
@@ -34,8 +34,6 @@ const Tags = ({tags, navigation}) => {
                 }}
                 textStyle={{
                   fontSize: scale(12),
-                  fontWeight: 'bold',
-
                   color: colors.EventDescriptionScreen_TagText,
                 }}
                 ellipsizeMode="tail"

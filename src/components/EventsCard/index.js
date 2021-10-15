@@ -56,17 +56,16 @@ export default EventsCard;
 
 const styles = ScaledSheet.create({
   card: {
-    marginTop: '5@vs',
-    marginBottom: '5@vs',
+    marginHorizontal: '5@s',
+    marginVertical: '3@vs',
     display: 'flex',
     flexDirection: 'row',
-    paddingHorizontal: scale(HorizontalPadding),
-    //backgroundColor: 'red',
+    padding: scale(HorizontalPadding),
+    backgroundColor: colors.EventCard_Back,
+    borderRadius: '8@s',
   },
   image: {
-    marginTop: '5@s',
     width: '100@s',
-    marginBottom: '5@s',
     marginRight: '5@s',
     height: '100@s',
     borderRadius: '8@s',
@@ -74,9 +73,8 @@ const styles = ScaledSheet.create({
   cardDetails: {
     flexGrow: 1,
     width: 0,
-    margin: '5@s',
-    marginRight: 0,
     justifyContent: 'space-evenly',
+    marginHorizontal: scale(5),
     //backgroundColor: 'red',
   },
 

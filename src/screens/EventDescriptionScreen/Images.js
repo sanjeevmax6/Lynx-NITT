@@ -87,9 +87,11 @@ const styles = ScaledSheet.create({
   dotActive: {
     margin: '3@msr',
     color: colors.EventDescriptionScreen_DotActive,
+    fontSize: '15@s',
   },
   dot: {
     margin: '3@msr',
     color: colors.EventDescriptionScreen_DotInactive,
+    fontSize: '15@s',
   },
 });

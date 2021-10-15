@@ -13,35 +13,32 @@ const ClubCard = ({
   navigation,
 }) => {
   return (
-    <Card>
-      <View
-        style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
+    <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ClubDescription');
+        }}>
+        <Card.Cover source={{uri: imgURL}} style={styles.image} />
+      </TouchableOpacity>
+      <View style={styles.cardDetails}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ClubDescription');
           }}>
-          <Card.Cover source={{uri: imgURL}} style={styles.image} />
+          <Text numberOfLines={2} style={styles.title}>
+            {name}
+          </Text>
         </TouchableOpacity>
-        <View style={styles.cardDetails}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ClubDescription');
-            }}>
-            <Text numberOfLines={2} style={styles.title}>
-              {name}
-            </Text>
-          </TouchableOpacity>
-          <Text style={styles.followers}>{followers} FOLLOWERS</Text>
-          <Button
-            mode="outlined"
-            color={colors.EventDescriptionScreen_Follow}
-            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-            style={{alignSelf: 'baseline'}}>
-            {isFollowing ? 'Following' : 'Follow'}
-          </Button>
-        </View>
+        <Text style={styles.followers}>{followers} FOLLOWERS</Text>
+        <Button
+          mode="outlined"
+          color={colors.EventDescriptionScreen_Follow}
+          labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+          style={{alignSelf: 'baseline'}}>
+          {isFollowing ? 'Following' : 'Follow'}
+        </Button>
       </View>
-    </Card>
+    </View>
   );
 };
 

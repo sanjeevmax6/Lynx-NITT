@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
-import {FlatList, TouchableOpacity,View, SafeAreaView} from 'react-native';
+import {FlatList, TouchableOpacity, View, SafeAreaView} from 'react-native';
 import {FAB} from 'react-native-paper';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventCard from './EventCard';
 import NoEventCard from './NoEventCard';
 import TopLayout from './TopLayout';
@@ -57,8 +57,7 @@ const CalendarScreen = ({navigation}) => {
       tags: ['Computer Science', 'Machine Learning', 'Neural Network'],
       organizer: {
         name: 'Spider R&D',
-        imgURL:
-          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+        imgURL: 'https://delta.nitt.edu/images/deltaLogoGreen.png',
         isFollowing: true,
       },
       links: [
@@ -79,8 +78,7 @@ const CalendarScreen = ({navigation}) => {
       tags: ['Computer Science', 'Machine Learning', 'Neural Network'],
       organizer: {
         name: 'Spider R&D',
-        imgURL:
-          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+        imgURL: 'https://nitt.wiki/images/4/45/Tc_logo.png',
         isFollowing: true,
       },
       links: [
@@ -102,8 +100,7 @@ const CalendarScreen = ({navigation}) => {
       tags: ['Crypto', 'Future', 'Innovation'],
       organizer: {
         name: 'Spider R&D',
-        imgURL:
-          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+        imgURL: 'https://delta.nitt.edu/images/deltaLogoGreen.png',
         isFollowing: true,
       },
       links: [
@@ -127,7 +124,7 @@ const CalendarScreen = ({navigation}) => {
       organizer: {
         name: 'Spider R&D',
         imgURL:
-          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+          'https://scontent-maa2-1.xx.fbcdn.net/v/t31.18172-8/886853_949188685116554_2235082819868938369_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=yWojUORoCY0AX9aFPyp&_nc_ht=scontent-maa2-1.xx&oh=4716630c2f3c70678d31f28bd913790c&oe=618B81E5',
         isFollowing: true,
       },
     },
@@ -161,13 +158,13 @@ const CalendarScreen = ({navigation}) => {
       description:
         'The Internet is a worldwide collection of networks that links millions of businesses, government agencies, educational institutions',
       images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjyudszQUse-zKQfNaYxP26URn91W6gOQDhg&usqp=CAU',
+        'https://scontent-maa2-1.xx.fbcdn.net/v/t1.6435-9/40172254_429381174256506_219664165323669504_n.png?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=FYfQfI1oP10AX_qQd20&_nc_ht=scontent-maa2-1.xx&oh=17690135b8c8cb8fa92639ad0ab9e4a3&oe=618BE5B7',
       ],
       tags: ['Computer Science', 'Internet'],
       organizer: {
         name: 'Spider R&D',
         imgURL:
-          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+          'https://scontent-maa2-1.xx.fbcdn.net/v/t31.18172-8/1669754_596379967119456_676780727_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=CHx_mVPWDdMAX_xaupR&_nc_ht=scontent-maa2-1.xx&oh=146853d9d1cbc4920284aa598bda7326&oe=618B616B',
         isFollowing: true,
       },
       links: [
@@ -178,16 +175,12 @@ const CalendarScreen = ({navigation}) => {
     },
   ];
 
-  const createEvent = item => {
-    navigation.push('CreateEventScreen');
-  };
-
   const Item = ({item}) => (
     <TouchableOpacity
       onPress={() => {
         navigation.push('EventDescriptionScreen', {data: item});
       }}>
-      <EventCard />
+      <EventCard data={item} />
     </TouchableOpacity>
   );
 
@@ -202,28 +195,24 @@ const CalendarScreen = ({navigation}) => {
   );
 
   return (
-    <View style={styles.calContainer}>
-    <SafeAreaView>
-      <FlatList
-        renderItem={Item}
-        ref={agendaList}
-        data={DATA}
-        style={styles.flatlist}
-        ListHeaderComponent={renderTopLayout}
-        ListEmptyComponent={renderEmptyItem}
-      />
-      {/* <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} /> */}
-      <FabGroup navigation={navigation} />
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.calContainer}>
+        <FlatList
+          renderItem={Item}
+          ref={agendaList}
+          data={DATA}
+          ListHeaderComponent={renderTopLayout}
+          ListEmptyComponent={renderEmptyItem}
+        />
+        {/* <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} /> */}
+        <FabGroup navigation={navigation} />
+      </View>
     </SafeAreaView>
-    </View>
   );
 };
 
 const styles = ScaledSheet.create({
   calContainer: {flex: 1, backgroundColor: colors.CalBack},
-  flatlist: {
-    marginBottom: '10@vs',
-  },
   fab: {
     position: 'absolute',
     marginVertical: '16@vs',

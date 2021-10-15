@@ -11,24 +11,27 @@ import {
 import * as color from '../../utils/colors';
 
 const EventCard = props => {
+  const data = props.data;
   return (
     <View style={styles.cardcontainer}>
       <View
         style={{
           width: scale(6),
-          backgroundColor: color.cardstrip,
+          backgroundColor: '#444444',
           borderRadius: scale(5),
         }}
       />
       <View style={styles.eventinfo}>
-        <Text style={styles.eventName}>Spider Week</Text>
-        <Text style={styles.time}>Time: 12:30:00</Text>
+        <Text style={styles.eventName} numberOfLines={1}>
+          {data.title}
+        </Text>
+        <Text style={styles.time}>Time: {data.time}:00</Text>
       </View>
       <Avatar.Image
         size={moderateScale(50)}
         style={styles.profImg}
         source={{
-          uri: 'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+          uri: data.organizer.imgURL,
         }}
       />
     </View>
@@ -44,6 +47,7 @@ const styles = ScaledSheet.create({
     marginTop: '5@vs',
     padding: '5@s',
     marginHorizontal: '10@s',
+    backgroundColor: color.EventCard_Back,
   },
   eventinfo: {
     flexDirection: 'column',
@@ -53,7 +57,7 @@ const styles = ScaledSheet.create({
   },
   profImg: {
     alignSelf: 'center',
-    backgroundColor: color.imgbck,
+    backgroundColor: color.EventCard_imgbck,
     marginRight: '5@s',
   },
   eventName: {

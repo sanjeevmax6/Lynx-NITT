@@ -6,7 +6,7 @@ import {
   FlatList,
   Animated,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -191,82 +191,81 @@ const FeedScreen = ({navigation}) => {
   });
   return (
     <View style={{flex: 1}}>
-    <SafeAreaView>
-      <Animated.View
-        style={{
-          elevation: 1,
-          zIndex: 1,
-          transform: [
-            {
-              translateY: interpolateY,
-            },
-          ],
-        }}>
-        <View
+      <SafeAreaView>
+        <Animated.View
           style={{
-            left: 0,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            right: 0,
-            height: verticalScale(HeaderHeight),
-            backgroundColor: colors.EventScreen_headerBackground,
-            // borderBottomLeftRadius: scale(10),
-            // borderBottomRightRadius: scale(10),
-            elevation: 5,
-            zIndex: 100, //for IOS
-            alignContent: 'center',
-            justifyContent: 'center',
-            shadowColor: colors.GRAY_DARK,
+            elevation: 1,
+            zIndex: 1,
+            transform: [
+              {
+                translateY: interpolateY,
+              },
+            ],
           }}>
-          <Text
+          <View
             style={{
-              fontSize: verticalScale(18),
-              paddingLeft: scale(HorizontalPadding),
-              color: 'white',
-              //fontWeight: 'bold',
-              color: colors.EventScreen_headerText,
+              left: 0,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              right: 0,
+              height: verticalScale(HeaderHeight),
+              backgroundColor: colors.EventScreen_headerBackground,
+              // borderBottomLeftRadius: scale(10),
+              // borderBottomRightRadius: scale(10),
+              elevation: 5,
+              zIndex: 100, //for IOS
+              alignContent: 'center',
+              justifyContent: 'center',
+              shadowColor: colors.GRAY_DARK,
             }}>
-            EVENTS
-          </Text>
-        </View>
-      </Animated.View>
-
-      <FlatList
-        data={DATA}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        ListHeaderComponent={
-          <View style={{height: verticalScale(HeaderHeight)}}></View>
-        }
-        onScroll={e => {
-          scrollY.setValue(e.nativeEvent.contentOffset.y);
-        }}
-        bounces={false}
-        bouncesZoom={false}
-        renderItem={({item}) => (
-          <View>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.push('EventDescriptionScreen', {data: item})
-              }>
-              <EventsCard
-                date={item.dates}
-                time={item.time}
-                name={item.title}
-                desc={item.description}
-                eventImage={item.images[0]}
-                organizer={item.organizer.name}
-              />
-            </TouchableOpacity>
-            <Divider style={{height: verticalScale(2)}} />
+            <Text
+              style={{
+                fontSize: verticalScale(18),
+                paddingLeft: scale(HorizontalPadding),
+                color: 'white',
+                //fontWeight: 'bold',
+                color: colors.EventScreen_headerText,
+              }}>
+              EVENTS
+            </Text>
           </View>
-        )}
-        numColumns={1}
-        keyExtractor={(item, index) => index}
-      />
-    </SafeAreaView>
+        </Animated.View>
+
+        <FlatList
+          data={DATA}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ListHeaderComponent={
+            <View style={{height: verticalScale(HeaderHeight)}}></View>
+          }
+          onScroll={e => {
+            scrollY.setValue(e.nativeEvent.contentOffset.y);
+          }}
+          bounces={false}
+          bouncesZoom={false}
+          renderItem={({item}) => (
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.push('EventDescriptionScreen', {data: item})
+                }>
+                <EventsCard
+                  date={item.dates}
+                  time={item.time}
+                  name={item.title}
+                  desc={item.description}
+                  eventImage={item.images[0]}
+                  organizer={item.organizer.name}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+          numColumns={1}
+          keyExtractor={(item, index) => index}
+        />
+      </SafeAreaView>
     </View>
   );
 };

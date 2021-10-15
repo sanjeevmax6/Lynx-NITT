@@ -15,7 +15,7 @@ const FileItem = ({item, deleteItem}) => {
         onPress={() => deleteItem(item.uri)}>
         <MaterialCommunityIcons
           name="trash-can"
-          color={color.Accent}
+          color={color.Tertiary}
           size={23}
         />
       </TouchableOpacity>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   fileItemText: {
     padding: moderateScale(10),
     fontSize: scale(12),
-    color: color.WHITE,
+    color: color.FontColor,
   },
   deleteItem: {
     padding: moderateScale(5),

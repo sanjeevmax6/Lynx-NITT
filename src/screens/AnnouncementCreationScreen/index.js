@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.Secondary,
   },
   viewScale: {
     paddingHorizontal: scale(20),

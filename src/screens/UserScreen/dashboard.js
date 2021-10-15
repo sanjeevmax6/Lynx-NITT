@@ -30,7 +30,7 @@ const Dashboard = ({profileView, eventView}) => {
         <Text
           style={{
             alignSelf: 'flex-end',
-            color: colors.Accent,
+            color: colors.FontColor,
             fontSize: scale(10),
           }}>
           *Past 90 Days
@@ -44,7 +44,7 @@ export default Dashboard;
 
 const styles = ScaledSheet.create({
   dashboard: {
-    backgroundColor: colors.Tertiary,
+    backgroundColor: '#e82007',
     paddingBottom: '6@vs',
     borderRadius: '5@ms',
   },

@@ -22,6 +22,7 @@ import FontAwesome, {
   parseIconFromClassName,
   MaterialCommunityIcons,
 } from 'react-native-fontawesome';
+import * as colors from '../../utils/colors';
 
 import {updateToken} from '../../redux/reducers/loginScreen';
 import {useDispatch, useSelector} from 'react-redux';
@@ -29,13 +30,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import store from '../../redux/store';
 
 const LoginScreen = ({navigation}) => {
-  const [user, setUser] = useState();
+  const [rollno, setRollNo] = useState();
   const [password, setPassword] = useState();
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
   const imageHeight = useRef(new Animated.Value(verticalScale(150))).current;
   const [headerHt, setheaderHt] = useState(0);
-  const marginHt = useRef(new Animated.Value(verticalScale(0))).current;
+  const marginHt = useRef(new Animated.Value(verticalScale(27))).current;
   const [temp, setTemp] = useState();
 
   useEffect(() => {
@@ -55,34 +56,33 @@ const LoginScreen = ({navigation}) => {
   }, []);
 
   const keyboardWillShow = event => {
-    marginHt.setValue(headerHt / 4);
     Animated.timing(imageHeight, {
-      duration: 10,
       useNativeDriver: false,
-      toValue: verticalScale(120),
-    }).start(({finished}) => {
-      console.log(headerHt);
-    });
+      toValue: verticalScale(100),
+    }).start();
+    Animated.timing(marginHt, {
+      toValue: verticalScale(7),
+      useNativeDriver: false,
+    }).start();
   };
 
   const keyboardWillHide = event => {
     Animated.timing(imageHeight, {
-      duration: 10,
       toValue: verticalScale(150),
       useNativeDriver: false,
-    }).start(({finished}) => {
-      console.log(headerHt);
-      marginHt.setValue(headerHt / 2);
-    });
+    }).start();
+    Animated.timing(marginHt, {
+      toValue: verticalScale(27),
+      useNativeDriver: false,
+    }).start();
   };
 
   const dispatch = useDispatch();
 
-  const onLogin = token => {
-    // console.log(token);
-    dispatch(updateToken(token));
-    setTemp(store.getState().logScreen.login.userToken);
-    // console.log(temp);
+  const verifyCred = () => {};
+
+  const login = () => {
+    navigation.pop();
   };
 
   return (
@@ -94,10 +94,10 @@ const LoginScreen = ({navigation}) => {
             setheaderHt(event.nativeEvent.layout.height);
             marginHt.setValue(event.nativeEvent.layout.height / 2);
           }}>
-          <Text style={styles.logintext}>Login</Text>
-          <TouchableOpacity>
-            <Text style={styles.signuptext}>Sign Up</Text>
+          <TouchableOpacity onPress={login}>
+            <Text style={styles.logintext}>Login</Text>
           </TouchableOpacity>
+          <Text style={styles.signuptext}>SignUp</Text>
         </View>
         <Animated.View style={[styles.inputLayout, {marginBottom: headerHt}]}>
           <Animated.View
@@ -112,19 +112,24 @@ const LoginScreen = ({navigation}) => {
           </Animated.View>
           <View style={styles.textInput}>
             <TextInput
-              label="Username"
-              placeholder="Enter your username"
+              label="Roll Number"
+              placeholder="Enter your Roll Number"
               mode="outlined"
-              value={user}
-              onChangeText={user => {
-                setUser(user);
+              value={rollno}
+              theme={{
+                colors: {
+                  primary: 'black',
+                },
+              }}
+              onChangeText={rollno => {
+                setRollNo(rollno);
               }}
             />
           </View>
           <View style={styles.textInput}>
             <TextInput
-              label="Password"
-              placeholder="Enter your password"
+              label=" Webmail Password"
+              placeholder="Enter your Webmail Password"
               mode="outlined"
               secureTextEntry={passwordToggle}
               right={
@@ -137,6 +142,11 @@ const LoginScreen = ({navigation}) => {
                 />
               }
               value={password}
+              theme={{
+                colors: {
+                  primary: 'black',
+                },
+              }}
               onChangeText={password => setPassword(password)}
             />
           </View>
@@ -145,10 +155,9 @@ const LoginScreen = ({navigation}) => {
               style={styles.loginButton}
               mode="outlined"
               loading={false}
-              onPress={() => {
-                onLogin(user);
-              }}>
-              Login
+              color={colors.Accent}
+              onPress={verifyCred}>
+              Verify Credentials
             </Button>
           </Animated.View>
         </Animated.View>
@@ -174,18 +183,18 @@ const styles = ScaledSheet.create({
     marginTop: '20@vs',
     justifyContent: 'space-between',
   },
-  logintext: {
+  signuptext: {
     padding: '10@msr',
     fontSize: '25@s',
     fontWeight: 'bold',
     color: 'black',
-    marginLeft: '15@s',
+    marginRight: '15@s',
     alignContent: 'flex-start',
   },
-  signuptext: {
+  logintext: {
     padding: '10@msr',
     fontSize: '18@s',
-    marginRight: '15@s',
+    marginLeft: '15@s',
     fontWeight: 'bold',
     color: '#ddd',
   },

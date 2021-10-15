@@ -36,6 +36,7 @@ const About = ({about, date, time}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>About</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Text style={styles.modalText}>{about}</Text>
             </ScrollView>
@@ -56,6 +57,7 @@ const About = ({about, date, time}) => {
           style={{
             fontSize: scale(12),
             textAlign: 'justify',
+            lineHeight: 20,
           }}
           onTextLayout={onTextLayout}
           numberOfLines={
@@ -74,7 +76,8 @@ const About = ({about, date, time}) => {
                 style={{
                   paddingVertical: verticalScale(4),
                   fontWeight: 'bold',
-                  color: colors.Accent,
+                  color: colors.Tertiary,
+                  fontSize: scale(12),
                 }}>
                 See More
               </Text>
@@ -134,11 +137,16 @@ const styles = ScaledSheet.create({
   modalText: {
     marginBottom: scale(15),
     letterSpacing: 0.7,
-    color: 'white',
+    color: colors.FontColor,
     fontSize: scale(16),
   },
+  modalTitle: {
+    fontSize: scale(18),
+    color: colors.FontColor,
+    fontWeight: 'bold',
+  },
   closeButton: {
-    borderRadius: scale(20),
+    borderRadius: scale(10),
     padding: scale(10),
     elevation: 2,
     backgroundColor: colors.EventDescriptionScreen_Button,

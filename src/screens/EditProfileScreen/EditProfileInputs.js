@@ -36,6 +36,11 @@ const EditProfileInputs = ({inputStates}) => {
           placeholder="Name"
           value={inputStates.name}
           multiline={true}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           onChangeText={nName => {
             inputStates.setName(nName);
             onChangeNameLength(nName);
@@ -58,6 +63,11 @@ const EditProfileInputs = ({inputStates}) => {
               backgroundColor: color.GRAY_LIGHT,
               borderTopLeftRadius: moderateScale(6),
               marginHorizontal: HorizontalPadding,
+            }}
+            theme={{
+              colors: {
+                primary: 'black',
+              },
             }}
             left={
               <TextInput.Icon
@@ -89,6 +99,11 @@ const EditProfileInputs = ({inputStates}) => {
           }}
           label="Aadhar Number"
           placeholder="Aadhar Number"
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           value={inputStates.aadharNumber}
           onChangeText={nAadharNumber => {
             inputStates.setAadharNumber(nAadharNumber);
@@ -110,6 +125,11 @@ const EditProfileInputs = ({inputStates}) => {
             backgroundColor: color.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             // borderTopLeftRadius: moderateScale(9),
+          }}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
           }}
           label="Address"
           placeholder="Address (max 300)"

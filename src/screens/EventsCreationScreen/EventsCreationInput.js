@@ -41,11 +41,16 @@ const EventCreationInputs = ({inputStates}) => {
           placeholder="Event Title (max 150)"
           multiline={true}
           value={inputStates.title}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
             onChangeTitleLength(nTitle);
           }}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
         />
         <Text
           style={[
@@ -65,6 +70,11 @@ const EventCreationInputs = ({inputStates}) => {
           }}
           label="Event Description"
           multiline={true}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           placeholder="Event Description (max 300)"
           value={inputStates.desc}
           onChangeText={nDesc => {
@@ -72,7 +82,7 @@ const EventCreationInputs = ({inputStates}) => {
             onChangeDescLength(nDesc);
           }}
           multiline={true}
-          left={<TextInput.Icon name={'text-subject'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
         />
         <Text
           style={[
@@ -93,12 +103,17 @@ const EventCreationInputs = ({inputStates}) => {
           label="Event Links"
           placeholder="Event Links"
           value={inputStates.link}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           onChangeText={nLinks => inputStates.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.Tertiary}
+              color={color.BLACK}
               onPress={() => addLink()}
             />
           }

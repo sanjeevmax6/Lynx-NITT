@@ -44,18 +44,23 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           placeholder="Announcement Subject (max 150)"
           value={inputStates.title}
           multiline={true}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
             onChangeSubjectLength(nTitle);
           }}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
         />
         <Text
           style={[
             styles.wordCount,
             {color: inputStates.subjectLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.subjectLength}
+          {inputStates.subjectLength} characters
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -69,20 +74,25 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           label="Announcement"
           placeholder="Announcement (max 300)"
           multiline={true}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
           value={inputStates.desc}
           onChangeText={nDesc => {
             inputStates.setDesc(nDesc);
             onChangeAnnouncementLength(nDesc);
           }}
           multiline={true}
-          left={<TextInput.Icon name={'text-subject'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
         />
         <Text
           style={[
             styles.wordCount,
             {color: inputStates.announcementLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.announcementLength}
+          {inputStates.announcementLength} characters
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -96,8 +106,14 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           label="Links"
           placeholder="Links"
           value={inputStates.link}
+          theme={{
+            colors: {
+              primary: 'black',
+              underlineColor: 'white',
+            },
+          }}
           onChangeText={nLinks => inputStates.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.Tertiary} />}
+          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}

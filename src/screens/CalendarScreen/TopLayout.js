@@ -77,7 +77,6 @@ const TopLayout = props => {
             options={{
               textHeaderColor: colors.CalenderScreen_textHeaderColor,
               textDefaultColor: colors.CalenderScreen_textDefaultColor,
-              selectedTextColor: colors.CalenderScreen_selectedTextColor,
               mainColor: colors.CalenderScreen_mainColor,
               textSecondaryColor: colors.CalenderScreen_textSecondaryColor,
               textHeaderFontSize: scale(16),

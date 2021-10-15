@@ -161,6 +161,7 @@ const styles = ScaledSheet.create({
     color: color.Tertiary,
     fontSize: scale(14),
     fontWeight: 'bold',
+    lineHeight: 20,
   },
 });
 export default ActivityCard;

@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: scale(20),
     margin: moderateScale(15),
     lineHeight: verticalScale(30),
-    color: color.WHITE,
+    color: color.FontColor,
     textAlign: 'center',
   },
   image: {

@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar backgroundColor={color.StatusBar} barStyle="light-content" />
+        <StatusBar backgroundColor={color.StatusBar} barStyle="dark-content" />
         <Navigator />
       </Provider>
     );

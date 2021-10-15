@@ -22,7 +22,12 @@ const EventsCreationScreenHeader = ({navigation, isValid}) => {
             ]);
           }}
           style={styles.button}>
-          <Icon name="close" size={HeaderHeight - 9} color={color.Tertiary} />
+          <Icon
+            name="close"
+            size={HeaderHeight / 1.6}
+            color={color.Tertiary}
+            style={{marginLeft: scale(5)}}
+          />
         </TouchableOpacity>
       </View>
       <Text style={styles.headerText}>Create Event</Text>
@@ -41,9 +46,9 @@ const EventsCreationScreenHeader = ({navigation, isValid}) => {
           style={styles.button}>
           <Icon
             name="check"
-            size={HeaderHeight - 9}
-            color={color.Tertiary}
-            style={{}}
+            size={HeaderHeight / 1.6}
+            color="#3e863e"
+            style={{marginRight: scale(5)}}
           />
         </TouchableOpacity>
       </View>
