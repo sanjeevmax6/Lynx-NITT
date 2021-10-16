@@ -252,10 +252,11 @@ const ActivityScreen = ({navigation}) => {
       key: '62',
       date: '10/1/2020',
       time: '12:00',
+      url: 'https://media-exp1.licdn.com/dms/image/C4D22AQH8LrB1EJoKvw/feedshare-shrink_800/0/1599841013385?e=1637193600&v=beta&t=muw3T96Pt2-97-vht2HAy6B9mrmOv3802poeKBaFhP8',
 
       description:
-        'Ever struggled with managing dependencies in your complex web application? Spent countless hours to solve dependency related issues only to end up with large files that take years to load? We have something called Module bundler which does all these and much more for you!',
-      url: 'https://media-exp1.licdn.com/dms/image/sync/C4E27AQGxEvuJygUVGQ/articleshare-shrink_800/0/1632108431702?e=1633197600&v=beta&t=gqA1LAQ2P9-m6vonsm5KCN00sDSAZ1QPhYkw7gZKQVc',
+        'La Casa de la Tecnología, an initiative of the Technical Council, is a series of talks with the Tech Clubs of NITT to understand them better in terms of their projects, vision, and the future ahead. The eighth episode of this series is with Spider, the R&D Club of NITT. They focus on projects related to Artificial Intelligence, Electronics, and Computer Technology featuring WebDev, AppDev, Algos, and Tronix.',
+      //x url: 'https://media-exp1.licdn.com/dms/image/sync/C4E27AQGxEvuJygUVGQ/articleshare-shrink_800/0/1632108431702?e=1633197600&v=beta&t=gqA1LAQ2P9-m6vonsm5KCN00sDSAZ1QPhYkw7gZKQVc',
       organizer: 'SPIDER',
       organizerUrl:
         'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',

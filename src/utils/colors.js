@@ -1,7 +1,7 @@
 export const Primary = '#FFFFFF';
 export const Secondary = '#f8faf9';
 export const Accent = '#1e63b9';
-export const Tertiary = '#D00000';
+export const Tertiary = '#D62020';
 export const Contrast = '#000000';
 
 export const WHITE = '#FFFFFF';

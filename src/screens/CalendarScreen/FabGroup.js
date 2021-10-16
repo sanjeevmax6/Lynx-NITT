@@ -16,6 +16,7 @@ const FabGroup = ({navigation}) => {
         },
       }}
       icon={open ? 'window-close' : 'plus'}
+      color={open ? colors.Tertiary : colors.Accent}
       actions={[
         {
           icon: 'bullhorn',

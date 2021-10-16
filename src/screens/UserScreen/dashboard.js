@@ -9,7 +9,7 @@ const Dashboard = ({profileView, eventView}) => {
       <View
         style={{
           marginHorizontal: scale(HorizontalPadding),
-          paddingTop: verticalScale(6),
+          paddingTop: verticalScale(3),
         }}>
         <Text style={styles.head}>DASHBOARD</Text>
         <View style={styles.card}>
@@ -44,15 +44,15 @@ export default Dashboard;
 
 const styles = ScaledSheet.create({
   dashboard: {
-    backgroundColor: '#e82007',
-    paddingBottom: '6@vs',
+    backgroundColor: colors.Tertiary,
+    paddingBottom: '5@vs',
     borderRadius: '5@ms',
   },
   head: {
     color: colors.WHITE,
     fontWeight: 'bold',
     fontSize: '14@s',
-    paddingBottom: '6@vs',
+    paddingBottom: '3@vs',
   },
   card: {
     backgroundColor: colors.WHITE,

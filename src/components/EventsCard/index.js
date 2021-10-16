@@ -56,7 +56,6 @@ export default EventsCard;
 
 const styles = ScaledSheet.create({
   card: {
-    marginHorizontal: '5@s',
     marginVertical: '3@vs',
     display: 'flex',
     flexDirection: 'row',

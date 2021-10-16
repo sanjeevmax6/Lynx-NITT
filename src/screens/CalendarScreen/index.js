@@ -57,7 +57,9 @@ const CalendarScreen = ({navigation}) => {
       tags: ['Computer Science', 'Machine Learning', 'Neural Network'],
       organizer: {
         name: 'Spider R&D',
-        imgURL: 'https://delta.nitt.edu/images/deltaLogoGreen.png',
+        imgURL:
+          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+
         isFollowing: true,
       },
       links: [
@@ -77,7 +79,7 @@ const CalendarScreen = ({navigation}) => {
       ],
       tags: ['Computer Science', 'Machine Learning', 'Neural Network'],
       organizer: {
-        name: 'Spider R&D',
+        name: 'Technical Council',
         imgURL: 'https://nitt.wiki/images/4/45/Tc_logo.png',
         isFollowing: true,
       },
@@ -100,7 +102,9 @@ const CalendarScreen = ({navigation}) => {
       tags: ['Crypto', 'Future', 'Innovation'],
       organizer: {
         name: 'Spider R&D',
-        imgURL: 'https://delta.nitt.edu/images/deltaLogoGreen.png',
+        imgURL:
+          'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
+
         isFollowing: true,
       },
       links: [
@@ -122,9 +126,9 @@ const CalendarScreen = ({navigation}) => {
         'https://spider.nitt.edu/members/',
       ],
       organizer: {
-        name: 'Spider R&D',
+        name: 'PixelBug',
         imgURL:
-          'https://scontent-maa2-1.xx.fbcdn.net/v/t31.18172-8/886853_949188685116554_2235082819868938369_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=yWojUORoCY0AX9aFPyp&_nc_ht=scontent-maa2-1.xx&oh=4716630c2f3c70678d31f28bd913790c&oe=618B81E5',
+          'https://media-exp1.licdn.com/dms/image/C510BAQFMjJrkqwgCNA/company-logo_200_200/0/1579262953010?e=1642636800&v=beta&t=0cmqXAZf6l_AtgsK2Y5b5lT5kwvupI7pJ21xJi-UpzM',
         isFollowing: true,
       },
     },

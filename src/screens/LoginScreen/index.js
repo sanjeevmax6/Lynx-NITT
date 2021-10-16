@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {
@@ -33,48 +34,48 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState();
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
-  const imageHeight = useRef(new Animated.Value(verticalScale(150))).current;
-  const marginHt = useRef(new Animated.Value(verticalScale(27))).current;
+  // const imageHeight = useRef(new Animated.Value(verticalScale(150))).current;
+  // const marginHt = useRef(new Animated.Value(verticalScale(27))).current;
   const [temp, setTemp] = useState();
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener(
-      'keyboardDidShow',
-      keyboardWillShow,
-    );
-    const hideSubscription = Keyboard.addListener(
-      'keyboardDidHide',
-      keyboardWillHide,
-    );
+  // useEffect(() => {
+  //   const showSubscription = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     keyboardWillShow,
+  //   );
+  //   const hideSubscription = Keyboard.addListener(
+  //     'keyboardDidHide',
+  //     keyboardWillHide,
+  //   );
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+  //   return () => {
+  //     showSubscription.remove();
+  //     hideSubscription.remove();
+  //   };
+  // }, []);
 
-  const keyboardWillShow = event => {
-    Animated.timing(imageHeight, {
-      useNativeDriver: false,
-      toValue: verticalScale(100),
-    }).start();
-    Animated.timing(marginHt, {
-      toValue: verticalScale(7),
-      useNativeDriver: false,
-    }).start();
-  };
+  // const keyboardWillShow = event => {
+  //   Animated.timing(imageHeight, {
+  //     useNativeDriver: false,
+  //     toValue: verticalScale(100),
+  //   }).start();
+  //   Animated.timing(marginHt, {
+  //     toValue: verticalScale(7),
+  //     useNativeDriver: false,
+  //   }).start();
+  // };
 
-  const keyboardWillHide = event => {
-    Animated.timing(imageHeight, {
-      toValue: verticalScale(150),
-      useNativeDriver: false,
-    }).start();
+  // const keyboardWillHide = event => {
+  //   Animated.timing(imageHeight, {
+  //     toValue: verticalScale(150),
+  //     useNativeDriver: false,
+  //   }).start();
 
-    Animated.timing(marginHt, {
-      toValue: verticalScale(27),
-      useNativeDriver: false,
-    }).start();
-  };
+  //   Animated.timing(marginHt, {
+  //     toValue: verticalScale(27),
+  //     useNativeDriver: false,
+  //   }).start();
+  // };
 
   const dispatch = useDispatch();
 
@@ -95,77 +96,80 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.headertextcontainer}>
-          <Text style={styles.logintext}>Login</Text>
-          <TouchableOpacity onPress={signup}>
-            <Text style={styles.signuptext}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-        <Animated.View
-          style={[styles.inputLayout, {marginBottom: verticalScale(55)}]}>
+        <ScrollView>
+          <View style={styles.headertextcontainer}>
+            <Text style={styles.logintext}>Login</Text>
+            <TouchableOpacity onPress={signup}>
+              <Text style={styles.signuptext}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
           <Animated.View
-            style={[styles.profileImgView, {marginBottom: marginHt}]}>
-            <Animated.Image
-              source={require('../../assests/images/nitt_logo.png')}
-              style={{
-                width: imageHeight,
-                height: imageHeight,
-              }}
-            />
+            style={[styles.inputLayout, {marginBottom: verticalScale(55)}]}>
+            <Animated.View style={styles.profileImgView}>
+              <Animated.Image
+                style={{
+                  width: moderateScale(170),
+                  height: moderateScale(170),
+                  marginTop: verticalScale(90),
+                  marginBottom: verticalScale(20),
+                }}
+                source={require('../../assests/images/nitt_logo.png')}
+              />
+            </Animated.View>
+            <View style={styles.textInput}>
+              <TextInput
+                label="Username"
+                placeholder="Enter your username"
+                mode="outlined"
+                value={user}
+                theme={{
+                  colors: {
+                    primary: 'black',
+                  },
+                }}
+                onChangeText={user => {
+                  setUser(user);
+                }}
+              />
+            </View>
+            <View style={styles.textInput}>
+              <TextInput
+                label="Password"
+                placeholder="Enter your password"
+                mode="outlined"
+                secureTextEntry={passwordToggle}
+                theme={{
+                  colors: {
+                    primary: 'black',
+                  },
+                }}
+                right={
+                  <TextInput.Icon
+                    name={eyeIcon}
+                    onPress={() => {
+                      setPasswordToggle(!passwordToggle);
+                      setEyeIcon(eyeIcon === 'eye' ? 'eye-off' : 'eye');
+                    }}
+                  />
+                }
+                value={password}
+                onChangeText={password => setPassword(password)}
+              />
+            </View>
+            <Animated.View style={styles.loginBtnView}>
+              <Button
+                style={styles.loginButton}
+                mode="outlined"
+                loading={false}
+                color="#3e863e"
+                onPress={() => {
+                  onLogin(user);
+                }}>
+                Login
+              </Button>
+            </Animated.View>
           </Animated.View>
-          <View style={styles.textInput}>
-            <TextInput
-              label="Username"
-              placeholder="Enter your username"
-              mode="outlined"
-              value={user}
-              theme={{
-                colors: {
-                  primary: 'black',
-                },
-              }}
-              onChangeText={user => {
-                setUser(user);
-              }}
-            />
-          </View>
-          <View style={styles.textInput}>
-            <TextInput
-              label="Password"
-              placeholder="Enter your password"
-              mode="outlined"
-              secureTextEntry={passwordToggle}
-              theme={{
-                colors: {
-                  primary: 'black',
-                },
-              }}
-              right={
-                <TextInput.Icon
-                  name={eyeIcon}
-                  onPress={() => {
-                    setPasswordToggle(!passwordToggle);
-                    setEyeIcon(eyeIcon === 'eye' ? 'eye-off' : 'eye');
-                  }}
-                />
-              }
-              value={password}
-              onChangeText={password => setPassword(password)}
-            />
-          </View>
-          <Animated.View style={[styles.loginBtnView, {marginTop: marginHt}]}>
-            <Button
-              style={styles.loginButton}
-              mode="outlined"
-              loading={false}
-              color="#3e863e"
-              onPress={() => {
-                onLogin(user);
-              }}>
-              Login
-            </Button>
-          </Animated.View>
-        </Animated.View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

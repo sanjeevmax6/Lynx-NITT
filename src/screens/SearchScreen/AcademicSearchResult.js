@@ -25,7 +25,7 @@ const AcademicSearchResult = ({searchQuery, setScreen}) => {
           Searching for{' '}
           <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
-        <LottieView source={lf} progress={1} autoPlay loop />
+        {/* <LottieView source={lf} progress={1} autoPlay loop /> */}
       </View>
     </SafeAreaView>
   );
