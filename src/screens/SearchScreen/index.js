@@ -1,98 +1,106 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView} from 'react-native';
-import {Searchbar} from 'react-native-paper';
-import {scale} from 'react-native-size-matters';
+import {View, SafeAreaView, PixelRatio} from 'react-native';
+
 import * as color from '../../utils/colors';
+import {scale} from 'react-native-size-matters';
 
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-const Tab = createMaterialTopTabNavigator();
+import {NavigationContainer} from '@react-navigation/native';
 
+import {Searchbar, DefaultTheme, configureFonts} from 'react-native-paper';
+import {Tabs, TabScreen, useTabNavigation} from 'react-native-paper-tabs';
 import ClubSearchResult from './ClubSearchResult';
 import TagSearchResult from './TagSearchResult';
 import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
 
 const SearchScreen = ({route}) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [Screen, setScreen] = useState('CLUB');
-
+  const [SearchQuery, setSearchQuery] = useState('');
+  console.log('Pixel Ratio: ' + PixelRatio.getFontScale().toFixed(1));
+  console.log(scale(10));
+  console.log(Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)));
+  const goTo = useTabNavigation();
   if (route.params != undefined) {
     if (route.params.params.searchText != '') {
       setSearchQuery(route.params.params.searchText);
       route.params.params.searchText = '';
+
+      // goTo(2);
+      console.log('FROM TAG');
     }
   }
   const onChangeSearch = query => {
     setSearchQuery(query);
   };
+  const fontConfig = {
+    ios: {
+      medium: {
+        fontSize: Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)),
+        fontWeight: 'bold',
+      },
+    },
+    android: {
+      medium: {
+        fontFamily: 'normal',
+        fontSize: Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)),
+        fontWeight: 'bold',
+      },
+    },
+  };
+
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: color.WHITE,
+      accent: '#f1c40f',
+    },
+    fonts: configureFonts(fontConfig),
+  };
+  const themeSearchBar = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: color.Tertiary,
+      accent: color.Tertiary,
+    },
+  };
+
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
+    <NavigationContainer independent={true}>
+      <View>
         <Searchbar
-          style={{elevation: 0, margin: 0, padding: 0, color: 'red'}}
-          placeholder={'SEARCH ' + Screen}
+          style={{elevation: 0, margin: 0, padding: 0}}
+          placeholder="Search"
           onChangeText={onChangeSearch}
           autoFocus={true}
-          value={searchQuery}
+          value={SearchQuery}
+          theme={themeSearchBar}
           iconColor={color.BLACK}
         />
-
-        <Tab.Navigator
-          screenOptions={{
-            tabBarLabelStyle: {
-              fontSize: scale(11),
-              fontWeight: 'bold',
-              width: 'auto',
-              margin: 0,
-              padding: 0,
-              textTransform: 'none',
-            },
-            lazy: true,
-            tabBarStyle: {textTransform: 'none', width: 'auto'},
-            tabBarPressColor: color.tabBarPressColor,
-            tabBarIndicatorStyle: {backgroundColor: color.sliderColor},
-            tabBarActiveTintColor: color.tabBarActiveTintColor,
-            tabBarInactiveTintColor: color.tabBarInactiveTintColor,
-          }}>
-          <Tab.Screen
-            name="Clubs"
-            children={() => (
-              <ClubSearchResult
-                searchQuery={searchQuery}
-                setScreen={setScreen}
-              />
-            )}
-          />
-          <Tab.Screen
-            name="Events"
-            children={() => (
-              <EventSearchResult
-                searchQuery={searchQuery}
-                setScreen={setScreen}
-              />
-            )}
-          />
-          <Tab.Screen
-            name="Tags"
-            children={route => (
-              <TagSearchResult
-                searchQuery={searchQuery}
-                setScreen={setScreen}
-              />
-            )}
-          />
-          <Tab.Screen
-            name="Academics"
-            children={() => (
-              <AcadSearchResult
-                searchQuery={searchQuery}
-                setScreen={setScreen}
-              />
-            )}
-          />
-        </Tab.Navigator>
       </View>
-    </SafeAreaView>
+      <Tabs
+        uppercase={false}
+        theme={theme}
+        showLeadingSpace={false}
+        onChangeIndex={n => {
+          //console.log(n);
+        }}
+        //mode="scrollable"
+      >
+        <TabScreen label="Clubs">
+          <ClubSearchResult SearchQuery={SearchQuery} />
+        </TabScreen>
+        <TabScreen label="Events">
+          <EventSearchResult SearchQuery={SearchQuery} />
+        </TabScreen>
+        <TabScreen label="Tags">
+          <TagSearchResult SearchQuery={SearchQuery} />
+        </TabScreen>
+        <TabScreen label="Acads">
+          <AcadSearchResult SearchQuery={SearchQuery} />
+        </TabScreen>
+      </Tabs>
+    </NavigationContainer>
   );
 };
 
