@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTabIndex} from 'react-native-paper-tabs';
 
-const TagSearchResult = ({SearchQuery}) => {
+const TagSearchResult = ({SearchQuery, setIsTag}) => {
   const [API, setAPI] = useState('');
   const index = useTabIndex();
+  useEffect(() => {
+    setIsTag(false);
+  });
+
   if (index === 2) {
     if (SearchQuery != '') {
       if (SearchQuery != API) {

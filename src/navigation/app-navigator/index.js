@@ -60,7 +60,7 @@ const AppNavigator = () => {
         }}
       />
       <HomeTab.Screen
-        name="Activity"
+        name="ActivityNavigator"
         component={ActivityNavigator}
         options={{
           tabBarLabel: 'Activity',

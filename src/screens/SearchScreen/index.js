@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, SafeAreaView, PixelRatio} from 'react-native';
 
 import * as color from '../../utils/colors';
@@ -12,18 +12,18 @@ import ClubSearchResult from './ClubSearchResult';
 import TagSearchResult from './TagSearchResult';
 import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
-
 const SearchScreen = ({route}) => {
+  console.log('Page Refresh');
   const [SearchQuery, setSearchQuery] = useState('');
+  const [isTag, setIsTag] = useState(0);
   console.log('Pixel Ratio: ' + PixelRatio.getFontScale().toFixed(1));
   console.log(scale(10));
   console.log(Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)));
-  const goTo = useTabNavigation();
   if (route.params != undefined) {
     if (route.params.params.searchText != '') {
       setSearchQuery(route.params.params.searchText);
       route.params.params.searchText = '';
-
+      setIsTag(2);
       // goTo(2);
       console.log('FROM TAG');
     }
@@ -84,22 +84,23 @@ const SearchScreen = ({route}) => {
         uppercase={false}
         theme={theme}
         showLeadingSpace={false}
+        defaultIndex={isTag}
         onChangeIndex={n => {
           //console.log(n);
         }}
         //mode="scrollable"
       >
         <TabScreen label="Clubs">
-          <ClubSearchResult SearchQuery={SearchQuery} />
+          <ClubSearchResult SearchQuery={SearchQuery} isTag={isTag} />
         </TabScreen>
         <TabScreen label="Events">
-          <EventSearchResult SearchQuery={SearchQuery} />
+          <EventSearchResult SearchQuery={SearchQuery} isTag={isTag} />
         </TabScreen>
         <TabScreen label="Tags">
-          <TagSearchResult SearchQuery={SearchQuery} />
+          <TagSearchResult SearchQuery={SearchQuery} setIsTag={setIsTag} />
         </TabScreen>
         <TabScreen label="Acads">
-          <AcadSearchResult SearchQuery={SearchQuery} />
+          <AcadSearchResult SearchQuery={SearchQuery} isTag={isTag} />
         </TabScreen>
       </Tabs>
     </NavigationContainer>

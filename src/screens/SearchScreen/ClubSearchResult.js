@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, ScrollView} from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ClubSearchCard from '../../components/ClubSearchCard';
 import {useTabIndex} from 'react-native-paper-tabs';
+import {useTabNavigation} from 'react-native-paper-tabs';
+const ClubSearchResult = ({SearchQuery, isTag}) => {
+  const goTo = useTabNavigation();
+  useEffect(() => {
+    if (isTag) goTo(2);
+  });
 
-const ClubSearchResult = ({SearchQuery}) => {
   const footer = () => {
     return <View />;
   };

@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import lf from '../../res/lottieFiles/No_Result.json';
 import LottieView from 'lottie-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTabIndex} from 'react-native-paper-tabs';
+import {useTabNavigation} from 'react-native-paper-tabs';
+const AcademicSearchResult = ({SearchQuery, isTag}) => {
+  const goTo = useTabNavigation();
+  useEffect(() => {
+    if (isTag) goTo(2);
+  });
 
-const AcademicSearchResult = ({SearchQuery}) => {
   const [API, setAPI] = useState('');
   const index = useTabIndex();
   if (index === 3) {
