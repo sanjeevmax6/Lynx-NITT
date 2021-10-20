@@ -16,14 +16,14 @@ const ClubCard = ({
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ClubDescription');
+          navigation.push('ClubDescription');
         }}>
         <Card.Cover source={{uri: imgURL}} style={styles.image} />
       </TouchableOpacity>
       <View style={styles.cardDetails}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('ClubDescription');
+            navigation.push('ClubDescription');
           }}>
           <Text numberOfLines={2} style={styles.title}>
             {name}

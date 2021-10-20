@@ -5,6 +5,9 @@ import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import EventsCreationScreen from '../../screens/EventsCreationScreen';
 import CalendarScreen from '../../screens/CalendarScreen';
 import AnnouncementCreationScreen from '../../screens/AnnouncementCreationScreen';
+import ImageZoomScreen from '../../screens/ImageZoomScreen';
+import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
+import * as color from '../../utils/colors';
 const CalendarStack = createNativeStackNavigator();
 
 function CalendarNavigator() {
@@ -34,6 +37,24 @@ function CalendarNavigator() {
       <CalendarStack.Screen
         name="CreateAnnouncementScreen"
         component={AnnouncementCreationScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <CalendarStack.Screen
+        name="ImageScreen"
+        children={ImageZoomScreen}
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
+          title: '',
+          headerTintColor: color.WHITE,
+        }}
+      />
+      <CalendarStack.Screen
+        name="ClubDescription"
+        component={ClubDescriptionScreen}
         options={{
           headerShown: false,
         }}

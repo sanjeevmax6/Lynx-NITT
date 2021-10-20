@@ -40,7 +40,7 @@ const Images = ({images, navigation}) => {
           {images.map((e, index) => (
             <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('ImageScreen', {imgUrl: e});
+                navigation.push('ImageScreen', {imgUrl: e});
               }}
               key={index}>
               <Image
