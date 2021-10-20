@@ -6,6 +6,7 @@ import EventsView from './EventsView';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {Divider} from 'react-native-paper';
 import Header from './Header';
+import Backheader from './backheader';
 const data = {
   name: 'SPIDER',
   description: 'The official Research and Development (R&D) Club of NIT Trichy',
@@ -85,6 +86,7 @@ const data = {
 
 const renderTopLayout = navigation => (
   <View>
+  <Backheader navigation={navigation}/>
     <Header
       name={data.name}
       followers={data.followers}

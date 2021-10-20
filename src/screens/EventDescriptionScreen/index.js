@@ -7,6 +7,7 @@ import About from './About';
 import Tags from './Tags';
 import Links from './Links';
 import ClubCard from './ClubCard';
+import Header from './header';
 import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const EventDescriptionScreen = ({route, navigation}) => {
@@ -15,6 +16,7 @@ const EventDescriptionScreen = ({route, navigation}) => {
     <View style={{backgroundColor: colors.EventDescriptionScreen_Back}}>
       <SafeAreaView>
         <ScrollView>
+          <Header navigation={navigation} />
           <Images images={data.images} navigation={navigation} />
           <Divider style={styles.divider} />
 

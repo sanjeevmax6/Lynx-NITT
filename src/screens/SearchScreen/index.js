@@ -68,6 +68,7 @@ const SearchScreen = ({route}) => {
   return (
     <NavigationContainer independent={true}>
       <View>
+      <SafeAreaView>
         <Searchbar
           style={{elevation: 0, margin: 0, padding: 0}}
           placeholder="Search"
@@ -77,6 +78,7 @@ const SearchScreen = ({route}) => {
           theme={themeSearchBar}
           iconColor={color.BLACK}
         />
+        </SafeAreaView>
       </View>
       <Tabs
         uppercase={false}
