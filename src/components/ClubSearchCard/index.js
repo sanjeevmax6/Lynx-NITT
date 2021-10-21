@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: scale(HorizontalPadding),
     flexDirection: 'row',
-    height: verticalScale(60),
     marginTop: verticalScale(2),
     marginBottom: verticalScale(3),
     flex: 1,

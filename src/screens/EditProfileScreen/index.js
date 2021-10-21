@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, FlatList, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  Alert,
+  BackHandler,
+} from 'react-native';
 import {Divider, Button} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
@@ -67,6 +74,26 @@ const EditProfileScreen = ({navigation}) => {
     setSelectedFiles(prevList => {
       return prevList.filter(item => item.uri !== uri);
     });
+  };
+
+  useEffect(() => {
+    const backPress = BackHandler.addEventListener('backPress', onBackPress);
+
+    return () => {
+      backPress.remove();
+    };
+  }, []);
+
+  const onBackPress = () => {
+    Alert.alert('', 'Are you sure you want to discard changes?', [
+      {
+        text: 'DISCARD',
+        onPress: () => navigation.goBack(),
+        style: 'cancel',
+      },
+      {text: 'KEEP EDITING'},
+    ]);
+    return true;
   };
 
   return (

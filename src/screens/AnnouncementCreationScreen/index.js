@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  Alert,
+  BackHandler,
+} from 'react-native';
 import {Divider, Button} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
@@ -8,6 +15,7 @@ import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+
 const AnnouncementCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -55,6 +63,26 @@ const AnnouncementCreationScreen = ({navigation}) => {
     setSelectedFiles(prevList => {
       return prevList.filter(item => item.uri !== uri);
     });
+  };
+
+  useEffect(() => {
+    const backPress = BackHandler.addEventListener('backPress', onBackPress);
+
+    return () => {
+      backPress.remove();
+    };
+  }, []);
+
+  const onBackPress = () => {
+    Alert.alert('', 'Are you sure you want to discard this announcement?', [
+      {
+        text: 'DISCARD',
+        onPress: () => navigation.goBack(),
+        style: 'cancel',
+      },
+      {text: 'KEEP EDITING'},
+    ]);
+    return true;
   };
 
   return (
