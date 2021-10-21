@@ -13,7 +13,7 @@ const EventSearchResult = ({SearchQuery, isTag}) => {
   const index = useTabIndex();
   if (index === 1) {
     if (SearchQuery != '') {
-      if (SearchQuery != API) {
+      if (SearchQuery != API && !isTag) {
         setAPI(SearchQuery);
         console.log('Doing API CALL IN EVENTS SEARCH: ' + SearchQuery);
       }

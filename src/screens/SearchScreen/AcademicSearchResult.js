@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
 import lf from '../../res/lottieFiles/No_Result.json';
 import LottieView from 'lottie-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,7 +15,7 @@ const AcademicSearchResult = ({SearchQuery, isTag}) => {
   const index = useTabIndex();
   if (index === 3) {
     if (SearchQuery != '') {
-      if (SearchQuery != API) {
+      if (SearchQuery != API && !isTag) {
         setAPI(SearchQuery);
         console.log('Doing API CALL IN ACADEMIC SEARCH: ' + SearchQuery);
       }

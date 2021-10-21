@@ -89,7 +89,7 @@ const ClubSearchResult = ({SearchQuery, isTag}) => {
   const index = useTabIndex();
   if (index === 0) {
     if (SearchQuery != '') {
-      if (SearchQuery != API) {
+      if (SearchQuery != API && !isTag) {
         setAPI(SearchQuery);
         console.log('Doing API CALL IN CLUBS SEARCH: ' + SearchQuery);
       }

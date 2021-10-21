@@ -13,12 +13,12 @@ import TagSearchResult from './TagSearchResult';
 import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
 const SearchScreen = ({route}) => {
-  console.log('Page Refresh');
+  // console.log('Page Refresh');
   const [SearchQuery, setSearchQuery] = useState('');
   const [isTag, setIsTag] = useState(0);
-  console.log('Pixel Ratio: ' + PixelRatio.getFontScale().toFixed(1));
-  console.log(scale(10));
-  console.log(Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)));
+  // console.log('Pixel Ratio: ' + PixelRatio.getFontScale().toFixed(1));
+  // console.log(scale(10));
+  // console.log(Math.floor(scale(12) / PixelRatio.getFontScale().toFixed(1)));
   if (route.params != undefined) {
     if (route.params.params.searchText != '') {
       setSearchQuery(route.params.params.searchText);
@@ -68,16 +68,16 @@ const SearchScreen = ({route}) => {
   return (
     <NavigationContainer independent={true}>
       <View>
-      <SafeAreaView>
-        <Searchbar
-          style={{elevation: 0, margin: 0, padding: 0}}
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          autoFocus={true}
-          value={SearchQuery}
-          theme={themeSearchBar}
-          iconColor={color.BLACK}
-        />
+        <SafeAreaView>
+          <Searchbar
+            style={{elevation: 0, margin: 0, padding: 0}}
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            autoFocus={true}
+            value={SearchQuery}
+            theme={themeSearchBar}
+            iconColor={color.BLACK}
+          />
         </SafeAreaView>
       </View>
       <Tabs
