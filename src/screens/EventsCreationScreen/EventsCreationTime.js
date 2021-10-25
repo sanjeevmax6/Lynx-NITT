@@ -36,7 +36,7 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
         <Switch
           trackColor={{false: color.Primary, true: color.Accent}}
           thumbColor={timeStates.allDaySwitch ? color.WHITE : color.WHITE}
-          ios_backgroundColor="#3e3e3e"
+          ios_backgroundColor={color.iosBackgroundColor}
           onValueChange={toggleSwitch}
           value={timeStates.allDaySwitch}
         />
@@ -53,7 +53,7 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
           }}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           left={
@@ -76,7 +76,7 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
             }}
             theme={{
               colors: {
-                primary: 'black',
+                primary: color.BLACK,
               },
             }}
             left={

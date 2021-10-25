@@ -7,31 +7,35 @@ import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import AnnouncementDetailScreen from '../../screens/AnnouncementDetailScreen';
 import ActivityScreen from '../../screens/ActivityScreen';
 import * as color from '../../utils/colors';
+import {verticalScale} from 'react-native-size-matters';
+import Header from '../../components/Header';
 
 const AnnouncementStack = createNativeStackNavigator();
 
-function ActivityNavigator() {
+function ActivityNavigator({navigation}) {
   return (
     <AnnouncementStack.Navigator>
-    <AnnouncementStack.Screen
+      <AnnouncementStack.Screen
         name="Activity"
         component={ActivityScreen}
         options={{
-          headerShown:false,
+          headerShown: false,
         }}
       />
       <AnnouncementStack.Screen
         name="AnnouncementDetail"
         component={AnnouncementDetailScreen}
         options={{
-          headerShown:false,
+          headerShown: true,
+          header: props => <Header navigation={navigation} props={props} />,
         }}
       />
       <AnnouncementStack.Screen
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: props => <Header navigation={navigation} props={props} />,
         }}
       />
       <AnnouncementStack.Screen
@@ -49,7 +53,8 @@ function ActivityNavigator() {
         name="ClubDescription"
         component={ClubDescriptionScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: props => <Header navigation={navigation} props={props} />,
         }}
       />
     </AnnouncementStack.Navigator>

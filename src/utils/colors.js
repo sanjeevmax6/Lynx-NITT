@@ -7,9 +7,12 @@ export const Contrast = '#000000';
 export const WHITE = '#FFFFFF';
 export const BLACK = '#000000';
 export const Blue = '#1e63b9';
+export const Green = '#3e863e';
+export const Lightsteelblue = '#b0c4de';
 export const FontColor = '#000000';
 
 export const StatusBar = Secondary;
+export const iosBackgroundColor = '3e3e3e';
 
 //GreyScale
 export const GRAY_LIGHT = '#e6e6e6';
@@ -86,3 +89,6 @@ export const CreationScreen_SwitchViewBg = Secondary;
 
 //Splash Screen
 export const spashScreenBackground = Secondary;
+
+//Headers
+export const headerBackground = StatusBar;

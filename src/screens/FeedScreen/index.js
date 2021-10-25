@@ -202,37 +202,38 @@ const FeedScreen = ({navigation}) => {
               },
             ],
           }}>
-          <View
-            style={{
-              left: 0,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              right: 0,
-              height: verticalScale(HeaderHeight),
-              backgroundColor: colors.EventScreen_headerBackground,
-              // borderBottomLeftRadius: scale(10),
-              // borderBottomRightRadius: scale(10),
-              elevation: 5,
-              zIndex: 100, //for IOS
-              alignContent: 'center',
-              justifyContent: 'center',
-              shadowColor: colors.GRAY_DARK,
-            }}>
-            <Text
+          <SafeAreaView>
+            <View
               style={{
-                fontSize: verticalScale(18),
-                paddingLeft: scale(HorizontalPadding),
-                color: 'white',
-                //fontWeight: 'bold',
-                color: colors.EventScreen_headerText,
+                left: 0,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                right: 0,
+                height: verticalScale(HeaderHeight),
+                backgroundColor: colors.EventScreen_headerBackground,
+                // borderBottomLeftRadius: scale(10),
+                // borderBottomRightRadius: scale(10),
+                elevation: 5,
+                zIndex: 100, //for IOS
+                alignContent: 'center',
+                justifyContent: 'center',
+                shadowColor: colors.GRAY_DARK,
               }}>
-              EVENTS
-            </Text>
-          </View>
+              <Text
+                style={{
+                  fontSize: verticalScale(18),
+                  paddingLeft: scale(HorizontalPadding),
+                  color: 'white',
+                  fontWeight: 'bold',
+                  color: colors.EventScreen_headerText,
+                }}>
+                EVENTS
+              </Text>
+            </View>
+          </SafeAreaView>
         </Animated.View>
-
         <FlatList
           data={DATA}
           showsVerticalScrollIndicator={false}

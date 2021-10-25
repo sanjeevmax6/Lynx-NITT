@@ -16,7 +16,6 @@ const EventDescriptionScreen = ({route, navigation}) => {
     <View style={{backgroundColor: colors.EventDescriptionScreen_Back}}>
       <SafeAreaView>
         <ScrollView>
-          <Header navigation={navigation} />
           <Images images={data.images} navigation={navigation} />
           <Divider style={styles.divider} />
 

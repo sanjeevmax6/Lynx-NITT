@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   FlatList,
   Animated,
+  Platform,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -267,7 +268,6 @@ const ActivityScreen = ({navigation}) => {
   const scrollY = new Animated.Value(0);
 
   const diffClamp = Animated.diffClamp(scrollY, 0, verticalScale(HeaderHeight));
-
   const interpolateY = diffClamp.interpolate({
     inputRange: [0, verticalScale(HeaderHeight)],
     outputRange: [0, verticalScale(-1 * HeaderHeight)],
@@ -308,14 +308,13 @@ const ActivityScreen = ({navigation}) => {
                 fontSize: verticalScale(18),
                 paddingLeft: scale(HorizontalPadding),
                 color: 'white',
-                //fontWeight: 'bold',
+                fontWeight: 'bold',
                 color: colors.EventScreen_headerText,
               }}>
               ACTIVITIES
             </Text>
           </View>
         </Animated.View>
-
         <FlatList
           data={DATA}
           showsVerticalScrollIndicator={false}

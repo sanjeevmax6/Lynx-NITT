@@ -86,7 +86,6 @@ const data = {
 
 const renderTopLayout = navigation => (
   <View>
-  <Backheader navigation={navigation}/>
     <Header
       name={data.name}
       followers={data.followers}

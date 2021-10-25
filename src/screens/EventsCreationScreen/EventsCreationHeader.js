@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    color: 'lightsteelblue',
+    color: color.Lightsteelblue,
     fontSize: 16,
   },
 });

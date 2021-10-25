@@ -14,7 +14,6 @@ const AnnouncementDetailScreen = ({route, navigation}) => {
   const {data} = route.params;
   return (
     <SafeAreaView>
-      <Header navigation={navigation} />
       <Images url={data.url} navigation={navigation} />
       <Divider style={styles.divider} />
       <ClubAnnounce

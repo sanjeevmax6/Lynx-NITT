@@ -46,7 +46,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           multiline={true}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           onChangeText={nTitle => {
@@ -76,7 +76,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           multiline={true}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           value={inputStates.desc}
@@ -108,8 +108,8 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           value={inputStates.link}
           theme={{
             colors: {
-              primary: 'black',
-              underlineColor: 'white',
+              primary: color.BLACK,
+              underlineColor: color.WHITE,
             },
           }}
           onChangeText={nLinks => inputStates.setLink(nLinks)}

@@ -43,7 +43,7 @@ const EventCreationInputs = ({inputStates}) => {
           value={inputStates.title}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           onChangeText={nTitle => {
@@ -72,7 +72,7 @@ const EventCreationInputs = ({inputStates}) => {
           multiline={true}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           placeholder="Event Description (max 300)"
@@ -105,7 +105,7 @@ const EventCreationInputs = ({inputStates}) => {
           value={inputStates.link}
           theme={{
             colors: {
-              primary: 'black',
+              primary: color.BLACK,
             },
           }}
           onChangeText={nLinks => inputStates.setLink(nLinks)}

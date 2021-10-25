@@ -47,7 +47,7 @@ const EventsCreationScreenHeader = ({navigation, isValid}) => {
           <Icon
             name="check"
             size={HeaderHeight / 1.6}
-            color="#3e863e"
+            color={color.Green}
             style={{marginRight: scale(5)}}
           />
         </TouchableOpacity>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 6,
     zIndex: 6,
-    backgroundColor: 'white',
+    backgroundColor: color.WHITE,
   },
   button: {
     flex: 1,

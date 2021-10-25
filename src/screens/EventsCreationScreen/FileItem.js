@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(20),
     right: scale(20),
     position: 'absolute',
-    backgroundColor: 'white',
+    backgroundColor: color.WHITE,
   },
 });
 

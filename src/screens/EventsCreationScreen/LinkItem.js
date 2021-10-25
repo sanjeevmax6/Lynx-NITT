@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     right: scale(20),
     position: 'absolute',
-    backgroundColor: 'white',
+    backgroundColor:  color.CreationScreen_DeleteItemBg,
   },
 });
 

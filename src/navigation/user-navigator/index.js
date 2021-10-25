@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import UserScreen from '../../screens/UserScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
+import { verticalScale } from 'react-native-size-matters';
 
 const UserStack = createNativeStackNavigator();
 
