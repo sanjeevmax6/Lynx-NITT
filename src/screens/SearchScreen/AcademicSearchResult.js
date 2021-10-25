@@ -1,34 +1,29 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import lf from '../../res/lottieFiles/No_Result.json';
 import LottieView from 'lottie-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTabIndex} from 'react-native-paper-tabs';
-import {useTabNavigation} from 'react-native-paper-tabs';
-const AcademicSearchResult = ({SearchQuery, isTag}) => {
-  const goTo = useTabNavigation();
-  useEffect(() => {
-    if (isTag) goTo(2);
-  });
 
+const AcademicSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
-  const index = useTabIndex();
-  if (index === 3) {
-    if (SearchQuery != '') {
-      if (SearchQuery != API && !isTag) {
-        setAPI(SearchQuery);
-        console.log('Doing API CALL IN ACADEMIC SEARCH: ' + SearchQuery);
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    setScreen('ACADEMIC');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN ACADEMIC SEARCH: ' + searchQuery);
       }
-    } else if (SearchQuery === '' && API != '') {
-      setAPI('');
     }
   }
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <Text style={{textAlign: 'center'}}>
-          AcademicSearchResult: {'\n\n'} {API}{' '}
-          <Text style={{fontWeight: 'bold'}}> </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
         {/* <LottieView source={lf} progress={1} autoPlay loop /> */}
       </View>

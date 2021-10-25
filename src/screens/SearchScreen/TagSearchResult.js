@@ -1,23 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTabIndex} from 'react-native-paper-tabs';
 
-const TagSearchResult = ({SearchQuery, setIsTag}) => {
+const TagSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
-  const index = useTabIndex();
-  useEffect(() => {
-    setIsTag(false);
-  });
-
-  if (index === 2) {
-    if (SearchQuery != '') {
-      if (SearchQuery != API) {
-        setAPI(SearchQuery);
-        console.log('Doing API CALL IN TAG SEARCH: ' + SearchQuery);
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    setScreen('TAG');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN TAG SEARCH: ' + searchQuery);
       }
-    } else if (SearchQuery === '' && API != '') {
-      setAPI('');
     }
   }
 
@@ -25,8 +21,8 @@ const TagSearchResult = ({SearchQuery, setIsTag}) => {
     <SafeAreaView>
       <View>
         <Text style={{textAlign: 'center'}}>
-          TagSearchResult: {'\n\n'} {API}{' '}
-          <Text style={{fontWeight: 'bold'}}> </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
       </View>
     </SafeAreaView>

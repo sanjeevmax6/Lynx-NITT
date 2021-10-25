@@ -1,15 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, FlatList, Keyboard} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ClubSearchCard from '../../components/ClubSearchCard';
-import {useTabIndex} from 'react-native-paper-tabs';
-import {useTabNavigation} from 'react-native-paper-tabs';
-const ClubSearchResult = ({SearchQuery, isTag}) => {
-  const goTo = useTabNavigation();
-  useEffect(() => {
-    if (isTag) goTo(2);
-  });
 
+const ClubSearchResult = ({searchQuery, setScreen}) => {
   const footer = () => {
     return <View />;
   };
@@ -83,17 +78,40 @@ const ClubSearchResult = ({SearchQuery, isTag}) => {
         'The Annual National Level Technical Symposium of Department of CSE, NIT Trichy',
       isFollowing: true,
     },
+    {
+      clubIconUrl:
+        'https://scontent-maa2-1.xx.fbcdn.net/v/t31.18172-8/886853_949188685116554_2235082819868938369_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=yWojUORoCY0AX9aFPyp&_nc_ht=scontent-maa2-1.xx&oh=4716630c2f3c70678d31f28bd913790c&oe=618B81E5',
+      clubName: 'Feeds',
+      clubDescription: 'The official college magazine',
+      isFollowing: false,
+    },
+    {
+      clubIconUrl:
+        'https://scontent-maa2-1.xx.fbcdn.net/v/t1.6435-9/91796693_2956386031147812_3781329494191636480_n.png?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=iN8Ap-YEyQEAX8M98xi&tn=9RdPRT-jf60CJeDw&_nc_ht=scontent-maa2-1.xx&oh=893d8c3e4df956a635a1278b041602de&oe=618E6A13',
+      clubName: 'Aaveg',
+      clubDescription: 'Fest',
+      isFollowing: true,
+    },
+    {
+      clubIconUrl:
+        'https://scontent-maa2-2.xx.fbcdn.net/v/t1.6435-9/241857082_1976792029155655_8438033154233930116_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=tL-qiEURbA4AX8umi_6&_nc_ht=scontent-maa2-2.xx&oh=1f11ed149df11fed86f3dd7e9bbb65a8&oe=618BD0EE',
+      clubName: 'Vortex',
+      clubDescription:
+        'The Annual National Level Technical Symposium of Department of CSE, NIT Trichy',
+      isFollowing: true,
+    },
   ];
 
   const [API, setAPI] = useState('');
-  const index = useTabIndex();
-  if (index === 0) {
-    if (SearchQuery != '') {
-      if (SearchQuery != API && !isTag) {
-        setAPI(SearchQuery);
-        console.log('Doing API CALL IN CLUBS SEARCH: ' + SearchQuery);
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    setScreen('CLUB');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN CLUB SEARCH: ' + searchQuery);
       }
-    } else if (SearchQuery === '' && API != '') {
+    } else if (searchQuery === '' && API != '') {
       setAPI('');
     }
   }
@@ -112,6 +130,9 @@ const ClubSearchResult = ({SearchQuery, isTag}) => {
           <FlatList
             data={DATA}
             vertical={true}
+            onScroll={() => {
+              Keyboard.dismiss();
+            }}
             ListFooterComponent={footer()}
             renderItem={({item}) => (
               <View>

@@ -1,24 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {useTabNavigation} from 'react-native-paper-tabs';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTabIndex} from 'react-native-paper-tabs';
+import {useIsFocused} from '@react-navigation/native';
 
-const EventSearchResult = ({SearchQuery, isTag}) => {
-  const goTo = useTabNavigation(2);
-  useEffect(() => {
-    if (isTag) goTo(2);
-  });
+import {SafeAreaView} from 'react-native-safe-area-context';
+
+const EventSearchResult = ({searchQuery, setScreen}) => {
   const [API, setAPI] = useState('');
-  const index = useTabIndex();
-  if (index === 1) {
-    if (SearchQuery != '') {
-      if (SearchQuery != API && !isTag) {
-        setAPI(SearchQuery);
-        console.log('Doing API CALL IN EVENTS SEARCH: ' + SearchQuery);
+
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    setScreen('EVENT');
+    if (searchQuery != '') {
+      if (searchQuery != API) {
+        setAPI(searchQuery);
+        console.log('Doing API CALL IN EVENTS SEARCH: ' + searchQuery);
       }
-    } else if (SearchQuery === '' && API != '') {
-      setAPI('');
     }
   }
 
@@ -26,8 +22,8 @@ const EventSearchResult = ({SearchQuery, isTag}) => {
     <SafeAreaView>
       <View>
         <Text style={{textAlign: 'center'}}>
-          EventSearchResult: {'\n'} {API}{' '}
-          <Text style={{fontWeight: 'bold'}}> </Text>
+          Searching for{' '}
+          <Text style={{fontWeight: 'bold'}}>"{searchQuery}" </Text>
         </Text>
       </View>
     </SafeAreaView>
