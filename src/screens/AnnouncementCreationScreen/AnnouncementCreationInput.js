@@ -60,7 +60,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             styles.wordCount,
             {color: inputStates.subjectLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.subjectLength} characters
+          {inputStates.subjectLength}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -92,7 +92,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             styles.wordCount,
             {color: inputStates.announcementLength < 0 ? 'red' : 'black'},
           ]}>
-          {inputStates.announcementLength} characters
+          {inputStates.announcementLength}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -117,7 +117,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.Tertiary}
+              color={color.BLACK}
               onPress={() => addLink()}
             />
           }

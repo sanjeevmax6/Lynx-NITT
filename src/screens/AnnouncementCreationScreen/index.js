@@ -93,6 +93,7 @@ const AnnouncementCreationScreen = ({navigation}) => {
       />
       <FlatList
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
         ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
         ListFooterComponent={<View style={{height: verticalScale(6)}} />}
         ListHeaderComponent={

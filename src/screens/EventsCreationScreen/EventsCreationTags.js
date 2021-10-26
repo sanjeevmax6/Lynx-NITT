@@ -52,6 +52,7 @@ const EventsCreationTag = ({tagStates}) => {
       />
       {tagStates.tags.length > 0 && (
         <FlatList
+          listKey="tags"
           style={styles.flatListStyle}
           data={tagStates.tags}
           renderItem={({item}) => (
