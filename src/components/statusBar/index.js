@@ -4,8 +4,7 @@ import * as color from '../../utils/colors';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 const CustomStatusBar = () => {
   let OS = Platform.OS;
-  console.log('StatusBar ' + StatusBar.currentHeight);
-  console.log('StatusBar ' + getStatusBarHeight());
+
   return (
     <>
       {OS === 'ios' ? (

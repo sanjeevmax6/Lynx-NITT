@@ -13,7 +13,7 @@ const CalendarStack = createNativeStackNavigator();
 import Header from '../../components/Header';
 import PageHeader from '../../components/PageHeader';
 
-function CalendarNavigator({navigation}) {
+function CalendarNavigator() {
   return (
     <CalendarStack.Navigator>
       <CalendarStack.Screen
@@ -29,7 +29,7 @@ function CalendarNavigator({navigation}) {
         component={EventDescriptionScreen}
         options={{
           headerShown: true,
-          header: props => <Header navigation={navigation} props={props} />,
+          header: props => <Header props={props} />,
         }}
       />
       <CalendarStack.Screen
@@ -62,7 +62,7 @@ function CalendarNavigator({navigation}) {
         component={ClubDescriptionScreen}
         options={{
           headerShown: true,
-          header: props => <Header navigation={navigation} props={props} />,
+          header: props => <Header props={props} />,
         }}
       />
     </CalendarStack.Navigator>

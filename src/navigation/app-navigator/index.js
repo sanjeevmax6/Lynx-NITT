@@ -4,12 +4,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import CalendarNavigator from '../calendar-navigator';
 import FeedNavigator from '../feed-navigator';
 import SearchScreen from '../../screens/SearchScreen';
-import UserScreen from '../../screens/UserScreen';
-import ActivityScreen from '../../screens/ActivityScreen';
 import ActivityNavigator from '../activity-navigator';
+import UserNavigator from '../user-navigator';
 
 import * as color from '../../utils/colors';
-import UserNavigator from '../user-navigator';
 
 const HomeTab = createMaterialBottomTabNavigator();
 

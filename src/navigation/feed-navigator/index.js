@@ -6,12 +6,11 @@ import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import * as color from '../../utils/colors';
-import {verticalScale} from 'react-native-size-matters';
 import Header from '../../components/Header';
 
 const FeedStack = createNativeStackNavigator();
 
-function FeedNavigator({navigation}) {
+function FeedNavigator() {
   return (
     <FeedStack.Navigator>
       <FeedStack.Screen
@@ -26,7 +25,7 @@ function FeedNavigator({navigation}) {
         component={EventDescriptionScreen}
         options={{
           headerShown: true,
-          header: props => <Header navigation={navigation} props={props} />,
+          header: props => <Header props={props} />,
         }}
       />
       <FeedStack.Screen
@@ -45,7 +44,7 @@ function FeedNavigator({navigation}) {
         component={ClubDescriptionScreen}
         options={{
           headerShown: true,
-          header: props => <Header navigation={navigation} props={props} />,
+          header: props => <Header props={props} />,
         }}
       />
     </FeedStack.Navigator>
