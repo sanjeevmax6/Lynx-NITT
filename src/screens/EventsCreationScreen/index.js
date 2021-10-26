@@ -17,6 +17,7 @@ import EventsCreationTime from './EventsCreationTime';
 import EventsCreationScreenHeader from './EventsCreationScreenHeader';
 import EventsCreationHeader from './EventsCreationHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import EventsCreationTag from './EventsCreationTags';
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -31,6 +32,7 @@ const EventCreationScreen = ({navigation}) => {
   const [links, setLinks] = useState([]);
   const [profilePicUri, setProfilePicUri] = useState('');
   const [isProfilePicSelected, setProfilePicSelected] = useState(false);
+  const [tags, setTags] = useState([]);
 
   const maxTitleLength = 150;
   const maxDescLength = 300;
@@ -76,6 +78,11 @@ const EventCreationScreen = ({navigation}) => {
     setProfilePicUri,
     isProfilePicSelected,
     setProfilePicSelected,
+  };
+
+  const tagStates = {
+    tags,
+    setTags,
   };
 
   const selectFiles = async () => {
@@ -133,6 +140,8 @@ const EventCreationScreen = ({navigation}) => {
             <EventsCreationHeader headerStates={headerStates} />
             <Divider style={styles.divider} />
             <EventCreationInputs inputStates={inputStates} />
+            <Divider style={styles.divider} />
+            <EventsCreationTag tagStates={tagStates} />
             <Divider style={styles.divider} />
             <EventsCreationTime
               timeStates={timeStates}
