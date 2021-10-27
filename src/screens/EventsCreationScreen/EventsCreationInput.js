@@ -1,6 +1,6 @@
 import React from 'react';
-import {TextInput, Divider} from 'react-native-paper';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {TextInput} from 'react-native-paper';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
@@ -51,7 +51,9 @@ const EventCreationInputs = ({inputStates}) => {
             onChangeTitleLength(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
+          right={<TextInput.Affix text={'/' + inputStates.titleLength} />}
         />
+        {/*
         <Text
           style={[
             styles.wordCount,
@@ -59,6 +61,7 @@ const EventCreationInputs = ({inputStates}) => {
           ]}>
           {inputStates.titleLength}
         </Text>
+        */}
       </View>
       <View style={styles.viewScale}>
         <TextInput
@@ -83,7 +86,9 @@ const EventCreationInputs = ({inputStates}) => {
           }}
           multiline={true}
           left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
+          right={<TextInput.Affix text={'/' + inputStates.descLength} />}
         />
+        {/*
         <Text
           style={[
             styles.wordCount,
@@ -91,6 +96,7 @@ const EventCreationInputs = ({inputStates}) => {
           ]}>
           {inputStates.descLength}
         </Text>
+        */}
       </View>
       <View style={styles.viewScale}>
         <TextInput

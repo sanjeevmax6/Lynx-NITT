@@ -9,7 +9,9 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const FileItem = ({item, deleteItem}) => {
   return (
     <View style={styles.fileItem}>
-      <Text style={styles.fileItemText}>{item.name}</Text>
+      <Text numberOfLines={1} style={styles.fileItemText}>
+        {item.name}
+      </Text>
       <TouchableOpacity
         style={styles.deleteItem}
         onPress={() => deleteItem(item.uri)}>
@@ -37,12 +39,12 @@ const styles = StyleSheet.create({
     padding: moderateScale(10),
     fontSize: scale(12),
     color: color.FontColor,
+    flex: 1,
   },
   deleteItem: {
     padding: moderateScale(5),
     borderRadius: moderateScale(20),
-    right: scale(20),
-    position: 'absolute',
+    right: scale(10),
     backgroundColor: color.WHITE,
   },
 });
