@@ -92,3 +92,8 @@ export const spashScreenBackground = Secondary;
 
 //Headers
 export const headerBackground = StatusBar;
+
+//Registration Screen
+export const regBackground = Secondary;
+export const regAttach = Accent;
+export const regNext = Primary;

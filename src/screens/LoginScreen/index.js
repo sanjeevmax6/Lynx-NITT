@@ -4,30 +4,25 @@ import {
   Text,
   Animated,
   SafeAreaView,
-  TouchableOpacity,
-  Keyboard,
+  Dimensions,
   ScrollView,
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button, Divider} from 'react-native-paper';
 import {
   scale,
   verticalScale,
   moderateScale,
   ScaledSheet,
 } from 'react-native-size-matters';
-
-import FontAwesome, {
-  SolidIcons,
-  RegularIcons,
-  BrandIcons,
-  parseIconFromClassName,
-  MaterialCommunityIcons,
-} from 'react-native-fontawesome';
-
 import {updateToken} from '../../redux/reducers/loginScreen';
 import {useDispatch, useSelector} from 'react-redux';
+import * as colors from '../../utils/colors';
 
 import store from '../../redux/store';
+
+const WIDTH = Dimensions.get('window').width;
 
 const LoginScreen = ({navigation}) => {
   const [user, setUser] = useState();
@@ -37,6 +32,7 @@ const LoginScreen = ({navigation}) => {
   // const imageHeight = useRef(new Animated.Value(verticalScale(150))).current;
   // const marginHt = useRef(new Animated.Value(verticalScale(27))).current;
   const [temp, setTemp] = useState();
+  const [student, setStudent] = useState(true);
 
   // useEffect(() => {
   //   const showSubscription = Keyboard.addListener(
@@ -89,8 +85,8 @@ const LoginScreen = ({navigation}) => {
     // console.log(temp);
   };
 
-  const signup = () => {
-    navigation.push('SignUp');
+  const toggle = bool => {
+    setStudent(bool);
   };
 
   return (
@@ -99,23 +95,41 @@ const LoginScreen = ({navigation}) => {
         <ScrollView>
           <View style={styles.headertextcontainer}>
             <Text style={styles.logintext}>Login</Text>
-            <TouchableOpacity onPress={signup}>
-              <Text style={styles.signuptext}>Sign Up</Text>
-            </TouchableOpacity>
           </View>
-          <Animated.View
-            style={[styles.inputLayout, {marginBottom: verticalScale(55)}]}>
-            <Animated.View style={styles.profileImgView}>
+
+          <View style={[styles.inputLayout, {marginBottom: verticalScale(55)}]}>
+            <View style={styles.profileImgView}>
               <Animated.Image
                 style={{
                   width: moderateScale(170),
                   height: moderateScale(170),
-                  marginTop: verticalScale(90),
+                  marginTop: verticalScale(70),
                   marginBottom: verticalScale(20),
                 }}
                 source={require('../../assests/images/nitt_logo.png')}
               />
-            </Animated.View>
+            </View>
+            <View style={styles.toggle}>
+              {/* <TouchableOpacity onPress={toggle(true)}> */}
+              <Text
+                style={{
+                  ...styles.toggleTextL,
+                  backgroundColor: student ? '#0080FF' : colors.Secondary,
+                }}>
+                Student
+              </Text>
+              {/* </TouchableOpacity> */}
+              <Divider style={{width: 2, backgroundColor: 'grey', flex: 1}} />
+              {/* <TouchableOpacity onPress={toggle(false)}> */}
+              <Text
+                style={{
+                  ...styles.toggleTextR,
+                  backgroundColor: student ? colors.Secondary : '#0080FF',
+                }}>
+                Club
+              </Text>
+              {/* </TouchableOpacity> */}
+            </View>
             <View style={styles.textInput}>
               <TextInput
                 label="Username"
@@ -168,7 +182,7 @@ const LoginScreen = ({navigation}) => {
                 Login
               </Button>
             </Animated.View>
-          </Animated.View>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -199,13 +213,34 @@ const styles = ScaledSheet.create({
     color: 'black',
     marginLeft: '15@s',
     alignContent: 'flex-start',
+    textDecorationLine: 'underline',
   },
-  signuptext: {
-    padding: '10@msr',
-    fontSize: '18@s',
-    marginRight: '15@s',
-    fontWeight: 'bold',
-    color: '#ddd',
+  toggle: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    width: WIDTH / 2,
+    marginBottom: verticalScale(20),
+  },
+  toggleTextL: {
+    fontSize: scale(14),
+    padding: '5@ms',
+    width: WIDTH / 4,
+    borderColor: colors.GRAY_DARK,
+    borderWidth: 1,
+    borderTopLeftRadius: 7,
+    borderBottomLeftRadius: 7,
+    borderRightWidth: 0,
+    textAlign: 'center',
+  },
+  toggleTextR: {
+    fontSize: scale(14),
+    padding: '5@ms',
+    width: WIDTH / 4,
+    borderColor: colors.GRAY_DARK,
+    borderWidth: 1,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    textAlign: 'center',
   },
   inputLayout: {
     flex: 1,
@@ -214,9 +249,7 @@ const styles = ScaledSheet.create({
   profileImgView: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '30@vs',
   },
-
   textInput: {
     paddingHorizontal: moderateScale(20),
     paddingVertical: moderateScale(10),

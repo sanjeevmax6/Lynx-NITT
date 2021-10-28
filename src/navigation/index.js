@@ -5,10 +5,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import AppNavigator from './app-navigator';
 import AuthNavigator from './auth-navigator';
-import LogNavigator from './login-signup-navigator';
 
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
+import Registration from '../screens/Registration';
 
 import store from '../redux/store';
 
@@ -37,7 +37,7 @@ function Navigator(isUserLoggedIn) {
           isLoading ? (
             <RootStack.Screen name="Splash" component={SplashScreen} />
           ) : (
-            <RootStack.Screen name="LoginSignUp" component={LogNavigator} />
+            <RootStack.Screen name="Login" component={LoginScreen} />
           )
         ) : (
           <RootStack.Screen
