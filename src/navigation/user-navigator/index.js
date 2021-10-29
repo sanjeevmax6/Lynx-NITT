@@ -1,8 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Header from '../../components/Header';
+import PageHeader from '../../components/PageHeader';
 
 import UserScreen from '../../screens/UserScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
+import SettingsSceen from '../../screens/SettingsScreen';
 
 const UserStack = createNativeStackNavigator();
 
@@ -21,6 +24,14 @@ function UserNavigator() {
         component={EditProfileScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <UserStack.Screen
+        name="Settings"
+        component={SettingsSceen}
+        options={{
+          headerShown: true,
+          header: props => <PageHeader title="SETTINGS" />,
         }}
       />
     </UserStack.Navigator>

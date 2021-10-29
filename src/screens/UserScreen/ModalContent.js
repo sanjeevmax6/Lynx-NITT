@@ -3,8 +3,13 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
+import {updateToken} from '../../redux/reducers/loginScreen';
+import {useDispatch} from 'react-redux';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
+
 const ModalContent = ({ModalVisible, navigation}) => {
+  const dispatch = useDispatch();
+
   return (
     <View style={{flex: 1, width: '100%'}}>
       <TouchableOpacity onPress={() => ModalVisible(false)}>
@@ -19,7 +24,13 @@ const ModalContent = ({ModalVisible, navigation}) => {
           }}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          {
+            navigation.navigate('Settings');
+            ModalVisible(false);
+          }
+        }}>
         <View
           style={{
             flexDirection: 'row',
@@ -38,7 +49,12 @@ const ModalContent = ({ModalVisible, navigation}) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          {
+            dispatch(updateToken(false));
+          }
+        }}>
         <View
           style={{
             flexDirection: 'row',
