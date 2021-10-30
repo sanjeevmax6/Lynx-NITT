@@ -28,7 +28,8 @@ const EventCreationTagItem = ({item, removeTag}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginHorizontal: scale(1),
   },
 });

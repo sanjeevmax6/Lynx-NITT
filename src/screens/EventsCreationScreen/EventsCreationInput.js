@@ -1,41 +1,66 @@
-import React from 'react';
-import {TextInput} from 'react-native-paper';
-import {View, StyleSheet, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {TextInput, Button} from 'react-native-paper';
+import {View, StyleSheet, FlatList, Dimensions, Keyboard} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-const EventCreationInputs = ({inputStates}) => {
-  const addLink = () => {
-    if (inputStates.link !== '') {
-      inputStates.setLinks(prevList => {
-        return [inputStates.link, ...prevList];
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Error from './Error';
+const WIDTH = Dimensions.get('window').width;
+const EventCreationInputs = ({inputStates, scrollViewRef, callback}) => {
+  const maxTitleLength = 150;
+  const maxDescLength = 300;
+
+  const [titleLength, setTitleLength] = useState(maxTitleLength);
+  const [descLength, setDescLength] = useState(maxDescLength);
+
+  const onChangeTitleLength = text => {
+    setTitleLength(maxTitleLength - text.length);
+  };
+  const onChangeDescLength = text => {
+    setDescLength(maxDescLength - text.length);
+  };
+
+  const [titleEr, setTitleEr] = useState(0);
+  const [descEr, setdescEr] = useState(0);
+  const scroll = () => {
+    setTitleEr(0);
+    setdescEr(0);
+    if (!inputStates.title) {
+      setTitleEr(1);
+      return;
+    }
+    if (!inputStates.desc) {
+      setdescEr(1);
+      return;
+    }
+    if (titleLength < 0) {
+      setTitleEr(2);
+      return;
+    }
+    if (descLength < 0) {
+      setdescEr(2);
+      return;
+    }
+
+    callback('Date and Time', 2);
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: WIDTH,
+        animated: true,
       });
-      inputStates.setLink('');
+      Keyboard.dismiss();
     }
   };
 
-  const removeLink = link => {
-    inputStates.setLinks(prevList => {
-      return prevList.filter(item => item != link);
-    });
-  };
-  const onChangeTitleLength = text => {
-    inputStates.setTitleLength(inputStates.maxTitleLength - text.length);
-  };
-  const onChangeDescLength = text => {
-    inputStates.setDescLength(inputStates.maxDescLength - text.length);
-  };
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
           label="Event Title"
           style={{
             backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
             borderTopLeftRadius: moderateScale(12),
           }}
           placeholder="Event Title (max 150)"
@@ -51,7 +76,7 @@ const EventCreationInputs = ({inputStates}) => {
             onChangeTitleLength(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
-          right={<TextInput.Affix text={'/' + inputStates.titleLength} />}
+          right={<TextInput.Affix text={'/' + titleLength} />}
         />
         {/*
         <Text
@@ -62,14 +87,17 @@ const EventCreationInputs = ({inputStates}) => {
           {inputStates.titleLength}
         </Text>
         */}
+
+        {titleEr == 1 && <Error text="Please fill in the Title" />}
+        {titleEr == 2 && <Error text="Exceeds Word Limit" />}
       </View>
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
           style={{
             backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
-            // borderTopLeftRadius: moderateScale(9),
+
+            borderTopLeftRadius: moderateScale(9),
           }}
           label="Event Description"
           multiline={true}
@@ -86,7 +114,7 @@ const EventCreationInputs = ({inputStates}) => {
           }}
           multiline={true}
           left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
-          right={<TextInput.Affix text={'/' + inputStates.descLength} />}
+          right={<TextInput.Affix text={'/' + descLength} />}
         />
         {/*
         <Text
@@ -97,45 +125,18 @@ const EventCreationInputs = ({inputStates}) => {
           {inputStates.descLength}
         </Text>
         */}
+
+        {descEr == 1 && <Error text="Please fill in the Description" />}
+        {descEr == 2 && <Error text="Exceeds Word Limit" />}
       </View>
-      <View style={styles.viewScale}>
-        <TextInput
-          underlineColor="transparent"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
-            borderBottomRightRadius: moderateScale(12),
-          }}
-          label="Event Links"
-          placeholder="Event Links"
-          value={inputStates.link}
-          theme={{
-            colors: {
-              primary: color.BLACK,
-            },
-          }}
-          onChangeText={nLinks => inputStates.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
-          right={
-            <TextInput.Icon
-              name={'plus'}
-              color={color.BLACK}
-              onPress={() => addLink()}
-            />
-          }
-        />
-        {inputStates.links.length > 0 && (
-          <View style={styles.viewScale}>
-            <FlatList
-              data={inputStates.links}
-              renderItem={({item}) => (
-                <LinkItem item={item} deleteItem={removeLink} />
-              )}
-            />
-          </View>
-        )}
-      </View>
-    </View>
+      <Button
+        style={styles.next}
+        mode="contained"
+        onPress={scroll}
+        labelStyle={{color: color.regNext}}>
+        Next
+      </Button>
+    </SafeAreaView>
   );
 };
 
@@ -143,15 +144,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: verticalScale(4),
+    width: WIDTH,
   },
   viewScale: {
-    paddingHorizontal: scale(0),
+    paddingHorizontal: HorizontalPadding,
     paddingVertical: verticalScale(4),
   },
   wordCount: {
     fontSize: scale(10),
     textAlign: 'right',
     paddingHorizontal: HorizontalPadding,
+  },
+  next: {
+    position: 'absolute',
+    bottom: verticalScale(20),
+    right: verticalScale(20),
+    backgroundColor: color.regAttach,
   },
 });
 

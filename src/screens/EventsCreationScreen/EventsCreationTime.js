@@ -1,16 +1,36 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Switch} from 'react-native';
-import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  Dimensions,
+} from 'react-native';
+import {
+  scale,
+  verticalScale,
+  moderateScale,
+  ScaledSheet,
+} from 'react-native-size-matters';
 import moment from 'moment';
 import * as color from '../../utils/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {TextInput} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const TIME_FORMAT = 'h:mm A';
 const DATE_FORMAT = 'MMMM DD, YYYY';
 
-const EventsCreationTime = ({timeStates, dateStates}) => {
+const WIDTH = Dimensions.get('window').width;
+
+const EventsCreationTime = ({
+  timeStates,
+  dateStates,
+  scrollViewRef,
+  callback,
+}) => {
   const toggleSwitch = () => {
     timeStates.setAllDaySwitch(prevVal => {
       return !prevVal;
@@ -28,9 +48,28 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
     dateStates.setDatePicker(false);
     dateStates.setDate(currentDate);
   };
+  const scroll = () => {
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: WIDTH * 2,
+        animated: true,
+      });
+    }
+    callback('Images', 3);
+  };
+
+  const back = () => {
+    callback('About the Event', 1);
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: WIDTH * 0,
+        animated: true,
+      });
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.switchView}>
         <Text style={styles.buttonTextTheme}>All day event? </Text>
         <Switch
@@ -106,14 +145,30 @@ const EventsCreationTime = ({timeStates, dateStates}) => {
           onCancel={() => timeStates.setTimePicker(false)}
         />
       )}
-    </View>
+      <Button
+        style={styles.next}
+        mode="contained"
+        onPress={scroll}
+        labelStyle={{color: color.regNext}}>
+        Next
+      </Button>
+      <Button
+        style={styles.back}
+        mode="outline"
+        onPress={back}
+        labelStyle={{color: color.regAttach}}
+        icon="chevron-left">
+        Back
+      </Button>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     paddingVertical: verticalScale(4),
+    width: WIDTH,
   },
   viewScale: {
     //paddingHorizontal: scale(2),
@@ -143,6 +198,17 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(HorizontalPadding),
 
     marginVertical: verticalScale(2),
+  },
+  back: {
+    position: 'absolute',
+    bottom: '20@vs',
+    left: '10@vs',
+  },
+  next: {
+    position: 'absolute',
+    bottom: '20@vs',
+    right: '20@vs',
+    backgroundColor: color.regAttach,
   },
 });
 

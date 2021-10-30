@@ -1,25 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
-  View,
-  StyleSheet,
   SafeAreaView,
-  FlatList,
   Alert,
   BackHandler,
+  ScrollView,
+  Text,
+  Dimensions,
 } from 'react-native';
-import {Divider, Button} from 'react-native-paper';
-import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
+import {
+  moderateScale,
+  scale,
+  ScaledSheet,
+  verticalScale,
+} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
-import DocumentPicker from 'react-native-document-picker';
-import FileItem from './FileItem';
+import {useFocusEffect} from '@react-navigation/native';
 import EventCreationInputs from './EventsCreationInput';
 import EventsCreationTime from './EventsCreationTime';
 import EventsCreationScreenHeader from './EventsCreationScreenHeader';
-import EventsCreationHeader from './EventsCreationHeader';
+import EventsCreationImages from './EventsCreationImages';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EventsCreationTag from './EventsCreationTags';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import {useDispatch} from 'react-redux';
+
+const WIDTH = Dimensions.get('window').width;
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -29,39 +34,74 @@ const EventCreationScreen = ({navigation}) => {
   const [showDatePicker, setDatePicker] = useState(false);
   const [time, setTime] = useState(new Date());
   const [showTimePicker, setTimePicker] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
   const [allDaySwitch, setAllDaySwitch] = useState(false);
   const [links, setLinks] = useState([]);
-  const [profilePicUri, setProfilePicUri] = useState('');
+  const [profilePicUri, setProfilePicUri] = useState(['']);
   const [isProfilePicSelected, setProfilePicSelected] = useState(false);
   const [tags, setTags] = useState([]);
 
-  const maxTitleLength = 150;
-  const maxDescLength = 300;
+  const scrollview = useRef(null);
+  const [pageTitle, setPageTitle] = useState('About the Event');
+  // const [subtitle, setSubTitle] = useState('');
+  const [page, setPage] = useState(0);
 
-  const [titleLength, setTitleLength] = useState(maxTitleLength);
-  const [descLength, setDescLength] = useState(maxDescLength);
+  const changeText = (title, page) => {
+    setPageTitle(title);
+    // setSubTitle(stitle);
+    setPage(page);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (page == 0) {
+          Alert.alert('', 'Are you sure you want to discard this event?', [
+            {
+              text: 'DISCARD',
+              onPress: () => {
+                navigation.goBack();
+                toggleTab(true);
+              },
+              style: 'cancel',
+            },
+            {text: 'KEEP EDITING', onPress: () => console.log('OK Pressed')},
+          ]);
+        }
+
+        setPage(page - 1);
+        if (scrollview.current !== null) {
+          scrollview.current.scrollTo({
+            x: WIDTH * (page - 1),
+            animated: true,
+          });
+        }
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }),
+  );
 
   const dispatch = useDispatch();
 
   function toggleTab(tabShow) {
     dispatch(TabVisibility(tabShow));
   }
+
+  useEffect(() => {
+    toggleTab(false);
+
+    return () => {};
+  }, []);
+
   const inputStates = {
     title,
     setTitle,
     desc,
     setDesc,
-    link,
-    setLink,
-    links,
-    setLinks,
-    titleLength,
-    setTitleLength,
-    descLength,
-    setDescLength,
-    maxDescLength,
-    maxTitleLength,
   };
 
   const dateStates = {
@@ -80,7 +120,7 @@ const EventCreationScreen = ({navigation}) => {
     setAllDaySwitch,
   };
 
-  const headerStates = {
+  const imageStates = {
     profilePicUri,
     setProfilePicUri,
     isProfilePicSelected,
@@ -90,100 +130,53 @@ const EventCreationScreen = ({navigation}) => {
   const tagStates = {
     tags,
     setTags,
-  };
-
-  const selectFiles = async () => {
-    try {
-      const files = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.allFiles],
-      });
-      setSelectedFiles(prevList => {
-        return [...prevList, ...files];
-      });
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) console.log(err);
-      else throw err;
-    }
-  };
-
-  const removeFile = uri => {
-    setSelectedFiles(prevList => {
-      return prevList.filter(item => item.uri !== uri);
-    });
-  };
-
-  useEffect(() => {
-    toggleTab(false);
-    const backPress = BackHandler.addEventListener('backPress', onBackPress);
-
-    return () => {
-      backPress.remove();
-    };
-  }, []);
-
-  const onBackPress = () => {
-    Alert.alert('', 'Are you sure you want to discard this event?', [
-      {
-        text: 'DISCARD',
-        onPress: () => {
-          toggleTab(true);
-          navigation.goBack();
-        },
-        style: 'cancel',
-      },
-      {text: 'KEEP EDITING'},
-    ]);
-    return true;
+    link,
+    setLink,
+    links,
+    setLinks,
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <EventsCreationScreenHeader
-        navigation={navigation}
-        isValid={titleLength >= 0 && descLength >= 0}
-      />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always"
-        ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
-        ListFooterComponent={<View style={{height: verticalScale(6)}} />}
-        ListHeaderComponent={
-          <>
-            <EventsCreationHeader headerStates={headerStates} />
-            <Divider style={styles.divider} />
-            <EventCreationInputs inputStates={inputStates} />
-            <Divider style={styles.divider} />
-            <EventsCreationTag tagStates={tagStates} />
-            <Divider style={styles.divider} />
-            <EventsCreationTime
-              timeStates={timeStates}
-              dateStates={dateStates}
-            />
-            <Divider style={styles.divider} />
-            <View style={styles.uploadButton}>
-              <Button
-                icon="upload"
-                mode="text"
-                onPress={() => selectFiles()}
-                color={color.WHITE}>
-                Upload Media
-              </Button>
-            </View>
-          </>
-        }
-        data={selectedFiles}
-        renderItem={({item}) => (
-          <FileItem item={item} deleteItem={removeFile} />
-        )}
-      />
+      <EventsCreationScreenHeader navigation={navigation} />
+      <Text style={styles.title}>{pageTitle}</Text>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        ref={scrollview}
+        horizontal={true}
+        pagingEnabled={true}
+        style={{width: WIDTH, marginTop: verticalScale(5)}}
+        scrollEnabled={false}>
+        <EventCreationInputs
+          inputStates={inputStates}
+          scrollViewRef={scrollview}
+          callback={changeText}
+        />
+        <EventsCreationTime
+          timeStates={timeStates}
+          dateStates={dateStates}
+          scrollViewRef={scrollview}
+          callback={changeText}
+        />
+        <EventsCreationImages
+          imageStates={imageStates}
+          scrollViewRef={scrollview}
+          callback={changeText}
+        />
+        <EventsCreationTag
+          tagStates={tagStates}
+          scrollViewRef={scrollview}
+          callback={changeText}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: color.Secondary,
   },
   viewScale: {
@@ -204,6 +197,27 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(6),
     marginVertical: verticalScale(9),
     marginHorizontal: HorizontalPadding,
+  },
+  header: {
+    fontSize: '18@s',
+    color: color.FontColor,
+    fontWeight: 'bold',
+    marginTop: '40@vs',
+  },
+  title: {
+    fontSize: '18@s',
+    color: color.FontColor,
+    fontWeight: '500',
+    marginTop: '10@vs',
+  },
+  subtitle: {
+    fontSize: '12@s',
+    color: '#555555',
+    marginTop: '5@vs',
+    textAlign: 'center',
+  },
+  input: {
+    width: '100%',
   },
 });
 

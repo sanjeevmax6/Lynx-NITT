@@ -9,7 +9,9 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const LinkItem = ({item, deleteItem}) => {
   return (
     <View style={styles.linkItem}>
-      <Text style={styles.linkItemText}>{item}</Text>
+      <Text style={styles.linkItemText} numberOfLines={1}>
+        {item}
+      </Text>
       <TouchableOpacity
         style={styles.deleteItem}
         onPress={() => deleteItem(item)}>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     right: scale(20),
     position: 'absolute',
-    backgroundColor:  color.CreationScreen_DeleteItemBg,
+    backgroundColor: color.CreationScreen_DeleteItemBg,
   },
 });
 
