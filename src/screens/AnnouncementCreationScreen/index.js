@@ -15,6 +15,8 @@ import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {TabVisibility} from '../../redux/reducers/bottomNav';
+import {useDispatch} from 'react-redux';
 
 const AnnouncementCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -45,6 +47,12 @@ const AnnouncementCreationScreen = ({navigation}) => {
     maxAnnouncementLength,
   };
 
+  const dispatch = useDispatch();
+
+  function toggleTab(tabShow) {
+    dispatch(TabVisibility(tabShow));
+  }
+
   const selectFiles = async () => {
     try {
       const files = await DocumentPicker.pickMultiple({
@@ -66,6 +74,7 @@ const AnnouncementCreationScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
     return () => {
@@ -77,7 +86,10 @@ const AnnouncementCreationScreen = ({navigation}) => {
     Alert.alert('', 'Are you sure you want to discard this announcement?', [
       {
         text: 'DISCARD',
-        onPress: () => navigation.goBack(),
+        onPress: () => {
+          toggleTab(true);
+          navigation.goBack();
+        },
         style: 'cancel',
       },
       {text: 'KEEP EDITING'},

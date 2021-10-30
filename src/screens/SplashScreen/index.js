@@ -7,11 +7,13 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import store from '../../redux/store';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import {TabVisibility} from '../../redux/reducers/bottomNav';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
 
   function onEndNavigate() {
+    dispatch(TabVisibility(true));
     dispatch(switchIsLoading(false));
   }
 

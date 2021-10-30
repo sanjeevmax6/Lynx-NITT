@@ -16,6 +16,9 @@ import EditProfileInputs from './EditProfileInputs';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EditProfileScreenHeader from './EditProfileScreenHeader';
 import StudentPhoto from './StudentPhoto';
+import {TabVisibility} from '../../redux/reducers/bottomNav';
+import {useDispatch} from 'react-redux';
+
 const EditProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [dob, setDob] = useState(new Date());
@@ -56,6 +59,12 @@ const EditProfileScreen = ({navigation}) => {
     setStudentPicSelected,
   };
 
+  const dispatch = useDispatch();
+
+  function toggleTab(tabShow) {
+    dispatch(TabVisibility(tabShow));
+  }
+
   const selectFiles = async () => {
     try {
       const files = await DocumentPicker.pickMultiple({
@@ -77,6 +86,7 @@ const EditProfileScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
     return () => {
@@ -88,7 +98,10 @@ const EditProfileScreen = ({navigation}) => {
     Alert.alert('', 'Are you sure you want to discard changes?', [
       {
         text: 'DISCARD',
-        onPress: () => navigation.goBack(),
+        onPress: () => {
+          toggleTab(true);
+          navigation.goBack();
+        },
         style: 'cancel',
       },
       {text: 'KEEP EDITING'},

@@ -4,8 +4,16 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
+import {TabVisibility} from '../../redux/reducers/bottomNav';
+import {useDispatch} from 'react-redux';
 
 const EditProfileScreenHeader = ({navigation, isValid}) => {
+  const dispatch = useDispatch();
+
+  function toggleTab(tabShow) {
+    dispatch(TabVisibility(tabShow));
+  }
+
   return (
     <View style={styles.header}>
       <View style={styles.twoButtonLeft}>
@@ -14,7 +22,10 @@ const EditProfileScreenHeader = ({navigation, isValid}) => {
             Alert.alert('', 'Are you sure you want to discard changes?', [
               {
                 text: 'DISCARD',
-                onPress: () => navigation.goBack(),
+                onPress: () => {
+                  toggleTab(true);
+                  navigation.goBack();
+                },
                 style: 'cancel',
               },
               {
@@ -44,6 +55,9 @@ const EditProfileScreenHeader = ({navigation, isValid}) => {
                   onPress: () => console.log('OK Pressed'),
                 },
               ]);
+            else {
+              //toggleTab(true); To be enabled after implementing save
+            }
           }}
           style={styles.button}>
           <Icon

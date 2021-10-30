@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CalendarNavigator from '../calendar-navigator';
@@ -6,12 +6,19 @@ import FeedNavigator from '../feed-navigator';
 import SearchScreen from '../../screens/SearchScreen';
 import ActivityNavigator from '../activity-navigator';
 import UserNavigator from '../user-navigator';
-
 import * as color from '../../utils/colors';
+import store from '../../redux/store';
 
 const HomeTab = createMaterialBottomTabNavigator();
 
 const AppNavigator = () => {
+  const [isTabVisible, setisTabVisible] = useState(true);
+
+  store.subscribe(() => {
+    setisTabVisible(store.getState().bottomNav.bottomNavigation.isTabVisible);
+    console.log(isTabVisible);
+  });
+
   return (
     <HomeTab.Navigator
       initialRouteName="Feed"
@@ -19,7 +26,10 @@ const AppNavigator = () => {
       inactiveColor={color.iconInActiveColor}
       labeled={false}
       sceneAnimationEnabled={true}
-      barStyle={{backgroundColor: color.BottomNav}}
+      barStyle={{
+        backgroundColor: color.BottomNav,
+        display: isTabVisible ? null : 'none',
+      }}
       screenOptions={{
         headerShown: false,
       }}>

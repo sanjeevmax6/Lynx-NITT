@@ -18,6 +18,8 @@ import EventsCreationScreenHeader from './EventsCreationScreenHeader';
 import EventsCreationHeader from './EventsCreationHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EventsCreationTag from './EventsCreationTags';
+import {TabVisibility} from '../../redux/reducers/bottomNav';
+import {useDispatch} from 'react-redux';
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -40,6 +42,11 @@ const EventCreationScreen = ({navigation}) => {
   const [titleLength, setTitleLength] = useState(maxTitleLength);
   const [descLength, setDescLength] = useState(maxDescLength);
 
+  const dispatch = useDispatch();
+
+  function toggleTab(tabShow) {
+    dispatch(TabVisibility(tabShow));
+  }
   const inputStates = {
     title,
     setTitle,
@@ -106,6 +113,7 @@ const EventCreationScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
     return () => {
@@ -117,7 +125,10 @@ const EventCreationScreen = ({navigation}) => {
     Alert.alert('', 'Are you sure you want to discard this event?', [
       {
         text: 'DISCARD',
-        onPress: () => navigation.goBack(),
+        onPress: () => {
+          toggleTab(true);
+          navigation.goBack();
+        },
         style: 'cancel',
       },
       {text: 'KEEP EDITING'},
