@@ -46,7 +46,6 @@ const styles = ScaledSheet.create({
   dashboard: {
     backgroundColor: colors.Tertiary,
     paddingBottom: '5@vs',
-    borderRadius: '5@ms',
   },
   head: {
     color: colors.WHITE,
@@ -65,7 +64,7 @@ const styles = ScaledSheet.create({
     //backgroundColor: 'pink',
   },
   number: {
-    color: 'blue',
+    color: colors.iconActiveColor,
     fontSize: '14@s',
     fontWeight: 'bold',
     padding: '6@s',

@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 
 const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
@@ -31,7 +31,7 @@ const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity style={styles.icon} onPress={() => {}}>
               <Icon
-                name="bookmark-o"
+                name="turned-in-not"
                 color={colors.EventCard_Bookmark}
                 size={scale(ICON_SIZE)}
               />
@@ -40,7 +40,7 @@ const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
               style={{...styles.icon, paddingRight: 0}}
               onPress={() => {}}>
               <Icon
-                name="share-alt"
+                name="share"
                 color={colors.EventCard_ShareIcon}
                 size={scale(ICON_SIZE)}
               />
@@ -62,6 +62,7 @@ const styles = ScaledSheet.create({
     padding: scale(HorizontalPadding),
     backgroundColor: colors.EventCard_Back,
     borderRadius: '8@s',
+    elevation: 1,
   },
   image: {
     width: '100@s',
@@ -80,12 +81,13 @@ const styles = ScaledSheet.create({
   title: {
     marginBottom: '3@vs',
     color: colors.EventCard_Title,
-    fontSize: '16@s',
+    fontSize: '14@s',
     fontWeight: 'bold',
+    textAlign: 'justify',
   },
-  desc: {fontSize: '12@s'},
+  desc: {fontSize: '12@s', fontWeight: '500', textAlign: 'justify'},
   date: {
-    fontWeight: 'bold',
+    fontWeight: '500',
     fontSize: '12@s',
     color: colors.EventCard_Date,
   },

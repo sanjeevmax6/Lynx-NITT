@@ -24,6 +24,7 @@ function UserNavigator() {
         component={EditProfileScreen}
         options={{
           headerShown: false,
+          animation: 'slide_from_right',
         }}
       />
       <UserStack.Screen
@@ -32,6 +33,7 @@ function UserNavigator() {
         options={{
           headerShown: true,
           header: props => <PageHeader title="SETTINGS" />,
+          animation: 'slide_from_right',
         }}
       />
     </UserStack.Navigator>

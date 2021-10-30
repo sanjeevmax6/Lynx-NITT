@@ -10,7 +10,7 @@ import {
   vs,
   s,
 } from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as color from '../../utils/colors';
 import {ICON_SIZE} from '../../utils/UI_CONSTANTS';
 const RecentEventCard = ({name, date, time, id, url}) => {
@@ -33,7 +33,7 @@ const RecentEventCard = ({name, date, time, id, url}) => {
       </View>
       <View style={styles.notificationView}>
         <Icon
-          name={'notification'}
+          name={'bullhorn'}
           size={scale(ICON_SIZE)}
           style={{color: color.Tertiary}}
         />

@@ -26,6 +26,7 @@ function ActivityNavigator() {
         name="AnnouncementDetail"
         component={AnnouncementDetailScreen}
         options={{
+          animation: 'slide_from_right',
           headerShown: true,
           header: props => <Header props={props} />,
         }}
@@ -34,6 +35,7 @@ function ActivityNavigator() {
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
         options={{
+          animation: 'slide_from_right',
           headerShown: true,
           header: props => <Header props={props} />,
         }}
@@ -42,6 +44,7 @@ function ActivityNavigator() {
         name="ImageScreen"
         children={ImageZoomScreen}
         options={{
+          animation: 'fade_from_bottom',
           headerShown: true,
           headerTransparent: true,
           headerShadowVisible: false,

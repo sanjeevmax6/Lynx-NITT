@@ -5,15 +5,16 @@ import {
   Animated,
   SafeAreaView,
   Dimensions,
+  Platform,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {
-  scale,
   verticalScale,
   moderateScale,
   ScaledSheet,
+  scale,
 } from 'react-native-size-matters';
 import {updateToken} from '../../redux/reducers/loginScreen';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,6 +23,14 @@ import store from '../../redux/store';
 import LottieView from 'lottie-react-native';
 import lottieFile from '../../res/lottieFiles/loginBackGround.json';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+//scaling
+const height2 = 737.1;
+const screenHeight = Dimensions.get('window').height - getStatusBarHeight(true);
+export function getHeight(height) {
+  return Math.floor((height * screenHeight) / height2);
+}
 
 const LoginScreen = ({navigation}) => {
   const [user, setUser] = useState();
@@ -44,17 +53,30 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <LottieView
-        style={{
-          marginTop: verticalScale(160),
-          backgroundColor: 'white',
-        }}
-        resizeMode="cover"
-        source={lottieFile}
-        progress={1}
-        autoPlay
-        loop
-      />
+      {Platform.OS === 'android' ? (
+        <LottieView
+          style={{
+            marginTop: getHeight(180),
+          }}
+          resizeMode="cover"
+          source={lottieFile}
+          progress={1}
+          autoPlay
+          loop
+        />
+      ) : (
+        <LottieView
+          style={{
+            marginTop: getHeight(85),
+          }}
+          resizeMode="contain"
+          source={lottieFile}
+          progress={1}
+          autoPlay
+          loop
+        />
+      )}
+
       <View>
         <SafeAreaView>
           <ScrollView keyboardShouldPersistTaps="always">
@@ -107,8 +129,23 @@ const LoginScreen = ({navigation}) => {
                   onChangeText={password => setPassword(password)}
                 />
               </View>
+              <Text style={{textAlign: 'center', fontSize: scale(12)}}>
+                <Text> Don't have an Account? </Text>
+                <Text
+                  style={{
+                    color: colors.Accent,
+                    fontWeight: 'bold',
+                    fontSize: scale(14),
+                  }}>
+                  SIGN UP
+                </Text>
+              </Text>
               <Animated.View style={styles.loginBtnView}>
                 <TouchableOpacity
+                  style={{
+                    backgroundColor: '#2F3F9E',
+                    borderRadius: verticalScale(22),
+                  }}
                   onPress={() => {
                     onLogin(user);
                   }}>
@@ -116,10 +153,6 @@ const LoginScreen = ({navigation}) => {
                     name="chevron-right"
                     size={verticalScale(44)}
                     color={colors.WHITE}
-                    style={{
-                      backgroundColor: '#2F3F9E',
-                      borderRadius: verticalScale(22),
-                    }}
                   />
                 </TouchableOpacity>
               </Animated.View>

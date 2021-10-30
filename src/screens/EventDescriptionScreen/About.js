@@ -36,7 +36,7 @@ const About = ({about, date, time}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>About</Text>
+            <Text style={styles.modalTitle}>ABOUT</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Text style={styles.modalText}>{about}</Text>
             </ScrollView>
@@ -114,7 +114,7 @@ const styles = ScaledSheet.create({
     marginVertical: scale(12),
     marginHorizontal: scale(8),
     height: (2.3 * Dimensions.get('window').height) / 3,
-    backgroundColor: colors.EventDescriptionScreen_ModalView,
+    backgroundColor: 'rgba(63,80,180,0.99)',
     opacity: 0.99,
     borderRadius: scale(20),
     padding: scale(20),
@@ -137,12 +137,13 @@ const styles = ScaledSheet.create({
   modalText: {
     marginBottom: scale(15),
     letterSpacing: 0.7,
-    color: colors.FontColor,
+    color: colors.GRAY_LIGHT,
     fontSize: scale(16),
+    textAlign: 'justify',
   },
   modalTitle: {
     fontSize: scale(18),
-    color: colors.FontColor,
+    color: colors.GRAY_LIGHT,
     fontWeight: 'bold',
   },
   closeButton: {

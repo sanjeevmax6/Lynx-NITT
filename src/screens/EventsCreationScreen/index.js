@@ -144,6 +144,8 @@ const EventCreationScreen = ({navigation}) => {
         keyboardShouldPersistTaps="handled"
         ref={scrollview}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         pagingEnabled={true}
         style={{width: WIDTH, marginTop: verticalScale(5)}}
         scrollEnabled={false}>

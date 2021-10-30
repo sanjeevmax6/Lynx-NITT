@@ -28,6 +28,7 @@ function CalendarNavigator() {
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
         options={{
+          animation: 'slide_from_right',
           headerShown: true,
           header: props => <Header props={props} />,
         }}
@@ -37,6 +38,7 @@ function CalendarNavigator() {
         component={EventsCreationScreen}
         options={{
           headerShown: false,
+          animation: 'slide_from_bottom',
         }}
       />
       <CalendarStack.Screen
@@ -44,6 +46,7 @@ function CalendarNavigator() {
         component={AnnouncementCreationScreen}
         options={{
           headerShown: false,
+          animation: 'slide_from_bottom',
         }}
       />
       <CalendarStack.Screen
@@ -52,6 +55,7 @@ function CalendarNavigator() {
         options={{
           headerShown: true,
           headerTransparent: true,
+          animation: 'fade_from_bottom',
           headerShadowVisible: false,
           title: '',
           headerTintColor: color.WHITE,
@@ -62,6 +66,7 @@ function CalendarNavigator() {
         component={ClubDescriptionScreen}
         options={{
           headerShown: true,
+          animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}
       />

@@ -92,10 +92,12 @@ const Header = ({
         onPress={() => {
           navigation.navigate('ImageScreen', {imgUrl: url});
         }}>
-        <Image
-          source={{uri: url || '../../assests/images/spider.png'}}
-          style={styles.image}
-        />
+        <View style={styles.imageView}>
+          <Image
+            source={{uri: url || '../../assests/images/spider.png'}}
+            style={styles.image}
+          />
+        </View>
       </TouchableOpacity>
       <View
         style={{
@@ -183,15 +185,24 @@ const styles = ScaledSheet.create({
     fontSize: '14@s',
     color: colors.BLACK,
   },
+  imageView: {
+    width: '120@s',
+    height: '120@s',
+    marginTop: '-67@vs',
+    borderRadius: '60@s',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: scale(HorizontalPadding),
+    elevation: 1,
+    backgroundColor: 'transparent',
+    zIndex: 1,
+  },
   image: {
     width: '120@s',
     height: '120@s',
     borderRadius: '60@s',
     justifyContent: 'center',
     borderColor: colors.Primary,
-    borderWidth: '1@vs',
-    marginTop: '-67@vs',
-    marginLeft: scale(HorizontalPadding),
   },
   numbers: {
     color: colors.WHITE,

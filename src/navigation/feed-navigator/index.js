@@ -25,6 +25,7 @@ function FeedNavigator() {
         component={EventDescriptionScreen}
         options={{
           headerShown: true,
+          animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}
       />
@@ -33,6 +34,7 @@ function FeedNavigator() {
         children={ImageZoomScreen}
         options={{
           headerShown: true,
+          animation: 'fade_from_bottom',
           headerTransparent: true,
           headerShadowVisible: false,
           title: '',
@@ -44,6 +46,7 @@ function FeedNavigator() {
         component={ClubDescriptionScreen}
         options={{
           headerShown: true,
+          animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}
       />

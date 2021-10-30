@@ -63,7 +63,7 @@ const TopLayout = props => {
     <View>
       <TouchableOpacity style={styles.dateLayout} onPress={toggle}>
         <Text style={styles.dateText}>{day}</Text>
-        <IconButton icon={icon} size={scale(15)} />
+        <IconButton icon={icon} size={scale(16)} color={colors.Tertiary} />
       </TouchableOpacity>
       <Divider style={{height: 0.3}} />
       <Animated.View style={[{height: animation}]}>
