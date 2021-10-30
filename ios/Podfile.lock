@@ -347,6 +347,8 @@ PODS:
     - React-Core
   - RNImageColors (1.4.0):
     - React-Core
+  - RNInAppBrowser (3.6.3):
+    - React-Core
   - RNScreens (3.7.0):
     - React-Core
     - React-RCTImage
@@ -414,6 +416,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNImageColors (from `../node_modules/react-native-image-colors`)
+  - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -505,6 +508,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNImageColors:
     :path: "../node_modules/react-native-image-colors"
+  RNInAppBrowser:
+    :path: "../node_modules/react-native-inappbrowser-reborn"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -561,6 +566,7 @@ SPEC CHECKSUMS:
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNImageColors: f6b4dc737d15bf01bf379369655467e03b361861
+  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNScreens: 2a71d74b4e530f051f5684c8111d7591176722cf
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4

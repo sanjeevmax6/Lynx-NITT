@@ -24,7 +24,7 @@ const TopLayout = props => {
   const [expanded, setexpanded] = useState(true);
   const maxHeight = width * 0.9 + 55;
   const animation = useRef(new Animated.Value(maxHeight)).current;
-  const [icon, setIcon] = useState('arrow-down-drop-circle');
+  const [icon, setIcon] = useState('arrow-up-drop-circle');
   const [b, setb] = useState(true);
   const [selDate, setSelDate] = useState(
     new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
@@ -45,11 +45,11 @@ const TopLayout = props => {
   const toggle = () => {
     var ht = 0;
     setb(false);
-    setIcon('arrow-up-drop-circle');
+    setIcon('arrow-down-drop-circle');
     if (!expanded) {
       ht = maxHeight;
       setb(true);
-      setIcon('arrow-down-drop-circle');
+      setIcon('arrow-up-drop-circle');
     }
 
     Animated.spring(animation, {

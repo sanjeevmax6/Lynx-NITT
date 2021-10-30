@@ -13,6 +13,8 @@ export const FontColor = '#000000';
 
 export const StatusBar = Secondary;
 export const iosBackgroundColor = '3e3e3e';
+export const HeaderText = '#c0392b';
+export const cardContainer = '#444444';
 
 //GreyScale
 export const GRAY_LIGHT = '#e6e6e6';

@@ -227,7 +227,7 @@ const FeedScreen = ({navigation}) => {
                   paddingLeft: scale(HorizontalPadding),
                   color: 'white',
                   fontWeight: 'bold',
-                  color: colors.EventScreen_headerText,
+                  color: colors.HeaderText,
                 }}>
                 EVENTS
               </Text>

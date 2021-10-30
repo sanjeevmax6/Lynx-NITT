@@ -17,7 +17,7 @@ const EventCard = props => {
       <View
         style={{
           width: scale(6),
-          backgroundColor: '#444444',
+          backgroundColor: color.cardContainer,
           borderRadius: scale(5),
         }}
       />

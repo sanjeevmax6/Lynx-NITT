@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     zIndex: 6,
     backgroundColor: colors.headerBackground,
+    
   },
   headerText: {
     flex: 1,
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: scale(16),
     fontWeight: 'bold',
     paddingHorizontal: scale(HorizontalPadding),
+    color:colors.HeaderText,
   },
   button: {
     flex: 1,

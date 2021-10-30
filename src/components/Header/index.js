@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: '65%',
     textAlign: 'center',
+    color:colors.HeaderText,
   },
   button: {
     justifyContent: 'center',
