@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Image, Dimensions, ActivityIndicator} from 'react-native';
 import {verticalScale, scale, ScaledSheet} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
@@ -59,17 +52,17 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
     }
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: win.width * 3,
+        x: win.width * 4,
         animated: true,
       });
     }
-    callback('Additional Info', 4);
+    callback('Additional Info', 5);
   };
   const back = () => {
-    callback('Date and Time', 0);
+    callback('Date and Time', 3);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: win.width * 1,
+        x: win.width * 2,
         animated: true,
       });
     }
@@ -135,12 +128,12 @@ const styles = ScaledSheet.create({
   },
   headerText: {
     color: color.Lightsteelblue,
-    fontSize: 16,
+    fontSize: '16@s',
   },
   error: {
     position: 'absolute',
     bottom: '60@vs',
-    left: HorizontalPadding,
+    left: scale(HorizontalPadding),
   },
   next: {
     position: 'absolute',

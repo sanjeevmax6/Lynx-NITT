@@ -10,7 +10,7 @@ import {
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import {useDispatch} from 'react-redux';
 

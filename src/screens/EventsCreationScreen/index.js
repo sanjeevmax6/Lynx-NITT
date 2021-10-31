@@ -15,12 +15,13 @@ import {
 } from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import {useFocusEffect} from '@react-navigation/native';
-import EventCreationInputs from './EventsCreationInput';
+import EventCreationTitle from './EventsCreationTitle';
 import EventsCreationTime from './EventsCreationTime';
 import EventsCreationScreenHeader from './EventsCreationScreenHeader';
 import EventsCreationImages from './EventsCreationImages';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import EventCreationDesc from './EventsCreationDesc';
 import EventsCreationTag from './EventsCreationTags';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import {useDispatch} from 'react-redux';
 
@@ -41,7 +42,7 @@ const EventCreationScreen = ({navigation}) => {
   const [tags, setTags] = useState([]);
 
   const scrollview = useRef(null);
-  const [pageTitle, setPageTitle] = useState('About the Event');
+  const [pageTitle, setPageTitle] = useState('Event Title');
   // const [subtitle, setSubTitle] = useState('');
   const [page, setPage] = useState(0);
 
@@ -97,9 +98,12 @@ const EventCreationScreen = ({navigation}) => {
     return () => {};
   }, []);
 
-  const inputStates = {
+  const titleStates = {
     title,
     setTitle,
+  };
+
+  const descStates = {
     desc,
     setDesc,
   };
@@ -149,8 +153,13 @@ const EventCreationScreen = ({navigation}) => {
         pagingEnabled={true}
         style={{width: WIDTH, marginTop: verticalScale(5)}}
         scrollEnabled={false}>
-        <EventCreationInputs
-          inputStates={inputStates}
+        <EventCreationTitle
+          titleStates={titleStates}
+          scrollViewRef={scrollview}
+          callback={changeText}
+        />
+        <EventCreationDesc
+          descStates={descStates}
           scrollViewRef={scrollview}
           callback={changeText}
         />
@@ -198,7 +207,7 @@ const styles = ScaledSheet.create({
     backgroundColor: color.Tertiary,
     borderRadius: moderateScale(6),
     marginVertical: verticalScale(9),
-    marginHorizontal: HorizontalPadding,
+    marginHorizontal: scale(HorizontalPadding),
   },
   header: {
     fontSize: '18@s',

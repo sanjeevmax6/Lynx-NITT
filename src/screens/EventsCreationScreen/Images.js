@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {Text, View, ScrollView, Image, Dimensions} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import {ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 
 const WIDTH = Dimensions.get('window').width;
@@ -54,7 +54,7 @@ const Images = ({images, selectImage, deleteImage}) => {
                     <IconButton
                       icon="close"
                       color={colors.Tertiary}
-                      size={20}
+                      size={scale(20)}
                       onPress={() => {
                         deleteImage(index);
                         goBack(index);
@@ -136,7 +136,7 @@ const styles = ScaledSheet.create({
   wrapCloseButton: {
     position: 'absolute',
     top: 0,
-    right: HorizontalPadding,
+    right: scale(HorizontalPadding),
     flexDirection: 'row',
   },
 });

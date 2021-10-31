@@ -51,18 +51,18 @@ const EventsCreationTime = ({
   const scroll = () => {
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 2,
+        x: WIDTH * 3,
         animated: true,
       });
     }
-    callback('Images', 3);
+    callback('Images', 4);
   };
 
   const back = () => {
-    callback('About the Event', 1);
+    callback('Event Description', 2);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 0,
+        x: WIDTH * 1,
         animated: true,
       });
     }
@@ -174,14 +174,6 @@ const styles = ScaledSheet.create({
     //paddingHorizontal: scale(2),
     paddingVertical: verticalScale(4),
     marginHorizontal: scale(HorizontalPadding),
-  },
-  buttonViewTheme: {
-    fontSize: 16,
-    padding: moderateScale(8),
-    backgroundColor: color.Secondary,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonTextTheme: {
     fontSize: scale(14),

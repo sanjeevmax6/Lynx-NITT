@@ -72,10 +72,10 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
   };
 
   const back = () => {
-    callback('Images', 2);
+    callback('Images', 4);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 2,
+        x: WIDTH * 3,
         animated: true,
       });
       Keyboard.dismiss();
@@ -186,7 +186,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     width: WIDTH,
-    paddingHorizontal: HorizontalPadding,
+    paddingHorizontal: scale(HorizontalPadding),
   },
   tagContainer: {},
   textInputStyle: {
