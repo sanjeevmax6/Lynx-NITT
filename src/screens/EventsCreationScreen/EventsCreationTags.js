@@ -19,6 +19,7 @@ import {
 } from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import Error from './Error';
+import {eventCreation_ImageTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -72,7 +73,7 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
   };
 
   const back = () => {
-    callback('Images', 4);
+    callback(eventCreation_ImageTitle, 4);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 3,
@@ -131,7 +132,10 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
           underlineColor="transparent"
           style={{
             backgroundColor: color.GRAY_LIGHT,
-            borderBottomRightRadius: moderateScale(12),
+            borderTopRightRadius: moderateScale(9),
+            borderTopLeftRadius: moderateScale(9),
+            borderBottomLeftRadius: moderateScale(9),
+            borderBottomRightRadius: moderateScale(9),
           }}
           label="Event Links"
           placeholder="Event Links"
@@ -191,7 +195,10 @@ const styles = ScaledSheet.create({
   tagContainer: {},
   textInputStyle: {
     backgroundColor: color.GRAY_LIGHT,
-    borderTopLeftRadius: moderateScale(12),
+    borderTopRightRadius: moderateScale(9),
+    borderTopLeftRadius: moderateScale(9),
+    borderBottomLeftRadius: moderateScale(9),
+    borderBottomRightRadius: moderateScale(9),
   },
   flatListStyle: {
     flexDirection: 'row',

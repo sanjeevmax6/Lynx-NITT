@@ -19,6 +19,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {Button, TextInput} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  eventCreation_DescriptionTitle,
+  eventCreation_ImageTitle,
+} from '../../utils/stringConstants';
 
 const TIME_FORMAT = 'h:mm A';
 const DATE_FORMAT = 'MMMM DD, YYYY';
@@ -55,11 +59,11 @@ const EventsCreationTime = ({
         animated: true,
       });
     }
-    callback('Images', 4);
+    callback(eventCreation_ImageTitle, 4);
   };
 
   const back = () => {
-    callback('Event Description', 2);
+    callback(eventCreation_DescriptionTitle, 2);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 1,
@@ -88,7 +92,10 @@ const EventsCreationTime = ({
           disabled={true}
           style={{
             backgroundColor: color.GRAY_LIGHT,
-            borderTopLeftRadius: moderateScale(6),
+            borderTopRightRadius: moderateScale(9),
+            borderTopLeftRadius: moderateScale(9),
+            borderBottomLeftRadius: moderateScale(9),
+            borderBottomRightRadius: moderateScale(9),
           }}
           theme={{
             colors: {
@@ -112,6 +119,10 @@ const EventsCreationTime = ({
             disabled={true}
             style={{
               backgroundColor: color.GRAY_LIGHT,
+              borderTopRightRadius: moderateScale(9),
+              borderTopLeftRadius: moderateScale(9),
+              borderBottomLeftRadius: moderateScale(9),
+              borderBottomRightRadius: moderateScale(9),
             }}
             theme={{
               colors: {
@@ -183,7 +194,7 @@ const styles = ScaledSheet.create({
   switchView: {
     paddingVertical: verticalScale(8),
     backgroundColor: color.Tertiary,
-    borderRadius: moderateScale(6),
+    borderRadius: moderateScale(9),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

@@ -6,6 +6,7 @@ import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from './Error';
+import {eventCreation_DescriptionTitle} from '../../utils/stringConstants';
 const WIDTH = Dimensions.get('window').width;
 const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
   const maxTitleLength = 150;
@@ -29,7 +30,7 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
       return;
     }
 
-    callback('Event Description', 2);
+    callback(eventCreation_DescriptionTitle, 2);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH,
@@ -47,7 +48,10 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
           label="Event Title"
           style={{
             backgroundColor: color.GRAY_LIGHT,
-            borderTopLeftRadius: moderateScale(12),
+            borderTopRightRadius: moderateScale(9),
+            borderTopLeftRadius: moderateScale(9),
+            borderBottomLeftRadius: moderateScale(9),
+            borderBottomRightRadius: moderateScale(9),
           }}
           placeholder="Event Title (max 150)"
           multiline={true}
@@ -61,7 +65,7 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
             titleStates.setTitle(nTitle);
             onChangeTitleLength(nTitle);
           }}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={color.Accent} />}
           right={
             <TextInput.Affix
               text={'/' + titleLength}

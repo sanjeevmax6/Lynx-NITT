@@ -8,6 +8,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Images from './Images';
 import Error from './Error';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {
+  eventCreation_DateTitle,
+  eventCreation_tags_linksTitle,
+} from '../../utils/stringConstants';
 
 const win = Dimensions.get('window');
 
@@ -56,10 +60,10 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
         animated: true,
       });
     }
-    callback('Additional Info', 5);
+    callback(eventCreation_tags_linksTitle, 5);
   };
   const back = () => {
-    callback('Date and Time', 3);
+    callback(eventCreation_DateTitle, 3);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: win.width * 2,

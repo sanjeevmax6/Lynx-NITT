@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {Text, View, ScrollView, Image, Dimensions} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 
 const WIDTH = Dimensions.get('window').width;
@@ -31,7 +31,13 @@ const Images = ({images, selectImage, deleteImage}) => {
     }
   };
   return (
-    <View>
+    <View
+      style={{
+        //backgroundColor: 'blue',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <View style={styles.wrap}>
         <ScrollView
           ref={scrollview}
@@ -53,7 +59,8 @@ const Images = ({images, selectImage, deleteImage}) => {
                   <View style={styles.wrapCloseButton}>
                     <IconButton
                       icon="close"
-                      color={colors.Tertiary}
+                      style={{backgroundColor: colors.Accent}}
+                      color="#ffff"
                       size={scale(20)}
                       onPress={() => {
                         deleteImage(index);
@@ -84,20 +91,20 @@ const Images = ({images, selectImage, deleteImage}) => {
             </View>
           ))}
         </ScrollView>
-        {images.length > 1 ? (
-          <View style={styles.wrapDot}>
-            {images.map((e, index) => (
-              <Text
-                key={e}
-                style={imgActive == index ? styles.dotActive : styles.dot}>
-                ●
-              </Text>
-            ))}
-          </View>
-        ) : (
-          <View />
-        )}
       </View>
+      {images.length > 1 ? (
+        <View style={styles.wrapDot}>
+          {images.map((e, index) => (
+            <Text
+              key={e}
+              style={imgActive == index ? styles.dotActive : styles.dot}>
+              ●
+            </Text>
+          ))}
+        </View>
+      ) : (
+        <View />
+      )}
     </View>
   );
 };
@@ -108,12 +115,14 @@ const styles = ScaledSheet.create({
   wrap: {
     width: WIDTH,
     height: HEIGHT * 0.6,
-    backgroundColor: colors.Secondary,
+    //backgroundColor: 'pink',
   },
   wrapDot: {
-    position: 'absolute',
+    position: 'relative',
     bottom: 0,
+    //backgroundColor: 'red',
     flexDirection: 'row',
+    marginTop: '3@vs',
     alignSelf: 'center',
   },
   dotActive: {
@@ -136,7 +145,8 @@ const styles = ScaledSheet.create({
   wrapCloseButton: {
     position: 'absolute',
     top: 0,
-    right: scale(HorizontalPadding),
+    elevation: 1,
+    right: 0,
     flexDirection: 'row',
   },
 });

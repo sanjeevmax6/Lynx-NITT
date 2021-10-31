@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   linkItem: {
     flex: 1,
     backgroundColor: color.Primary,
+    elevation: 1,
     marginVertical: moderateScale(1),
     marginHorizontal: scale(HorizontalPadding),
     flexDirection: 'row',
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     padding: moderateScale(5),
     borderRadius: 20,
     right: scale(20),
+    elevation: 1,
     position: 'absolute',
     backgroundColor: color.CreationScreen_DeleteItemBg,
   },

@@ -6,6 +6,10 @@ import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from './Error';
+import {
+  eventCreation_DateTitle,
+  eventCreation_eventTitle,
+} from '../../utils/stringConstants';
 const WIDTH = Dimensions.get('window').width;
 const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
   const maxDescLength = 300;
@@ -26,7 +30,7 @@ const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
       return;
     }
 
-    callback('Date and Time', 3);
+    callback(eventCreation_DateTitle, 3);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 2,
@@ -36,7 +40,7 @@ const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
     }
   };
   const back = () => {
-    callback('Event Title', 1);
+    callback(eventCreation_eventTitle, 1);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 0,
@@ -52,8 +56,10 @@ const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
           underlineColor="transparent"
           style={{
             backgroundColor: color.GRAY_LIGHT,
-
+            borderTopRightRadius: moderateScale(9),
             borderTopLeftRadius: moderateScale(9),
+            borderBottomLeftRadius: moderateScale(9),
+            borderBottomRightRadius: moderateScale(9),
           }}
           label="Event Description"
           multiline={true}

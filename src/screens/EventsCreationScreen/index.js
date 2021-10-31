@@ -24,6 +24,7 @@ import EventsCreationTag from './EventsCreationTags';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import {useDispatch} from 'react-redux';
+import {eventCreation_eventTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -42,7 +43,7 @@ const EventCreationScreen = ({navigation}) => {
   const [tags, setTags] = useState([]);
 
   const scrollview = useRef(null);
-  const [pageTitle, setPageTitle] = useState('Event Title');
+  const [pageTitle, setPageTitle] = useState(eventCreation_eventTitle);
   // const [subtitle, setSubTitle] = useState('');
   const [page, setPage] = useState(0);
 
@@ -145,7 +146,7 @@ const EventCreationScreen = ({navigation}) => {
       <EventsCreationScreenHeader navigation={navigation} />
       <Text style={styles.title}>{pageTitle}</Text>
       <ScrollView
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="always"
         ref={scrollview}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -216,7 +217,7 @@ const styles = ScaledSheet.create({
     marginTop: '40@vs',
   },
   title: {
-    fontSize: '18@s',
+    fontSize: '16@s',
     color: color.FontColor,
     fontWeight: '500',
     marginTop: '10@vs',
