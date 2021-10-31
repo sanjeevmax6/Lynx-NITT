@@ -43,6 +43,8 @@ const EventCreationScreen = ({navigation}) => {
   const [tags, setTags] = useState([]);
 
   const scrollview = useRef(null);
+  const descInputRef = useRef(null);
+
   const [pageTitle, setPageTitle] = useState(eventCreation_eventTitle);
   // const [subtitle, setSubTitle] = useState('');
   const [page, setPage] = useState(0);
@@ -53,6 +55,11 @@ const EventCreationScreen = ({navigation}) => {
     setPage(page);
   };
 
+  const handleFocus = x => {
+    if (Math.floor(x) == Math.floor(WIDTH)) descInputRef.current.focus();
+  };
+
+  //Handling hardwareBackPress
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -149,6 +156,9 @@ const EventCreationScreen = ({navigation}) => {
         keyboardShouldPersistTaps="always"
         ref={scrollview}
         horizontal={true}
+        onScroll={({nativeEvent}) => {
+          handleFocus(nativeEvent.contentOffset.x);
+        }}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         pagingEnabled={true}
@@ -162,6 +172,7 @@ const EventCreationScreen = ({navigation}) => {
         <EventCreationDesc
           descStates={descStates}
           scrollViewRef={scrollview}
+          descInputRef={descInputRef}
           callback={changeText}
         />
         <EventsCreationTime

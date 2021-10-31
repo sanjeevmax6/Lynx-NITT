@@ -10,15 +10,16 @@ import {
   eventCreation_DateTitle,
   eventCreation_eventTitle,
 } from '../../utils/stringConstants';
-const WIDTH = Dimensions.get('window').width;
-const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
-  const maxDescLength = 300;
-  const [descLength, setDescLength] = useState(maxDescLength);
-  const onChangeDescLength = text => {
-    setDescLength(maxDescLength - text.length);
-  };
 
-  const [descEr, setdescEr] = useState(0);
+const WIDTH = Dimensions.get('window').width;
+
+const EventCreationDesc = ({
+  descStates,
+  scrollViewRef,
+  descInputRef,
+  callback,
+}) => {
+  //handling scroll
   const scroll = () => {
     setdescEr(0);
     if (!descStates.desc) {
@@ -49,10 +50,20 @@ const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
     }
   };
 
+  //char count
+  const maxDescLength = 300;
+  const [descLength, setDescLength] = useState(maxDescLength);
+  const onChangeDescLength = text => {
+    setDescLength(maxDescLength - text.length);
+  };
+
+  const [descEr, setdescEr] = useState(0);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.viewScale}>
         <TextInput
+          ref={descInputRef}
           underlineColor="transparent"
           style={{
             backgroundColor: color.GRAY_LIGHT,
@@ -85,19 +96,11 @@ const EventCreationDesc = ({descStates, scrollViewRef, callback}) => {
             />
           }
         />
-        {/*
-        <Text
-          style={[
-            styles.wordCount,
-            {color: inputStates.descLength < 0 ? 'red' : 'black'},
-          ]}>
-          {inputStates.descLength}
-        </Text>
-        */}
-
         {descEr == 1 && <Error text="Please fill in the Description" />}
         {descEr == 2 && <Error text="Exceeds Word Limit" />}
       </View>
+
+      {/* Navigation Buttons */}
       <Button
         style={styles.next}
         mode="contained"

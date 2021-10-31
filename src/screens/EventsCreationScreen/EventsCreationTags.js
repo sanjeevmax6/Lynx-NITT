@@ -24,6 +24,32 @@ import {eventCreation_ImageTitle} from '../../utils/stringConstants';
 const WIDTH = Dimensions.get('window').width;
 
 const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
+  //handling scroll
+  const createEvent = () => {
+    if (tagStates.tags.length == 0) {
+      setTagEr(true);
+      return;
+    }
+    if (tagStates.links.length == 0) {
+      setLinkEr(true);
+      return;
+    }
+
+    console.log('Event Created');
+  };
+
+  const back = () => {
+    callback(eventCreation_ImageTitle, 4);
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: WIDTH * 3,
+        animated: true,
+      });
+      Keyboard.dismiss();
+    }
+  };
+  //
+
   const [tag, setTag] = useState('');
   const [tagEr, setTagEr] = useState(false);
   const [linkEr, setLinkEr] = useState(false);
@@ -57,30 +83,6 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
     tagStates.setLinks(prevList => {
       return prevList.filter(item => item != link);
     });
-  };
-
-  const createEvent = () => {
-    if (tagStates.tags.length == 0) {
-      setTagEr(true);
-      return;
-    }
-    if (tagStates.links.length == 0) {
-      setLinkEr(true);
-      return;
-    }
-
-    console.log('Event Created');
-  };
-
-  const back = () => {
-    callback(eventCreation_ImageTitle, 4);
-    if (scrollViewRef.current !== null) {
-      scrollViewRef.current.scrollTo({
-        x: WIDTH * 3,
-        animated: true,
-      });
-      Keyboard.dismiss();
-    }
   };
 
   return (
@@ -167,6 +169,8 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
         )}
         {linkEr && <Error text={'Please add a Link'} />}
       </View>
+
+      {/* Navigation Buttons */}
       <Button
         style={styles.next}
         mode="contained"

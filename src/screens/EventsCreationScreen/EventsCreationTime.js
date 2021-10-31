@@ -35,23 +35,7 @@ const EventsCreationTime = ({
   scrollViewRef,
   callback,
 }) => {
-  const toggleSwitch = () => {
-    timeStates.setAllDaySwitch(prevVal => {
-      return !prevVal;
-    });
-  };
-
-  const onChangeTime = newTime => {
-    const currentTime = newTime || timeStates.time;
-    timeStates.setTimePicker(false);
-    timeStates.setTime(currentTime);
-  };
-
-  const onChangeDate = newDate => {
-    const currentDate = newDate || dateStates.date;
-    dateStates.setDatePicker(false);
-    dateStates.setDate(currentDate);
-  };
+  //Handling Scroll
   const scroll = () => {
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
@@ -70,6 +54,25 @@ const EventsCreationTime = ({
         animated: true,
       });
     }
+  };
+  //
+
+  const toggleSwitch = () => {
+    timeStates.setAllDaySwitch(prevVal => {
+      return !prevVal;
+    });
+  };
+
+  const onChangeTime = newTime => {
+    const currentTime = newTime || timeStates.time;
+    timeStates.setTimePicker(false);
+    timeStates.setTime(currentTime);
+  };
+
+  const onChangeDate = newDate => {
+    const currentDate = newDate || dateStates.date;
+    dateStates.setDatePicker(false);
+    dateStates.setDate(currentDate);
   };
 
   return (
@@ -156,6 +159,8 @@ const EventsCreationTime = ({
           onCancel={() => timeStates.setTimePicker(false)}
         />
       )}
+
+      {/* Navigation Buttons */}
       <Button
         style={styles.next}
         mode="contained"

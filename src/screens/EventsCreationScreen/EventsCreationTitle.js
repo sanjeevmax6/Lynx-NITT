@@ -7,16 +7,11 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from './Error';
 import {eventCreation_DescriptionTitle} from '../../utils/stringConstants';
+
 const WIDTH = Dimensions.get('window').width;
+
 const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
-  const maxTitleLength = 150;
-
-  const [titleLength, setTitleLength] = useState(maxTitleLength);
-
-  const onChangeTitleLength = text => {
-    setTitleLength(maxTitleLength - text.length);
-  };
-
+  //Handling scroll
   const [titleEr, setTitleEr] = useState(0);
   const scroll = () => {
     setTitleEr(0);
@@ -36,8 +31,14 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
         x: WIDTH,
         animated: true,
       });
-      Keyboard.dismiss();
     }
+  };
+
+  //Character Count
+  const maxTitleLength = 150;
+  const [titleLength, setTitleLength] = useState(maxTitleLength);
+  const onChangeTitleLength = text => {
+    setTitleLength(maxTitleLength - text.length);
   };
 
   return (
@@ -75,19 +76,11 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
             />
           }
         />
-        {/*
-        <Text
-          style={[
-            styles.wordCount,
-            {color: inputStates.titleLength < 0 ? 'red' : 'black'},
-          ]}>
-          {inputStates.titleLength}
-        </Text>
-        */}
-
         {titleEr == 1 && <Error text="Please fill in the Title" />}
         {titleEr == 2 && <Error text="Exceeds Word Limit" />}
       </View>
+
+      {/* Navigation Buttons */}
       <Button
         style={styles.next}
         mode="contained"

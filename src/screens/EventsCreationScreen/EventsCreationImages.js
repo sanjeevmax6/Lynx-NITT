@@ -16,6 +16,31 @@ import {
 const win = Dimensions.get('window');
 
 const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
+  //handling scroll
+  const scroll = () => {
+    if (imageStates.profilePicUri.length < 2) {
+      setImgEr(true);
+      return;
+    }
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: win.width * 4,
+        animated: true,
+      });
+    }
+    callback(eventCreation_tags_linksTitle, 5);
+  };
+  const back = () => {
+    callback(eventCreation_DateTitle, 3);
+    if (scrollViewRef.current !== null) {
+      scrollViewRef.current.scrollTo({
+        x: win.width * 2,
+        animated: true,
+      });
+    }
+  };
+  //
+
   const [isLoading, setLoading] = useState(false);
   const [imgEr, setImgEr] = useState(false);
   const selectImage = async () => {
@@ -49,28 +74,6 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
       return arr;
     });
   };
-  const scroll = () => {
-    if (imageStates.profilePicUri.length < 2) {
-      setImgEr(true);
-      return;
-    }
-    if (scrollViewRef.current !== null) {
-      scrollViewRef.current.scrollTo({
-        x: win.width * 4,
-        animated: true,
-      });
-    }
-    callback(eventCreation_tags_linksTitle, 5);
-  };
-  const back = () => {
-    callback(eventCreation_DateTitle, 3);
-    if (scrollViewRef.current !== null) {
-      scrollViewRef.current.scrollTo({
-        x: win.width * 2,
-        animated: true,
-      });
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -98,6 +101,8 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
           <Error text="Please upload cover photo" />
         </View>
       )}
+
+      {/* Navigation Buttons */}
       <Button
         style={styles.next}
         mode="contained"

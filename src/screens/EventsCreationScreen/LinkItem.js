@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.Primary,
     elevation: 1,
     marginVertical: moderateScale(1),
-    marginHorizontal: scale(HorizontalPadding),
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: moderateScale(10),
