@@ -1,20 +1,9 @@
-import React, {useState} from 'react';
-import {
-  View,
-  SafeAreaView,
-  Dimensions,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React from 'react';
+import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
-import {Card, Paragraph, Button} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import * as color from '../../utils/colors';
-
-const WIDTH = Dimensions.get('window').width;
 
 const ActivityCard = ({
   notifier = 'Spider',
@@ -33,8 +22,6 @@ const ActivityCard = ({
   const getTimeGap = d => {
     let date = new Date(d);
     var today = new Date();
-    let currentMonth = today.getMonth() + 1;
-    let time = currentMonth + '/' + today.getDate() + '/' + today.getFullYear();
     var Difference_In_Time = Math.abs(today.getTime() - date.getTime());
     var Difference_In_Days = Math.floor(
       Difference_In_Time / (1000 * 3600 * 24),
@@ -47,15 +34,17 @@ const ActivityCard = ({
     //     ' Difference: ' +
     //     Difference_In_Days,
     // );
-    if (Difference_In_Days < 8) {
-      return Difference_In_Days + ' d';
-    } else if (Difference_In_Days / 7 < 3) {
-      return Math.floor(Difference_In_Days / 7) + ' w';
-    } else if (Difference_In_Days / 30 < 12) {
+    if (Math.floor(Difference_In_Days / 365) >= 1) {
+      return Math.floor(Difference_In_Days / 365) + ' yr';
+    }
+    if (Math.floor(Difference_In_Days / 30) >= 1) {
       return Math.floor(Difference_In_Days / 30) + ' mo';
-    } else return Math.floor(Difference_In_Days / 365) + ' yr';
+    }
+    if (Math.floor(Difference_In_Days / 7) >= 1) {
+      return Math.floor(Difference_In_Days / 7) + ' w';
+    }
+    return Difference_In_Days + ' d';
   };
-  //console.log(getTimeGap(date));
 
   return (
     <View style={{paddingVertical: 6}}>
@@ -84,17 +73,13 @@ const ActivityCard = ({
               <Text
                 style={{
                   fontSize: scale(12),
-                  //fontWeight: 'bold',
-                  paddingRight: 10,
                 }}>
                 {notification}
               </Text>
             </Text>
             <View
               style={{
-                //backgroundColor: 'red',
                 flexDirection: 'row',
-                //alignItems: 'flex-end',
               }}>
               <Text style={{fontSize: scale(12), fontWeight: '500'}}>
                 {date} | {time}
@@ -133,7 +118,6 @@ const styles = ScaledSheet.create({
   cardLayout: {
     flexDirection: 'row',
     paddingHorizontal: scale(HorizontalPadding),
-    //marginTop: '10@vs',
   },
   poster: {
     height: '60@s',
@@ -152,7 +136,6 @@ const styles = ScaledSheet.create({
   },
   button: {
     marginLeft: '79@s',
-    //backgroundColor: 'red',
   },
   btn: {
     alignSelf: 'baseline',

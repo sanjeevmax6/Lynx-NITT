@@ -19,7 +19,7 @@ const ActivityScreen = ({navigation}) => {
   const DATA = [
     {
       key: '4',
-      date: '09/30/2021',
+      date: '10/3/2021',
       time: '15:00',
 
       description:
