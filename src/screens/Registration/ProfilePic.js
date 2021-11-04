@@ -10,7 +10,7 @@ import {Avatar, Button} from 'react-native-paper';
 import {ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
-import Error from './Error';
+import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 

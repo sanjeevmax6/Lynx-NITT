@@ -5,7 +5,7 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Error from './Error';
+import Error from '../../components/Error';
 import {eventCreation_DescriptionTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;

@@ -1,14 +1,35 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
 import {updateToken} from '../../redux/reducers/loginScreen';
 import {useDispatch} from 'react-redux';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ModalContent = ({ModalVisible, navigation}) => {
   const dispatch = useDispatch();
+  const HandleLogout = () => {
+    Alert.alert(
+      'Logout?',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            AsyncStorage.removeItem('user_token');
+            dispatch(updateToken(false));
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   return (
     <View style={{flex: 1, width: '100%'}}>
@@ -49,12 +70,7 @@ const ModalContent = ({ModalVisible, navigation}) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          {
-            dispatch(updateToken(false));
-          }
-        }}>
+      <TouchableOpacity onPress={HandleLogout}>
         <View
           style={{
             flexDirection: 'row',

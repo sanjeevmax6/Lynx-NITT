@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {
@@ -16,7 +17,10 @@ import {
   ScaledSheet,
   scale,
 } from 'react-native-size-matters';
-import {updateToken} from '../../redux/reducers/loginScreen';
+import {
+  updateToken,
+  updateRegisterToken,
+} from '../../redux/reducers/loginScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import * as colors from '../../utils/colors';
 import store from '../../redux/store';
@@ -24,6 +28,10 @@ import LottieView from 'lottie-react-native';
 import lottieFile from '../../res/lottieFiles/loginBackGround.json';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Error from '../../components/Error';
+import {API_STUDENT_LOGIN} from '../../utils/API_CONSTANTS';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 
 //scaling
 const height2 = 737.1;
@@ -38,17 +46,62 @@ const LoginScreen = ({navigation}) => {
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
   const [temp, setTemp] = useState();
-
+  const [loading, setLoading] = useState();
+  const [errorText, setErrorText] = useState(null);
   const dispatch = useDispatch();
 
   const onLogin = token => {
     // console.log(token);
-    if (token) {
-      dispatch(updateToken(true));
-    }
+    // if (token) {
+    //   dispatch(updateToken());
+    // }
 
-    setTemp(store.getState().logScreen.login.userToken);
-    // console.log(temp);
+    setErrorText(null);
+
+    if (user == '' || password == '') {
+      setErrorText('Enter Valid Username/Password');
+    } else {
+      let rollNo = parseInt(user);
+
+      NetInfo.fetch().then(state => {
+        console.log(state.isConnected);
+        if (state.isConnected == true) {
+          setLoading(true);
+          fetch(API_STUDENT_LOGIN, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              rollNo,
+              password,
+            }),
+          })
+            .then(response => response.json())
+            .then(responseData => {
+              setLoading(false);
+              //console.log('response DATA ' + JSON.stringify(responseData));
+              if (responseData.message == 'Success') {
+                if (responseData.userExists) {
+                  AsyncStorage.setItem('user_token', responseData.token);
+                  setTemp(store.getState().logScreen.login.userToken);
+                  //console.log('Temp: ' + temp);
+                  dispatch(updateToken(responseData.token));
+                } else {
+                  dispatch(updateRegisterToken(responseData.token));
+                }
+              } else {
+                setErrorText(responseData.message);
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              setLoading(false);
+              setErrorText('Server Error');
+            });
+        } else {
+          setErrorText('No internet connection');
+        }
+      });
+    }
   };
 
   return (
@@ -128,8 +181,16 @@ const LoginScreen = ({navigation}) => {
                   value={password}
                   onChangeText={password => setPassword(password)}
                 />
+                {errorText && <Error text={errorText} />}
+
+                {loading && (
+                  <View style={{paddingTop: verticalScale(5)}}>
+                    <ActivityIndicator size="small" color="#0000ff" />
+                  </View>
+                )}
               </View>
-              <Text style={{textAlign: 'center', fontSize: scale(12)}}>
+
+              {/* <Text style={{textAlign: 'center', fontSize: scale(12)}}>
                 <Text> Don't have an Account? </Text>
                 <Text
                   style={{
@@ -139,7 +200,7 @@ const LoginScreen = ({navigation}) => {
                   }}>
                   SIGN UP
                 </Text>
-              </Text>
+              </Text> */}
               <Animated.View style={styles.loginBtnView}>
                 <TouchableOpacity
                   style={{

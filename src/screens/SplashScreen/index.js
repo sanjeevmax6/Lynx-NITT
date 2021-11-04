@@ -6,8 +6,11 @@ import {switchIsLoading} from '../../redux/reducers/splashScreen';
 import {useDispatch, useSelector} from 'react-redux';
 
 import store from '../../redux/store';
+import {updateToken} from '../../redux/reducers/loginScreen';
+
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,13 @@ const SplashScreen = () => {
     dispatch(TabVisibility(true));
     dispatch(switchIsLoading(false));
   }
+  const getToken = () => {
+    AsyncStorage.getItem('user_token').then(value =>
+      value != null
+        ? dispatch(updateToken(value))
+        : dispatch(updateToken(null)),
+    );
+  };
 
   let logo = require('../../assests/images/nitt_logo.png');
   const opacityLogo = useRef(new Animated.Value(0)).current;
@@ -23,6 +33,7 @@ const SplashScreen = () => {
   const opacityEmpty = useRef(new Animated.Value(0)).current;
   const opacityEnd = useRef(new Animated.Value(0)).current;
   useEffect(() => {
+    getToken();
     Animated.stagger(1000, [
       Animated.timing(opacityEmpty, {
         toValue: 1,

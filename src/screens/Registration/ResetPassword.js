@@ -1,9 +1,14 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, Dimensions} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {verticalScale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import Error from './Error';
+import Error from '../../components/Error';
+import {
+  updateRegisterToken,
+  updateToken,
+} from '../../redux/reducers/loginScreen';
+import {useDispatch} from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -14,6 +19,7 @@ const ResetPassword = ({scrollViewRef, navigation, callback}) => {
   const [cpassword, setCPassword] = useState();
   const [passEr, setpassEr] = useState(false);
   const [cpassEr, setcpassEr] = useState(false);
+  const dispatch = useDispatch();
 
   const register = () => {
     if (!password) {
@@ -26,7 +32,8 @@ const ResetPassword = ({scrollViewRef, navigation, callback}) => {
     }
     console.log(cpassword);
     console.log(password);
-    // Go to App-navigator
+    dispatch(updateRegisterToken(null));
+    dispatch(updateToken(true));
   };
 
   const back = () => {

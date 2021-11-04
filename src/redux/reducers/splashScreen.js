@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   splash: {
-    isLoading: null,
+    isLoading: true,
   },
 };
 
@@ -13,7 +13,8 @@ export const switchIsLoading = timeOut => {
 export default SplashScreenReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SWITCH_IS_LOADING:
-      state.splash.isLoading = action.isLoading;
+      //state.splash.isLoading = action.isLoading;
+      return {...state, splash: {isLoading: action.isLoading}};
     default:
       return state;
   }

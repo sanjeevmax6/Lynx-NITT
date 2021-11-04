@@ -6,7 +6,7 @@ import DocumentPicker from 'react-native-document-picker';
 import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Images from './Images';
-import Error from './Error';
+import Error from '../../components/Error';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {
   eventCreation_DateTitle,

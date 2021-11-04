@@ -18,7 +18,7 @@ import {
   moderateScale,
 } from 'react-native-size-matters';
 import LinkItem from './LinkItem';
-import Error from './Error';
+import Error from '../../components/Error';
 import {eventCreation_ImageTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;

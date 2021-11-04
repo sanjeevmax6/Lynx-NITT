@@ -4,7 +4,7 @@ import {TextInput, Button} from 'react-native-paper';
 import {scale, verticalScale, ScaledSheet} from 'react-native-size-matters';
 
 import * as colors from '../../utils/colors';
-import Error from './Error';
+import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 
