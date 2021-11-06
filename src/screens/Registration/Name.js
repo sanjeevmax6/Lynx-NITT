@@ -1,7 +1,8 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {SafeAreaView, Dimensions} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import {verticalScale, ScaledSheet} from 'react-native-size-matters';
+import NextButton from './nextButton';
 
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
@@ -10,18 +11,21 @@ const WIDTH = Dimensions.get('window').width;
 
 const Name = ({scrollViewRef, callback, nameStates}) => {
   const [er, setEr] = useState(false);
-  const [erDept, setErDept] = useState(false);
+  const [erMsg, setErMsg] = useState('');
 
   const scroll = () => {
     if (!nameStates.firstname || !nameStates.lastname) {
       setEr(true);
+      setErMsg('Enter your name');
       return;
     }
     if (!nameStates.dept) {
-      setErDept(true);
+      setEr(true);
+      setErMsg('Enter your Department');
       return;
     }
     setEr(false);
+
     callback('Basic Information', 'Enter your date of birth and address', 1);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
@@ -30,6 +34,9 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
       });
     }
   };
+
+  const lastNameInput = useRef(); // for focus transfer
+  const departmentInput = useRef();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,6 +54,8 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         onChangeText={fname => {
           nameStates.setFirstName(fname);
         }}
+        returnKeyType="next"
+        onSubmitEditing={() => lastNameInput.current.focus()}
       />
       <TextInput
         label="Last Name"
@@ -62,8 +71,11 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         onChangeText={sname => {
           nameStates.setLastName(sname);
         }}
+        returnKeyType="next"
+        onSubmitEditing={() => departmentInput.current.focus()}
+        ref={lastNameInput}
       />
-      {er && <Error text="Enter firstname and surname" />}
+
       <TextInput
         label="Department"
         mode="outlined"
@@ -78,15 +90,12 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         onChangeText={fdept => {
           nameStates.setDept(fdept);
         }}
+        ref={departmentInput}
+        onSubmitEditing={scroll}
+        returnKeyType="next"
       />
-      {erDept && <Error text="Enter Department" />}
-      <Button
-        style={styles.next}
-        mode="contained"
-        onPress={scroll}
-        labelStyle={{color: colors.regNext}}>
-        Next
-      </Button>
+      {er && <Error text={erMsg} />}
+      <NextButton handler={scroll} />
     </SafeAreaView>
   );
 };
@@ -99,15 +108,8 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '20@s',
     alignItems: 'center',
   },
-
   input: {
     width: '100%',
-  },
-  next: {
-    position: 'absolute',
-    bottom: '20@vs',
-    right: '20@vs',
-    backgroundColor: colors.regAttach,
   },
 });
 

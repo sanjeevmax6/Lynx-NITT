@@ -4,6 +4,8 @@ import {TextInput, Button, ActivityIndicator} from 'react-native-paper';
 import {verticalScale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
+import NextButton from './nextButton';
+import BackButton from './backButton';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -94,21 +96,8 @@ const ResetPassword = ({
           <ActivityIndicator size="small" color="#0000ff" />
         </View>
       )}
-      <Button
-        style={styles.next}
-        mode="contained"
-        onPress={register}
-        labelStyle={{color: colors.regNext}}>
-        Let's Go!
-      </Button>
-      <Button
-        style={styles.back}
-        mode="outline"
-        onPress={back}
-        labelStyle={{color: colors.regAttach}}
-        icon="chevron-left">
-        Back
-      </Button>
+      <NextButton handler={register} label="Let's Go" />
+      <BackButton handler={back} />
     </SafeAreaView>
   );
 };
@@ -117,24 +106,11 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     width: WIDTH,
-    backgroundColor: colors.regBackground,
     paddingHorizontal: '20@s',
     alignItems: 'center',
   },
-
   input: {
     width: '100%',
-  },
-  next: {
-    position: 'absolute',
-    bottom: '20@vs',
-    right: '20@vs',
-    backgroundColor: colors.regAttach,
-  },
-  back: {
-    position: 'absolute',
-    bottom: '20@vs',
-    left: '10@vs',
   },
 });
 

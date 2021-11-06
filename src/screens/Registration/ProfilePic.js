@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   SafeAreaView,
@@ -11,12 +11,16 @@ import {ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
 import Error from '../../components/Error';
+import NextButton from './nextButton';
+import BackButton from './backButton';
 
 const WIDTH = Dimensions.get('window').width;
 
 const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
   const [picEr, setpicEr] = useState(false);
-
+  const [URI, setURI] = useState(
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&usqp=CAU',
+  );
   const scroll = () => {
     if (!profilePicStates.pic) {
       setpicEr(true);
@@ -35,7 +39,7 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
   const back = () => {
     callback(
       'Documents',
-      'Enter your Aadhar Number and Upload your passport pic\n(Optional)',
+      'Enter Aadhar Number and Upload your passport\n(Optional)',
       2,
     );
     if (scrollViewRef.current !== null) {
@@ -52,6 +56,9 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
         type: [DocumentPicker.types.images],
       });
       profilePicStates.setPic(file);
+      setURI(file.fileCopyUri);
+      console.log(file.fileCopyUri);
+      console.log(file.fileCopyUri);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;
@@ -61,11 +68,18 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.imageView}>
         <Image
-          source={require('../../assests/images/user.png')}
+          source={{
+            uri: URI,
+          }}
           style={styles.image}
         />
         <TouchableOpacity style={styles.edit} onPress={selectFile}>
-          <Avatar.Icon icon="lead-pencil" size={35} color="black" />
+          <Avatar.Icon
+            icon="lead-pencil"
+            size={35}
+            color="white"
+            style={{backgroundColor: colors.Accent, elevation: 5}}
+          />
         </TouchableOpacity>
       </View>
       {picEr && (
@@ -73,21 +87,8 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
           <Error text="Upload your photo" />
         </View>
       )}
-      <Button
-        style={styles.next}
-        mode="contained"
-        labelStyle={{color: colors.regNext}}
-        onPress={scroll}>
-        Next
-      </Button>
-      <Button
-        style={styles.back}
-        mode="outline"
-        onPress={back}
-        labelStyle={{color: colors.regAttach}}
-        icon="chevron-left">
-        Back
-      </Button>
+      <NextButton handler={scroll} />
+      <BackButton handler={back} />
     </SafeAreaView>
   );
 };
@@ -101,26 +102,20 @@ const styles = ScaledSheet.create({
   },
   imageView: {
     marginTop: '10@vs',
+    elevation: 1,
+    height: WIDTH / 1.75,
+    width: WIDTH / 1.75,
+    borderRadius: (WIDTH / 1.75) * 2,
   },
   image: {
-    height: WIDTH / 2,
-    width: WIDTH / 2,
-  },
-  next: {
-    position: 'absolute',
-    bottom: '20@vs',
-    right: '20@vs',
-    backgroundColor: colors.regAttach,
+    height: WIDTH / 1.75,
+    width: WIDTH / 1.75,
+    borderRadius: (WIDTH / 1.75) * 2,
   },
   edit: {
     position: 'absolute',
     alignSelf: 'flex-end',
     marginTop: WIDTH / 2.8,
-  },
-  back: {
-    position: 'absolute',
-    bottom: '20@vs',
-    left: '10@vs',
   },
 });
 

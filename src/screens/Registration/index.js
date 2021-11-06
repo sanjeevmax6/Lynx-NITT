@@ -94,7 +94,6 @@ const Registration = ({navigation}) => {
     setPage(page);
   };
 
-  //console.log('FORMDATA:: ' + JSON.stringify(formData));
   const dispatch = useDispatch();
   const token = useSelector(state => state.logScreen.login.registerToken);
 
@@ -147,6 +146,7 @@ const Registration = ({navigation}) => {
         ref={scrollview}
         horizontal
         pagingEnabled
+        showsHorizontalScrollIndicator={false}
         style={{width: WIDTH, marginTop: verticalScale(20)}}
         scrollEnabled={false}>
         <Name

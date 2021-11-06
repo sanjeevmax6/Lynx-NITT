@@ -1,4 +1,4 @@
-import React, {useState, useRef, useFoc} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,13 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {TextInput, Button, IconButton} from 'react-native-paper';
+import {TextInput, IconButton} from 'react-native-paper';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import DocumentPicker from 'react-native-document-picker';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NextButton from './nextButton';
+import BackButton from './backButton';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -82,21 +84,8 @@ const Documents = ({scrollViewRef, callback, docStates}) => {
           <Text style={styles.attachText}>Attach</Text>
         </TouchableOpacity>
       )}
-      <Button
-        style={styles.next}
-        mode="contained"
-        onPress={scroll}
-        labelStyle={{color: colors.regNext}}>
-        Next
-      </Button>
-      <Button
-        style={styles.back}
-        mode="outline"
-        onPress={back}
-        labelStyle={{color: colors.regAttach}}
-        icon="chevron-left">
-        Back
-      </Button>
+      <NextButton handler={scroll} />
+      <BackButton handler={back} />
     </SafeAreaView>
   );
 };
@@ -114,12 +103,6 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
   },
   inputAd: {width: '100%'},
-  next: {
-    position: 'absolute',
-    bottom: '20@vs',
-    right: '20@vs',
-    backgroundColor: colors.regAttach,
-  },
   passtitle: {
     alignSelf: 'flex-start',
     marginTop: '10@vs',
@@ -151,11 +134,6 @@ const styles = ScaledSheet.create({
     flex: 1,
     marginHorizontal: scale(10),
     fontSize: scale(14),
-  },
-  back: {
-    position: 'absolute',
-    bottom: '20@vs',
-    left: '10@vs',
   },
 });
 

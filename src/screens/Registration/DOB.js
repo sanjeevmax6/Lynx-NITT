@@ -1,7 +1,9 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, SafeAreaView, Dimensions} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import {scale, verticalScale, ScaledSheet} from 'react-native-size-matters';
+import NextButton from './nextButton';
+import BackButton from './backButton';
 
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
@@ -35,7 +37,7 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
     }
     callback(
       'Documents',
-      'Enter your Aadhar Number and Upload your passport pic\n(Optional)',
+      'Enter Aadhar Number and Upload your passport\n(Optional)',
       2,
     );
   };
@@ -109,7 +111,7 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
           }}
         />
       </View>
-      {dateEr && <Error text="Please fill in a complete date of birth" />}
+      {dateEr && <Error text="Enter your date of birth" />}
       <TextInput
         label="Address"
         mode="outlined"
@@ -125,22 +127,9 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
           dobStates.setAddress(add);
         }}
       />
-      {addEr && <Error text="Please fill in your address" />}
-      <Button
-        style={styles.next}
-        mode="contained"
-        onPress={scroll}
-        labelStyle={{color: colors.regNext}}>
-        Next
-      </Button>
-      <Button
-        style={styles.back}
-        mode="outline"
-        onPress={back}
-        labelStyle={{color: colors.regAttach}}
-        icon="chevron-left">
-        Back
-      </Button>
+      {addEr && <Error text="Enter your address" />}
+      <NextButton handler={scroll} />
+      <BackButton handler={back} />
     </SafeAreaView>
   );
 };
@@ -161,17 +150,6 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   inputAd: {width: '100%'},
-  next: {
-    position: 'absolute',
-    bottom: '20@vs',
-    right: '20@vs',
-    backgroundColor: colors.regAttach,
-  },
-  back: {
-    position: 'absolute',
-    bottom: '20@vs',
-    left: '10@vs',
-  },
 });
 
 export default Name;
