@@ -14,10 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Documents = ({scrollViewRef, callback}) => {
-  const [aadhar, setAadhar] = useState('');
-  const [passport, setPassport] = useState(null);
-
+const Documents = ({scrollViewRef, callback, docStates}) => {
   const scroll = () => {
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
@@ -33,7 +30,7 @@ const Documents = ({scrollViewRef, callback}) => {
       const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       });
-      setPassport(file);
+      docStates.setPassport(file);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;
@@ -55,7 +52,7 @@ const Documents = ({scrollViewRef, callback}) => {
       <TextInput
         label="Aadhar Number"
         mode="outlined"
-        value={aadhar}
+        value={docStates.aadhar}
         theme={{
           colors: {
             primary: 'black',
@@ -63,23 +60,23 @@ const Documents = ({scrollViewRef, callback}) => {
         }}
         style={styles.inputAd}
         onChangeText={anum => {
-          setAadhar(anum);
+          docStates.setAadhar(anum);
         }}
       />
       <Text style={styles.passtitle}>Passport Upload</Text>
-      {passport && (
+      {docStates.passport && (
         <View style={styles.file}>
-          <Text style={styles.filename}>{passport.name}</Text>
+          <Text style={styles.filename}>{docStates.passport.name}</Text>
           <IconButton
             size={scale(15)}
             icon="close"
             onPress={() => {
-              setPassport(null);
+              docStates.setPassport(null);
             }}
           />
         </View>
       )}
-      {!passport && (
+      {!docStates.passport && (
         <TouchableOpacity style={styles.attach} onPress={selectFile}>
           <Icon name="attach-file" color={colors.Accent} size={16} />
           <Text style={styles.attachText}>Attach</Text>

@@ -14,12 +14,11 @@ import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 
-const ProfilePic = ({scrollViewRef, callback}) => {
-  const [pic, setPic] = useState(null);
+const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
   const [picEr, setpicEr] = useState(false);
 
   const scroll = () => {
-    if (!pic) {
+    if (!profilePicStates.pic) {
       setpicEr(true);
       return;
     }
@@ -52,7 +51,7 @@ const ProfilePic = ({scrollViewRef, callback}) => {
       const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-      setPic(file);
+      profilePicStates.setPic(file);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;

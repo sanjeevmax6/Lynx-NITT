@@ -1,39 +1,38 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Dimensions} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {SafeAreaView, Dimensions, View} from 'react-native';
+import {TextInput, Button, ActivityIndicator} from 'react-native-paper';
 import {verticalScale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
-import {
-  updateRegisterToken,
-  updateToken,
-} from '../../redux/reducers/loginScreen';
-import {useDispatch} from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
-const ResetPassword = ({scrollViewRef, navigation, callback}) => {
-  const [password, setPassword] = useState();
+const ResetPassword = ({
+  scrollViewRef,
+  navigation,
+  callback,
+  resetPasswordStates,
+  handleAPICALL,
+}) => {
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
-  const [cpassword, setCPassword] = useState();
+
   const [passEr, setpassEr] = useState(false);
   const [cpassEr, setcpassEr] = useState(false);
-  const dispatch = useDispatch();
 
   const register = () => {
-    if (!password) {
+    setpassEr(false);
+    setcpassEr(false);
+    if (!resetPasswordStates.password) {
       setpassEr(true);
       return;
     }
-    if (!cpassword || cpassword != password) {
+    if (!resetPasswordStates.cpassword) {
       setcpassEr(true);
       return;
     }
-    console.log(cpassword);
-    console.log(password);
-    dispatch(updateRegisterToken(null));
-    dispatch(updateToken(true));
+
+    handleAPICALL();
   };
 
   const back = () => {
@@ -68,8 +67,8 @@ const ResetPassword = ({scrollViewRef, navigation, callback}) => {
             }}
           />
         }
-        value={password}
-        onChangeText={password => setPassword(password)}
+        value={resetPasswordStates.password}
+        onChangeText={password => resetPasswordStates.setPassword(password)}
       />
       {passEr && <Error text="Enter your new password" />}
       <TextInput
@@ -83,10 +82,18 @@ const ResetPassword = ({scrollViewRef, navigation, callback}) => {
         }}
         outlineColor={cpassEr ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
-        value={cpassword}
-        onChangeText={password => setCPassword(password)}
+        value={resetPasswordStates.cpassword}
+        onChangeText={password => resetPasswordStates.setCPassword(password)}
       />
-      {cpassEr && <Error text="Password and Confirm Password doesn't match" />}
+      {cpassEr && <Error text="Enter Confirm Password" />}
+      {resetPasswordStates.errorText != null && (
+        <Error text={resetPasswordStates.errorText} />
+      )}
+      {resetPasswordStates.loading && (
+        <View style={{paddingTop: verticalScale(5)}}>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </View>
+      )}
       <Button
         style={styles.next}
         mode="contained"

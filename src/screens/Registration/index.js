@@ -16,18 +16,102 @@ import ResetPassword from './ResetPassword';
 
 import * as colors from '../../utils/colors';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {studentRegisterAPI} from './studentRegisterAPI';
+
 const WIDTH = Dimensions.get('window').width;
 
 const Registration = ({navigation}) => {
   const scrollview = useRef(null);
   const [title, setTitle] = useState('Basic Information');
-  const [subtitle, setSubTitle] = useState('Enter your name');
+  const [subtitle, setSubTitle] = useState('Enter your name and department');
   const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState();
+  //data
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+  const [address, setAddress] = useState('');
+
+  const [aadhar, setAadhar] = useState('');
+  const [passport, setPassport] = useState(null);
+
+  const [pic, setPic] = useState(null);
+
+  const [password, setPassword] = useState();
+  const [cpassword, setCPassword] = useState();
+
+  const [dept, setDept] = useState();
+
+  const nameStates = {
+    firstname,
+    setFirstName,
+    lastname,
+    setLastName,
+    dept,
+    setDept,
+  };
+
+  const dobStates = {
+    day,
+    setDay,
+    month,
+    setMonth,
+    year,
+    setYear,
+    address,
+    setAddress,
+  };
+
+  const docStates = {
+    aadhar,
+    setAadhar,
+    passport,
+    setPassport,
+  };
+  const profilePicStates = {
+    pic,
+    setPic,
+  };
+  const resetPasswordStates = {
+    password,
+    setPassword,
+    cpassword,
+    setCPassword,
+    loading,
+    setLoading,
+    errorText,
+    setErrorText,
+  };
 
   const changeText = (title, stitle, page) => {
     setTitle(title);
     setSubTitle(stitle);
     setPage(page);
+  };
+
+  //console.log('FORMDATA:: ' + JSON.stringify(formData));
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.logScreen.login.registerToken);
+
+  const handleAPICALL = () => {
+    setErrorText(null);
+    const formData = new FormData();
+    formData.append('first_name', firstname);
+    formData.append('last_name', lastname);
+    formData.append('department', dept);
+    formData.append('new_password', password);
+    formData.append('confirm_password', cpassword);
+    formData.append('dob', year + '-' + month + '-' + day + 'T00:00:00.000Z');
+    formData.append('address', address);
+    formData.append('aadhar_no', aadhar);
+    formData.append('profileImg', pic);
+    formData.append('passportImg', passport);
+    studentRegisterAPI(token, formData, setLoading, setErrorText, dispatch);
   };
 
   useFocusEffect(
@@ -65,14 +149,32 @@ const Registration = ({navigation}) => {
         pagingEnabled
         style={{width: WIDTH, marginTop: verticalScale(20)}}
         scrollEnabled={false}>
-        <Name scrollViewRef={scrollview} callback={changeText} />
-        <DOB scrollViewRef={scrollview} callback={changeText} />
-        <Documents scrollViewRef={scrollview} callback={changeText} />
-        <ProfilePic scrollViewRef={scrollview} callback={changeText} />
+        <Name
+          scrollViewRef={scrollview}
+          callback={changeText}
+          nameStates={nameStates}
+        />
+        <DOB
+          scrollViewRef={scrollview}
+          callback={changeText}
+          dobStates={dobStates}
+        />
+        <Documents
+          scrollViewRef={scrollview}
+          callback={changeText}
+          docStates={docStates}
+        />
+        <ProfilePic
+          scrollViewRef={scrollview}
+          callback={changeText}
+          profilePicStates={profilePicStates}
+        />
         <ResetPassword
           scrollViewRef={scrollview}
           navigation={navigation}
           callback={changeText}
+          handleAPICALL={handleAPICALL}
+          resetPasswordStates={resetPasswordStates}
         />
       </ScrollView>
     </SafeAreaView>

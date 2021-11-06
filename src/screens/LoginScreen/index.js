@@ -17,21 +17,15 @@ import {
   ScaledSheet,
   scale,
 } from 'react-native-size-matters';
-import {
-  updateToken,
-  updateRegisterToken,
-} from '../../redux/reducers/loginScreen';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import * as colors from '../../utils/colors';
-import store from '../../redux/store';
 import LottieView from 'lottie-react-native';
 import lottieFile from '../../res/lottieFiles/loginBackGround.json';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Error from '../../components/Error';
-import {API_STUDENT_LOGIN} from '../../utils/API_CONSTANTS';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';
+import {studentLogin} from './studentLogin';
+import {clubLogin} from './clubLogin';
 
 //scaling
 const height2 = 737.1;
@@ -41,66 +35,30 @@ export function getHeight(height) {
 }
 
 const LoginScreen = ({navigation}) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState('');
   const [password, setPassword] = useState();
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
-  const [temp, setTemp] = useState();
   const [loading, setLoading] = useState();
   const [errorText, setErrorText] = useState(null);
   const dispatch = useDispatch();
 
   const onLogin = token => {
-    // console.log(token);
-    // if (token) {
-    //   dispatch(updateToken());
-    // }
-
     setErrorText(null);
 
-    if (user == '' || password == '') {
-      setErrorText('Enter Valid Username/Password');
+    //checking if user is purly numbers
+    if (user != '' && user.match(/^[0-9]+$/) == null) {
+      //if not purely numbers then check if '@' is present (of form a@b where len a/b >=1)
+      if (!user.slice(user.slice(1, user.length - 1)).includes('@')) {
+        setErrorText('Enter Valid UserID/Password');
+        return;
+      }
+      let email = user.trim();
+      clubLogin(email, password, setErrorText, setLoading, dispatch);
     } else {
+      //if purely numbers then student login
       let rollNo = parseInt(user);
-
-      NetInfo.fetch().then(state => {
-        console.log(state.isConnected);
-        if (state.isConnected == true) {
-          setLoading(true);
-          fetch(API_STUDENT_LOGIN, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              rollNo,
-              password,
-            }),
-          })
-            .then(response => response.json())
-            .then(responseData => {
-              setLoading(false);
-              //console.log('response DATA ' + JSON.stringify(responseData));
-              if (responseData.message == 'Success') {
-                if (responseData.userExists) {
-                  AsyncStorage.setItem('user_token', responseData.token);
-                  setTemp(store.getState().logScreen.login.userToken);
-                  //console.log('Temp: ' + temp);
-                  dispatch(updateToken(responseData.token));
-                } else {
-                  dispatch(updateRegisterToken(responseData.token));
-                }
-              } else {
-                setErrorText(responseData.message);
-              }
-            })
-            .catch(error => {
-              console.log(error);
-              setLoading(false);
-              setErrorText('Server Error');
-            });
-        } else {
-          setErrorText('No internet connection');
-        }
-      });
+      studentLogin(rollNo, password, setErrorText, setLoading, dispatch);
     }
   };
 

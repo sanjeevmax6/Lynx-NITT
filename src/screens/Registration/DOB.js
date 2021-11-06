@@ -8,23 +8,19 @@ import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Name = ({scrollViewRef, callback}) => {
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-  const [address, setAddress] = useState('');
+const Name = ({scrollViewRef, callback, dobStates}) => {
   const [dateEr, setDateEr] = useState(false);
   const [addEr, setAddEr] = useState(false);
 
   const scroll = () => {
-    if (!day || !month || !year) {
+    if (!dobStates.day || !dobStates.month || !dobStates.year) {
       setDateEr(true);
-      if (!address) {
+      if (!dobStates.address) {
         setAddEr(true);
       }
       return;
     }
-    if (!address) {
+    if (!dobStates.address) {
       setDateEr(false);
       setAddEr(true);
       return;
@@ -45,7 +41,7 @@ const Name = ({scrollViewRef, callback}) => {
   };
 
   const back = () => {
-    callback('Basic Information', 'Enter your name', 0);
+    callback('Basic Information', 'Enter your name and department', 0);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: 0,
@@ -61,7 +57,8 @@ const Name = ({scrollViewRef, callback}) => {
           label="Day"
           mode="outlined"
           keyboardType="phone-pad"
-          value={day}
+          placeholder="dd"
+          value={dobStates.day}
           theme={{
             colors: {
               primary: dateEr ? colors.Tertiary : 'black',
@@ -70,13 +67,14 @@ const Name = ({scrollViewRef, callback}) => {
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginRight: scale(4)}}
           onChangeText={day => {
-            setDay(day);
+            dobStates.setDay(day);
           }}
         />
         <TextInput
           label="Month"
           mode="outlined"
-          value={month}
+          placeholder="mm"
+          value={dobStates.month}
           theme={{
             colors: {
               primary: dateEr ? colors.Tertiary : 'black',
@@ -90,13 +88,14 @@ const Name = ({scrollViewRef, callback}) => {
             marginLeft: scale(4),
           }}
           onChangeText={month => {
-            setMonth(month);
+            dobStates.setMonth(month);
           }}
         />
         <TextInput
           label="Year"
           mode="outlined"
-          value={year}
+          placeholder="yyyy"
+          value={dobStates.year}
           keyboardType="phone-pad"
           theme={{
             colors: {
@@ -106,7 +105,7 @@ const Name = ({scrollViewRef, callback}) => {
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginLeft: scale(4)}}
           onChangeText={yr => {
-            setYear(yr);
+            dobStates.setYear(yr);
           }}
         />
       </View>
@@ -114,7 +113,7 @@ const Name = ({scrollViewRef, callback}) => {
       <TextInput
         label="Address"
         mode="outlined"
-        value={address}
+        value={dobStates.address}
         theme={{
           colors: {
             primary: addEr ? colors.Tertiary : 'black',
@@ -123,7 +122,7 @@ const Name = ({scrollViewRef, callback}) => {
         outlineColor={addEr ? colors.Tertiary : null}
         style={{...styles.inputAd, marginTop: verticalScale(5)}}
         onChangeText={add => {
-          setAddress(add);
+          dobStates.setAddress(add);
         }}
       />
       {addEr && <Error text="Please fill in your address" />}

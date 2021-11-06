@@ -3,12 +3,14 @@ const INITIAL_STATE = {
     userLoggedIn: '',
     userToken: null,
     registerToken: null,
+    isStudent: null,
   },
 };
 
 const SWITCH_USER_LOGGEDIN = 'switchLogin';
 const UPDATE_TOKEN = 'updateToken';
 const UPDATE_REGISTER_TOKEN = 'updateRegisterToken';
+const UPDATE_IS_STUDENT = 'updateIsStudent';
 
 export const switchUserLoggedIn = status => {
   return {type: SWITCH_USER_LOGGEDIN, userLoggedIn: status};
@@ -22,18 +24,26 @@ export const updateRegisterToken = query => {
   return {type: UPDATE_REGISTER_TOKEN, registerToken: query};
 };
 
+export const updateIsStudent = query => {
+  return {type: UPDATE_IS_STUDENT, isStudent: query};
+};
+
 export default LoginScreenReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SWITCH_USER_LOGGEDIN:
-      return {...state, userLoggedIn: action.userLoggedIn};
+      return {
+        ...state,
+        login: {...state.login, userLoggedIn: action.userLoggedIn},
+      };
     case UPDATE_TOKEN:
-      state.login.userToken = action.userToken;
-      //console.log('Updated user token' + state.login.userToken);
-      return {...state, userToken: action.userToken};
+      return {...state, login: {...state.login, userToken: action.userToken}};
     case UPDATE_REGISTER_TOKEN:
-      //state.login.registerToken = action.registerToken;
-      //console.log('Updated Register token' + state.login.registerToken);
-      return {...state, login: {registerToken: action.registerToken}};
+      return {
+        ...state,
+        login: {...state.login, registerToken: action.registerToken},
+      };
+    case UPDATE_IS_STUDENT:
+      return {...state, login: {...state.login, isStudent: action.isStudent}};
     default:
       return state;
   }

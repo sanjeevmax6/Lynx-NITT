@@ -8,14 +8,17 @@ import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Name = ({scrollViewRef, callback}) => {
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
+const Name = ({scrollViewRef, callback, nameStates}) => {
   const [er, setEr] = useState(false);
+  const [erDept, setErDept] = useState(false);
 
   const scroll = () => {
-    if (!firstname || !lastname) {
+    if (!nameStates.firstname || !nameStates.lastname) {
       setEr(true);
+      return;
+    }
+    if (!nameStates.dept) {
+      setErDept(true);
       return;
     }
     setEr(false);
@@ -33,7 +36,7 @@ const Name = ({scrollViewRef, callback}) => {
       <TextInput
         label="First Name"
         mode="outlined"
-        value={firstname}
+        value={nameStates.firstname}
         theme={{
           colors: {
             primary: er ? colors.Tertiary : 'black',
@@ -42,13 +45,13 @@ const Name = ({scrollViewRef, callback}) => {
         outlineColor={er ? colors.Tertiary : null}
         style={styles.input}
         onChangeText={fname => {
-          setFirstName(fname);
+          nameStates.setFirstName(fname);
         }}
       />
       <TextInput
         label="Last Name"
         mode="outlined"
-        value={lastname}
+        value={nameStates.lastname}
         theme={{
           colors: {
             primary: er ? colors.Tertiary : 'black',
@@ -57,10 +60,26 @@ const Name = ({scrollViewRef, callback}) => {
         outlineColor={er ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
         onChangeText={sname => {
-          setLastName(sname);
+          nameStates.setLastName(sname);
         }}
       />
       {er && <Error text="Enter firstname and surname" />}
+      <TextInput
+        label="Department"
+        mode="outlined"
+        value={nameStates.dept}
+        theme={{
+          colors: {
+            primary: er ? colors.Tertiary : 'black',
+          },
+        }}
+        outlineColor={er ? colors.Tertiary : null}
+        style={{...styles.input, marginTop: verticalScale(5)}}
+        onChangeText={fdept => {
+          nameStates.setDept(fdept);
+        }}
+      />
+      {erDept && <Error text="Enter Department" />}
       <Button
         style={styles.next}
         mode="contained"

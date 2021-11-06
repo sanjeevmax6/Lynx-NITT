@@ -3,24 +3,29 @@ import {Animated, Image, StyleSheet, Text, View} from 'react-native';
 import * as color from '../../utils/colors';
 import * as Animatable from 'react-native-animatable';
 import {switchIsLoading} from '../../redux/reducers/splashScreen';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import store from '../../redux/store';
-import {updateToken} from '../../redux/reducers/loginScreen';
+import {updateIsStudent, updateToken} from '../../redux/reducers/loginScreen';
 
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {KEY_IS_STUDENT, KEY_USER_TOKEN} from '../../utils/API_CONSTANTS';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
-
   function onEndNavigate() {
     dispatch(TabVisibility(true));
     dispatch(switchIsLoading(false));
   }
   const getToken = () => {
-    AsyncStorage.getItem('user_token').then(value =>
+    AsyncStorage.getItem(KEY_IS_STUDENT).then(value => {
+      if (value != null) {
+        if (value == 'true') dispatch(updateIsStudent(true));
+        else if (value == 'false') dispatch(updateIsStudent(false));
+      } else dispatch(updateToken(null));
+    });
+    AsyncStorage.getItem(KEY_USER_TOKEN).then(value =>
       value != null
         ? dispatch(updateToken(value))
         : dispatch(updateToken(null)),
