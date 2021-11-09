@@ -8,7 +8,11 @@ import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import {useDispatch} from 'react-redux';
 
-const AnnouncementCreationScreenHeader = ({navigation, validLength}) => {
+const AnnouncementCreationScreenHeader = ({
+  navigation,
+  validLength,
+  createAnnouncement,
+}) => {
   const dispatch = useDispatch();
 
   function toggleTab(tabShow) {
@@ -61,6 +65,7 @@ const AnnouncementCreationScreenHeader = ({navigation, validLength}) => {
                 },
               ]);
             else {
+              createAnnouncement();
               //toggleTab(true); To be enabled after implementing save
             }
           }}
