@@ -9,6 +9,8 @@ import EditProfileScreen from '../../screens/EditProfileScreen';
 import SettingsSceen from '../../screens/SettingsScreen';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
+import ImageZoomScreen from '../../screens/ImageZoomScreen';
+import * as color from '../../utils/colors';
 
 import {useSelector} from 'react-redux';
 
@@ -58,6 +60,18 @@ function UserNavigator() {
           headerShown: true,
           animation: 'slide_from_right',
           header: props => <Header props={props} />,
+        }}
+      />
+      <UserStack.Screen
+        name="ImageScreen"
+        children={ImageZoomScreen}
+        options={{
+          headerShown: true,
+          animation: 'fade_from_bottom',
+          headerTransparent: true,
+          headerShadowVisible: false,
+          title: '',
+          headerTintColor: color.WHITE,
         }}
       />
     </UserStack.Navigator>
