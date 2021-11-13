@@ -21,9 +21,10 @@ import EventsCreationScreenHeader from './EventsCreationScreenHeader';
 import EventsCreationImages from './EventsCreationImages';
 import EventCreationDesc from './EventsCreationDesc';
 import EventsCreationTag from './EventsCreationTags';
+import { EventCreationAPI } from './EventCreationAPI';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {eventCreation_eventTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;
@@ -45,6 +46,9 @@ const EventCreationScreen = ({navigation}) => {
   const scrollview = useRef(null);
   const descInputRef = useRef(null);
 
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState();
+
   const [pageTitle, setPageTitle] = useState(eventCreation_eventTitle);
   // const [subtitle, setSubTitle] = useState('');
   const [page, setPage] = useState(0);
@@ -58,6 +62,14 @@ const EventCreationScreen = ({navigation}) => {
   const handleFocus = x => {
     if (Math.floor(x) == Math.floor(WIDTH)) descInputRef.current.focus();
   };
+
+  const handleAPICALL = () => {
+    let description = desc;
+    EventCreationAPI(title,description,time,date,userToken,setLoading,setErrorText);
+  };
+
+
+  const userToken = useSelector(state => state.logScreen.login.userToken);
 
   //Handling hardwareBackPress
   useFocusEffect(
@@ -146,6 +158,8 @@ const EventCreationScreen = ({navigation}) => {
     setLink,
     links,
     setLinks,
+    errorText,
+    setErrorText,
   };
 
   return (
@@ -190,6 +204,7 @@ const EventCreationScreen = ({navigation}) => {
           tagStates={tagStates}
           scrollViewRef={scrollview}
           callback={changeText}
+          handleAPICALL={handleAPICALL}
         />
       </ScrollView>
     </SafeAreaView>

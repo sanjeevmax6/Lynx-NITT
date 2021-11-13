@@ -23,7 +23,12 @@ import {eventCreation_ImageTitle} from '../../utils/stringConstants';
 
 const WIDTH = Dimensions.get('window').width;
 
-const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
+const EventsCreationTag = ({
+  tagStates,
+  scrollViewRef,
+  callback,
+  handleAPICALL,
+}) => {
   //handling scroll
   const createEvent = () => {
     if (tagStates.tags.length == 0) {
@@ -34,8 +39,7 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
       setLinkEr(true);
       return;
     }
-
-    console.log('Event Created');
+    handleAPICALL();
   };
 
   const back = () => {
@@ -168,6 +172,7 @@ const EventsCreationTag = ({tagStates, scrollViewRef, callback}) => {
           </View>
         )}
         {linkEr && <Error text={'Please add a Link'} />}
+        {tagStates.errorText != null && <Error text={tagStates.errorText} />}
       </View>
 
       {/* Navigation Buttons */}
