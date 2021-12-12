@@ -6,6 +6,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {updateToken, updateIsStudent} from '../../redux/reducers/loginScreen';
+import {USER_STORE} from '../../mobx/USER_STORE';
 
 export const clubLogin = (
   email,
@@ -32,7 +33,8 @@ export const clubLogin = (
             AsyncStorage.setItem(KEY_USER_TOKEN, response.data.token); //user token stored locally
             AsyncStorage.setItem(KEY_IS_STUDENT, 'false');
             dispatch(updateIsStudent(false));
-            dispatch(updateToken(response.data.token)); //user token recieved and updated
+            dispatch(updateToken(response.data.token)); //user token received and updated
+            USER_STORE.setUserToken(response.data.token);
           }
         })
         .catch(error => {

@@ -6,6 +6,7 @@ import {
   updateRegisterToken,
   updateIsStudent,
 } from '../../redux/reducers/loginScreen';
+import {USER_STORE} from '../../mobx/USER_STORE';
 
 export const studentLogin = (
   rollNo,
@@ -34,6 +35,7 @@ export const studentLogin = (
               AsyncStorage.setItem('is_student', 'true'); //Is student bool stored locally
               dispatch(updateIsStudent(true));
               dispatch(updateToken(response.data.token)); //user token recieved and updated
+              USER_STORE.setUserToken(response.data.token);
             } else {
               dispatch(updateRegisterToken(response.data.token));
             }

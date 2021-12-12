@@ -3,10 +3,10 @@ import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
-import {updateToken} from '../../redux/reducers/loginScreen';
 import {useDispatch} from 'react-redux';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_STORE} from '../../mobx/USER_STORE';
 
 const ModalContent = ({ModalVisible, navigation}) => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const ModalContent = ({ModalVisible, navigation}) => {
           text: 'OK',
           onPress: () => {
             AsyncStorage.removeItem('user_token');
-            dispatch(updateToken(false));
+            USER_STORE.setUserToken('');
           },
         },
       ],

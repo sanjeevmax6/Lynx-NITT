@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Animated, Image, StyleSheet, Text, View} from 'react-native';
 import * as color from '../../utils/colors';
 import * as Animatable from 'react-native-animatable';
-import {switchIsLoading} from '../../redux/reducers/splashScreen';
+
 import {useDispatch} from 'react-redux';
 
 import {updateIsStudent, updateToken} from '../../redux/reducers/loginScreen';
@@ -11,12 +11,14 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {KEY_IS_STUDENT, KEY_USER_TOKEN} from '../../utils/API_CONSTANTS';
+import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
+import {USER_STORE} from '../../mobx/USER_STORE';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
   function onEndNavigate() {
     dispatch(TabVisibility(true));
-    dispatch(switchIsLoading(false));
+    AUTH_NAV_STORE.setSplashLoading(false);
   }
   const getToken = () => {
     AsyncStorage.getItem(KEY_IS_STUDENT).then(value => {
@@ -25,11 +27,14 @@ const SplashScreen = () => {
         else if (value == 'false') dispatch(updateIsStudent(false));
       } else dispatch(updateToken(null));
     });
-    AsyncStorage.getItem(KEY_USER_TOKEN).then(value =>
-      value != null
-        ? dispatch(updateToken(value))
-        : dispatch(updateToken(null)),
-    );
+    AsyncStorage.getItem(KEY_USER_TOKEN).then(value => {
+      if (value != null) {
+        dispatch(updateToken(value));
+        USER_STORE.setUserToken(value);
+      } else {
+        dispatch(updateToken(null));
+      }
+    });
   };
 
   let logo = require('../../assests/images/nitt_logo.png');

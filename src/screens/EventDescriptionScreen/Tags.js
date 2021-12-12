@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 import styles from './SharedStyles';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import searchScreen from '../../redux/reducers/searchScreen';
+
 const Tags = ({tags, navigation}) => {
   return (
     <View style={{...styles.fragment, backgroundColor: colors.WHITE}}>
