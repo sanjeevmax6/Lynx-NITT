@@ -37,7 +37,7 @@ const SplashScreen = () => {
     });
   };
 
-  let logo = require('../../assests/images/nitt_logo.png');
+  let logo = require('../../res/images/nitt_logo.png');
   const opacityLogo = useRef(new Animated.Value(0)).current;
   const opacityText = useRef(new Animated.Value(0)).current;
   const opacityEmpty = useRef(new Animated.Value(0)).current;
