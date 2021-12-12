@@ -7,28 +7,21 @@ import {
   updateIsStudent,
 } from '../../redux/reducers/loginScreen';
 import {USER_STORE} from '../../mobx/USER_STORE';
+import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 
-export const studentLogin = (
-  rollNo,
-  password,
-  setErrorText,
-  setLoading,
-  dispatch,
-) => {
+export const studentLogin = (rollNo, password, dispatch) => {
   const axios = require('axios');
   //using netinfo to check if online
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
-      setLoading(true);
-
+      LOGIN_STORE.setLoading(true);
       axios
         .post(API_STUDENT_LOGIN, {
           rollNo,
           password,
         })
         .then(response => {
-          setLoading(false);
-
           if (response.data.message == 'Success') {
             if (response.data.userExists) {
               AsyncStorage.setItem('user_token', response.data.token); //user token stored locally
@@ -40,19 +33,23 @@ export const studentLogin = (
               dispatch(updateRegisterToken(response.data.token));
             }
           }
+          LOGIN_STORE.setLoading(false);
         })
         .catch(error => {
           if (error.response) {
             console.log(error);
-            setLoading(false);
-            setErrorText(error.response.data.message);
+
+            LOGIN_STORE.setErrorText(error.response.data.message);
           } else if (error.request) {
             console.log(error.request);
-            setErrorText('Server Error');
+            LOGIN_STORE.setError(SERVER_ERROR);
           }
+          LOGIN_STORE.setError(true);
+          LOGIN_STORE.setLoading(false);
         });
     } else {
-      setErrorText('No internet connection');
+      LOGIN_STORE.setErrorText(NO_NETWORK);
+      LOGIN_STORE.setError(true);
     }
   });
 };
