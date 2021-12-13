@@ -30,6 +30,7 @@ import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import {observer} from 'mobx-react';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 
 //scaling
 const height2 = 737.1;
@@ -49,7 +50,7 @@ const LoginScreen = observer(() => {
   const onLogin = () => {
     LOGIN_STORE.setErrorText('');
 
-    //checking if user is purly numbers
+    //checking if user is purely numbers
     if (user != '' && user.match(/^[0-9]+$/) == null) {
       //if not purely numbers then check if '@' is present (of form a@b where len a/b >=1)
       if (!user.slice(user.slice(1, user.length - 1)).includes('@')) {
@@ -69,7 +70,7 @@ const LoginScreen = observer(() => {
     <>
       {LOGIN_STORE.getLoading ? (
         <>
-          <LoaderPage />
+          <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
         </>
       ) : (
         <>
