@@ -4,6 +4,7 @@ import {Button} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {listItemStyles} from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Tertiary} from '../../utils/colors';
 
 const ListItem = ({eventItem, goToEvent}) => {
   return (
@@ -11,10 +12,12 @@ const ListItem = ({eventItem, goToEvent}) => {
       style={listItemStyles.container}
       onPress={() => goToEvent(eventItem)}>
       <View style={listItemStyles.viewStyle}>
-        <Image
-          source={{uri: eventItem.images[0]}}
-          style={listItemStyles.imageStyle}
-        />
+        <View style={{...listItemStyles.imageStyle, elevation: 1}}>
+          <Image
+            source={{uri: eventItem.images[0]}}
+            style={listItemStyles.imageStyle}
+          />
+        </View>
         <View style={{flex: 1}}>
           <Text style={listItemStyles.textStyle}>{eventItem.title}</Text>
           <Text
@@ -34,7 +37,7 @@ const ListItem = ({eventItem, goToEvent}) => {
             name="bookmark"
             size={moderateScale(20)}
             style={{marginEnd: scale(10)}}
-            color="crimson"
+            color={Tertiary}
           />
         </TouchableOpacity>
 

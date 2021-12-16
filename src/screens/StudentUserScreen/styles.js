@@ -9,13 +9,13 @@ export const listItemStyles = StyleSheet.create({
     backgroundColor: color.WHITE,
     alignItems: 'center',
     marginHorizontal: scale(uiConstants.HorizontalPadding),
-    marginVertical: verticalScale(4),
+    marginVertical: verticalScale(3),
     padding: moderateScale(10),
-    borderRadius: moderateScale(5),
+    borderRadius: moderateScale(6),
     elevation: 2,
   },
   textStyle: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(14),
     fontWeight: 'bold',
     flex: 1,
     marginEnd: scale(8),
@@ -29,7 +29,7 @@ export const listItemStyles = StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    borderRadius: moderateScale(12.5),
+    borderRadius: moderateScale(9),
     justifyContent: 'center',
     width: moderateScale(50),
     height: moderateScale(50),
@@ -43,6 +43,5 @@ export const listScreenStyles = StyleSheet.create({
   },
   listStyle: {
     flex: 1,
-    marginVertical: verticalScale(10),
   },
 });
