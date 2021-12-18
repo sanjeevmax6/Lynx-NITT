@@ -23,15 +23,15 @@ const EventCard = props => {
       />
       <View style={styles.eventinfo}>
         <Text style={styles.eventName} numberOfLines={1}>
-          {data.title}
+          {data.Title}
         </Text>
-        <Text style={styles.time}>Time: {data.time}:00</Text>
+        <Text style={styles.time}>Time: {data.Time}</Text>
       </View>
       <Avatar.Image
         size={moderateScale(50)}
         style={styles.profImg}
         source={{
-          uri: data.organizer.imgURL,
+          uri: 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
         }}
       />
     </View>

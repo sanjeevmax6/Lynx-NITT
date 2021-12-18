@@ -18,6 +18,7 @@ import {
 import moment from 'moment';
 import * as colors from '../../utils/colors';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {CALENDAR_STORE} from '../../mobx/CALENDAR_STORE';
 let width = Dimensions.get('window').width;
 
 const TopLayout = props => {
@@ -32,6 +33,9 @@ const TopLayout = props => {
   const [day, setDay] = useState('');
 
   const onSelectedChange = dateString => {
+    CALENDAR_STORE.setSelectedDate(
+      moment(Date.parse(dateString)).format('DD-MM-YYYY'),
+    );
     setSelDate(dateString);
     var d = Date.parse(dateString);
     var day = moment(d).format('LLLL');
