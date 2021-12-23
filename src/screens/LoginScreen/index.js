@@ -171,7 +171,7 @@ const LoginScreen = observer(() => {
                         <Animated.View style={styles.loginBtnView}>
                           <TouchableOpacity
                             style={{
-                              backgroundColor: '#2F3F9E',
+                              backgroundColor: colors.Tertiary,
                               borderRadius: verticalScale(22),
                             }}
                             onPress={() => {

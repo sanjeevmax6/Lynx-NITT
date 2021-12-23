@@ -1,11 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, View, StatusBar, Platform} from 'react-native';
 import * as color from '../../utils/colors';
 import * as Animatable from 'react-native-animatable';
 
 import {useDispatch} from 'react-redux';
 
 import {updateIsStudent, updateToken} from '../../redux/reducers/loginScreen';
+import LottieView from 'lottie-react-native';
+import splashLottie from '../../res/lottieFiles/splash.json';
 
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TabVisibility} from '../../redux/reducers/bottomNav';
@@ -38,62 +40,56 @@ const SplashScreen = () => {
   };
 
   let logo = require('../../res/images/nitt_logo.png');
-  const opacityLogo = useRef(new Animated.Value(0)).current;
-  const opacityText = useRef(new Animated.Value(0)).current;
-  const opacityEmpty = useRef(new Animated.Value(0)).current;
-  const opacityEnd = useRef(new Animated.Value(0)).current;
+  let spiderLogo = require('../../res/images/spiderLogo.png');
   useEffect(() => {
     getToken();
-    Animated.stagger(1000, [
-      Animated.timing(opacityEmpty, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityLogo, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityText, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityEnd, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      onEndNavigate();
-    });
   });
 
+  setTimeout(() => {
+    onEndNavigate();
+  }, 3000);
   return (
-    <View style={styles.container}>
-      <Animatable.View
+    <>
+      <StatusBar
+        backgroundColor={color.Tertiary}
+        hidden={false}
+        barStyle="light-content"
+      />
+      <LottieView
+        style={{height: '108%', backgroundColor: 'white'}}
+        source={splashLottie}
+        speed={0.78}
+        resizeMode="cover"
+        autoPlay
+        width={500}
+        loop={false}
+      />
+      <View
         style={{
-          opacity: opacityEmpty,
-          width: scale(0),
-          height: verticalScale(0),
-        }}></Animatable.View>
-      <Animatable.View
-        style={{
-          marginBottom: verticalScale(10),
-          opacity: opacityLogo,
+          position: 'absolute',
+          top: verticalScale(-55),
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-        <Image style={styles.image} source={logo}></Image>
-      </Animatable.View>
-      <Animatable.View
-        style={{
-          opacity: opacityText,
-        }}>
-        <Text style={styles.text}>NIT-T APP</Text>
-      </Animatable.View>
-      <Animatable.View
-        style={{
-          opacity: opacityEnd,
-          width: scale(0),
-          height: verticalScale(0),
-        }}></Animatable.View>
-    </View>
+        <Animatable.Image
+          source={logo}
+          style={styles.image}
+          delay={1500}
+          animation="fadeIn"></Animatable.Image>
+        <Animatable.Text style={styles.text} delay={1800} animation="fadeIn">
+          NIT-T APP
+        </Animatable.Text>
+        <Animatable.Image
+          source={spiderLogo}
+          style={styles.spider}
+          delay={2000}
+          animation="fadeIn"
+        />
+      </View>
+    </>
   );
 };
 
@@ -106,15 +102,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: scale(20),
+    fontSize: scale(24),
     margin: moderateScale(15),
     lineHeight: verticalScale(30),
-    color: color.FontColor,
+    color: color.WHITE,
+    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: Platform.OS === 'android' ? 'monospace' : 'normal',
   },
   image: {
-    width: moderateScale(150),
-    height: moderateScale(150),
+    width: moderateScale(180),
+    height: moderateScale(180),
+  },
+  spider: {
+    height: scale(50),
+    width: scale(100),
+    position: 'absolute',
+    bottom: scale(24),
   },
 });
 
