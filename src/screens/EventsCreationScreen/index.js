@@ -21,11 +21,11 @@ import EventsCreationScreenHeader from './EventsCreationScreenHeader';
 import EventsCreationImages from './EventsCreationImages';
 import EventCreationDesc from './EventsCreationDesc';
 import EventsCreationTag from './EventsCreationTags';
-import { EventCreationAPI } from './EventCreationAPI';
+import {EventCreationAPI} from './EventCreationAPI';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import {TabVisibility} from '../../redux/reducers/bottomNav';
-import {useDispatch,useSelector} from 'react-redux';
 import {eventCreation_eventTitle} from '../../utils/stringConstants';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -65,11 +65,18 @@ const EventCreationScreen = ({navigation}) => {
 
   const handleAPICALL = () => {
     let description = desc;
-    EventCreationAPI(title,description,time,date,userToken,setLoading,setErrorText);
+    EventCreationAPI(
+      title,
+      description,
+      time,
+      date,
+      userToken,
+      setLoading,
+      setErrorText,
+    );
   };
 
-
-  const userToken = useSelector(state => state.logScreen.login.userToken);
+  const userToken = USER_STORE.getUserToken;
 
   //Handling hardwareBackPress
   useFocusEffect(
@@ -106,10 +113,8 @@ const EventCreationScreen = ({navigation}) => {
     }),
   );
 
-  const dispatch = useDispatch();
-
   function toggleTab(tabShow) {
-    dispatch(TabVisibility(tabShow));
+    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
 
   useEffect(() => {

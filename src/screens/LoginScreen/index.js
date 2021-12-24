@@ -17,7 +17,6 @@ import {
   ScaledSheet,
   scale,
 } from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
 import * as colors from '../../utils/colors';
 import LottieView from 'lottie-react-native';
 import lottieFile from '../../res/lottieFiles/loginBackGround.json';
@@ -26,7 +25,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Error from '../../components/Error';
 import {studentLogin} from './studentLogin';
 import {clubLogin} from './clubLogin';
-import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
+import {LOGIN_STORE, USER_STORE} from '../../mobx/LOGIN_STORE';
 import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import {observer} from 'mobx-react';
@@ -45,8 +44,6 @@ const LoginScreen = observer(() => {
   const [eyeIcon, setEyeIcon] = useState('eye-off');
   const [passwordToggle, setPasswordToggle] = useState(true);
 
-  const dispatch = useDispatch();
-
   const onLogin = () => {
     LOGIN_STORE.setErrorText('');
 
@@ -59,10 +56,10 @@ const LoginScreen = observer(() => {
         return;
       }
       let email = user.trim();
-      clubLogin(email, password, dispatch);
+      clubLogin(email, password);
     } else {
       let rollNo = parseInt(user);
-      studentLogin(rollNo, password, dispatch);
+      studentLogin(rollNo, password);
     }
   };
 

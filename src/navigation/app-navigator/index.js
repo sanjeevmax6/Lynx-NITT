@@ -7,17 +7,13 @@ import SearchScreen from '../../screens/SearchScreen';
 import ActivityNavigator from '../activity-navigator';
 import UserNavigator from '../user-navigator';
 import * as color from '../../utils/colors';
-import store from '../../redux/store';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {observer} from 'mobx-react';
 
 const HomeTab = createMaterialBottomTabNavigator();
 
-const AppNavigator = () => {
-  const [isTabVisible, setisTabVisible] = useState(true);
-
-  store.subscribe(() => {
-    setisTabVisible(store.getState().bottomNav.bottomNavigation.isTabVisible);
-    console.log(isTabVisible);
-  });
+const AppNavigator = observer(() => {
+  console.log(BOTTOM_NAV_STORE.getTabVisibility);
 
   return (
     <HomeTab.Navigator
@@ -28,7 +24,7 @@ const AppNavigator = () => {
       sceneAnimationEnabled={true}
       barStyle={{
         backgroundColor: color.BottomNav,
-        display: isTabVisible ? null : 'none',
+        display: BOTTOM_NAV_STORE.getTabVisibility ? null : 'none',
       }}
       screenOptions={{
         headerShown: false,
@@ -89,6 +85,6 @@ const AppNavigator = () => {
       />
     </HomeTab.Navigator>
   );
-};
+});
 
 export default AppNavigator;

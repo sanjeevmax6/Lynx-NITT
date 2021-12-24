@@ -16,12 +16,11 @@ import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import {TabVisibility} from '../../redux/reducers/bottomNav';
-import {useDispatch} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import Error from '../../components/Error';
 import {API_CIRCULAR_CREATION} from '../../utils/API_CONSTANTS';
 import axios from 'axios';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const AnnouncementCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -54,8 +53,6 @@ const AnnouncementCreationScreen = ({navigation}) => {
     maxAnnouncementLength,
   };
 
-  const dispatch = useDispatch();
-
   function validData() {
     if (inputStates.title == '' || inputStates.desc == '') {
       setErrorText('Please enter subject and description');
@@ -66,7 +63,8 @@ const AnnouncementCreationScreen = ({navigation}) => {
   }
 
   function toggleTab(tabShow) {
-    dispatch(TabVisibility(tabShow));
+    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
+    // console.log('Toggled' + BOTTOM_NAV_STORE.getTabVisibility);
   }
 
   function clearData() {

@@ -5,12 +5,12 @@ import {
 } from '../../utils/API_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import {updateToken, updateIsStudent} from '../../redux/reducers/loginScreen';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
-
-export const clubLogin = (email, password, dispatch) => {
+import {CLUB} from '../../utils/USER_TYPE';
+import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+export const clubLogin = (email, password) => {
   const axios = require('axios');
   //using netinfo to check if online
   NetInfo.fetch().then(state => {
@@ -23,11 +23,12 @@ export const clubLogin = (email, password, dispatch) => {
           password,
         })
         .then(response => {
-          if (response.data.message == 'Success') {
-            AsyncStorage.setItem(KEY_USER_TOKEN, response.data.token); //user token stored locally
-            AsyncStorage.setItem(KEY_IS_STUDENT, 'false');
-            dispatch(updateIsStudent(false));
-            dispatch(updateToken(response.data.token)); //user token received and updated
+          if (response.status == 200) {
+            AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
+            AsyncStorage.setItem(USER_TYPE, CLUB);
+
+            //Differentiate club and admin based on backend
+            USER_STORE.setUserType(CLUB);
             USER_STORE.setUserToken(response.data.token);
           }
           LOGIN_STORE.setLoading(false);

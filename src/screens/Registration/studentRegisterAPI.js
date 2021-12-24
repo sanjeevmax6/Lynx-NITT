@@ -1,23 +1,12 @@
-import {
-  API_STUDENT_REGISTER,
-  KEY_IS_STUDENT,
-  KEY_USER_TOKEN,
-} from '../../utils/API_CONSTANTS';
+import {API_STUDENT_REGISTER} from '../../utils/API_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import {
-  updateToken,
-  updateIsStudent,
-  updateRegisterToken,
-} from '../../redux/reducers/loginScreen';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {STUDENT} from '../../utils/USER_TYPE';
 
-export const studentRegisterAPI = (
-  token,
-  formData,
-  setLoading,
-  setErrorText,
-  dispatch,
-) => {
+export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
+  const token = USER_STORE.getUserRegToken;
   const axios = require('axios');
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
@@ -32,12 +21,12 @@ export const studentRegisterAPI = (
         )
         .then(response => {
           setLoading(false);
-          if (response.data.message == 'Success') {
-            AsyncStorage.setItem(KEY_USER_TOKEN, response.data.token);
-            AsyncStorage.setItem(KEY_IS_STUDENT, 'true'); //stored items should be string
-            dispatch(updateToken(response.data.token));
-            dispatch(updateRegisterToken(null));
-            dispatch(updateIsStudent(true));
+          if (response.status == 200) {
+            AsyncStorage.setItem(USER_TOKEN, response.data.token);
+            AsyncStorage.setItem(USER_TYPE, STUDENT); //stored items should be string
+            USER_STORE.setUserType(STUDENT);
+            USER_STORE.setUserToken(response.data.token);
+            USER_STORE.setUserRegToken(null);
           }
         })
         .catch(error => {

@@ -16,8 +16,7 @@ import EditProfileInputs from './EditProfileInputs';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EditProfileScreenHeader from './EditProfileScreenHeader';
 import StudentPhoto from './StudentPhoto';
-import {TabVisibility} from '../../redux/reducers/bottomNav';
-import {useDispatch} from 'react-redux';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const EditProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
@@ -59,10 +58,8 @@ const EditProfileScreen = ({navigation}) => {
     setStudentPicSelected,
   };
 
-  const dispatch = useDispatch();
-
   function toggleTab(tabShow) {
-    dispatch(TabVisibility(tabShow));
+    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
 
   const selectFiles = async () => {

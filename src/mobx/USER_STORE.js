@@ -6,7 +6,16 @@ class UserData {
     userType: '',
     userRollNumber: '',
     userToken: '',
+    userRegToken: '',
   };
+
+  setUserType = type => {
+    this.state.userType = type;
+  };
+
+  get getUserType() {
+    return this.state.userType;
+  }
 
   setUserToken = token => {
     this.state.userToken = token;
@@ -16,12 +25,22 @@ class UserData {
     return this.state.userToken;
   }
 
+  setUserRegToken = rtoken => {
+    this.state.userRegToken = rtoken;
+  };
+
+  get getUserRegToken() {
+    return this.state.userRegToken;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
 
       setUserToken: action,
       getUserToken: computed,
+      setUserRegToken: action,
+      getUserRegToken: computed,
     });
   }
 }

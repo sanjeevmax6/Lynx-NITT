@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import Navigator from './navigation';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import * as color from './utils/colors';
-import {Provider} from 'react-redux';
-import store from './redux/store';
+import {Provider} from 'mobx-react';
 import CustomStatusBar from './components/statusBar';
 
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      <Provider>
         <CustomStatusBar />
         <Navigator />
       </Provider>

@@ -8,7 +8,6 @@ import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
 
-import {useDispatch, useSelector} from 'react-redux';
 import {AUTH_NAV_STORE} from '../mobx/AUTH_NAV_STORE';
 import {observer} from 'mobx-react';
 import {USER_STORE} from '../mobx/USER_STORE';
@@ -16,20 +15,17 @@ import {USER_STORE} from '../mobx/USER_STORE';
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
-  const registerToken = useSelector(
-    state => state.logScreen.login.registerToken,
-  );
-
   return (
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
+        {console.log(USER_STORE.getUserToken)}
         {AUTH_NAV_STORE.getSplashLoading ? (
           <RootStack.Screen name="Splash" component={SplashScreen} />
         ) : !USER_STORE.getUserToken ? (
-          registerToken ? (
+          USER_STORE.getUserRegToken ? (
             <RootStack.Screen
               name="Register"
               component={Registration}

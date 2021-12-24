@@ -3,38 +3,36 @@ import {StyleSheet, View, StatusBar, Platform} from 'react-native';
 import * as color from '../../utils/colors';
 import * as Animatable from 'react-native-animatable';
 
-import {useDispatch} from 'react-redux';
-
-import {updateIsStudent, updateToken} from '../../redux/reducers/loginScreen';
 import LottieView from 'lottie-react-native';
 import splashLottie from '../../res/lottieFiles/splash.json';
 
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import {TabVisibility} from '../../redux/reducers/bottomNav';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KEY_IS_STUDENT, KEY_USER_TOKEN} from '../../utils/API_CONSTANTS';
 import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
+import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 
 const SplashScreen = () => {
-  const dispatch = useDispatch();
   function onEndNavigate() {
-    dispatch(TabVisibility(true));
+    BOTTOM_NAV_STORE.setTabVisibility(true);
     AUTH_NAV_STORE.setSplashLoading(false);
   }
   const getToken = () => {
-    AsyncStorage.getItem(KEY_IS_STUDENT).then(value => {
+    AsyncStorage.getItem(USER_TYPE).then(value => {
       if (value != null) {
-        if (value == 'true') dispatch(updateIsStudent(true));
-        else if (value == 'false') dispatch(updateIsStudent(false));
-      } else dispatch(updateToken(null));
+        if (value == STUDENT) USER_STORE.setUserType(STUDENT);
+        else if (value == CLUB) USER_STORE.setUserType(CLUB);
+        else if (value == ADMIN) USER_STORE.setUserType(ADMIN);
+      } else USER_STORE.setUserType(null);
     });
-    AsyncStorage.getItem(KEY_USER_TOKEN).then(value => {
+    AsyncStorage.getItem(USER_TOKEN).then(value => {
       if (value != null) {
-        dispatch(updateToken(value));
         USER_STORE.setUserToken(value);
       } else {
-        dispatch(updateToken(null));
+        USER_STORE.setUserToken(null);
       }
     });
   };

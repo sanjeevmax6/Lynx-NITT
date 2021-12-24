@@ -3,13 +3,12 @@ import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_STORE} from '../../mobx/USER_STORE';
+import {USER_TOKEN} from '../../utils/STORAGE_KEYS';
 
 const ModalContent = ({ModalVisible, navigation}) => {
-  const dispatch = useDispatch();
   const HandleLogout = () => {
     Alert.alert(
       'Logout?',
@@ -22,7 +21,7 @@ const ModalContent = ({ModalVisible, navigation}) => {
         {
           text: 'OK',
           onPress: () => {
-            AsyncStorage.removeItem('user_token');
+            AsyncStorage.removeItem(USER_TOKEN);
             USER_STORE.setUserToken('');
           },
         },

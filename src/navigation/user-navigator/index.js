@@ -12,12 +12,13 @@ import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import * as color from '../../utils/colors';
 
-import {useSelector} from 'react-redux';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {STUDENT} from '../../utils/USER_TYPE';
 
 const UserStack = createNativeStackNavigator();
 
 function UserNavigator() {
-  const isStudent = useSelector(state => state.logScreen.login.isStudent);
+  const isStudent = USER_STORE.getUserType == STUDENT;
   return (
     <UserStack.Navigator>
       <UserStack.Screen

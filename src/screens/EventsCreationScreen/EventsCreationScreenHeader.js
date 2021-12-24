@@ -11,16 +11,13 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
-import {TabVisibility} from '../../redux/reducers/bottomNav';
-import {useDispatch} from 'react-redux';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 const WIDTH = Dimensions.get('window').width;
 const EventsCreationScreenHeader = ({navigation, isValid}) => {
-  const dispatch = useDispatch();
-
   function toggleTab(tabShow) {
-    dispatch(TabVisibility(tabShow));
+    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
 
   return (

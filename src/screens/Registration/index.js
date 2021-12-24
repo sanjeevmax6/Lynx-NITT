@@ -16,7 +16,6 @@ import ResetPassword from './ResetPassword';
 
 import * as colors from '../../utils/colors';
 
-import {useDispatch, useSelector} from 'react-redux';
 import {studentRegisterAPI} from './studentRegisterAPI';
 
 const WIDTH = Dimensions.get('window').width;
@@ -94,9 +93,6 @@ const Registration = ({navigation}) => {
     setPage(page);
   };
 
-  const dispatch = useDispatch();
-  const token = useSelector(state => state.logScreen.login.registerToken);
-
   const handleAPICALL = () => {
     setErrorText(null);
     const formData = new FormData();
@@ -110,7 +106,7 @@ const Registration = ({navigation}) => {
     formData.append('aadhar_no', aadhar);
     formData.append('profileImg', pic);
     formData.append('passportImg', passport);
-    studentRegisterAPI(token, formData, setLoading, setErrorText, dispatch);
+    studentRegisterAPI(formData, setLoading, setErrorText);
   };
 
   useFocusEffect(
