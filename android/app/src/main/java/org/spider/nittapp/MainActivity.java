@@ -1,4 +1,4 @@
-package com.nitt_app;
+package org.spider.nittapp;
 
 import com.facebook.react.ReactActivity;
 
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "NITT_APP";
+    return "NITTAPP";
   }
   
   @Override

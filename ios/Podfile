@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'NITT_APP' do
+target 'NITTAPP' do
   config = use_native_modules!
 
   use_react_native!(
@@ -19,7 +19,7 @@ target 'NITT_APP' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
-  target 'NITT_APPTests' do
+  target 'NITTAPPTests' do
     inherit! :complete
     # Pods for testing
   end

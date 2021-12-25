@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface NITT_APPTests : XCTestCase
+@interface NITTAPPTests : XCTestCase
 
 @end
 
-@implementation NITT_APPTests
+@implementation NITTAPPTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "NITT_APP.app"
-               BlueprintName = "NITT_APP"
-               ReferencedContainer = "container:NITT_APP.xcodeproj">
+               BuildableName = "NITTAPP.app"
+               BlueprintName = "NITTAPP"
+               ReferencedContainer = "container:NITTAPP.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "NITT_APPTests.xctest"
-               BlueprintName = "NITT_APPTests"
-               ReferencedContainer = "container:NITT_APP.xcodeproj">
+               BuildableName = "NITTAPPTests.xctest"
+               BlueprintName = "NITTAPPTests"
+               ReferencedContainer = "container:NITTAPP.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "NITT_APP.app"
-            BlueprintName = "NITT_APP"
-            ReferencedContainer = "container:NITT_APP.xcodeproj">
+            BuildableName = "NITTAPP.app"
+            BlueprintName = "NITTAPP"
+            ReferencedContainer = "container:NITTAPP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "NITT_APP.app"
-            BlueprintName = "NITT_APP"
-            ReferencedContainer = "container:NITT_APP.xcodeproj">
+            BuildableName = "NITTAPP.app"
+            BlueprintName = "NITTAPP"
+            ReferencedContainer = "container:NITTAPP.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
