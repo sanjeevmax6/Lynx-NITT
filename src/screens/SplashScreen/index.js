@@ -45,7 +45,7 @@ const SplashScreen = () => {
 
   setTimeout(() => {
     onEndNavigate();
-  }, 3000);
+  }, 2000);
   return (
     <>
       <StatusBar
@@ -56,7 +56,7 @@ const SplashScreen = () => {
       <LottieView
         style={{height: '108%', backgroundColor: 'white'}}
         source={splashLottie}
-        speed={0.78}
+        speed={1.5}
         resizeMode="cover"
         autoPlay
         width={500}
@@ -75,15 +75,15 @@ const SplashScreen = () => {
         <Animatable.Image
           source={logo}
           style={styles.image}
-          delay={1500}
+          delay={1000}
           animation="fadeIn"></Animatable.Image>
-        <Animatable.Text style={styles.text} delay={1800} animation="fadeIn">
+        <Animatable.Text style={styles.text} delay={1000} animation="fadeIn">
           NIT-T APP
         </Animatable.Text>
         <Animatable.Image
           source={spiderLogo}
           style={styles.spider}
-          delay={2000}
+          delay={1200}
           animation="fadeIn"
         />
       </View>
