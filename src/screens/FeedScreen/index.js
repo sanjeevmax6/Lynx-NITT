@@ -22,6 +22,7 @@ const FeedScreen = ({navigation}) => {
       dates: '27/9/21',
       time: '10:00',
       title: 'Spider Neural Conference',
+      live: true,
       description:
         'Neural networks, also known as artificial neural networks (ANNs) or simulated neural networks (SNNs), are a subset of machine learning and are at the heart of deep learning algorithms. Their name and structure are inspired by the human brain, mimicking the way that biological neurons signal to one another.',
       images: [
@@ -49,6 +50,8 @@ const FeedScreen = ({navigation}) => {
     },
     {
       key: '2',
+      live: true,
+
       dates: '28/9/21',
       time: '1:00',
       title: 'Application Softwares',
@@ -73,6 +76,8 @@ const FeedScreen = ({navigation}) => {
     },
     {
       key: '3',
+      live: false,
+
       dates: '29/9/21',
       time: '16:00',
       title: 'Community Week',
@@ -94,6 +99,7 @@ const FeedScreen = ({navigation}) => {
       ],
     },
     {
+      live: false,
       key: '4',
       dates: '30/9/21',
       time: '15:00',
@@ -117,6 +123,7 @@ const FeedScreen = ({navigation}) => {
     },
     {
       key: '5',
+      live: false,
       dates: '31/9/21',
       time: '9:00',
       title: 'Photshoot',
@@ -137,6 +144,7 @@ const FeedScreen = ({navigation}) => {
     },
     {
       key: '6',
+      live: false,
       dates: '10/10/21',
       time: '12:00',
       title: 'Blockchain',
@@ -159,6 +167,7 @@ const FeedScreen = ({navigation}) => {
     },
     {
       key: '7',
+      live: false,
       dates: '12/10/21',
       time: '17:00',
       title: 'Dawn of the Net',
@@ -259,6 +268,7 @@ const FeedScreen = ({navigation}) => {
                   desc={item.description}
                   eventImage={item.images[0]}
                   organizer={item.organizer.name}
+                  isLive={item.live}
                 />
               </TouchableOpacity>
             </View>

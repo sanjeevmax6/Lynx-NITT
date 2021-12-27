@@ -1,13 +1,51 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 
-const EventsCard = ({date, time, name, desc, eventImage, organizer}) => {
+const EventsCard = ({
+  date,
+  time,
+  name,
+  desc,
+  eventImage,
+  organizer,
+  isLive = false,
+}) => {
   return (
     <View style={styles.card}>
+      {isLive ? (
+        <View
+          style={{
+            position: 'absolute',
+            paddingHorizontal: scale(3),
+            flexDirection: 'row',
+            right: scale(9),
+            top: verticalScale(1),
+            borderRadius: scale(18),
+            alignItems: 'center',
+          }}>
+          <Icon
+            name="circle"
+            color={colors.EventCard_IsLive}
+            size={scale(10)}
+          />
+          <Text
+            style={{
+              fontSize: scale(9),
+              color: colors.GRAY_DARK,
+              fontWeight: 'bold',
+            }}>
+            {' '}
+            LIVE
+          </Text>
+        </View>
+      ) : (
+        <></>
+      )}
+
       <View style={{justifyContent: 'center'}}>
         <Image
           source={{uri: eventImage || '../assests/images/spider.png'}}
