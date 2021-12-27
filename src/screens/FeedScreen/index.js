@@ -12,6 +12,7 @@ import {Divider} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 import EventsCard from '../../components/EventsCard';
+import SuggestedEventCard from '../../components/SuggestedEventCard';
 import * as colors from '../../utils/colors';
 import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
 
@@ -198,6 +199,65 @@ const FeedScreen = ({navigation}) => {
     inputRange: [0, verticalScale(HeaderHeight)],
     outputRange: [0, verticalScale(-1 * HeaderHeight)],
   });
+
+  const SUGGESTED_DATA = [
+    {
+      imgURL: 'https://imagizer.imageshack.com/v2/498x490q90/r/923/n8M7JL.jpg',
+      organizer: 'Mechanical Engineering',
+      eventName: 'Synergy',
+      isLive: true,
+    },
+    {
+      imgURL: 'https://imagizer.imageshack.com/v2/839x490q90/r/922/DEBlUE.png',
+      organizer: 'TedX',
+      eventName: 'Beat the Heat this summer',
+      isLive: true,
+    },
+    {
+      imgURL: 'https://imageshack.com/a/img923/8703/QIFnoR.png',
+      organizer: 'Dance Troupe',
+      eventName: 'Shake it off',
+      isLive: false,
+    },
+  ];
+  const SuggestedEvents = () => {
+    const Separator = () => <View style={{width: scale(HorizontalPadding)}} />;
+    return (
+      <>
+        <View>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: scale(18),
+              marginHorizontal: scale(HorizontalPadding),
+              marginVertical: verticalScale(9),
+            }}>
+            Suggested Events
+          </Text>
+          <FlatList
+            data={SUGGESTED_DATA}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={<Separator />}
+            ListFooterComponent={<Separator />}
+            ItemSeparatorComponent={() => (
+              <View style={{width: scale(HorizontalPadding)}} />
+            )}
+            renderItem={({item}) => (
+              <SuggestedEventCard
+                eventImage={item.imgURL}
+                organizer={item.organizer}
+                eventName={item.eventName}
+                isLive={item.isLive}
+              />
+            )}
+          />
+        </View>
+      </>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <SafeAreaView>
@@ -250,6 +310,7 @@ const FeedScreen = ({navigation}) => {
           ListHeaderComponent={
             <View style={{height: verticalScale(HeaderHeight)}}></View>
           }
+          ListFooterComponent={<SuggestedEvents />}
           onScroll={e => {
             scrollY.setValue(e.nativeEvent.contentOffset.y);
           }}
