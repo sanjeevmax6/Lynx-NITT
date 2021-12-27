@@ -1,14 +1,10 @@
-import {
-  API_CLUB_LOGIN,
-  KEY_IS_STUDENT,
-  KEY_USER_TOKEN,
-} from '../../utils/API_CONSTANTS';
+import {API_CLUB_LOGIN} from '../../utils/API_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
-import {CLUB} from '../../utils/USER_TYPE';
+import {ADMIN, CLUB} from '../../utils/USER_TYPE';
 import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 export const clubLogin = (email, password) => {
   const axios = require('axios');
@@ -25,10 +21,17 @@ export const clubLogin = (email, password) => {
         .then(response => {
           if (response.status == 200) {
             AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
-            AsyncStorage.setItem(USER_TYPE, CLUB);
 
             //Differentiate club and admin based on backend
-            USER_STORE.setUserType(CLUB);
+            console.log('IS ADMIN?' + response.data.isAdmin);
+            if (response.data.isAdmin) {
+              AsyncStorage.setItem(USER_TYPE, ADMIN);
+              USER_STORE.setUserType(ADMIN);
+            } else {
+              USER_STORE.setUserType(CLUB);
+              AsyncStorage.setItem(USER_TYPE, CLUB);
+            }
+
             USER_STORE.setUserToken(response.data.token);
           }
           LOGIN_STORE.setLoading(false);

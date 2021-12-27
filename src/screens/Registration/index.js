@@ -17,6 +17,7 @@ import ResetPassword from './ResetPassword';
 import * as colors from '../../utils/colors';
 
 import {studentRegisterAPI} from './studentRegisterAPI';
+import {reg_token} from '../../utils/API_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -106,6 +107,7 @@ const Registration = ({navigation}) => {
     formData.append('aadhar_no', aadhar);
     formData.append('profileImg', pic);
     formData.append('passportImg', passport);
+    formData.append('reg_token', reg_token);
     studentRegisterAPI(formData, setLoading, setErrorText);
   };
 
