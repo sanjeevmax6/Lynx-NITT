@@ -8,13 +8,13 @@ import {
 } from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {TextInput, Button} from 'react-native-paper';
-import {CLUB_REGISTRATION_STORE} from '../../mobx/CLUB_REGISTRATION';
+import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
 
 const charLen = 500;
 const ClubDescription = observer(({forwardAction}) => {
   const remainCharacter =
-    charLen - CLUB_REGISTRATION_STORE.getClubDescription.length;
+    charLen - EDIT_CLUB_PROFILE_STORE.getClubDescription.length;
   return (
     <View
       style={{
@@ -46,7 +46,7 @@ const ClubDescription = observer(({forwardAction}) => {
           },
         }}
         onChangeText={text => {
-          CLUB_REGISTRATION_STORE.setClubDescription(text);
+          EDIT_CLUB_PROFILE_STORE.setClubDescription(text);
         }}
         left={<TextInput.Icon name={'lead-pencil'} color={colors.Accent} />}
         right={

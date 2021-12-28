@@ -8,11 +8,11 @@ import {
 } from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {TextInput, Button} from 'react-native-paper';
-import {CLUB_REGISTRATION_STORE} from '../../mobx/CLUB_REGISTRATION';
-import {observer} from 'mobx-react';
-import Icon from 'react-native-vector-icons/Fontisto';
 
-const TEXT_INPUT = ({placeholder, label = placeholder, icon}) => {
+import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
+import {observer} from 'mobx-react';
+
+const TEXT_INPUT = ({placeholder, label = placeholder, icon, onTextChange}) => {
   return (
     <TextInput
       underlineColor="transparent"
@@ -34,7 +34,7 @@ const TEXT_INPUT = ({placeholder, label = placeholder, icon}) => {
         },
       }}
       onChangeText={text => {
-        CLUB_REGISTRATION_STORE.setInstagramLink(text);
+        onTextChange(text);
       }}
       left={<TextInput.Icon name={icon} color={colors.Accent} />}
     />
@@ -55,70 +55,50 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Website Link'}
           label={'Website Link'}
           icon={'google-chrome'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setWebsiteLink(val);
+          }}
         />
         <TEXT_INPUT
           placeholder={'Instagram Link'}
           label={'Instagram Link'}
           icon={'instagram'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setInstagramLink(val);
+          }}
         />
         <TEXT_INPUT
           placeholder={'Facebook Link'}
           label={'Facebook Link'}
           icon={'facebook'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setFacebookLink(val);
+          }}
         />
         <TEXT_INPUT
           placeholder={'Youtube Link'}
           label={'Youtube Link'}
           icon={'youtube'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setYoutubeLink(val);
+          }}
         />
         <TEXT_INPUT
           placeholder={'LinkedIn Link'}
           label={'LinkedIn Link'}
           icon={'linkedin'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setLinkedInLink(val);
+          }}
         />
-        <View
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            flexDirection: 'row',
-            justifyContent: 'center',
-
-            marginTop: verticalScale(10),
-          }}>
-          <Icon
-            name="medium"
-            size={18}
-            color={colors.Accent}
-            style={{
-              position: 'absolute',
-              elevation: 1,
-              left: scale(33),
-            }}
-          />
-          <TextInput
-            underlineColor="transparent"
-            label="Medium Link"
-            style={{
-              backgroundColor: colors.GRAY_LIGHT,
-              borderTopRightRadius: moderateScale(9),
-              borderTopLeftRadius: moderateScale(9),
-              borderBottomLeftRadius: moderateScale(9),
-              borderBottomRightRadius: moderateScale(9),
-              paddingLeft: scale(30),
-              width: '90%',
-            }}
-            placeholder="Medium Link"
-            multiline={false}
-            theme={{
-              colors: {
-                primary: colors.BLACK,
-              },
-            }}
-            onChangeText={text => {
-              CLUB_REGISTRATION_STORE.setInstagramLink(text);
-            }}
-          />
-        </View>
+        <TEXT_INPUT
+          placeholder={'Medium Link'}
+          label={'Medium Link'}
+          icon={'alpha-m-box'}
+          onTextChange={val => {
+            EDIT_CLUB_PROFILE_STORE.setMediumLink(val);
+          }}
+        />
         <View
           style={{
             height: verticalScale(170),

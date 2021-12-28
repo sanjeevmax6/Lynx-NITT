@@ -1,14 +1,9 @@
 import React from 'react';
 import {View, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
-import {
-  moderateScale,
-  scale,
-  ScaledSheet,
-  verticalScale,
-} from 'react-native-size-matters';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import {TextInput, Button, Avatar} from 'react-native-paper';
-import {CLUB_REGISTRATION_STORE} from '../../mobx/CLUB_REGISTRATION';
+import {Button, Avatar} from 'react-native-paper';
+import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import DocumentPicker from 'react-native-document-picker';
 import {observer} from 'mobx-react';
 
@@ -20,7 +15,8 @@ const selectFile = async () => {
       type: [DocumentPicker.types.images],
     });
     console.log(file.fileCopyUri);
-    CLUB_REGISTRATION_STORE.setClubLogo(file.fileCopyUri);
+
+    EDIT_CLUB_PROFILE_STORE.setClubImage(file.fileCopyUri);
   } catch (err) {
     if (DocumentPicker.isCancel(err)) console.log(err);
     else throw err;
@@ -39,7 +35,7 @@ const ClubLogo = observer(({forwardAction, backwardAction}) => {
       <View style={styles.imageView}>
         <Image
           source={{
-            uri: CLUB_REGISTRATION_STORE.getClubLogo,
+            uri: EDIT_CLUB_PROFILE_STORE.getClubImage,
           }}
           style={styles.image}
         />
