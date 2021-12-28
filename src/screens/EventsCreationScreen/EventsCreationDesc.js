@@ -85,7 +85,6 @@ const EventCreationDesc = ({
             descStates.setDesc(nDesc);
             onChangeDescLength(nDesc);
           }}
-          multiline={true}
           left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
           right={
             <TextInput.Affix

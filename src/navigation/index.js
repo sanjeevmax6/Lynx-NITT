@@ -7,6 +7,7 @@ import AppNavigator from './app-navigator';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
+import ResetPasswordScreen from '../screens/ResetPasswordScreens';
 
 import {AUTH_NAV_STORE} from '../mobx/AUTH_NAV_STORE';
 import {observer} from 'mobx-react';
@@ -21,7 +22,6 @@ const Navigator = observer(() => {
         screenOptions={{
           headerShown: false,
         }}>
-        {console.log(USER_STORE.getUserToken)}
         {AUTH_NAV_STORE.getSplashLoading ? (
           <RootStack.Screen name="Splash" component={SplashScreen} />
         ) : !USER_STORE.getUserToken ? (
@@ -32,7 +32,10 @@ const Navigator = observer(() => {
               initialParams={{token: USER_STORE.getUserToken}}
             />
           ) : (
-            <RootStack.Screen name="Login" component={LoginScreen} />
+            <>
+              <RootStack.Screen name="Login" component={LoginScreen} />
+              <RootStack.Screen name="Reset" component={ResetPasswordScreen} />
+            </>
           )
         ) : (
           <RootStack.Screen

@@ -38,7 +38,7 @@ export function getHeight(height) {
   return Math.floor((height * screenHeight) / height2);
 }
 
-const LoginScreen = observer(() => {
+const LoginScreen = observer(({navigation}) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState();
   const [eyeIcon, setEyeIcon] = useState('eye-off');
@@ -161,11 +161,31 @@ const LoginScreen = observer(() => {
                             value={password}
                             onChangeText={password => setPassword(password)}
                           />
-                          {LOGIN_STORE.getError && (
-                            <Error text={LOGIN_STORE.getErrorText} />
-                          )}
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.push('Reset');
+                            }}>
+                            <Text
+                              style={{
+                                textAlign: 'center',
+                                fontSize: scale(14),
+
+                                marginTop: verticalScale(6),
+                              }}>
+                              <Text>Forgot Password?</Text>
+
+                              <Text
+                                style={{
+                                  color: 'darkgreen',
+                                  fontWeight: 'bold',
+                                }}>
+                                {' '}
+                                Reset
+                              </Text>
+                            </Text>
+                          </TouchableOpacity>
                         </View>
-                        <Animated.View style={styles.loginBtnView}>
+                        <View style={styles.loginBtnView}>
                           <TouchableOpacity
                             style={{
                               backgroundColor: colors.Tertiary,
@@ -180,7 +200,7 @@ const LoginScreen = observer(() => {
                               color={colors.WHITE}
                             />
                           </TouchableOpacity>
-                        </Animated.View>
+                        </View>
                       </View>
                     </ScrollView>
                   </SafeAreaView>
@@ -222,7 +242,7 @@ const styles = ScaledSheet.create({
   loginBtnView: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginTop: '15@vs',
+
     paddingHorizontal: moderateScale(20),
   },
 });
