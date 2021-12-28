@@ -4,10 +4,61 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const DATE_FORMAT = 'MMMM DD, YYYY';
+
+const TEXT_INPUT = ({
+  placeholder,
+  label,
+  icon,
+  onTextChange,
+  showCharCount,
+  charCount,
+  maxLength = 1000,
+  keyboardType = 'default',
+  multiline = false,
+}) => {
+  return (
+    <TextInput
+      underlineColor="transparent"
+      label={label}
+      maxLength={maxLength}
+      style={{
+        backgroundColor: colors.GRAY_LIGHT,
+        borderTopRightRadius: moderateScale(6),
+        borderTopLeftRadius: moderateScale(6),
+        marginHorizontal: scale(HorizontalPadding),
+        marginTop: verticalScale(3),
+      }}
+      placeholder={placeholder}
+      multiline={multiline}
+      keyboardType={keyboardType}
+      theme={{
+        colors: {
+          primary: colors.BLACK,
+        },
+      }}
+      onChangeText={text => {
+        onTextChange(text);
+      }}
+      left={<TextInput.Icon name={icon} color={colors.Accent} />}
+      right={
+        showCharCount ? (
+          <TextInput.Affix
+            text={'/' + charCount}
+            textStyle={{
+              color: charCount < 0 ? colors.Tertiary : colors.GRAY_DARK,
+            }}
+          />
+        ) : (
+          <></>
+        )
+      }
+    />
+  );
+};
 
 const EditProfileInputs = ({inputStates}) => {
   const onChangeDate = newDate => {
@@ -24,44 +75,25 @@ const EditProfileInputs = ({inputStates}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.viewScale}>
-        <TextInput
-          underlineColor="transparent"
-          label="Name"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
-            borderTopLeftRadius: moderateScale(12),
-          }}
-          placeholder="Name"
-          value={inputStates.name}
-          multiline={true}
-          theme={{
-            colors: {
-              primary: 'black',
-            },
-          }}
-          onChangeText={nName => {
-            inputStates.setName(nName);
-            onChangeNameLength(nName);
-          }}
-          left={<TextInput.Icon name="account" color={color.Tertiary} />}
-        />
-        <Text
-          style={[
-            styles.wordCount,
-            {color: inputStates.nameLength < 0 ? 'red' : 'black'},
-          ]}>
-          {inputStates.nameLength}
-        </Text>
-      </View>
+      <TEXT_INPUT
+        label="Name"
+        placeholder="Name"
+        icon="account"
+        showCharCount={true}
+        charCount={inputStates.nameLength}
+        onTextChange={nName => {
+          inputStates.setName(nName);
+          onChangeNameLength(nName);
+        }}
+      />
       <View style={styles.viewScale}>
         <TouchableOpacity onPress={() => inputStates.setDatePicker(true)}>
           <TextInput
             disabled={true}
             style={{
-              backgroundColor: color.GRAY_LIGHT,
+              backgroundColor: colors.GRAY_LIGHT,
               borderTopLeftRadius: moderateScale(6),
+              borderTopRightRadius: moderateScale(6),
               marginHorizontal: HorizontalPadding,
             }}
             theme={{
@@ -70,11 +102,7 @@ const EditProfileInputs = ({inputStates}) => {
               },
             }}
             left={
-              <TextInput.Icon
-                name="calendar"
-                size={25}
-                color={color.Tertiary}
-              />
+              <TextInput.Icon name="calendar" size={25} color={colors.Accent} />
             }>
             Date of Birth: {moment(inputStates.dob).format(DATE_FORMAT)}
           </TextInput>
@@ -89,67 +117,30 @@ const EditProfileInputs = ({inputStates}) => {
           />
         )}
       </View>
-      <View style={styles.viewScale}>
-        <TextInput
-          underlineColor="transparent"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
-            // borderTopLeftRadius: moderateScale(9),
-          }}
-          label="Aadhar Number"
-          placeholder="Aadhar Number"
-          theme={{
-            colors: {
-              primary: 'black',
-            },
-          }}
-          value={inputStates.aadharNumber}
-          onChangeText={nAadharNumber => {
-            inputStates.setAadharNumber(nAadharNumber);
-          }}
-          keyboardType="number-pad"
-          maxLength={12}
-          left={
-            <TextInput.Icon
-              name={'card-account-details'}
-              color={color.Tertiary}
-            />
-          }
-        />
-      </View>
-      <View style={styles.viewScale}>
-        <TextInput
-          underlineColor="transparent"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            marginHorizontal: HorizontalPadding,
-            // borderTopLeftRadius: moderateScale(9),
-          }}
-          theme={{
-            colors: {
-              primary: 'black',
-            },
-          }}
-          label="Address"
-          placeholder="Address (max 300)"
-          multiline={true}
-          value={inputStates.address}
-          onChangeText={nAddress => {
-            inputStates.setAddress(nAddress);
-            onChangeAddressLength(nAddress);
-          }}
-          multiline={true}
-          left={<TextInput.Icon name={'map-marker'} color={color.Tertiary} />}
-        />
-        <Text
-          style={[
-            styles.wordCount,
-            {color: inputStates.addressLength < 0 ? 'red' : 'black'},
-          ]}>
-          {inputStates.addressLength}
-        </Text>
-      </View>
+
+      <TEXT_INPUT
+        label="Aadhar Number"
+        placeholder="Aadhar Number"
+        showCharCount={false}
+        keyboardType="number-pad"
+        maxLength={12}
+        icon={'card-account-details'}
+        onTextChange={nAadharNumber => {
+          inputStates.setAadharNumber(nAadharNumber);
+        }}
+      />
+      <TEXT_INPUT
+        label="Address"
+        placeholder="Address (max 300)"
+        showCharCount={true}
+        icon={'map-marker'}
+        multiline={true}
+        charCount={inputStates.addressLength}
+        onTextChange={nAddress => {
+          inputStates.setAddress(nAddress);
+          onChangeAddressLength(nAddress);
+        }}
+      />
     </View>
   );
 };
@@ -161,12 +152,7 @@ const styles = StyleSheet.create({
   },
   viewScale: {
     paddingHorizontal: scale(0),
-    paddingVertical: verticalScale(4),
-  },
-  wordCount: {
-    fontSize: scale(10),
-    textAlign: 'right',
-    paddingHorizontal: HorizontalPadding,
+    marginTop: verticalScale(3),
   },
 });
 

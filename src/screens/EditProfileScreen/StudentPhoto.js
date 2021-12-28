@@ -1,9 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableOpacity, Image, Dimensions} from 'react-native';
 import {verticalScale, scale, moderateScale} from 'react-native-size-matters';
-import * as color from '../../utils/colors';
+import {ScaledSheet} from 'react-native-size-matters';
+
+import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
-import {Button} from 'react-native-paper';
+import {Avatar} from 'react-native-paper';
+
+const WIDTH = Dimensions.get('window').width;
 
 const StudentPhoto = ({PhotoStates}) => {
   const selectImage = async () => {
@@ -21,46 +25,51 @@ const StudentPhoto = ({PhotoStates}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.choosePicture}
-        onPress={() => selectImage()}>
-        {PhotoStates.isStudentPicSelected ? (
-          <Image
-            source={{uri: PhotoStates.studentPic}}
-            style={{
-              height: verticalScale(200),
-              width: scale(200),
-            }}
+      <View style={styles.imageView}>
+        <Image
+          source={{
+            uri: 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
+          }}
+          style={styles.image}
+        />
+        <TouchableOpacity style={styles.edit} onPress={selectImage}>
+          <Avatar.Icon
+            icon="lead-pencil"
+            size={35}
+            color="white"
+            style={{backgroundColor: colors.Accent, elevation: 5}}
           />
-        ) : (
-          <Button
-            icon="plus"
-            mode="text"
-            color={color.BLACK}
-            onPress={() => selectImage()}>
-            UPLOAD STUDENT PHOTO
-          </Button>
-        )}
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    paddingVertical: verticalScale(20),
+    paddingVertical: verticalScale(10),
     paddingHorizontal: scale(10),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  choosePicture: {
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  imageView: {
+    marginTop: '3@vs',
+    elevation: 1,
+    height: WIDTH / 1.75,
+    width: WIDTH / 1.75,
+    borderRadius: (WIDTH / 1.75) * 2,
   },
-  headerText: {
-    color: 'lightsteelblue',
-    fontSize: 16,
+  image: {
+    height: WIDTH / 1.75,
+    width: WIDTH / 1.75,
+    borderRadius: (WIDTH / 1.75) * 2,
+  },
+  edit: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    marginTop: WIDTH / 2.8,
   },
 });
 

@@ -115,20 +115,24 @@ const EditProfileScreen = ({navigation}) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
-        ListFooterComponent={<View style={{height: verticalScale(6)}} />}
+        ListFooterComponent={
+          <View
+            style={{
+              height: verticalScale(200),
+            }}
+          />
+        }
         ListHeaderComponent={
           <>
             <StudentPhoto PhotoStates={PhotoStates} />
-            <Divider style={styles.divider} />
             <EditProfileInputs inputStates={inputStates} />
-            <Divider style={styles.divider} />
             <View style={styles.uploadButton}>
               <Button
                 icon="upload"
                 mode="text"
                 onPress={() => selectFiles()}
                 color={colors.WHITE}>
-                UPLOAD PASSPORT
+                UPDATE PASSPORT
               </Button>
             </View>
           </>
