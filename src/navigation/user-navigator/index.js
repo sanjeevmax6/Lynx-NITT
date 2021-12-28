@@ -10,6 +10,7 @@ import SettingsSceen from '../../screens/SettingsScreen';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
+import EditClubProfileScreen from '../../screens/EditProfileScreen_Club';
 import * as color from '../../utils/colors';
 
 import {USER_STORE} from '../../mobx/USER_STORE';
@@ -18,7 +19,7 @@ import {STUDENT} from '../../utils/USER_TYPE';
 const UserStack = createNativeStackNavigator();
 
 function UserNavigator() {
-  const isStudent = USER_STORE.getUserType == STUDENT;
+  const isStudent = USER_STORE.getUserType === STUDENT;
   return (
     <UserStack.Navigator>
       <UserStack.Screen
@@ -30,7 +31,7 @@ function UserNavigator() {
       />
       <UserStack.Screen
         name="EditProfile"
-        component={EditProfileScreen}
+        component={isStudent ? EditProfileScreen : EditClubProfileScreen}
         options={{
           headerShown: false,
           animation: 'slide_from_right',
