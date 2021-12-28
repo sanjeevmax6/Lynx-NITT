@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import {ScaledSheet} from 'react-native-size-matters';
+import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
 
 const WIDTH = Dimensions.get('window').width;
@@ -47,7 +48,7 @@ const Images = ({images, navigation}) => {
                 key={index}
                 resizeMode="contain"
                 style={styles.wrap}
-                source={{uri: e}}
+                source={{uri: API_GET_IMAGE + e}}
               />
             </TouchableWithoutFeedback>
           ))}
@@ -63,7 +64,15 @@ const Images = ({images, navigation}) => {
             ))}
           </View>
         ) : (
-          <View />
+          <View>
+            <Image
+              resizeMode="contain"
+              style={styles.wrap}
+              source={{
+                uri: NO_IMAGE_URL,
+              }}
+            />
+          </View>
         )}
       </View>
     </View>

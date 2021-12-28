@@ -4,14 +4,11 @@ import {Card, Paragraph, Button, Image, Text} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import * as USER_TYPE from '../../utils/USER_TYPE';
+
 const WIDTH = Dimensions.get('window').width;
-const ClubCard = ({
-  name,
-  imgURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAD1BMVEUJAAAACAkJAAUBCQABAAk/Y8DWAAAA/0lEQVR4nO3QNwEAIBAAsaf414yHW1gSCZlpTrOa2+wmljhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx4sSJEydOnDhx8vXkAW0liTrVxGJyAAAAAElFTkSuQmCC',
-  isFollowing,
-  followers = 1008,
-  navigation,
-}) => {
+const ClubCard = ({name, imgURL, isFollowing, followers, navigation}) => {
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
       <TouchableOpacity
@@ -30,13 +27,15 @@ const ClubCard = ({
           </Text>
         </TouchableOpacity>
         <Text style={styles.followers}>{followers} FOLLOWERS</Text>
-        <Button
-          mode="outlined"
-          color={colors.EventDescriptionScreen_Follow}
-          labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-          style={{alignSelf: 'baseline'}}>
-          {isFollowing ? 'Following' : 'Follow'}
-        </Button>
+        {USER_STORE.getUserType == USER_TYPE.STUDENT ? (
+          <Button
+            mode="outlined"
+            color={colors.EventDescriptionScreen_Follow}
+            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+            style={{alignSelf: 'baseline'}}>
+            {isFollowing ? 'Following' : 'Follow'}
+          </Button>
+        ) : null}
       </View>
     </View>
   );

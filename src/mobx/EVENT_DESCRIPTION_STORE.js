@@ -1,16 +1,13 @@
 import {action, makeObservable, observable, computed} from 'mobx';
-import moment from 'moment';
 
-class calendarStore {
+class eventDescriptionStore {
   state = {
-    error: false,
+    error: true,
     errorText: '',
-    loading: false,
-    eventData: {},
-    adminEventData: {},
+    loading: true,
     success: false,
-    //Adjusting to IST
-    selectedDate: moment(new Date().toLocaleString()).format('DD-MM-YYYY'),
+    data: '',
+    eventID: '',
   };
 
   setError = val => {
@@ -37,20 +34,20 @@ class calendarStore {
     return this.state.loading;
   }
 
-  setEventData = val => {
-    this.state.eventData = val;
+  setData = val => {
+    this.state.data = val;
   };
 
-  get getEventData() {
-    return this.state.eventData;
+  get getData() {
+    return this.state.data;
   }
 
-  setAdminEventData = val => {
-    this.state.adminEventData = val;
+  setID = val => {
+    this.state.eventID = val;
   };
 
-  get getAdminEventData() {
-    return this.state.adminEventData;
+  get getID() {
+    return this.state.eventID;
   }
 
   setSuccess = val => {
@@ -59,14 +56,6 @@ class calendarStore {
 
   get getSuccess() {
     return this.state.success;
-  }
-
-  setSelectedDate = val => {
-    this.state.selectedDate = val;
-  };
-
-  get getSelectedDate() {
-    return this.state.selectedDate;
   }
 
   constructor() {
@@ -82,19 +71,16 @@ class calendarStore {
       setLoading: action,
       getLoading: computed,
 
-      setEventData: action,
-      getEventData: computed,
-
-      setAdminEventData: action,
-      getAdminEventData: computed,
+      setData: action,
+      getData: computed,
 
       setSuccess: action,
       getSuccess: computed,
 
-      setSelectedDate: action,
-      getSelectedDate: computed,
+      setID: action,
+      getID: computed,
     });
   }
 }
 
-export const CALENDAR_STORE = new calendarStore();
+export const EVENT_DESCRIPTION_STORE = new eventDescriptionStore();

@@ -1,5 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {FlatList, TouchableOpacity, View, SafeAreaView} from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  RefreshControl,
+  ScrollView,
+} from 'react-native';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventCard from './EventCard';
 import NoEventCard from './NoEventCard';
@@ -8,45 +15,134 @@ import * as colors from '../../utils/colors';
 import FabGroup from './FabGroup';
 import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
-import {eventList} from './eventList';
+import {eventList} from './eventListAPI';
 import {CALENDAR_STORE} from '../../mobx/CALENDAR_STORE';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import moment from 'moment';
+import AdminNoticeCard from './AdminNoticeCard';
+import CustomAlert from '../../components/customAlert';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import * as USER_TYPE from '../../utils/USER_TYPE';
 
 const CalendarScreen = observer(({navigation}) => {
   const agendaList = useRef();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalStartDate, setModalStartDate] = useState('');
+  const [modalEndDate, setModalEndDate] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
-  var DATA, filteredData;
+  var eventDATA,
+    adminEventDATA,
+    filteredEventData,
+    filteredAdminEventData,
+    filteredData = [];
   var selectedDate = CALENDAR_STORE.getSelectedDate;
-  //console.log(selectedDate);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    CALENDAR_STORE.setError(false);
+    CALENDAR_STORE.setErrorText('');
+    CALENDAR_STORE.setLoading(false);
+    CALENDAR_STORE.setSuccess(false);
+    CALENDAR_STORE.setSelectedDate(
+      moment(new Date().toLocaleString()).format('DD-MM-YYYY'),
+    );
+    console.log(new Date().toLocaleString());
+    eventList();
+    setRefreshing(false);
+  }, []);
 
   //API Call for getting event list
   useEffect(() => {
     eventList();
   }, []);
 
-  //console.log(CALENDAR_STORE.getSuccess);
   if (CALENDAR_STORE.getSuccess) {
-    DATA = CALENDAR_STORE.getData;
-    //console.log('Data from Calendar index.js:' + JSON.stringify(DATA));
-    filteredData = DATA[selectedDate];
-    //console.log(filteredData);
+    eventDATA = CALENDAR_STORE.getEventData.events;
+    adminEventDATA = CALENDAR_STORE.getAdminEventData.events;
+
+    filteredEventData = eventDATA.filter(function (event) {
+      return (
+        moment(new Date(event.data[0].startDate).toLocaleDateString()).format(
+          'DD-MM-YYYY',
+        ) == selectedDate
+      );
+    });
+    filteredAdminEventData = adminEventDATA.filter(function (event) {
+      return (
+        moment(new Date(event.data[0].startDate).toLocaleDateString()).format(
+          'DD-MM-YYYY',
+        ) == selectedDate
+      );
+    });
+
+    if (filteredEventData.length == 0) {
+      filteredEventData = [];
+    } else {
+      filteredEventData = filteredEventData[0].data;
+    }
+    if (filteredAdminEventData.length == 0) {
+      filteredAdminEventData = [];
+    } else {
+      filteredAdminEventData[0].data.forEach(element => {
+        element['admin_event'] = true;
+      });
+      filteredAdminEventData = filteredAdminEventData[0].data;
+    }
+
+    filteredData = [...filteredAdminEventData, ...filteredEventData];
   }
 
-  const Item = ({item}) => (
-    <TouchableOpacity
-      onPress={() => {
-        //navigation.push('EventDescriptionScreen', {data: item});
-        //console.log(item);
-      }}>
-      <EventCard data={item} />
-    </TouchableOpacity>
-  );
+  const onNoticePress = notice => {
+    const startDate = moment(
+      new Date(notice.startDate).toLocaleString(),
+    ).format('hh:mm A | DD-MM-YYYY');
+    const endDate = moment(new Date(notice.endDate).toLocaleString()).format(
+      'hh:mm A | DD-MM-YYYY',
+    );
+    const noticeMessage = notice.Description;
+    const noticeTitle = notice.Title;
+    setModalTitle(noticeTitle);
+    setModalMessage(noticeMessage);
+    setModalStartDate(startDate);
+    setModalEndDate(endDate);
+    setModalVisible(true);
+  };
+
+  const Item = ({item}) =>
+    item.admin_event ? (
+      <TouchableOpacity onPress={() => onNoticePress(item)} activeOpacity={0.5}>
+        <AdminNoticeCard data={item} />
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.push('EventDescriptionScreen', {data: item});
+        }}>
+        <EventCard data={item} />
+      </TouchableOpacity>
+    );
 
   const renderEmptyItem = () => <NoEventCard />;
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={modalStartDate}
+        endDate={modalEndDate}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={[
+          {
+            text: 'CLOSE',
+          },
+        ]}
+      />
       {CALENDAR_STORE.getLoading ? (
         <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
       ) : CALENDAR_STORE.getError ? (
@@ -66,9 +162,18 @@ const CalendarScreen = observer(({navigation}) => {
             data={filteredData}
             ListHeaderComponent={<TopLayout />}
             ListEmptyComponent={renderEmptyItem}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                colors={[colors.Accent]}
+                onRefresh={onRefresh}
+              />
+            }
           />
-          {/* <FAB style={styles.fab} small={false} icon="plus" onPress={createEvent} /> */}
-          <FabGroup navigation={navigation} />
+          {USER_STORE.getUserType == USER_TYPE.CLUB ||
+          USER_STORE.getUserType == USER_TYPE.ADMIN ? (
+            <FabGroup navigation={navigation} />
+          ) : null}
         </View>
       )}
     </SafeAreaView>

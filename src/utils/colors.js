@@ -46,7 +46,10 @@ export const CalenderScreen_selectedTextColor = FontColor;
 export const CalenderScreen_mainColor = Tertiary;
 export const CalenderScreen_textSecondaryColor = FontColor;
 export const CalenderScreen_borderColor = Contrast;
-
+//Admin Notice Card
+export const AdminNoticeCardContainer = '#30D5C8';
+export const AdminNoticeCard_CalendarIcon = Contrast;
+export const AdminNoticeCard_Back = Primary;
 //event card
 export const EventCard_Back = Primary;
 export const EventCard_Bookmark = Tertiary;

@@ -12,7 +12,7 @@ import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import sharedStyles from './SharedStyles';
 
-const About = ({about, date, time}) => {
+const About = ({about, startDate, endDate, startTime, endTime}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [numOfLines, setNumOfLines] = useState(0);
   const NO_OF_LINES = 3;
@@ -91,15 +91,26 @@ const About = ({about, date, time}) => {
           backgroundColor: colors.WHITE,
           paddingTop: 0,
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', marginVertical: verticalScale(3)}}>
           <Icon
             style={{paddingHorizontal: scale(0)}}
-            name="calendar-o"
+            name="calendar-plus-o"
             color={colors.EventDescriptionScreen_CalendarIcon}
             size={scale(20)}
           />
           <Text style={styles.eventDate}>
-            {date} | {time}
+            From : {startTime} | {startDate}
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            style={{paddingHorizontal: scale(0)}}
+            name="calendar-minus-o"
+            color={colors.EventDescriptionScreen_CalendarIcon}
+            size={scale(20)}
+          />
+          <Text style={styles.eventDate}>
+            To : {endTime} | {endDate}
           </Text>
         </View>
       </View>

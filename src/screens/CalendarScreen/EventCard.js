@@ -9,9 +9,12 @@ import {
   ms,
 } from 'react-native-size-matters';
 import * as color from '../../utils/colors';
+import moment from 'moment';
+import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const EventCard = props => {
-  const data = props.data;
+  const eventData = props.data;
+  //console.log('Event Card' + JSON.stringify(eventData));
   return (
     <View style={styles.cardcontainer}>
       <View
@@ -23,15 +26,20 @@ const EventCard = props => {
       />
       <View style={styles.eventinfo}>
         <Text style={styles.eventName} numberOfLines={1}>
-          {data.Title}
+          {eventData.Title}
         </Text>
-        <Text style={styles.time}>Time: {data.Time}</Text>
+        <Text style={styles.time}>
+          From :{' '}
+          {moment(new Date(eventData.startDate).toLocaleString()).format(
+            'hh:mm A',
+          )}
+        </Text>
       </View>
       <Avatar.Image
         size={moderateScale(50)}
         style={styles.profImg}
         source={{
-          uri: 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
+          uri: NO_IMAGE_URL,
         }}
       />
     </View>

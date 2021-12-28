@@ -81,7 +81,7 @@ const TopLayout = props => {
             }}
             minHeight={maxHeight}
             onSelectedChange={onSelectedChange}
-            selectorStartingYear={new Date().getFullYear() - 1}
+            selectorStartingYear={new Date().getFullYear() - 30}
             selectorEndingYear={new Date().getFullYear() + 1}
             options={{
               textHeaderColor: colors.CalenderScreen_textHeaderColor,
