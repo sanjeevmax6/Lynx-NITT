@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import LottieView from 'lottie-react-native';
 import errorLottie from '../../res/lottieFiles/errorLottie.json';
-import noNetLottie from '../../res/lottieFiles/errorLottie.json';
+import noNetLottie from '../../res/lottieFiles/noNet.json';
+import maintenanceLottie from '../../res/lottieFiles/maintenance.json';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -20,7 +21,8 @@ const ErrorScreen = ({
   errorMessage = UNEXPECTED_ERROR,
   buttonText = 'TRY AGAIN',
   showIconInButton = true,
-  icon = 'arrow-ios-back-outline',
+  icon = 'keyboard-arrow-left',
+  lottieFileName = 'errorLottie',
   fn = () => {},
 }) => {
   const backPress = () => {
@@ -37,7 +39,7 @@ const ErrorScreen = ({
 
   const getLottie = () => {
     if (errorMessage === NO_NETWORK) return noNetLottie;
-
+    if (lottieFileName === 'maintenanceLottie') return maintenanceLottie;
     return errorLottie;
   };
 
@@ -95,7 +97,7 @@ const ErrorScreen = ({
             onPress={backPress}>
             {showIconInButton ? (
               <Icon
-                name="keyboard-arrow-left"
+                name={icon}
                 color={colors.Primary}
                 size={scale(ICON_SIZE_LARGE)}
                 style={{marginRight: scale(6)}}

@@ -1,4 +1,5 @@
 export const API_BASE_URL = 'https://nittapp-spidertesting.cloudns.nz/v1.4/';
+export const GET_BASE_URL = 'https://ankursinha03.github.io/nittAppUrl/';
 
 export const API_STUDENT_LOGIN = API_BASE_URL + '/auth/student/login';
 export const API_CLUB_LOGIN = API_BASE_URL + '/auth/club/login';

@@ -1,3 +1,6 @@
-export const NO_NETWORK = 'no network ...';
-export const UNEXPECTED_ERROR = 'unexpected ...';
-export const SERVER_ERROR = 'Server Error...';
+export const NO_NETWORK = 'No Internet Connection';
+export const UNEXPECTED_ERROR =
+  'Oops, something went wrong \n Please try again in sometime';
+export const SERVER_ERROR =
+  'Looks like the server is taking to long to respond.\n Please try again in sometime';
+export const MAINTENANCE = 'We are under maintenance';
