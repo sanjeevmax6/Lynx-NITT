@@ -5935,6 +5935,11 @@
     "jscodeshift" "^0.11.0"
     "nullthrows" "^1.1.1"
 
+"react-native-device-info@^8.4.8":
+  "integrity" "sha512-92676ZWHZHsPM/EW1ulgb2MuVfjYfMWRTWMbLcrCsipkcMaZ9Traz5mpsnCS7KZpsOksnvUinzDIjsct2XGc6Q=="
+  "resolved" "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.4.8.tgz"
+  "version" "8.4.8"
+
 "react-native-document-picker@^6.0.4":
   "integrity" "sha512-qFKf76M1VyiVqZscqND8wDcALfHG0BI77mJ4CzEdANqLiJUbwie7XOKtQlw5oRSAjLPgg9NjXnjbOFY3OmkIXQ=="
   "resolved" "https://registry.npmjs.org/react-native-document-picker/-/react-native-document-picker-6.0.4.tgz"

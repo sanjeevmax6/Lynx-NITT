@@ -7,7 +7,18 @@ class UserData {
     userRollNumber: '',
     userToken: '',
     userRegToken: '',
+
+    //unique ID (Android ID)
+    uniqueID: '',
   };
+
+  setUniqueId = val => {
+    this.state.uniqueID = val;
+  };
+
+  get getUniqueId() {
+    return this.state.uniqueID;
+  }
 
   setUserType = type => {
     this.state.userType = type;
@@ -41,6 +52,9 @@ class UserData {
       getUserToken: computed,
       setUserRegToken: action,
       getUserRegToken: computed,
+
+      setUniqueId: action,
+      getUniqueId: computed,
     });
   }
 }

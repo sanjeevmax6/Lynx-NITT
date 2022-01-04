@@ -29,10 +29,17 @@ import {
 const logo = require('../../res/images/nitt_logo.png');
 const spiderLogo = require('../../res/images/spiderLogo.png');
 
+import DeviceInfo from 'react-native-device-info';
+
 const SplashScreen = () => {
   const [State, setState] = useState(0);
-  const [API, setAPI] = useState(-3);
+  const [API, setAPI] = useState(0);
+  //0 Splash
+  //1 error
+  //2 maintain
+  //3 no net
 
+  //200 (Api) Success
   const getToken = () => {
     AsyncStorage.getItem(USER_TYPE).then(value => {
       if (value != null) {
@@ -56,21 +63,24 @@ const SplashScreen = () => {
         axios
           .get(GET_BASE_URL, {}, {timeout: 5000})
           .then(res => {
-            console.log(res.data);
+            if (res.status === 200) {
+              console.log('Base URl: ', res.data);
+              if (res.data.trim() === 'maintain') {
+                setAPI(2);
+                return;
+              }
 
-            if (res.data.trim() === 'maintain') {
-              setAPI(-1);
-              return;
+              API_STORE.setBaseUrl(res.data.trim());
+              setAPI(200);
+            } else {
+              setAPI(1);
             }
-
-            API_STORE.setBaseUrl(res.data.trim());
-            setAPI(1);
           })
           .catch(err => {
-            setAPI(100);
+            setAPI(1);
           });
       } else {
-        setAPI(2);
+        setAPI(3);
       }
     });
   };
@@ -78,21 +88,28 @@ const SplashScreen = () => {
   useEffect(() => {
     API_CALL();
     getToken();
+    ID();
   });
 
   setTimeout(() => {
-    if (API === -1) {
-      setState(2);
-    } else if (API === 2) {
-      setState(3);
-    } else if (API === 1) {
+    if (API === 200) {
       BOTTOM_NAV_STORE.setTabVisibility(true);
       AUTH_NAV_STORE.setSplashLoading(false);
-    } else {
-      setState(4);
+      return;
     }
+    setState(API);
   }, 2000);
 
+  const ID = () => {
+    try {
+      const str = DeviceInfo.getUniqueId();
+      console.log('Android ID: ', str);
+      USER_STORE.setUniqueId(str);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(API, State);
   return (
     <>
       <StatusBar
