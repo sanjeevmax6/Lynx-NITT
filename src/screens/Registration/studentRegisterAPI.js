@@ -4,6 +4,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 import {STUDENT} from '../../utils/USER_TYPE';
+import {NO_NETWORK, SERVER_ERROR} from '../../utils/ERROR_MESSAGES';
 
 export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
   const token = USER_STORE.getUserRegToken;
@@ -31,16 +32,14 @@ export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
         })
         .catch(error => {
           if (error.response) {
-            console.log(error.response);
             setLoading(false);
             setErrorText(error.response.data.message);
           } else if (error.request) {
-            console.log(error.request);
-            setErrorText('Server Error');
+            setErrorText(SERVER_ERROR);
           }
         });
     } else {
-      setErrorText('No internet connection');
+      setErrorText(NO_NETWORK);
     }
   });
 };

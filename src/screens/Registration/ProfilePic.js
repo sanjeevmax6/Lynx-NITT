@@ -14,15 +14,18 @@ import Error from '../../components/Error';
 import NextButton from './nextButton';
 import BackButton from './backButton';
 
+import {observer} from 'mobx-react';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+
 const WIDTH = Dimensions.get('window').width;
 
-const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
+const ProfilePic = observer(({scrollViewRef, callback}) => {
   const [picEr, setpicEr] = useState(false);
   const [URI, setURI] = useState(
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&usqp=CAU',
   );
   const scroll = () => {
-    if (!profilePicStates.pic) {
+    if (!STUDENT_REGISTRATION_STORE.getPicture) {
       setpicEr(true);
       return;
     }
@@ -55,7 +58,8 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
       const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-      profilePicStates.setPic(file);
+
+      STUDENT_REGISTRATION_STORE.setPicture(file);
       setURI(file.fileCopyUri);
       console.log(file.fileCopyUri);
       console.log(file.fileCopyUri);
@@ -91,7 +95,7 @@ const ProfilePic = ({scrollViewRef, callback, profilePicStates}) => {
       <BackButton handler={back} />
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {

@@ -14,9 +14,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import NextButton from './nextButton';
 import BackButton from './backButton';
 
+import {observer} from 'mobx-react';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+
 const WIDTH = Dimensions.get('window').width;
 
-const Documents = ({scrollViewRef, callback, docStates}) => {
+const Documents = observer(({scrollViewRef, callback}) => {
   const scroll = () => {
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
@@ -32,7 +35,8 @@ const Documents = ({scrollViewRef, callback, docStates}) => {
       const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       });
-      docStates.setPassport(file);
+
+      STUDENT_REGISTRATION_STORE.setPassport(file);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;
@@ -54,31 +58,32 @@ const Documents = ({scrollViewRef, callback, docStates}) => {
       <TextInput
         label="Aadhar Number"
         mode="outlined"
-        value={docStates.aadhar}
         theme={{
           colors: {
             primary: 'black',
           },
         }}
         style={styles.inputAd}
-        onChangeText={anum => {
-          docStates.setAadhar(anum);
+        onChangeText={val => {
+          STUDENT_REGISTRATION_STORE.setAadhar(val);
         }}
       />
       <Text style={styles.passtitle}>Passport Upload</Text>
-      {docStates.passport && (
+      {STUDENT_REGISTRATION_STORE.getPassport != null && (
         <View style={styles.file}>
-          <Text style={styles.filename}>{docStates.passport.name}</Text>
+          <Text style={styles.filename}>
+            {STUDENT_REGISTRATION_STORE.getPassport.name}
+          </Text>
           <IconButton
             size={scale(15)}
             icon="close"
             onPress={() => {
-              docStates.setPassport(null);
+              STUDENT_REGISTRATION_STORE.setPassport(null);
             }}
           />
         </View>
       )}
-      {!docStates.passport && (
+      {!STUDENT_REGISTRATION_STORE.getPassport && (
         <TouchableOpacity style={styles.attach} onPress={selectFile}>
           <Icon name="attach-file" color={colors.Accent} size={16} />
           <Text style={styles.attachText}>Attach</Text>
@@ -88,7 +93,7 @@ const Documents = ({scrollViewRef, callback, docStates}) => {
       <BackButton handler={back} />
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {

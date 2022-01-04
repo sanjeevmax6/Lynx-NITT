@@ -6,20 +6,24 @@ import NextButton from './nextButton';
 
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Name = ({scrollViewRef, callback, nameStates}) => {
+const Name = ({scrollViewRef, callback}) => {
   const [er, setEr] = useState(false);
   const [erMsg, setErMsg] = useState('');
 
   const scroll = () => {
-    if (!nameStates.firstname || !nameStates.lastname) {
+    if (
+      !STUDENT_REGISTRATION_STORE.getFirstName ||
+      !STUDENT_REGISTRATION_STORE.getLastName
+    ) {
       setEr(true);
       setErMsg('Enter your name');
       return;
     }
-    if (!nameStates.dept) {
+    if (!STUDENT_REGISTRATION_STORE.getDepartment) {
       setEr(true);
       setErMsg('Enter your Department');
       return;
@@ -43,7 +47,6 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
       <TextInput
         label="First Name"
         mode="outlined"
-        value={nameStates.firstname}
         theme={{
           colors: {
             primary: er ? colors.Tertiary : 'black',
@@ -52,7 +55,7 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         outlineColor={er ? colors.Tertiary : null}
         style={styles.input}
         onChangeText={fname => {
-          nameStates.setFirstName(fname);
+          STUDENT_REGISTRATION_STORE.setFirstName(fname);
         }}
         returnKeyType="next"
         onSubmitEditing={() => lastNameInput.current.focus()}
@@ -60,7 +63,6 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
       <TextInput
         label="Last Name"
         mode="outlined"
-        value={nameStates.lastname}
         theme={{
           colors: {
             primary: er ? colors.Tertiary : 'black',
@@ -68,8 +70,8 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         }}
         outlineColor={er ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
-        onChangeText={sname => {
-          nameStates.setLastName(sname);
+        onChangeText={val => {
+          STUDENT_REGISTRATION_STORE.setLastName(val);
         }}
         returnKeyType="next"
         onSubmitEditing={() => departmentInput.current.focus()}
@@ -79,7 +81,6 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
       <TextInput
         label="Department"
         mode="outlined"
-        value={nameStates.dept}
         theme={{
           colors: {
             primary: er ? colors.Tertiary : 'black',
@@ -87,8 +88,26 @@ const Name = ({scrollViewRef, callback, nameStates}) => {
         }}
         outlineColor={er ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
-        onChangeText={fdept => {
-          nameStates.setDept(fdept);
+        onChangeText={val => {
+          STUDENT_REGISTRATION_STORE.setDepartment(val);
+        }}
+        ref={departmentInput}
+        onSubmitEditing={scroll}
+        returnKeyType="next"
+      />
+      <TextInput
+        label="Mobile Number"
+        mode="outlined"
+        keyboardType="phone-pad"
+        theme={{
+          colors: {
+            primary: er ? colors.Tertiary : 'black',
+          },
+        }}
+        outlineColor={er ? colors.Tertiary : null}
+        style={{...styles.input, marginTop: verticalScale(5)}}
+        onChangeText={val => {
+          STUDENT_REGISTRATION_STORE.setMobileNumber(val);
         }}
         ref={departmentInput}
         onSubmitEditing={scroll}

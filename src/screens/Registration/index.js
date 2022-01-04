@@ -19,69 +19,20 @@ import * as colors from '../../utils/colors';
 import {studentRegisterAPI} from './studentRegisterAPI';
 import {reg_token} from '../../utils/API_CONSTANTS';
 
+import {observer} from 'mobx-react';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+
 const WIDTH = Dimensions.get('window').width;
 
-const Registration = ({navigation}) => {
+const Registration = observer(({navigation}) => {
   const scrollview = useRef(null);
   const [title, setTitle] = useState('Basic Information');
   const [subtitle, setSubTitle] = useState('Enter your name and department');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState();
-  //data
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
 
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-  const [address, setAddress] = useState('');
-
-  const [aadhar, setAadhar] = useState('');
-  const [passport, setPassport] = useState(null);
-
-  const [pic, setPic] = useState(null);
-
-  const [password, setPassword] = useState();
-  const [cpassword, setCPassword] = useState();
-
-  const [dept, setDept] = useState();
-
-  const nameStates = {
-    firstname,
-    setFirstName,
-    lastname,
-    setLastName,
-    dept,
-    setDept,
-  };
-
-  const dobStates = {
-    day,
-    setDay,
-    month,
-    setMonth,
-    year,
-    setYear,
-    address,
-    setAddress,
-  };
-
-  const docStates = {
-    aadhar,
-    setAadhar,
-    passport,
-    setPassport,
-  };
-  const profilePicStates = {
-    pic,
-    setPic,
-  };
   const resetPasswordStates = {
-    password,
-    setPassword,
-    cpassword,
-    setCPassword,
     loading,
     setLoading,
     errorText,
@@ -97,17 +48,29 @@ const Registration = ({navigation}) => {
   const handleAPICALL = () => {
     setErrorText(null);
     const formData = new FormData();
-    formData.append('first_name', firstname);
-    formData.append('last_name', lastname);
-    formData.append('department', dept);
-    formData.append('new_password', password);
-    formData.append('confirm_password', cpassword);
-    formData.append('dob', year + '-' + month + '-' + day + 'T00:00:00.000Z');
-    formData.append('address', address);
-    formData.append('aadhar_no', aadhar);
-    formData.append('profileImg', pic);
-    formData.append('passportImg', passport);
+    formData.append('first_name', STUDENT_REGISTRATION_STORE.getFirstName);
+    formData.append('last_name', STUDENT_REGISTRATION_STORE.getLastName);
+    formData.append('department', STUDENT_REGISTRATION_STORE.getDepartment);
+    formData.append('new_password', STUDENT_REGISTRATION_STORE.getPassword);
+    formData.append(
+      'confirm_password',
+      STUDENT_REGISTRATION_STORE.getConfirmPassword,
+    );
+    formData.append(
+      'dob',
+      STUDENT_REGISTRATION_STORE.getBirthYear +
+        '-' +
+        STUDENT_REGISTRATION_STORE.getBirthMonth +
+        '-' +
+        STUDENT_REGISTRATION_STORE.getBirthDay +
+        'T00:00:00.000Z',
+    );
+    formData.append('address', STUDENT_REGISTRATION_STORE.getAddress);
+    formData.append('aadhar_no', STUDENT_REGISTRATION_STORE.getAadhar);
+    formData.append('profileImg', STUDENT_REGISTRATION_STORE.getPicture);
+    formData.append('passportImg', STUDENT_REGISTRATION_STORE.getPassport);
     formData.append('reg_token', reg_token);
+    formData.append('mobile_no', STUDENT_REGISTRATION_STORE.getMobileNumber);
     studentRegisterAPI(formData, setLoading, setErrorText);
   };
 
@@ -147,26 +110,10 @@ const Registration = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         style={{width: WIDTH, marginTop: verticalScale(20)}}
         scrollEnabled={false}>
-        <Name
-          scrollViewRef={scrollview}
-          callback={changeText}
-          nameStates={nameStates}
-        />
-        <DOB
-          scrollViewRef={scrollview}
-          callback={changeText}
-          dobStates={dobStates}
-        />
-        <Documents
-          scrollViewRef={scrollview}
-          callback={changeText}
-          docStates={docStates}
-        />
-        <ProfilePic
-          scrollViewRef={scrollview}
-          callback={changeText}
-          profilePicStates={profilePicStates}
-        />
+        <Name scrollViewRef={scrollview} callback={changeText} />
+        <DOB scrollViewRef={scrollview} callback={changeText} />
+        <Documents scrollViewRef={scrollview} callback={changeText} />
+        <ProfilePic scrollViewRef={scrollview} callback={changeText} />
         <ResetPassword
           scrollViewRef={scrollview}
           navigation={navigation}
@@ -177,7 +124,7 @@ const Registration = ({navigation}) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {

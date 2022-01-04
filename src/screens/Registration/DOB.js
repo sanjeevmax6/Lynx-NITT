@@ -7,22 +7,27 @@ import BackButton from './backButton';
 
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Name = ({scrollViewRef, callback, dobStates}) => {
+const Name = ({scrollViewRef, callback}) => {
   const [dateEr, setDateEr] = useState(false);
   const [addEr, setAddEr] = useState(false);
 
   const scroll = () => {
-    if (!dobStates.day || !dobStates.month || !dobStates.year) {
+    if (
+      !STUDENT_REGISTRATION_STORE.getBirthDay ||
+      !STUDENT_REGISTRATION_STORE.getBirthMonth ||
+      !STUDENT_REGISTRATION_STORE.getBirthYear
+    ) {
       setDateEr(true);
-      if (!dobStates.address) {
+      if (!STUDENT_REGISTRATION_STORE.getAddress) {
         setAddEr(true);
       }
       return;
     }
-    if (!dobStates.address) {
+    if (!STUDENT_REGISTRATION_STORE.getAddress) {
       setDateEr(false);
       setAddEr(true);
       return;
@@ -60,7 +65,6 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
           mode="outlined"
           keyboardType="phone-pad"
           placeholder="dd"
-          value={dobStates.day}
           theme={{
             colors: {
               primary: dateEr ? colors.Tertiary : 'black',
@@ -69,14 +73,13 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginRight: scale(4)}}
           onChangeText={day => {
-            dobStates.setDay(day);
+            STUDENT_REGISTRATION_STORE.setBirthDay(day);
           }}
         />
         <TextInput
           label="Month"
           mode="outlined"
           placeholder="mm"
-          value={dobStates.month}
           theme={{
             colors: {
               primary: dateEr ? colors.Tertiary : 'black',
@@ -90,14 +93,13 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
             marginLeft: scale(4),
           }}
           onChangeText={month => {
-            dobStates.setMonth(month);
+            STUDENT_REGISTRATION_STORE.setBirthMonth(month);
           }}
         />
         <TextInput
           label="Year"
           mode="outlined"
           placeholder="yyyy"
-          value={dobStates.year}
           keyboardType="phone-pad"
           theme={{
             colors: {
@@ -107,7 +109,7 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginLeft: scale(4)}}
           onChangeText={yr => {
-            dobStates.setYear(yr);
+            STUDENT_REGISTRATION_STORE.setBirthYear(yr);
           }}
         />
       </View>
@@ -115,7 +117,6 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
       <TextInput
         label="Address"
         mode="outlined"
-        value={dobStates.address}
         theme={{
           colors: {
             primary: addEr ? colors.Tertiary : 'black',
@@ -124,7 +125,7 @@ const Name = ({scrollViewRef, callback, dobStates}) => {
         outlineColor={addEr ? colors.Tertiary : null}
         style={{...styles.inputAd, marginTop: verticalScale(5)}}
         onChangeText={add => {
-          dobStates.setAddress(add);
+          STUDENT_REGISTRATION_STORE.setAddress(add);
         }}
       />
       {addEr && <Error text="Enter your address" />}

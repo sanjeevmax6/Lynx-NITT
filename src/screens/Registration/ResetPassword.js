@@ -6,6 +6,7 @@ import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
 import NextButton from './nextButton';
 import BackButton from './backButton';
+import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -25,11 +26,11 @@ const ResetPassword = ({
   const register = () => {
     setpassEr(false);
     setcpassEr(false);
-    if (!resetPasswordStates.password) {
+    if (!STUDENT_REGISTRATION_STORE.getPassword) {
       setpassEr(true);
       return;
     }
-    if (!resetPasswordStates.cpassword) {
+    if (!STUDENT_REGISTRATION_STORE.getConfirmPassword) {
       setcpassEr(true);
       return;
     }
@@ -69,8 +70,9 @@ const ResetPassword = ({
             }}
           />
         }
-        value={resetPasswordStates.password}
-        onChangeText={password => resetPasswordStates.setPassword(password)}
+        onChangeText={password =>
+          STUDENT_REGISTRATION_STORE.setPassword(password)
+        }
       />
       {passEr && <Error text="Enter your new password" />}
       <TextInput
@@ -84,8 +86,9 @@ const ResetPassword = ({
         }}
         outlineColor={cpassEr ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
-        value={resetPasswordStates.cpassword}
-        onChangeText={password => resetPasswordStates.setCPassword(password)}
+        onChangeText={password =>
+          STUDENT_REGISTRATION_STORE.setConfirmPassword(password)
+        }
       />
       {cpassEr && <Error text="Enter Confirm Password" />}
       {resetPasswordStates.errorText != null && (
