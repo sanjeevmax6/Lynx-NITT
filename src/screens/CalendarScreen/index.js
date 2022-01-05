@@ -5,9 +5,8 @@ import {
   View,
   SafeAreaView,
   RefreshControl,
-  ScrollView,
 } from 'react-native';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {ScaledSheet} from 'react-native-size-matters';
 import EventCard from './EventCard';
 import NoEventCard from './NoEventCard';
 import TopLayout from './TopLayout';
@@ -120,7 +119,9 @@ const CalendarScreen = observer(({navigation}) => {
     ) : (
       <TouchableOpacity
         onPress={() => {
-          navigation.push('EventDescriptionScreen', {data: item});
+          navigation.push('EventDescriptionScreen', {
+            eventId: item.EventId,
+          });
         }}>
         <EventCard data={item} />
       </TouchableOpacity>

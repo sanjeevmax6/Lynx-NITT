@@ -9,7 +9,7 @@ export const eventDescriptionAPI = () => {
   const axios = require('axios');
   //using netinfo to check if online
   NetInfo.fetch().then(state => {
-    if (state.isConnected == true) {
+    if (state.isConnected === true) {
       EVENT_DESCRIPTION_STORE.setLoading(true);
       axios
         .get(
@@ -18,12 +18,8 @@ export const eventDescriptionAPI = () => {
           {headers: {token: USER_STORE.getUserToken}},
         )
         .then(response => {
-          if (response.status == 200) {
-            // console.log(
-            //   'Response from eventDescription API Call' +
-            //     JSON.stringify(response.data),
-            // );
-            EVENT_DESCRIPTION_STORE.setData(response.data);
+          if (response.status === 200) {
+            EVENT_DESCRIPTION_STORE.setData(response.data.events);
             EVENT_DESCRIPTION_STORE.setSuccess(true);
           }
           EVENT_DESCRIPTION_STORE.setLoading(false);

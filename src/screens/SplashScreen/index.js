@@ -116,7 +116,7 @@ const SplashScreen = () => {
       console.log(error);
     }
   };
-  console.log(API, State);
+
   return (
     <>
       <StatusBar

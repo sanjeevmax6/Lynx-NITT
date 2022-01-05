@@ -6,16 +6,20 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import * as USER_TYPE from '../../utils/USER_TYPE';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
-const ClubCard = ({name, imgURL, isFollowing, followers, navigation}) => {
+const ClubCard = ({name, imgID, isFollowing, followers, navigation}) => {
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
       <TouchableOpacity
         onPress={() => {
           navigation.push('ClubDescription');
         }}>
-        <Card.Cover source={{uri: imgURL}} style={styles.image} />
+        <Card.Cover
+          source={{uri: API_GET_IMAGE + imgID.trim()}}
+          style={styles.image}
+        />
       </TouchableOpacity>
       <View style={styles.cardDetails}>
         <TouchableOpacity
@@ -27,9 +31,12 @@ const ClubCard = ({name, imgURL, isFollowing, followers, navigation}) => {
           </Text>
         </TouchableOpacity>
         <Text style={styles.followers}>{followers} FOLLOWERS</Text>
-        {USER_STORE.getUserType == USER_TYPE.STUDENT ? (
+        {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
           <Button
             mode="outlined"
+            onPress={() => {
+              isFollowing = !isFollowing;
+            }}
             color={colors.EventDescriptionScreen_Follow}
             labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
             style={{alignSelf: 'baseline'}}>
