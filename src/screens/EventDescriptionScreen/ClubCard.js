@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, View, TouchableOpacity} from 'react-native';
 import {Card, Paragraph, Button, Image, Text} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
@@ -9,11 +9,11 @@ import * as USER_TYPE from '../../utils/USER_TYPE';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {observer} from 'mobx-react';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
-import {TOGGLE_FOLLOW_STORE} from '../../mobx/FOLLOW_UNFOLLOW_STORE.js';
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
 
 const WIDTH = Dimensions.get('window').width;
 const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
+  const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
       <TouchableOpacity
@@ -38,9 +38,11 @@ const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
         {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
           <Button
             mode="outlined"
-            disabled={TOGGLE_FOLLOW_STORE.getDoingApiCall}
-            loading={TOGGLE_FOLLOW_STORE.getDoingApiCall}
+            disabled={ApiCall}
+            loading={ApiCall}
             onPress={() => {
+              setApiCall(true);
+
               toggleFollowApi(
                 clubID,
                 () => {
@@ -48,9 +50,11 @@ const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
                   EVENT_DESCRIPTION_STORE.setIsFollowingClub(
                     !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
                   );
+                  setApiCall(false);
                 },
                 () => {
                   //failure callback
+                  setApiCall(false);
                 },
               );
             }}
