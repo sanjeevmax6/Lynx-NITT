@@ -7,7 +7,7 @@ class UserData {
     userRollNumber: '',
     userToken: '',
     userRegToken: '',
-
+    redirectUpdate: false,
     //unique ID (Android ID)
     uniqueID: '',
   };
@@ -44,6 +44,14 @@ class UserData {
     return this.state.userRegToken;
   }
 
+  setRedirectUpdate = val => {
+    this.state.redirectUpdate = val;
+  };
+
+  get getRedirectUpdate() {
+    return this.state.redirectUpdate;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -55,6 +63,9 @@ class UserData {
 
       setUniqueId: action,
       getUniqueId: computed,
+
+      setRedirectUpdate: action,
+      getRedirectUpdate: computed,
     });
   }
 }

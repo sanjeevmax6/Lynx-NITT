@@ -17,7 +17,7 @@ import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {CLUB_REGISTERED, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 import {GET_BASE_URL} from '../../utils/API_CONSTANTS';
 import {API_STORE} from '../../mobx/API_STORE';
 import {
@@ -47,6 +47,13 @@ const SplashScreen = () => {
         else if (value == CLUB) USER_STORE.setUserType(CLUB);
         else if (value == ADMIN) USER_STORE.setUserType(ADMIN);
       } else USER_STORE.setUserType(null);
+    });
+    AsyncStorage.getItem(CLUB_REGISTERED).then(value => {
+      if (value != null) {
+        USER_STORE.setRedirectUpdate(value);
+      } else {
+        USER_STORE.setRedirectUpdate(null);
+      }
     });
     AsyncStorage.getItem(USER_TOKEN).then(value => {
       if (value != null) {

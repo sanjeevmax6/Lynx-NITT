@@ -6,6 +6,8 @@ import {Button, Avatar} from 'react-native-paper';
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import DocumentPicker from 'react-native-document-picker';
 import {observer} from 'mobx-react';
+import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
+import Error from '../../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -17,6 +19,7 @@ const selectFile = async () => {
     console.log(file.fileCopyUri);
 
     EDIT_CLUB_PROFILE_STORE.setClubImage(file.fileCopyUri);
+    CLUB_REGISTER_STORE.setError(false);
   } catch (err) {
     if (DocumentPicker.isCancel(err)) console.log(err);
     else throw err;
@@ -24,6 +27,17 @@ const selectFile = async () => {
 };
 
 const ClubLogo = observer(({forwardAction, backwardAction}) => {
+  const checkError = () => {
+    if (
+      EDIT_CLUB_PROFILE_STORE.getClubImage ==
+      'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg'
+    )
+      CLUB_REGISTER_STORE.setError(true);
+    else {
+      forwardAction();
+      CLUB_REGISTER_STORE.setError(false);
+    }
+  };
   return (
     <View
       style={{
@@ -48,11 +62,16 @@ const ClubLogo = observer(({forwardAction, backwardAction}) => {
           />
         </TouchableOpacity>
       </View>
+      <View style={{width: '90%', marginTop: verticalScale(50)}}>
+        {CLUB_REGISTER_STORE.getError && (
+          <Error text={'Please select a profile picture for your club!'} />
+        )}
+      </View>
       <Button
         style={styles.next}
         mode="contained"
         onPress={() => {
-          forwardAction();
+          checkError();
         }}
         labelStyle={{color: colors.regNext}}>
         Next

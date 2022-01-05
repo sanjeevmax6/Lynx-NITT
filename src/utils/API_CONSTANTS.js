@@ -15,7 +15,7 @@ export const API_GET_STUDENT_INTERESTS =
   API_BASE_URL + '/api/student/interest/list';
 export const API_DELETE_STUDENT_INTEREST =
   API_BASE_URL + '/api/student/interest/remove';
-
+export const API_CLUB_REGISTER = 'api/club/edit-clubs';
 export const NO_IMAGE_URL =
   'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg';
 

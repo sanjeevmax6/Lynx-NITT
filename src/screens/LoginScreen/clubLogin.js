@@ -5,7 +5,7 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 import {ADMIN, CLUB} from '../../utils/USER_TYPE';
-import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {CLUB_REGISTERED, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 export const clubLogin = (email, password) => {
   const axios = require('axios');
   //using netinfo to check if online
@@ -21,17 +21,24 @@ export const clubLogin = (email, password) => {
         .then(response => {
           if (response.status == 200) {
             AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
-
+            AsyncStorage.setItem(
+              CLUB_REGISTERED,
+              '' + response.data.redirectUpdate,
+            );
             //Differentiate club and admin based on backend
-            console.log('IS ADMIN?' + response.data.isAdmin);
+            //console.log('IS ADMIN?' + response.data.isAdmin);
             if (response.data.isAdmin) {
               AsyncStorage.setItem(USER_TYPE, ADMIN);
               USER_STORE.setUserType(ADMIN);
             } else {
               USER_STORE.setUserType(CLUB);
+
               AsyncStorage.setItem(USER_TYPE, CLUB);
             }
 
+            //USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
+            USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
+            //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
             USER_STORE.setUserToken(response.data.token);
           }
           LOGIN_STORE.setLoading(false);

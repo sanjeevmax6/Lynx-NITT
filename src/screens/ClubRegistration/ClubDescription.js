@@ -10,13 +10,24 @@ import * as colors from '../../utils/colors';
 import {TextInput, Button} from 'react-native-paper';
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
+import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
+import Error from '../../components/Error';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const charLen = 500;
 const ClubDescription = observer(({forwardAction}) => {
+  const checkError = () => {
+    if (remainCharacter == charLen) CLUB_REGISTER_STORE.setError(true);
+    else {
+      forwardAction();
+      CLUB_REGISTER_STORE.setError(false);
+    }
+  };
   const remainCharacter =
     charLen - EDIT_CLUB_PROFILE_STORE.getClubDescription.length;
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         alignItems: 'center',
@@ -58,15 +69,20 @@ const ClubDescription = observer(({forwardAction}) => {
           />
         }
       />
+      <View style={{width: '90%'}}>
+        {CLUB_REGISTER_STORE.getError && (
+          <Error text={'Please Enter a description for your club!'} />
+        )}
+      </View>
       <Button
         style={styles.next}
         mode="contained"
         disabled={remainCharacter < 0 ? true : false}
-        onPress={forwardAction}
+        onPress={checkError}
         labelStyle={{color: colors.regNext}}>
         Next
       </Button>
-    </View>
+    </SafeAreaView>
   );
 });
 

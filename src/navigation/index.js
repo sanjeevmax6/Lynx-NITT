@@ -8,6 +8,7 @@ import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
 import ResetPasswordScreen from '../screens/ResetPasswordScreens';
+import ClubRegistration from '../screens/ClubRegistration';
 
 import {AUTH_NAV_STORE} from '../mobx/AUTH_NAV_STORE';
 import {observer} from 'mobx-react';
@@ -16,6 +17,7 @@ import {USER_STORE} from '../mobx/USER_STORE';
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
+  //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
   return (
     <NavigationContainer>
       <RootStack.Navigator
@@ -37,6 +39,12 @@ const Navigator = observer(() => {
               <RootStack.Screen name="Reset" component={ResetPasswordScreen} />
             </>
           )
+        ) : USER_STORE.getRedirectUpdate ? (
+          <RootStack.Screen
+            name="ClubRegiser"
+            component={ClubRegistration}
+            initialParams={{token: USER_STORE.getUserToken}}
+          />
         ) : (
           <RootStack.Screen
             name="Home"

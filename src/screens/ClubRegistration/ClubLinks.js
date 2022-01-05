@@ -11,6 +11,8 @@ import {TextInput, Button} from 'react-native-paper';
 
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {clubRegisterAPI} from './ClubRegistrationAPI';
 
 const TEXT_INPUT = ({placeholder, label = placeholder, icon, onTextChange}) => {
   return (
@@ -111,10 +113,10 @@ const ClubLinks = observer(({backwardAction}) => {
           style={styles.next}
           mode="contained"
           onPress={() => {
-            console.log('Do Api Call');
+            clubRegisterAPI();
           }}
           labelStyle={{color: colors.regNext}}>
-          Next
+          Submit
         </Button>
         <Button
           style={styles.back}
