@@ -8,7 +8,15 @@ class eventDescriptionStore {
     success: false,
     data: '',
     eventID: '',
+    isFollowingClub: false,
   };
+  setIsFollowingClub = val => {
+    this.state.isFollowingClub = val;
+  };
+
+  get getIsFollowingClub() {
+    return this.state.isFollowingClub;
+  }
 
   setError = val => {
     this.state.error = val;
@@ -79,6 +87,9 @@ class eventDescriptionStore {
 
       setID: action,
       getID: computed,
+
+      setIsFollowingClub: action,
+      getIsFollowingClub: computed,
     });
   }
 }

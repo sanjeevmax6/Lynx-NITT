@@ -70,9 +70,9 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                 name={EVENT_DESCRIPTION_STORE.getData.club.name}
                 // imgURL={EVENT_DESCRIPTION_STORE.getData[0].organizer.imgURL}
                 imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
-                isFollowing={EVENT_DESCRIPTION_STORE.getData.student_interest}
                 followers={EVENT_DESCRIPTION_STORE.getData.club_followers}
                 navigation={navigation}
+                clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
               />
             </View>
             <Divider style={styles.divider} />

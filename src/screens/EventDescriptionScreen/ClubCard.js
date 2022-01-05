@@ -7,9 +7,13 @@ import * as colors from '../../utils/colors';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import * as USER_TYPE from '../../utils/USER_TYPE';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {observer} from 'mobx-react';
+import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
+import {TOGGLE_FOLLOW_STORE} from '../../mobx/FOLLOW_UNFOLLOW_STORE.js';
+import {toggleFollowApi} from '../../apis/followUnfollowApi';
 
 const WIDTH = Dimensions.get('window').width;
-const ClubCard = ({name, imgID, isFollowing, followers, navigation}) => {
+const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
       <TouchableOpacity
@@ -34,19 +38,34 @@ const ClubCard = ({name, imgID, isFollowing, followers, navigation}) => {
         {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
           <Button
             mode="outlined"
+            disabled={TOGGLE_FOLLOW_STORE.getDoingApiCall}
+            loading={TOGGLE_FOLLOW_STORE.getDoingApiCall}
             onPress={() => {
-              isFollowing = !isFollowing;
+              toggleFollowApi(
+                clubID,
+                () => {
+                  //success callback
+                  EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                    !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
+                  );
+                },
+                () => {
+                  //failure callback
+                },
+              );
             }}
             color={colors.EventDescriptionScreen_Follow}
             labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
             style={{alignSelf: 'baseline'}}>
-            {isFollowing ? 'Following' : 'Follow'}
+            {EVENT_DESCRIPTION_STORE.getIsFollowingClub
+              ? 'Following'
+              : 'Follow'}
           </Button>
         ) : null}
       </View>
     </View>
   );
-};
+});
 
 export default ClubCard;
 
