@@ -36,5 +36,6 @@ export const API_FOLLOW_TOGGLE = '/api/student/follow/';
 export const NO_IMAGE_URL =
   'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg';
 
+export const API_UPCOMING_EVENTS = 'api/student/upcoming-events';
 //reg token
 export const reg_token = '123abc';

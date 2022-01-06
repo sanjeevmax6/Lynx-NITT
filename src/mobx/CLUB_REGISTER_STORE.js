@@ -3,7 +3,7 @@ import {action, makeObservable, observable, computed} from 'mobx';
 class clubRegisterStore {
   state = {
     errorText: '',
-    loading: true,
+    loading: false,
     error: false,
   };
   setErrorText = txt => {

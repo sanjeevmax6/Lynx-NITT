@@ -48,13 +48,6 @@ const SplashScreen = () => {
         else if (value == ADMIN) USER_STORE.setUserType(ADMIN);
       } else USER_STORE.setUserType(null);
     });
-    AsyncStorage.getItem(CLUB_REGISTERED).then(value => {
-      if (value != null) {
-        USER_STORE.setRedirectUpdate(value);
-      } else {
-        USER_STORE.setRedirectUpdate(null);
-      }
-    });
     AsyncStorage.getItem(USER_TOKEN).then(value => {
       if (value != null) {
         USER_STORE.setUserToken(value);

@@ -20,11 +20,6 @@ export const clubLogin = (email, password) => {
         })
         .then(response => {
           if (response.status == 200) {
-            AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
-            AsyncStorage.setItem(
-              CLUB_REGISTERED,
-              '' + response.data.redirectUpdate,
-            );
             //Differentiate club and admin based on backend
             //console.log('IS ADMIN?' + response.data.isAdmin);
             if (response.data.isAdmin) {
@@ -36,10 +31,12 @@ export const clubLogin = (email, password) => {
               AsyncStorage.setItem(USER_TYPE, CLUB);
             }
 
-            //USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
             USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
-            //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
+
             USER_STORE.setUserToken(response.data.token);
+            //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
+            if (response.data.redirectUpdate === false)
+              AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
           }
           LOGIN_STORE.setLoading(false);
         })

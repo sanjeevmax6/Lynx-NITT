@@ -5,16 +5,19 @@ import ClubDescription from './ClubDescription';
 import ClubLogo from './ClubLogo';
 import ClubLinks from './ClubLinks';
 import {observer} from 'mobx-react';
+import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
 
 const ClubRegistration = observer(() => {
   const ref = useRef(PagerView);
 
   const buttonForwardAction = () => {
     console.log(1);
+
     ref.current.setPage(Page + 1);
   };
   const buttonBackwardAction = () => {
     console.log(0);
+    CLUB_REGISTER_STORE.setError(false);
     ref.current.setPage(Page - 1);
   };
   const [Page, setPage] = useState(0);

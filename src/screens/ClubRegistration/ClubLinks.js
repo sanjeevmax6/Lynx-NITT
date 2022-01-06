@@ -7,12 +7,14 @@ import {
   verticalScale,
 } from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button, ActivityIndicator} from 'react-native-paper';
 
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {clubRegisterAPI} from './ClubRegistrationAPI';
+import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
+import Error from '../../components/Error';
 
 const TEXT_INPUT = ({placeholder, label = placeholder, icon, onTextChange}) => {
   return (
@@ -35,6 +37,7 @@ const TEXT_INPUT = ({placeholder, label = placeholder, icon, onTextChange}) => {
           primary: colors.BLACK,
         },
       }}
+      selectionColor={colors.WHITE}
       onChangeText={text => {
         onTextChange(text);
       }}
@@ -101,6 +104,17 @@ const ClubLinks = observer(({backwardAction}) => {
             EDIT_CLUB_PROFILE_STORE.setMediumLink(val);
           }}
         />
+
+        {CLUB_REGISTER_STORE.getLoading && (
+          <View style={{paddingTop: verticalScale(5)}}>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </View>
+        )}
+        {CLUB_REGISTER_STORE.getError && (
+          <View style={{width: '90%'}}>
+            <Error text={'' + CLUB_REGISTER_STORE.getErrorText} />
+          </View>
+        )}
         <View
           style={{
             height: verticalScale(170),

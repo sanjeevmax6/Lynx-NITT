@@ -17,7 +17,7 @@ import {USER_STORE} from '../mobx/USER_STORE';
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
-  //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
+  console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
   return (
     <NavigationContainer>
       <RootStack.Navigator
@@ -39,7 +39,7 @@ const Navigator = observer(() => {
               <RootStack.Screen name="Reset" component={ResetPasswordScreen} />
             </>
           )
-        ) : USER_STORE.getRedirectUpdate ? (
+        ) : USER_STORE.getRedirectUpdate == true ? (
           <RootStack.Screen
             name="ClubRegiser"
             component={ClubRegistration}
