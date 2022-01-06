@@ -34,6 +34,7 @@ const SetNewPassword = ({forwardAction}) => {
             primary: 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         onChangeText={user => {
           console.log(5);
         }}
@@ -48,6 +49,7 @@ const SetNewPassword = ({forwardAction}) => {
             primary: 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         onChangeText={user => {
           console.log(5);
         }}

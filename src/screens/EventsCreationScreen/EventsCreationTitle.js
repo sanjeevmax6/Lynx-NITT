@@ -62,6 +62,7 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           onChangeText={nTitle => {
             titleStates.setTitle(nTitle);
             onChangeTitleLength(nTitle);

@@ -52,6 +52,7 @@ const Name = ({scrollViewRef, callback}) => {
             primary: er ? colors.Tertiary : 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         outlineColor={er ? colors.Tertiary : null}
         style={styles.input}
         onChangeText={fname => {
@@ -68,6 +69,7 @@ const Name = ({scrollViewRef, callback}) => {
             primary: er ? colors.Tertiary : 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         outlineColor={er ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
         onChangeText={val => {
@@ -86,6 +88,7 @@ const Name = ({scrollViewRef, callback}) => {
             primary: er ? colors.Tertiary : 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         outlineColor={er ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
         onChangeText={val => {

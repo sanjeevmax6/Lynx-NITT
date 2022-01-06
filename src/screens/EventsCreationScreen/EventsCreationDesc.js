@@ -79,6 +79,7 @@ const EventCreationDesc = ({
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           placeholder="Event Description (max 300)"
           value={descStates.desc}
           onChangeText={nDesc => {

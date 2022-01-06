@@ -22,6 +22,7 @@ export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
         )
         .then(response => {
           setLoading(false);
+          console.log(response);
           if (response.status == 200) {
             AsyncStorage.setItem(USER_TOKEN, response.data.token);
             AsyncStorage.setItem(USER_TYPE, STUDENT); //stored items should be string

@@ -39,6 +39,7 @@ const TEXT_INPUT = ({
           primary: colors.BLACK,
         },
       }}
+      selectionColor={colors.WHITE}
       onChangeText={text => {
         onTextChange(text);
       }}

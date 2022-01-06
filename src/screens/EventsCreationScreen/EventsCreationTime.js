@@ -105,6 +105,7 @@ const EventsCreationTime = ({
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           left={
             <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
           }>
@@ -132,6 +133,7 @@ const EventsCreationTime = ({
                 primary: color.BLACK,
               },
             }}
+            selectionColor={color.WHITE}
             left={
               <TextInput.Icon name="clock" size={25} color={color.BLACK} />
             }>

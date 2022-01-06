@@ -49,6 +49,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           onChangeText={nTitle => {
             inputStates.setTitle(nTitle);
             onChangeSubjectLength(nTitle);
@@ -79,6 +80,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           value={inputStates.desc}
           onChangeText={nDesc => {
             inputStates.setDesc(nDesc);
@@ -112,6 +114,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
               underlineColor: color.WHITE,
             },
           }}
+          selectionColor={color.WHITE}
           onChangeText={nLinks => inputStates.setLink(nLinks)}
           left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={

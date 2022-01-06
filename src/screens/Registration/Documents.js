@@ -63,6 +63,7 @@ const Documents = observer(({scrollViewRef, callback}) => {
             primary: 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         style={styles.inputAd}
         onChangeText={val => {
           STUDENT_REGISTRATION_STORE.setAadhar(val);

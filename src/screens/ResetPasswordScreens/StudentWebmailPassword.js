@@ -34,6 +34,7 @@ const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
             primary: 'black',
           },
         }}
+        selectionColor={colors.WHITE}
         onChangeText={user => {
           console.log(5);
         }}

@@ -70,6 +70,7 @@ const Name = ({scrollViewRef, callback}) => {
               primary: dateEr ? colors.Tertiary : 'black',
             },
           }}
+          selectionColor={colors.WHITE}
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginRight: scale(4)}}
           onChangeText={day => {
@@ -85,6 +86,7 @@ const Name = ({scrollViewRef, callback}) => {
               primary: dateEr ? colors.Tertiary : 'black',
             },
           }}
+          selectionColor={colors.WHITE}
           outlineColor={dateEr ? colors.Tertiary : null}
           keyboardType="phone-pad"
           style={{
@@ -106,6 +108,7 @@ const Name = ({scrollViewRef, callback}) => {
               primary: dateEr ? colors.Tertiary : 'black',
             },
           }}
+          selectionColor={colors.WHITE}
           outlineColor={dateEr ? colors.Tertiary : null}
           style={{...styles.inputDOB, marginLeft: scale(4)}}
           onChangeText={yr => {

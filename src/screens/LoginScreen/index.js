@@ -127,6 +127,7 @@ const LoginScreen = observer(({navigation}) => {
                                 primary: 'black',
                               },
                             }}
+                            selectionColor={colors.GRAY_MEDIUM}
                             onChangeText={user => {
                               setUser(user);
                             }}
@@ -147,6 +148,7 @@ const LoginScreen = observer(({navigation}) => {
                                 primary: 'black',
                               },
                             }}
+                            selectionColor={colors.GRAY_MEDIUM}
                             right={
                               <TextInput.Icon
                                 name={eyeIcon}

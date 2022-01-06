@@ -104,6 +104,7 @@ const EventsCreationTag = ({
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           onChangeText={nTag => {
             setTag(nTag);
           }}
@@ -151,6 +152,7 @@ const EventsCreationTag = ({
               primary: color.BLACK,
             },
           }}
+          selectionColor={color.WHITE}
           onChangeText={nLinks => tagStates.setLink(nLinks)}
           left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={
