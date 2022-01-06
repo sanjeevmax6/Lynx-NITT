@@ -12,7 +12,7 @@ import TagSearchResult from './TagSearchResult';
 import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
 
-const SearchScreen = ({route}) => {
+const SearchScreen = ({route, navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [Screen, setScreen] = useState('CLUB');
 
@@ -82,6 +82,7 @@ const SearchScreen = ({route}) => {
               <EventSearchResult
                 searchQuery={searchQuery}
                 setScreen={setScreen}
+                navigation={navigation}
               />
             )}
           />
@@ -91,6 +92,7 @@ const SearchScreen = ({route}) => {
               <TagSearchResult
                 searchQuery={searchQuery}
                 setScreen={setScreen}
+                navigation={navigation}
               />
             )}
           />

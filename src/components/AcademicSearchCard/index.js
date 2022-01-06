@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as c from '../../utils/colors';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const AcademicSearchCard = ({title, desc}) => {
   return (
@@ -22,6 +23,7 @@ const styles = ScaledSheet.create({
     marginBottom: '5@msr',
     display: 'flex',
     flexDirection: 'column',
+    marginHorizontal: scale(HorizontalPadding),
   },
   cardDetails: {
     flexGrow: 1,
@@ -30,8 +32,8 @@ const styles = ScaledSheet.create({
   },
   title: {
     marginBottom: '3@s',
-    color: c.Primary,
-    fontSize: '20@msr',
+    color: 'black',
+    fontSize: '16@msr',
     fontWeight: 'bold',
   },
   desc: {},

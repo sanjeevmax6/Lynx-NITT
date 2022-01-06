@@ -3,6 +3,11 @@ import {View, Text, FlatList, Keyboard} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ClubSearchCard from '../../components/ClubSearchCard';
+import {searchApi} from '../../apis/searchApi';
+import * as colors from '../../utils/colors';
+import {ActivityIndicator} from 'react-native-paper';
+import {scale, verticalScale} from 'react-native-size-matters';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const ClubSearchResult = ({searchQuery, setScreen}) => {
   const footer = () => {
@@ -103,13 +108,36 @@ const ClubSearchResult = ({searchQuery, setScreen}) => {
   ];
 
   const [API, setAPI] = useState('');
+  const [Loading, setLoading] = useState(false);
+  const [Data, setData] = useState([]);
+  const [Error, setError] = useState(false);
+  const [ErrorText, setErrorText] = useState('');
   const isFocused = useIsFocused();
+
   if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
     setScreen('CLUB');
     if (searchQuery != '') {
       if (searchQuery != API) {
         setAPI(searchQuery);
+        setLoading(true);
         console.log('Doing API CALL IN CLUB SEARCH: ' + searchQuery);
+        searchApi(
+          searchQuery,
+          'club',
+          res => {
+            setError(false);
+            setData(res.data);
+            setLoading(false);
+          },
+          err => {
+            setErrorText(err);
+            setError(true);
+
+            setData([]);
+            setLoading(false);
+          },
+        );
       }
     } else if (searchQuery === '' && API != '') {
       setAPI('');
@@ -118,35 +146,74 @@ const ClubSearchResult = ({searchQuery, setScreen}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {API != '' ? (
-        <View>
-          <Text style={{textAlign: 'center'}}>
-            ClubSearchResult: {'\n'} {API}{' '}
-            <Text style={{fontWeight: 'bold'}}> </Text>
-          </Text>
-        </View>
-      ) : (
-        <View>
-          <FlatList
-            data={DATA}
-            vertical={true}
-            onScroll={() => {
-              Keyboard.dismiss();
-            }}
-            ListFooterComponent={footer()}
-            renderItem={({item}) => (
-              <View>
-                <ClubSearchCard
-                  clubIconUrl={item.clubIconUrl}
-                  clubName={item.clubName}
-                  clubDescription={item.clubDescription}
-                  isFollowing={item.isFollowing}
-                />
-              </View>
-            )}
-            numColumns={1}
+      {Loading ? (
+        <>
+          <ActivityIndicator
+            animating={true}
+            size={'large'}
+            color={colors.Tertiary}
+            style={{margin: scale(10)}}
           />
-        </View>
+        </>
+      ) : (
+        <>
+          {Error ? (
+            <>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: scale(14),
+                  fontWeight: 'bold',
+                  paddingVertical: verticalScale(6),
+                }}>
+                {ErrorText}
+              </Text>
+            </>
+          ) : (
+            <>
+              {API != '' ? (
+                <FlatList
+                  data={Data}
+                  onScroll={() => {
+                    Keyboard.dismiss();
+                  }}
+                  ListFooterComponent={footer()}
+                  renderItem={({item}) => (
+                    <View>
+                      <ClubSearchCard
+                        clubIconUrl={item.profilePic}
+                        clubName={item.name}
+                        clubDescription={item.description}
+                      />
+                    </View>
+                  )}
+                  numColumns={1}
+                />
+              ) : (
+                <View>
+                  <FlatList
+                    data={DATA}
+                    vertical={true}
+                    onScroll={() => {
+                      Keyboard.dismiss();
+                    }}
+                    ListFooterComponent={footer()}
+                    renderItem={({item}) => (
+                      <View>
+                        <ClubSearchCard
+                          clubIconUrl={item.clubIconUrl}
+                          clubName={item.clubName}
+                          clubDescription={item.clubDescription}
+                        />
+                      </View>
+                    )}
+                    numColumns={1}
+                  />
+                </View>
+              )}
+            </>
+          )}
+        </>
       )}
     </SafeAreaView>
   );

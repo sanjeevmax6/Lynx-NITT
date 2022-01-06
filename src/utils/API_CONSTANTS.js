@@ -37,5 +37,7 @@ export const NO_IMAGE_URL =
   'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg';
 
 export const API_UPCOMING_EVENTS = 'api/student/upcoming-events';
+
+export const API_SEARCH = '/api/student/search';
 //reg token
 export const reg_token = '123abc';

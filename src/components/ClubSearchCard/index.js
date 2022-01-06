@@ -11,48 +11,28 @@ import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
-const ClubSearchCard = ({
-  clubIconUrl,
-  clubName,
-  clubDescription,
-  isFollowing,
-}) => {
+const ClubSearchCard = ({clubIconUrl, clubName, clubDescription}) => {
   return (
     <TouchableOpacity>
-      <View>
-        <View style={styles.container}>
-          <View style={styles.center}>
-            <Image
-              style={styles.clubIcon}
-              PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
-              source={{uri: clubIconUrl}}
-            />
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.headerText}>{clubName}</Text>
-            <Text numberOfLines={1} style={styles.itemText}>
-              {clubDescription}
-            </Text>
-            {isFollowing ? (
-              <Text style={styles.followText}>Following</Text>
-            ) : null}
-          </View>
-          <View style={styles.center}>
-            <TouchableOpacity>
-              <View style={styles.iconStyle}>
-                <Icon
-                  name="close"
-                  justifyContent="center"
-                  size={scale(ICON_SIZE)}
-                  color={color.GRAY_DARK}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Image
+            style={styles.clubIcon}
+            resizeMode="cover"
+            PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
+            source={{uri: API_GET_IMAGE + clubIconUrl}}
+          />
         </View>
-        <View style={styles.line} />
+        <View style={styles.item}>
+          <Text style={styles.headerText}>{clubName}</Text>
+          <Text numberOfLines={2} style={styles.itemText}>
+            {clubDescription}
+          </Text>
+        </View>
       </View>
+      <View style={styles.line} />
     </TouchableOpacity>
   );
 };
@@ -73,13 +53,20 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(3),
     flex: 1,
   },
-
-  clubIcon: {
-    borderRadius: moderateScale(25),
-    justifyContent: 'center',
-    width: scale(50),
+  center: {
+    height: scale(60),
+    width: scale(60),
     marginLeft: scale(5),
-    height: verticalScale(50),
+    borderRadius: scale(150),
+    justifyContent: 'center',
+    elevation: 1,
+  },
+  clubIcon: {
+    justifyContent: 'center',
+    width: scale(60),
+    height: scale(60),
+    backgroundColor: color.GRAY_LIGHT,
+    borderRadius: scale(120),
   },
 
   headerText: {
@@ -96,10 +83,6 @@ const styles = StyleSheet.create({
 
   itemText: {
     fontSize: scale(12),
-  },
-
-  center: {
-    justifyContent: 'center',
   },
 
   iconStyle: {

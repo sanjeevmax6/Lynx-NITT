@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 const cardDimensions = 123;
 const SuggestedEventCard = ({
@@ -31,7 +32,7 @@ const SuggestedEventCard = ({
         <></>
       )}
 
-      <Image source={{uri: eventImage}} style={styles.image} />
+      <Image source={{uri: API_GET_IMAGE + eventImage}} style={styles.image} />
       <Text numberOfLines={1} style={styles.title}>
         {eventName}
       </Text>
@@ -56,7 +57,7 @@ const styles = ScaledSheet.create({
   },
   image: {
     width: scale(cardDimensions),
-
+    backgroundColor: colors.Tertiary,
     height: scale(cardDimensions),
     borderRadius: '8@s',
   },

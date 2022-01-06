@@ -3,7 +3,8 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CalendarNavigator from '../calendar-navigator';
 import FeedNavigator from '../feed-navigator';
-import SearchScreen from '../../screens/SearchScreen';
+
+import SearchNavigator from '../search-navigator';
 import ActivityNavigator from '../activity-navigator';
 import UserNavigator from '../user-navigator';
 import * as color from '../../utils/colors';
@@ -41,7 +42,7 @@ const AppNavigator = observer(() => {
       />
       <HomeTab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchNavigator}
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({color}) => (

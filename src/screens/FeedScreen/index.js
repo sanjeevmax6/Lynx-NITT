@@ -87,10 +87,7 @@ const FeedScreen = observer(({navigation}) => {
                       eventImage={item.poster}
                       organizer={item.club.name}
                       eventName={item.Title}
-                      isLive={isLive(
-                        new Date(item.startDate),
-                        new Date(item.endDate),
-                      )}
+                      isLive={isLive(item.startDate, item.endDate)}
                     />
                   </TouchableOpacity>
                 </View>
