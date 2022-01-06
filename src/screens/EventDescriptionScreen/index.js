@@ -7,6 +7,7 @@ import About from './About';
 import Tags from './Tags';
 import Links from './Links';
 import ClubCard from './ClubCard';
+import {useIsFocused} from '@react-navigation/native';
 
 import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -20,6 +21,10 @@ import moment from 'moment';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const EventDescriptionScreen = observer(({route, navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(false);
+  }
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',

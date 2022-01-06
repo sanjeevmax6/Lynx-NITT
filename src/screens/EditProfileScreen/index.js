@@ -17,8 +17,11 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EditProfileScreenHeader from './EditProfileScreenHeader';
 import StudentPhoto from './StudentPhoto';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {useIsFocused} from '@react-navigation/native';
 
 const EditProfileScreen = ({navigation}) => {
+  const isFocused = useIsFocused();
+
   const [name, setName] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePicker, setDatePicker] = useState(false);
@@ -58,10 +61,6 @@ const EditProfileScreen = ({navigation}) => {
     setStudentPicSelected,
   };
 
-  function toggleTab(tabShow) {
-    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
-  }
-
   const selectFiles = async () => {
     try {
       const files = await DocumentPicker.pickMultiple({
@@ -83,7 +82,9 @@ const EditProfileScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    toggleTab(false);
+    if (isFocused) {
+      BOTTOM_NAV_STORE.setTabVisibility(false);
+    }
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
     return () => {
@@ -96,7 +97,6 @@ const EditProfileScreen = ({navigation}) => {
       {
         text: 'DISCARD',
         onPress: () => {
-          toggleTab(true);
           navigation.goBack();
         },
         style: 'cancel',

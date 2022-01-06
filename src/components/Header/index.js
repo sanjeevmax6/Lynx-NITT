@@ -4,7 +4,7 @@ import * as colors from '../../utils/colors';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+
 const Header = ({props, title = ''}) => {
   return (
     <View style={styles.header}>
@@ -12,8 +12,6 @@ const Header = ({props, title = ''}) => {
         style={styles.button}
         onPress={() => {
           props.navigation.goBack();
-          console.log('Clicking back button on the header');
-          BOTTOM_NAV_STORE.setTabVisibility(true);
         }}>
         {Platform.OS === 'ios' ? (
           <Icon

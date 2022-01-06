@@ -24,7 +24,14 @@ import moment from 'moment';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {STUDENT} from '../../utils/USER_TYPE';
 import {isLive} from '../../utils/helperFunction/isLive';
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+
 const FeedScreen = observer(({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
+  }
   useEffect(() => {
     if (USER_STORE.getUserType === STUDENT) feedsAPI();
     else {

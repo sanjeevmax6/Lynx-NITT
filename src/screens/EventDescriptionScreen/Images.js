@@ -38,6 +38,24 @@ const Images = ({images, navigation}) => {
           pagingEnabled
           horizontal
           style={styles.wrap}>
+          {images.length === 0 ? (
+            <>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  navigation.push('ImageScreen', {imgUrl: NO_IMAGE_URL});
+                }}>
+                <Image
+                  resizeMode="contain"
+                  style={styles.wrap}
+                  source={{
+                    uri: NO_IMAGE_URL,
+                  }}
+                />
+              </TouchableWithoutFeedback>
+            </>
+          ) : (
+            <></>
+          )}
           {images.map((e, index) => (
             <TouchableWithoutFeedback
               onPress={() => {
@@ -64,15 +82,7 @@ const Images = ({images, navigation}) => {
             ))}
           </View>
         ) : (
-          <View>
-            <Image
-              resizeMode="contain"
-              style={styles.wrap}
-              source={{
-                uri: NO_IMAGE_URL,
-              }}
-            />
-          </View>
+          <></>
         )}
       </View>
     </View>

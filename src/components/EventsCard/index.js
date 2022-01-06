@@ -47,7 +47,13 @@ const EventsCard = ({
         <></>
       )}
 
-      <View style={{justifyContent: 'center'}}>
+      <View
+        style={{
+          justifyContent: 'center',
+          elevation: 1,
+          backgroundColor: colors.Accent,
+          ...styles.image,
+        }}>
         <Image
           source={{
             uri: API_GET_IMAGE + eventImage || '../assests/images/spider.png',

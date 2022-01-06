@@ -6,7 +6,9 @@ import EventsView from './EventsView';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {Divider} from 'react-native-paper';
 import Header from './Header';
-import Backheader from './backheader';
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+
 const data = {
   name: 'SPIDER',
   description: 'The official Research and Development (R&D) Club of NIT Trichy',
@@ -100,6 +102,10 @@ const renderTopLayout = navigation => (
 );
 
 const ClubDescriptionScreen = ({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(false);
+  }
   return (
     <SafeAreaView style={{backgroundColor: colors.GRAY_MEDIUM, flex: 1}}>
       <EventsView

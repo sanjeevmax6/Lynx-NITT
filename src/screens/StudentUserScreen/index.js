@@ -9,8 +9,14 @@ import {observer} from 'mobx-react';
 import ErrorScreen from '../../components/ErrorScreen';
 import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const StudentUserScreen = observer(({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
+  }
   const studentUsername =
     STUDENT_DETAILS_STORE.getFirstName +
     ' ' +

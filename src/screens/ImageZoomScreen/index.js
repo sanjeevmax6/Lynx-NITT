@@ -3,10 +3,15 @@ import {Dimensions, Image} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 const screen = Dimensions.get('window');
 
 const ImageScreen = ({route, navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(false);
+  }
   const {imgUrl} = route.params;
   return (
     <ImageZoom
