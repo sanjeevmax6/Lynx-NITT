@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -30,6 +31,21 @@ import NoEventScreen from '../../components/NoEventScreen';
 import {NO_EVENTS} from '../../utils/ERROR_MESSAGES';
 
 const FeedScreen = observer(({navigation}) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    if (USER_STORE.getUserType === STUDENT) {
+      setRefreshing(true);
+      FEEDS_STORE.setError(false);
+      FEEDS_STORE.setErrorText('');
+      FEEDS_STORE.setLoading(false);
+      FEEDS_STORE.setSuccess(false);
+      feedsAPI();
+
+      setRefreshing(false);
+    }
+  }, []);
+
   const isFocused = useIsFocused();
   if (isFocused) {
     BOTTOM_NAV_STORE.setTabVisibility(true);
@@ -67,6 +83,7 @@ const FeedScreen = observer(({navigation}) => {
               }}>
               Suggested Events
             </Text>
+
             <FlatList
               data={FEEDS_STORE.getData.suggestedEvents}
               horizontal={true}
@@ -172,6 +189,13 @@ const FeedScreen = observer(({navigation}) => {
             onScroll={e => {
               scrollY.setValue(e.nativeEvent.contentOffset.y);
             }}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                colors={[colors.Accent]}
+                onRefresh={onRefresh}
+              />
+            }
             bounces={false}
             bouncesZoom={false}
             renderItem={({item}) => (
