@@ -1,43 +1,40 @@
 import {API_ADD_EVENT} from '../../utils/API_CONSTANTS';
 import NetInfo from '@react-native-community/netinfo';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import { EVENT_CREATION_STORE } from '../../mobx/EVENT_CREATION_STORE';
 
 export const EventCreationAPI = (
-  title,
-  description,
-  time,
-  date,
-  userToken,
-  setLoading,
-  setErrorText,
+  formData,
 ) => {
   const axios = require('axios');
-  console.log(userToken);
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
-      setLoading(true);
+      EVENT_CREATION_STORE.setLoading(true);
       axios
         .post(
           API_ADD_EVENT,
-          {title, description, time, date},
+          
+          formData,
 
-          {headers: {token: userToken}},
+          {headers: {token: USER_STORE.getUserToken}},
         )
         .then(response => {
-          setLoading(false);
+          EVENT_CREATION_STORE.setLoading(false);
           //console.log('EventCreated',response.data.message);
-          setErrorText(response.data.message);
+          console.log(response.data);
         })
         .catch(error => {
           if (error.response) {
-            setLoading(false);
-            setErrorText(error.response.data.message);
+            console.log(error.response.data.message);
+            EVENT_CREATION_STORE.setLoading(false);
+            EVENT_CREATION_STORE.setErrorText(error.response.data.message);
           } else if (error.request) {
-            setErrorText('Server Error');
+            EVENT_CREATION_STORE.setErrorText('Server Error');
           }
           console.log(error);
         });
     } else {
-      setErrorText('No internet connection');
+      EVENT_CREATION_STORE.setErrorText('No internet connection');
     }
   });
 };

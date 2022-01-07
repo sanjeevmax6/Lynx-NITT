@@ -72,7 +72,8 @@ const EventsCreationTime = ({
   const onChangeDate = newDate => {
     const currentDate = newDate || dateStates.date;
     dateStates.setDatePicker(false);
-    dateStates.setDate(currentDate);
+    dateStates.setStartDate(currentDate);
+    dateStates.setEndDate(currentDate);
   };
 
   return (
@@ -109,7 +110,7 @@ const EventsCreationTime = ({
           left={
             <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
           }>
-          Event on: {moment(dateStates.date).format(DATE_FORMAT)}
+          Event starts on: {moment(dateStates.date).format(DATE_FORMAT)}
         </TextInput>
       </TouchableOpacity>
 
@@ -134,6 +135,56 @@ const EventsCreationTime = ({
               },
             }}
             selectionColor={color.WHITE}
+            left={
+              <TextInput.Icon name="clock" size={25} color={color.BLACK} />
+            }>
+            Time: {moment(timeStates.time).format(TIME_FORMAT)}
+          </TextInput>
+        </TouchableOpacity>
+      )}
+      <TouchableOpacity
+        style={styles.viewScale}
+        onPress={() => dateStates.setDatePicker(true)}>
+        <TextInput
+          disabled={true}
+          style={{
+            backgroundColor: color.GRAY_LIGHT,
+            borderTopRightRadius: moderateScale(9),
+            borderTopLeftRadius: moderateScale(9),
+            borderBottomLeftRadius: moderateScale(9),
+            borderBottomRightRadius: moderateScale(9),
+          }}
+          theme={{
+            colors: {
+              primary: color.BLACK,
+            },
+          }}
+          left={
+            <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
+          }>
+          Event ends on: {moment(dateStates.date).format(DATE_FORMAT)}
+        </TextInput>
+      </TouchableOpacity>
+      {!timeStates.allDaySwitch && (
+        <TouchableOpacity
+          style={styles.viewScale}
+          onPress={() => {
+            timeStates.setTimePicker(true);
+          }}>
+          <TextInput
+            disabled={true}
+            style={{
+              backgroundColor: color.GRAY_LIGHT,
+              borderTopRightRadius: moderateScale(9),
+              borderTopLeftRadius: moderateScale(9),
+              borderBottomLeftRadius: moderateScale(9),
+              borderBottomRightRadius: moderateScale(9),
+            }}
+            theme={{
+              colors: {
+                primary: color.BLACK,
+              },
+            }}
             left={
               <TextInput.Icon name="clock" size={25} color={color.BLACK} />
             }>

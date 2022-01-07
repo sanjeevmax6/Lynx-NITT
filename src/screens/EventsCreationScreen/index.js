@@ -5,6 +5,7 @@ import {
   BackHandler,
   ScrollView,
   Text,
+  imageURI,
   Dimensions,
 } from 'react-native';
 import {
@@ -26,6 +27,7 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {eventCreation_eventTitle} from '../../utils/stringConstants';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import { EVENT_CREATION_STORE } from '../../mobx/EVENT_CREATION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -33,7 +35,8 @@ const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [link, setLink] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [showDatePicker, setDatePicker] = useState(false);
   const [time, setTime] = useState(new Date());
   const [showTimePicker, setTimePicker] = useState(false);
@@ -64,16 +67,27 @@ const EventCreationScreen = ({navigation}) => {
   };
 
   const handleAPICALL = () => {
+    EVENT_CREATION_STORE.setErrorText(null);
     let description = desc;
-    EventCreationAPI(
-      title,
-      description,
-      time,
-      date,
-      userToken,
-      setLoading,
-      setErrorText,
-    );
+    let eventsPic = profilePicUri;
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('startDate', startDate.toString());
+    formData.append('endDate', endDate.toString());
+    for(i=0;i<tags.length;i++){
+      formData.append('tags['+i+']', tags[i]);
+    }
+    for(i=0;i<links.length;i++){
+      formData.append('links['+i+']', links[i]);
+    }
+    formData.append('eventsPic', {
+      uri: imageURI,
+      type: "image/jpeg",
+      name: "photo.jpg"
+   })
+    EventCreationAPI(formData);
+    console.log(formData);
   };
 
   const userToken = USER_STORE.getUserToken;
@@ -134,8 +148,10 @@ const EventCreationScreen = ({navigation}) => {
   };
 
   const dateStates = {
-    date,
-    setDate,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
     showDatePicker,
     setDatePicker,
   };

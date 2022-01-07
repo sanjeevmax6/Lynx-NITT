@@ -27,6 +27,7 @@ const EventsCreationTag = ({
   tagStates,
   scrollViewRef,
   callback,
+  navigation,
   handleAPICALL,
 }) => {
   //handling scroll
@@ -182,7 +183,8 @@ const EventsCreationTag = ({
         style={styles.next}
         mode="contained"
         labelStyle={{color: color.regNext}}
-        onPress={createEvent}>
+        onPress={createEvent}
+      >
         Create Event
       </Button>
       <Button

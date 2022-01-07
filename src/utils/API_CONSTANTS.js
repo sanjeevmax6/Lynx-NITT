@@ -26,6 +26,10 @@ export const API_GET_STUDENT_INTERESTS =
 
 export const API_DELETE_STUDENT_INTEREST =
   API_BASE_URL + '/api/student/interest/remove';
+  
+export const API_EDIT_PROFILE_STUDENT = API_BASE_URL + 'api/student/edit'; 
+
+export const API_EDIT_PROFILE_CLUB = API_BASE_URL + 'api/club/edit-clubs';
 
 export const API_CLUB_REGISTER = 'api/club/edit-clubs';
 
