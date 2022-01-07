@@ -56,8 +56,11 @@ export const EventCard_Bookmark = Tertiary;
 export const EventCard_ShareIcon = Tertiary;
 export const EventCard_Title = FontColor;
 export const EventCard_Date = FontColor;
-export const EventCard_IsLive = '#f9685d';
+export const EventCard_IsLive = '#f34928';
 
+export const LIVE = EventCard_IsLive;
+export const CLOSED = '#feb706';
+export const UPCOMING = 'green';
 //eventScreen
 export const EventScreen_headerBackground = StatusBar;
 export const EventScreen_headerText = FontColor;

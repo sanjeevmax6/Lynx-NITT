@@ -26,6 +26,8 @@ import {STUDENT} from '../../utils/USER_TYPE';
 import {isLive} from '../../utils/helperFunction/isLive';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import NoEventScreen from '../../components/NoEventScreen';
+import {NO_EVENTS} from '../../utils/ERROR_MESSAGES';
 
 const FeedScreen = observer(({navigation}) => {
   const isFocused = useIsFocused();
@@ -162,6 +164,7 @@ const FeedScreen = observer(({navigation}) => {
             data={FEEDS_STORE.getData.upcomingEvents}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={<NoEventScreen errorMessage={NO_EVENTS} />}
             ListHeaderComponent={
               <View style={{height: verticalScale(HeaderHeight)}}></View>
             }

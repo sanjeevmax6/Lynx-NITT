@@ -19,6 +19,9 @@ import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import moment from 'moment';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {isLive} from '../../utils/helperFunction/isLive';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import EventStatusTag from './EventStatusTag';
 
 const EventDescriptionScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -65,10 +68,14 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
               navigation={navigation}
             />
             <Divider style={styles.divider} />
-
+            <EventStatusTag
+              startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
+              endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
+            />
             <Text style={styles.eventName}>
               {EVENT_DESCRIPTION_STORE.getData.Title}
             </Text>
+
             <Divider style={styles.divider} />
             <View style={{marginHorizontal: scale(3)}}>
               <ClubCard
@@ -130,12 +137,12 @@ export default EventDescriptionScreen;
 const styles = ScaledSheet.create({
   eventName: {
     fontSize: '18@s',
-    paddingTop: '10@vs',
+    paddingTop: '0@vs',
     paddingBottom: '10@vs',
     paddingHorizontal: HorizontalPadding,
     fontWeight: 'bold',
     backgroundColor: colors.WHITE,
-
+    marginTop: verticalScale(-6),
     color: colors.EventDescriptionScreen_Title,
   },
   divider: {
