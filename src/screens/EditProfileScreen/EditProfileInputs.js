@@ -1,6 +1,6 @@
 import React from 'react';
-import {TextInput} from 'react-native-paper';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {TextInput, Text} from 'react-native-paper';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -77,16 +77,49 @@ const EditProfileInputs = ({inputStates}) => {
   return (
     <View style={styles.container}>
       <TEXT_INPUT
-        label="Name"
-        placeholder="Name"
+        label="First Name"
+        placeholder="First Name"
         icon="account"
         showCharCount={true}
         charCount={inputStates.nameLength}
         onTextChange={nName => {
-          inputStates.setName(nName);
+          inputStates.setFirst_Name(nName);
           onChangeNameLength(nName);
         }}
       />
+      <TEXT_INPUT
+        label="Last Name"
+        placeholder="Last Name"
+        icon="account"
+        showCharCount={true}
+        charCount={inputStates.nameLength}
+        onTextChange={nName => {
+          inputStates.setLast_Name(nName);
+          onChangeNameLength(nName);
+        }}
+      />
+      <View style={styles.viewScale}>
+        <TouchableOpacity>
+          <TextInput
+            disabled={true}
+            style={{
+              backgroundColor: colors.GRAY_LIGHT,
+              borderTopLeftRadius: moderateScale(6),
+              borderTopRightRadius: moderateScale(6),
+              marginHorizontal: HorizontalPadding,
+            }}
+            theme={{
+              colors: {
+                primary: 'black',
+              },
+            }}
+            left={
+              <TextInput.Icon name="book" size={25} color={colors.Accent} />
+            }>
+            Department : MME
+          </TextInput>
+        </TouchableOpacity>
+      </View>
       <View style={styles.viewScale}>
         <TouchableOpacity onPress={() => inputStates.setDatePicker(true)}>
           <TextInput
@@ -141,6 +174,17 @@ const EditProfileInputs = ({inputStates}) => {
         onTextChange={nAddress => {
           inputStates.setAddress(nAddress);
           onChangeAddressLength(nAddress);
+        }}
+      />
+      <TEXT_INPUT
+        label="Mobile No."
+        placeholder="Mobile No."
+        icon="phone"
+        showCharCount={false}
+        charCount={inputStates.nameLength}
+        onTextChange={nName => {
+          inputStates.setMobile_No(nName);
+          onChangeNameLength(nName);
         }}
       />
     </View>

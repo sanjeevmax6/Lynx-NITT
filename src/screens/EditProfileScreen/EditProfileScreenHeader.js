@@ -5,11 +5,14 @@ import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import { STUDENT_DETAILS_STORE } from '../../mobx/STUDENT_DETAILS_STORE';
+import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 
-const EditProfileScreenHeader = ({navigation, isValid}) => {
+const EditProfileScreenHeader = ({navigation, isValid, handleAPICALL}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
+  
 
   return (
     <View style={styles.header}>
@@ -44,6 +47,8 @@ const EditProfileScreenHeader = ({navigation, isValid}) => {
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
+            handleAPICALL();
+            navigation.goBack();
             console.log('Create pressed');
             if (!isValid)
               Alert.alert('', 'The text entered exceeds the maximum length', [

@@ -15,17 +15,20 @@ import FileItem from './FileItem';
 import EditProfileInputs from './EditProfileInputs';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EditProfileScreenHeader from './EditProfileScreenHeader';
+import {EditProfileAPI} from './EditProfileAPI';
 import StudentPhoto from './StudentPhoto';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import {useIsFocused} from '@react-navigation/native';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import { STUDENT_EDIT_PROFILE_STORE } from '../../mobx/STUDENT_EDIT_PROFILE_STORE';
 
 const EditProfileScreen = ({navigation}) => {
-  const isFocused = useIsFocused();
-
-  const [name, setName] = useState('');
+  const [first_name, setFirst_Name] = useState('');
+  const [last_name, setLast_Name] = useState('');
+  const [department, setDepartment] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePicker, setDatePicker] = useState(false);
   const [aadharNumber, setAadharNumber] = useState('');
+  const [mobile_no,setMobile_No] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [address, setAddress] = useState();
   const [studentPic, setStudentPic] = useState('');
@@ -35,15 +38,22 @@ const EditProfileScreen = ({navigation}) => {
   const maxAddressLength = 300;
   const [nameLength, setNameLength] = useState(maxNameLength);
   const [addressLength, setAddressLength] = useState(maxAddressLength);
+
   const inputStates = {
-    name,
-    setName,
+    first_name,
+    setFirst_Name,
+    last_name,
+    setLast_Name,
+    department,
+    setDepartment,
     aadharNumber,
     setAadharNumber,
     address,
     setAddress,
     dob,
     setDob,
+    mobile_no,
+    setMobile_No,
     showDatePicker,
     setDatePicker,
     nameLength,
@@ -60,6 +70,10 @@ const EditProfileScreen = ({navigation}) => {
     isStudentPicSelected,
     setStudentPicSelected,
   };
+
+  function toggleTab(tabShow) {
+    BOTTOM_NAV_STORE.setTabVisibility(tabShow);
+  }
 
   const selectFiles = async () => {
     try {
@@ -81,10 +95,27 @@ const EditProfileScreen = ({navigation}) => {
     });
   };
 
+  const handleAPICALL = () => {
+    STUDENT_EDIT_PROFILE_STORE.setErrorText(null);
+    let profileImg = studentPic;
+    let passportImg = selectedFiles;
+    const formData = new FormData();
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('department', department);
+    formData.append('address', address);
+    formData.append('aadhar_no', aadharNumber);
+    formData.append('profileImg', profileImg);
+    formData.append('passportImg', passportImg);
+    formData.append('mobile_no',mobile_no);
+    EditProfileAPI(formData, navigation);
+  };
+
+  const userToken = USER_STORE.getUserToken;
+
+
   useEffect(() => {
-    if (isFocused) {
-      BOTTOM_NAV_STORE.setTabVisibility(false);
-    }
+    toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
     return () => {
@@ -97,6 +128,7 @@ const EditProfileScreen = ({navigation}) => {
       {
         text: 'DISCARD',
         onPress: () => {
+          toggleTab(true);
           navigation.goBack();
         },
         style: 'cancel',
@@ -111,6 +143,7 @@ const EditProfileScreen = ({navigation}) => {
       <EditProfileScreenHeader
         navigation={navigation}
         isValid={addressLength >= 0 && nameLength >= 0}
+        handleAPICALL={handleAPICALL}
       />
       <FlatList
         showsVerticalScrollIndicator={false}

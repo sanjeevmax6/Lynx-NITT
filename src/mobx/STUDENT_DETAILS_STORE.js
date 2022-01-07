@@ -25,6 +25,7 @@ class StudentDetailStore {
     hasClubsLoaded: false,
     isError: false,
     errorText: '',
+    refresh: false,
   };
 
   /*
@@ -95,6 +96,9 @@ class StudentDetailStore {
   setHasInterestsLoaded = hasInterestsLoaded => {
     this.state.hasInterestsLoaded = hasInterestsLoaded;
   };
+  setRefresh = val => {
+    this.state.val = val;
+  }
 
   /*
     ^^^^^ GETTERS ^^^^^
@@ -154,6 +158,9 @@ class StudentDetailStore {
   get errorText() {
     return this.state.errorText;
   }
+  get getRefresh(){
+    return this.state.refresh;
+  }
 
   /*
     ^^^^^ CONSTRUCTOR ^^^^^
@@ -180,6 +187,7 @@ class StudentDetailStore {
       setAadhar: action,
       setAddress: action,
       setProfilePic: action,
+      setRefresh: action,
       // all getters
       isLoading: computed,
       isError: computed,
@@ -196,6 +204,7 @@ class StudentDetailStore {
       getAadhar: computed,
       getAddress: computed,
       getProfilePic: computed,
+      getRefresh: computed,
     });
   }
 }
