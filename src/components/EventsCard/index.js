@@ -4,7 +4,7 @@ import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
-import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const EventsCard = ({
   date,
@@ -56,7 +56,7 @@ const EventsCard = ({
         }}>
         <Image
           source={{
-            uri: API_GET_IMAGE + eventImage || '../assests/images/spider.png',
+            uri: eventImage ? API_GET_IMAGE + eventImage : NO_IMAGE_URL,
           }}
           style={styles.image}
         />

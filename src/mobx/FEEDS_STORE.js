@@ -7,7 +7,15 @@ class feedsStore {
     loading: true,
     success: false,
     data: '',
+    refreshing: false,
   };
+  setRefreshing = val => {
+    this.state.refreshing = val;
+  };
+
+  get getRefreshing() {
+    return this.state.refreshing;
+  }
 
   setError = val => {
     this.state.error = val;
@@ -67,6 +75,9 @@ class feedsStore {
 
       setSuccess: action,
       getSuccess: computed,
+
+      setRefreshing: action,
+      getRefreshing: computed,
     });
   }
 }

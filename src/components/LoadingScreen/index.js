@@ -2,10 +2,17 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import LottieView from 'lottie-react-native';
 import loadingLottie from '../../res/lottieFiles/loadingLottie.json';
+import {HeaderHeight} from '../../utils/UI_CONSTANTS';
+import {scale, verticalScale} from 'react-native-size-matters';
 
-import {ACCENT_LOTTIE, LOADING_LOTTIE} from '../../utils/LOADING_TYPES';
+import {
+  ACCENT_ACTIVITY_SCREEN,
+  ACCENT_LOTTIE,
+  LOADING_LOTTIE,
+} from '../../utils/LOADING_TYPES';
 
 import ActivityLoader from './ActivityLoader';
+import EventLoader from './EventLoader';
 
 //loading accent decides what type of loader is to be displayed
 //LoaderLottieType is to choose the Lottie file to be displayed when the Loading accent is chosen as lottie
@@ -51,9 +58,20 @@ const LoaderPage = ({
         </>
       ) : (
         <>
-          {[...Array(repeat)].map((e, i) => (
-            <ActivityLoader key={i} />
-          ))}
+          {LoadingAccent === ACCENT_ACTIVITY_SCREEN ? (
+            <>
+              {[...Array(repeat)].map((e, i) => (
+                <ActivityLoader key={i} />
+              ))}
+            </>
+          ) : (
+            <>
+              <View style={{height: verticalScale(HeaderHeight)}} />
+              {[...Array(repeat)].map((e, i) => (
+                <EventLoader key={i} />
+              ))}
+            </>
+          )}
         </>
       )}
     </>

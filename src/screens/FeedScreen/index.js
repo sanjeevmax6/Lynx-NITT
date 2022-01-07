@@ -19,7 +19,11 @@ import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {feedsAPI} from './feedsAPI';
 import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
-import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {
+  ACCENT_ACTIVITY_SCREEN,
+  ACCENT_EVENT_SCREEN,
+  ACCENT_LOTTIE,
+} from '../../utils/LOADING_TYPES';
 import {observer} from 'mobx-react';
 import moment from 'moment';
 import {USER_STORE} from '../../mobx/USER_STORE';
@@ -31,18 +35,15 @@ import NoEventScreen from '../../components/NoEventScreen';
 import {NO_EVENTS} from '../../utils/ERROR_MESSAGES';
 
 const FeedScreen = observer(({navigation}) => {
-  const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = React.useCallback(() => {
     if (USER_STORE.getUserType === STUDENT) {
-      setRefreshing(true);
+      FEEDS_STORE.setRefreshing(true);
       FEEDS_STORE.setError(false);
       FEEDS_STORE.setErrorText('');
       FEEDS_STORE.setLoading(false);
       FEEDS_STORE.setSuccess(false);
-      feedsAPI();
 
-      setRefreshing(false);
+      feedsAPI(true);
     }
   }, []);
 
@@ -51,7 +52,7 @@ const FeedScreen = observer(({navigation}) => {
     BOTTOM_NAV_STORE.setTabVisibility(true);
   }
   useEffect(() => {
-    if (USER_STORE.getUserType === STUDENT) feedsAPI();
+    if (USER_STORE.getUserType === STUDENT) feedsAPI(false);
     else {
       FEEDS_STORE.setError(false);
       FEEDS_STORE.setLoading(false);
@@ -123,7 +124,7 @@ const FeedScreen = observer(({navigation}) => {
   return (
     <View style={{flex: 1}}>
       {FEEDS_STORE.getLoading ? (
-        <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+        <LoaderPage LoadingAccent={ACCENT_EVENT_SCREEN} />
       ) : FEEDS_STORE.getError ? (
         <ErrorScreen
           errorMessage={FEEDS_STORE.getErrorText}
@@ -191,9 +192,10 @@ const FeedScreen = observer(({navigation}) => {
             }}
             refreshControl={
               <RefreshControl
-                refreshing={refreshing}
+                refreshing={FEEDS_STORE.getRefreshing}
                 colors={[colors.Accent]}
                 onRefresh={onRefresh}
+                progressViewOffset={verticalScale(50)}
               />
             }
             bounces={false}
