@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
-const ScreenHeader = ({navigation, isValid}) => {
+const ScreenHeader = ({navigation, isValid, handleAPICALL}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
@@ -44,6 +44,8 @@ const ScreenHeader = ({navigation, isValid}) => {
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
+            handleAPICALL();
+            navigation.goBack();
             console.log('Create pressed');
             if (!isValid)
               Alert.alert('', 'The text entered exceeds the maximum length', [
