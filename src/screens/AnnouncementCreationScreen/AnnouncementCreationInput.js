@@ -1,32 +1,30 @@
-import React, {useState} from 'react';
-import {TextInput, Divider} from 'react-native-paper';
+import React from 'react';
+import {TextInput} from 'react-native-paper';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-const AnnouncementCreationInputs = ({inputStates}) => {
+import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
+
+const maxSubjectLength = 150;
+const maxAnnouncementLength = 300;
+import {observer} from 'mobx-react';
+
+const AnnouncementCreationInputs = observer(() => {
   const addLink = () => {
-    if (inputStates.link !== '') {
-      inputStates.setLinks(prevList => {
-        return [inputStates.link, ...prevList];
-      });
-      inputStates.setLink('');
+    if (ANNOUNCEMENT_CREATION_STORE.getLink.trim() !== '') {
+      ANNOUNCEMENT_CREATION_STORE.setLinks([
+        ANNOUNCEMENT_CREATION_STORE.getLink.trim(),
+        ...ANNOUNCEMENT_CREATION_STORE.getLinks,
+      ]);
+      ANNOUNCEMENT_CREATION_STORE.setLink('');
     }
   };
 
   const removeLink = link => {
-    inputStates.setLinks(prevList => {
-      return prevList.filter(item => item != link);
-    });
-  };
-
-  const onChangeSubjectLength = text => {
-    inputStates.setSubjectLength(inputStates.maxSubjectLength - text.length);
-  };
-  const onChangeAnnouncementLength = text => {
-    inputStates.setAnnouncementLength(
-      inputStates.maxAnnouncementLength - text.length,
+    ANNOUNCEMENT_CREATION_STORE.setLinks(
+      ANNOUNCEMENT_CREATION_STORE.getLinks.filter(item => item !== link),
     );
   };
 
@@ -42,7 +40,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             borderTopLeftRadius: moderateScale(12),
           }}
           placeholder="Announcement Subject (max 150)"
-          value={inputStates.title}
+          value={ANNOUNCEMENT_CREATION_STORE.getTitle}
           multiline={true}
           theme={{
             colors: {
@@ -51,17 +49,22 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           }}
           selectionColor={color.WHITE}
           onChangeText={nTitle => {
-            inputStates.setTitle(nTitle);
-            onChangeSubjectLength(nTitle);
+            ANNOUNCEMENT_CREATION_STORE.setTitle(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
         />
         <Text
           style={[
             styles.wordCount,
-            {color: inputStates.subjectLength < 0 ? 'red' : 'black'},
+            {
+              color:
+                maxSubjectLength - ANNOUNCEMENT_CREATION_STORE.getTitle.length <
+                0
+                  ? 'red'
+                  : 'black',
+            },
           ]}>
-          {inputStates.subjectLength}
+          {maxSubjectLength - ANNOUNCEMENT_CREATION_STORE.getTitle.length}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -73,6 +76,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             // borderTopLeftRadius: moderateScale(9),
           }}
           label="Announcement"
+          value={ANNOUNCEMENT_CREATION_STORE.getDescription}
           placeholder="Announcement (max 300)"
           multiline={true}
           theme={{
@@ -81,20 +85,25 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             },
           }}
           selectionColor={color.WHITE}
-          value={inputStates.desc}
           onChangeText={nDesc => {
-            inputStates.setDesc(nDesc);
-            onChangeAnnouncementLength(nDesc);
+            ANNOUNCEMENT_CREATION_STORE.setDescription(nDesc);
           }}
-          multiline={true}
           left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
         />
         <Text
           style={[
             styles.wordCount,
-            {color: inputStates.announcementLength < 0 ? 'red' : 'black'},
+            {
+              color:
+                maxAnnouncementLength -
+                  ANNOUNCEMENT_CREATION_STORE.getDescription.length <
+                0
+                  ? 'red'
+                  : 'black',
+            },
           ]}>
-          {inputStates.announcementLength}
+          {maxAnnouncementLength -
+            ANNOUNCEMENT_CREATION_STORE.getDescription.length}
         </Text>
       </View>
       <View style={styles.viewScale}>
@@ -107,7 +116,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
           }}
           label="Links"
           placeholder="Links"
-          value={inputStates.link}
+          value={ANNOUNCEMENT_CREATION_STORE.getLink}
           theme={{
             colors: {
               primary: color.BLACK,
@@ -115,7 +124,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             },
           }}
           selectionColor={color.WHITE}
-          onChangeText={nLinks => inputStates.setLink(nLinks)}
+          onChangeText={nLinks => ANNOUNCEMENT_CREATION_STORE.setLink(nLinks)}
           left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={
             <TextInput.Icon
@@ -125,10 +134,10 @@ const AnnouncementCreationInputs = ({inputStates}) => {
             />
           }
         />
-        {inputStates.links.length > 0 && (
+        {ANNOUNCEMENT_CREATION_STORE.getLinks.length > 0 && (
           <View style={styles.viewScale}>
             <FlatList
-              data={inputStates.links}
+              data={ANNOUNCEMENT_CREATION_STORE.getLinks}
               renderItem={({item}) => (
                 <LinkItem item={item} deleteItem={removeLink} />
               )}
@@ -138,7 +147,7 @@ const AnnouncementCreationInputs = ({inputStates}) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

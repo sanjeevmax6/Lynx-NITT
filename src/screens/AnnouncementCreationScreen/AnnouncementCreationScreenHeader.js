@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
-import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import {Button} from 'react-native-paper';
+import {scale, verticalScale} from 'react-native-size-matters';
+
 import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {clearData} from './createAnnouncementApi';
 const AnnouncementCreationScreenHeader = ({
   navigation,
   validLength,
@@ -29,8 +30,9 @@ const AnnouncementCreationScreenHeader = ({
                 {
                   text: 'DISCARD',
                   onPress: () => {
+                    clearData();
                     toggleTab(true);
-                    navigation.goBack();
+                    navigation.pop();
                   },
                   style: 'cancel',
                 },

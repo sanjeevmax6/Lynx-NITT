@@ -23,8 +23,15 @@ import AdminNoticeCard from './AdminNoticeCard';
 import CustomAlert from '../../components/customAlert';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import * as USER_TYPE from '../../utils/USER_TYPE';
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const CalendarScreen = observer(({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
+  }
+
   const agendaList = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');

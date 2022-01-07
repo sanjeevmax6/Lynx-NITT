@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,7 +6,6 @@ import {
   FlatList,
   Alert,
   BackHandler,
-  ActivityIndicator,
 } from 'react-native';
 import {Divider, Button} from 'react-native-paper';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
@@ -16,129 +15,36 @@ import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import NetInfo from '@react-native-community/netinfo';
-import Error from '../../components/Error';
-import {API_CIRCULAR_CREATION} from '../../utils/API_CONSTANTS';
-import axios from 'axios';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {clearData, createAnnouncement} from './createAnnouncementApi';
+import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
+import {observer} from 'mobx-react';
+import LoaderPage from '../../components/LoadingScreen';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import ErrorScreen from '../../components/ErrorScreen';
+import SuccessScreen from '../../components/SuccessScreen';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 
-const AnnouncementCreationScreen = ({navigation}) => {
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [link, setLink] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [links, setLinks] = useState([]);
-  const [errorText, setErrorText] = useState(null);
-  const [loading, setLoading] = useState(false);
+const AnnouncementCreationScreen = observer(({navigation}) => {
   const maxSubjectLength = 150;
   const maxAnnouncementLength = 300;
-  const [subjectLength, setSubjectLength] = useState(maxSubjectLength);
-  const [announcementLength, setAnnouncementLength] = useState(
-    maxAnnouncementLength,
-  );
-  const inputStates = {
-    title,
-    setTitle,
-    desc,
-    setDesc,
-    link,
-    setLink,
-    links,
-    setLinks,
-    subjectLength,
-    setSubjectLength,
-    announcementLength,
-    setAnnouncementLength,
-    maxSubjectLength,
-    maxAnnouncementLength,
-  };
-
-  function validData() {
-    if (inputStates.title == '' || inputStates.desc == '') {
-      setErrorText('Please enter subject and description');
-      return false;
-    } else if (selectedFiles.length <= 0) {
-      setErrorText('Please add atleast a document');
-    } else return true;
-  }
 
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
     // console.log('Toggled' + BOTTOM_NAV_STORE.getTabVisibility);
   }
 
-  function clearData() {
-    setErrorText(null);
-    setLoading(false);
-    inputStates.setDesc('');
-    inputStates.setTitle('');
-    inputStates.setLink('');
-    inputStates.setLinks('');
-    setSelectedFiles([]);
-  }
-  const createAnnouncement = () => {
-    setErrorText(null);
-    setLoading(true);
-    NetInfo.fetch().then(state => {
-      if (state.isConnected == true) {
-        console.log('connected' + JSON.stringify(selectedFiles));
-        if (validData()) {
-          const formData = new FormData();
-          formData.append('title', inputStates.title);
-          formData.append('description', inputStates.desc);
-          var i;
-          for (i = 0; i < selectedFiles.length; i++) {
-            formData.append('files', {
-              uri: selectedFiles[i].uri,
-              type: selectedFiles[i].type,
-              name: selectedFiles[i].name,
-            });
-          }
-          axios
-            .post(API_CIRCULAR_CREATION, formData, {
-              headers: {
-                //Remove hard coded token once implemented
-                token:
-                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNwaWRlcjEyM0BnbWFpbC5jb20iLCJjbHViIjp0cnVlLCJpZCI6IjYxODE3MGJhZGIwYjdhZTM5OWQwYTJhMyIsImlhdCI6MTYzNjEyMjU0NywiZXhwIjoxNjM2NzI3MzQ3fQ.BLRVqQU2_WMQxEENMc5KX3oR1E1RtZZGrX1h1HitsA4',
-              },
-            })
-            .then(response => {
-              console.log('got response ...:-)');
-              if (response.data.message == 'Successfully created circular') {
-                alert('Announcement has been sucessfully added.');
-                clearData();
-              }
-            })
-            .catch(error => {
-              if (error.response) {
-                console.log('response error');
-                setErrorText(error.response.data.message);
-                setLoading(false);
-              } else if (error.request) {
-                console.log(error.request);
-                setErrorText('Server Error');
-                setLoading(false);
-              }
-            });
-        } else {
-          console.log('Fields not entered');
-          setLoading(false);
-        }
-      } else {
-        setErrorText('No internet connection');
-        setLoading(false);
-      }
-    });
-  };
-
   const selectFiles = async () => {
     try {
       const files = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
       });
-      setSelectedFiles(prevList => {
-        return [...prevList, ...files];
-      });
+
+      console.log(files);
+      ANNOUNCEMENT_CREATION_STORE.setFiles([
+        ...ANNOUNCEMENT_CREATION_STORE.getFiles,
+        ...files,
+      ]);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;
@@ -146,9 +52,9 @@ const AnnouncementCreationScreen = ({navigation}) => {
   };
 
   const removeFile = uri => {
-    setSelectedFiles(prevList => {
-      return prevList.filter(item => item.uri !== uri);
-    });
+    ANNOUNCEMENT_CREATION_STORE.setFiles(
+      ANNOUNCEMENT_CREATION_STORE.getFiles.filter(item => item.uri !== uri),
+    );
   };
 
   useEffect(() => {
@@ -165,8 +71,11 @@ const AnnouncementCreationScreen = ({navigation}) => {
       {
         text: 'DISCARD',
         onPress: () => {
+          clearData();
+          console.log(55565);
           toggleTab(true);
-          navigation.goBack();
+          ANNOUNCEMENT_CREATION_STORE.setSuccess(false);
+          navigation.pop();
         },
         style: 'cancel',
       },
@@ -176,51 +85,93 @@ const AnnouncementCreationScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <AnnouncementCreationScreenHeader
-        navigation={navigation}
-        validLength={subjectLength >= 0 && announcementLength >= 0}
-        createAnnouncement={createAnnouncement}
-      />
-
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always"
-        ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
-        ListFooterComponent={<View style={{height: verticalScale(6)}} />}
-        ListHeaderComponent={
-          <>
-            <AnnouncementCreationInputs inputStates={inputStates} />
-            <Divider style={styles.divider} />
-            <View style={styles.uploadButton}>
-              <Button
-                icon="upload"
-                mode="text"
-                onPress={() => selectFiles()}
-                color={colors.WHITE}>
-                Add Attachments
-              </Button>
-            </View>
-            <View style={{marginLeft: scale(10)}}>
-              {errorText != null && <Error text={errorText} />}
-              {loading && (
-                <View style={{paddingTop: verticalScale(5)}}>
-                  <ActivityIndicator size="small" color="#0000ff" />
-                </View>
+    <>
+      {ANNOUNCEMENT_CREATION_STORE.getLoading ? (
+        <>
+          <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+        </>
+      ) : (
+        <>
+          {ANNOUNCEMENT_CREATION_STORE.getError ? (
+            <>
+              <ErrorScreen
+                errorMessage={ANNOUNCEMENT_CREATION_STORE.getErrorText}
+                showButton={true}
+                fn={() => {
+                  if (ANNOUNCEMENT_CREATION_STORE.getErrorText === NO_NETWORK) {
+                    createAnnouncement();
+                    return;
+                  }
+                  ANNOUNCEMENT_CREATION_STORE.setError(false);
+                }}
+              />
+            </>
+          ) : (
+            <>
+              {ANNOUNCEMENT_CREATION_STORE.getSuccess ? (
+                <>
+                  <SuccessScreen
+                    fn={() => {
+                      ANNOUNCEMENT_CREATION_STORE.setSuccess(false);
+                      navigation.pop();
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <SafeAreaView style={styles.container}>
+                    <AnnouncementCreationScreenHeader
+                      navigation={navigation}
+                      validLength={
+                        maxAnnouncementLength -
+                          ANNOUNCEMENT_CREATION_STORE.getDescription.length >=
+                          0 &&
+                        maxSubjectLength -
+                          ANNOUNCEMENT_CREATION_STORE.getTitle.length >=
+                          0
+                      }
+                      createAnnouncement={createAnnouncement}
+                    />
+                    <FlatList
+                      showsVerticalScrollIndicator={false}
+                      keyboardShouldPersistTaps="always"
+                      ListFooterComponentStyle={{
+                        flex: 1,
+                        justifyContent: 'flex-end',
+                      }}
+                      ListFooterComponent={
+                        <View style={{height: verticalScale(6)}} />
+                      }
+                      ListHeaderComponent={
+                        <>
+                          <AnnouncementCreationInputs />
+                          <Divider style={styles.divider} />
+                          <View style={styles.uploadButton}>
+                            <Button
+                              icon="upload"
+                              mode="text"
+                              onPress={() => selectFiles()}
+                              color={colors.WHITE}>
+                              Add Attachments
+                            </Button>
+                          </View>
+                        </>
+                      }
+                      data={ANNOUNCEMENT_CREATION_STORE.getFiles}
+                      renderItem={({item}) => (
+                        <FileItem item={item} deleteItem={removeFile} />
+                      )}
+                    />
+                  </SafeAreaView>
+                </>
               )}
-            </View>
-          </>
-        }
-        data={selectedFiles}
-        renderItem={({item}) => (
-          <FileItem item={item} deleteItem={removeFile} />
-        )}
-      />
-
-      <View></View>
-    </SafeAreaView>
+            </>
+          )}
+        </>
+      )}
+    </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -228,46 +179,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.Secondary,
   },
-  viewScale: {
-    paddingHorizontal: scale(20),
-    paddingVertical: verticalScale(5),
-  },
+
   divider: {
     height: verticalScale(2),
     backgroundColor: colors.GRAY_MEDIUM,
   },
-  buttonViewTheme: {
-    fontSize: 16,
-    padding: moderateScale(8),
-    backgroundColor: colors.CreationScreen_Button,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonTextTheme: {
-    fontSize: 16,
-    marginLeft: scale(10),
-    color: colors.CreationScreen_ButtonText,
-  },
+
   footer: {
     flexDirection: 'row',
     paddingVertical: verticalScale(5),
   },
-  twoButtonContainer: {
-    flexDirection: 'row',
-  },
-  twoButtonLeft: {
-    flex: 1,
-    paddingRight: scale(5),
-    paddingLeft: scale(20),
-    paddingVertical: verticalScale(5),
-  },
-  twoButtonRight: {
-    flex: 1,
-    paddingRight: scale(20),
-    paddingLeft: scale(5),
-    paddingVertical: verticalScale(5),
-  },
+
   uploadButton: {
     backgroundColor: colors.Tertiary,
     borderRadius: moderateScale(6),

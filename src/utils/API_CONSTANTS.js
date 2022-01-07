@@ -38,6 +38,8 @@ export const NO_IMAGE_URL =
 
 export const API_UPCOMING_EVENTS = 'api/student/upcoming-events';
 
+export const API_CIRCULAR_CREATION = '/api/circular';
+
 export const API_SEARCH = '/api/student/search';
 //reg token
 export const reg_token = '123abc';
