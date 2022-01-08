@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {verticalScale, scale} from 'react-native-size-matters';
 import {FONT} from '../utils/UI_CONSTANTS';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import * as colors from '../utils/colors';
 
 const CustomAlert = props => {
   const [androidDefaults, setAndroidDefaults] = useState({
@@ -192,12 +194,22 @@ const CustomAlert = props => {
                 {props.title}
               </Text>
             ) : null}
-            <Text style={[styles.androidMessage2]}>
-              From : {props.startDate || ''}
-            </Text>
-            <Text style={[styles.androidMessage2]}>
-              To : {props.endDate || ''}
-            </Text>
+            {props.startDate == props.endDate ? (
+              <Text style={[styles.androidMessage2]}>
+                On : {props.startDate || ''}
+              </Text>
+            ) : (
+              <>
+                <Text style={[styles.androidMessage2]}>
+                  From : {props.startDate || ''}
+                </Text>
+                <Text style={[styles.androidMessage2]}>
+                  To {'     : '}
+                  {props.endDate || ''}
+                </Text>
+              </>
+            )}
+
             <Text style={[styles.androidMessage, androidDefaults.message]}>
               {props.message || ''}
             </Text>
@@ -257,7 +269,7 @@ const styles = StyleSheet.create({
   androidMessage: {
     marginLeft: scale(24),
     marginRight: scale(24),
-    marginVertical: verticalScale(10),
+    marginBottom: verticalScale(10),
   },
   androidMessage2: {
     marginLeft: scale(24),

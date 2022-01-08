@@ -52,6 +52,8 @@ export const eventList = () => {
           } else if (error.request) {
             console.log(error.request);
             CALENDAR_STORE.setErrorText(SERVER_ERROR);
+          } else {
+            CALENDAR_STORE.setErrorText(UNEXPECTED_ERROR);
           }
           CALENDAR_STORE.setError(true);
           CALENDAR_STORE.setLoading(false);

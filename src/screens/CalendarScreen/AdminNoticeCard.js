@@ -17,19 +17,7 @@ const AdminNoticeCard = props => {
   //console.log('Event Card' + JSON.stringify(adminNoticeData));
 
   const Title = adminNoticeData.Title;
-  const startDate = moment(
-    new Date(adminNoticeData.startDate).toLocaleString(),
-  ).format('DD-MM-YYYY');
-  const startTime = moment(
-    new Date(adminNoticeData.startDate).toLocaleString(),
-  ).format('hh:mm A');
-  const endDate = moment(
-    new Date(adminNoticeData.endDate).toLocaleString(),
-  ).format('DD-MM-YYYY');
-  const endTime = moment(
-    new Date(adminNoticeData.endDate).toLocaleString(),
-  ).format('hh:mm A');
-
+  const Description = adminNoticeData.Description;
   return (
     <View style={styles.cardcontainer}>
       <View
@@ -39,37 +27,19 @@ const AdminNoticeCard = props => {
           borderRadius: scale(5),
         }}
       />
-      <View style={styles.eventinfo}>
-        <Text style={styles.eventName} numberOfLines={1}>
+      <View style={styles.noticeInfo}>
+        <Text style={styles.noticeName} numberOfLines={1}>
           Admin : {Title}
         </Text>
-        <View style={{flexDirection: 'row', marginVertical: verticalScale(2)}}>
-          <Icon
-            style={{paddingHorizontal: scale(0)}}
-            name="calendar-plus-o"
-            color={colors.AdminNoticeCard_CalendarIcon}
-            size={scale(20)}
-          />
-          <Text style={styles.eventDate}>
-            {' '}
-            From : {startTime} | {startDate}
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', marginVertical: verticalScale(2)}}>
-          <Icon
-            style={{paddingHorizontal: scale(0)}}
-            name="calendar-minus-o"
-            color={colors.AdminNoticeCard_CalendarIcon}
-            size={scale(20)}
-          />
-          <Text style={styles.eventDate}>
-            {' '}
-            To : {endTime} | {endDate}
-          </Text>
-        </View>
+        <Text
+          style={styles.noticeDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}>
+          {Description}
+        </Text>
       </View>
       <Avatar.Image
-        size={moderateScale(75)}
+        size={moderateScale(50)}
         style={styles.profImg}
         source={require('../../res/images/nitt_logo.png')}
       />
@@ -88,16 +58,18 @@ const styles = ScaledSheet.create({
     marginHorizontal: '10@s',
     backgroundColor: colors.AdminNoticeCard_Back,
   },
-  eventinfo: {
+  noticeInfo: {
     flexDirection: 'column',
     flex: 1,
     justifyContent: 'space-around',
     marginLeft: '5@s',
   },
-  eventName: {
+  noticeName: {
     fontSize: '16@s',
     fontWeight: 'bold',
-    marginBottom: verticalScale(5),
+  },
+  noticeDescription: {
+    fontSize: '14@s',
   },
   profImg: {
     alignSelf: 'center',

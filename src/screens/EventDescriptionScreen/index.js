@@ -80,7 +80,6 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             <View style={{marginHorizontal: scale(3)}}>
               <ClubCard
                 name={EVENT_DESCRIPTION_STORE.getData.club.name}
-                // imgURL={EVENT_DESCRIPTION_STORE.getData[0].organizer.imgURL}
                 imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
                 followers={EVENT_DESCRIPTION_STORE.getData.club_followers}
                 navigation={navigation}

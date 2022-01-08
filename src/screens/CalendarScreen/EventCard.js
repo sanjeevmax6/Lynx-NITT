@@ -10,7 +10,7 @@ import {
 } from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import moment from 'moment';
-import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
+import {NO_IMAGE_URL, API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 const EventCard = props => {
   const eventData = props.data;
@@ -38,9 +38,11 @@ const EventCard = props => {
       <Avatar.Image
         size={moderateScale(50)}
         style={styles.profImg}
-        source={{
-          uri: NO_IMAGE_URL,
-        }}
+        source={
+          eventData.Club.profilePic == null
+            ? {uri: NO_IMAGE_URL}
+            : {uri: API_GET_IMAGE + eventData.Club.profilePic}
+        }
       />
     </View>
   );

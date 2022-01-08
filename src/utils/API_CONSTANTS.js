@@ -11,7 +11,10 @@ export const API_ADD_EVENT = API_BASE_URL + '/api/events/add-events';
 
 export const API_EVENT_LIST = API_BASE_URL + '/api/calendar/eventList';
 
-export const API_ADMIN_EVENT_LIST = API_BASE_URL + '/api/calendar/admin/events';
+export const API_ADMIN_EVENT_LIST = API_BASE_URL + 'api/calendar/admin/events';
+
+export const API_ADD_CALENDAR_NOTICE =
+  API_BASE_URL + 'api/admin/event/add-events';
 
 export const API_EVENT_BY_ID = API_BASE_URL + '/api/eventById';
 

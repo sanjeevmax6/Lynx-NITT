@@ -5,8 +5,9 @@ import {
   View,
   SafeAreaView,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventCard from './EventCard';
 import NoEventCard from './NoEventCard';
 import TopLayout from './TopLayout';
@@ -41,10 +42,12 @@ const CalendarScreen = observer(({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   var eventDATA,
-    adminEventDATA,
     filteredEventData,
+    finalEventData = [];
+  var adminEventDATA,
     filteredAdminEventData,
-    filteredData = [];
+    finalAdminEventData = [];
+  var filteredData = [];
   var selectedDate = CALENDAR_STORE.getSelectedDate;
 
   const onRefresh = React.useCallback(() => {
@@ -84,35 +87,50 @@ const CalendarScreen = observer(({navigation}) => {
         ) == selectedDate
       );
     });
+    console.log(JSON.stringify(filteredAdminEventData));
 
     if (filteredEventData.length == 0) {
       filteredEventData = [];
     } else {
-      filteredEventData = filteredEventData[0].data;
+      //console.log(JSON.stringify(filteredEventData));
+      for (var i = 0; i < filteredEventData.length; i++) {
+        finalEventData = [...finalEventData, ...filteredEventData[i].data];
+      }
+      //console.log('Finale: ' + JSON.stringify(finalEventData));
     }
+
     if (filteredAdminEventData.length == 0) {
       filteredAdminEventData = [];
     } else {
-      filteredAdminEventData[0].data.forEach(element => {
-        element['admin_event'] = true;
-      });
-      filteredAdminEventData = filteredAdminEventData[0].data;
+      for (var i = 0; i < filteredAdminEventData.length; i++) {
+        filteredAdminEventData[i].data.forEach(element => {
+          element['admin_event'] = true;
+        });
+      }
+      //console.log(JSON.stringify(filteredAdminEventData));
+      for (var i = 0; i < filteredAdminEventData.length; i++) {
+        finalAdminEventData = [
+          ...finalAdminEventData,
+          ...filteredAdminEventData[i].data,
+        ];
+      }
+      //console.log('Finale: ' + JSON.stringify(finalAdminEventData));
     }
 
-    filteredData = [...filteredAdminEventData, ...filteredEventData];
+    filteredData = [...finalAdminEventData, ...finalEventData];
   }
 
   const onNoticePress = notice => {
     const startDate = moment(
       new Date(notice.startDate).toLocaleString(),
-    ).format('hh:mm A | DD-MM-YYYY');
+    ).format('DD-MM-YYYY');
     const endDate = moment(new Date(notice.endDate).toLocaleString()).format(
-      'hh:mm A | DD-MM-YYYY',
+      'DD-MM-YYYY',
     );
-    const noticeMessage = notice.Description;
+    const noticeDescription = notice.Description;
     const noticeTitle = notice.Title;
     setModalTitle(noticeTitle);
-    setModalMessage(noticeMessage);
+    setModalMessage(noticeDescription);
     setModalStartDate(startDate);
     setModalEndDate(endDate);
     setModalVisible(true);
@@ -178,8 +196,8 @@ const CalendarScreen = observer(({navigation}) => {
               />
             }
           />
-          {USER_STORE.getUserType == USER_TYPE.CLUB ||
-          USER_STORE.getUserType == USER_TYPE.ADMIN ? (
+          {USER_STORE.getUserType === USER_TYPE.CLUB ||
+          USER_STORE.getUserType === USER_TYPE.ADMIN ? (
             <FabGroup navigation={navigation} />
           ) : null}
         </View>
