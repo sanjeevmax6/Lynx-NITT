@@ -5,14 +5,14 @@ import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import { STUDENT_DETAILS_STORE } from '../../mobx/STUDENT_DETAILS_STORE';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
+import {CHECK_VALUES_ENTERED} from '../../utils/ERROR_MESSAGES';
 
-const EditProfileScreenHeader = ({navigation, isValid, handleAPICALL}) => {
+const EditProfileScreenHeader = ({navigation, isValid, handleApiCall}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
-  
 
   return (
     <View style={styles.header}>
@@ -47,11 +47,8 @@ const EditProfileScreenHeader = ({navigation, isValid, handleAPICALL}) => {
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
-            handleAPICALL();
-            navigation.goBack();
-            console.log('Create pressed');
             if (!isValid)
-              Alert.alert('', 'The text entered exceeds the maximum length', [
+              Alert.alert('', CHECK_VALUES_ENTERED, [
                 {
                   text: 'KEEP EDITING',
                   onPress: () => console.log('OK Pressed'),
@@ -59,6 +56,16 @@ const EditProfileScreenHeader = ({navigation, isValid, handleAPICALL}) => {
               ]);
             else {
               //toggleTab(true); To be enabled after implementing save
+              Alert.alert('', 'Are you sure you want to update your details?', [
+                {
+                  text: 'KEEP EDITING',
+                  onPress: () => console.log('OK Pressed'),
+                },
+                {
+                  text: 'YES',
+                  onPress: () => handleApiCall(),
+                },
+              ]);
             }
           }}
           style={styles.button}>

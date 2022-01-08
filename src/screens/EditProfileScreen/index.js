@@ -1,120 +1,91 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
   SafeAreaView,
-  FlatList,
   Alert,
   BackHandler,
+  ScrollView,
 } from 'react-native';
-import {Divider, Button} from 'react-native-paper';
+
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import DocumentPicker from 'react-native-document-picker';
-import FileItem from './FileItem';
+
 import EditProfileInputs from './EditProfileInputs';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import EditProfileScreenHeader from './EditProfileScreenHeader';
 import {EditProfileAPI} from './EditProfileAPI';
 import StudentPhoto from './StudentPhoto';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import {USER_STORE} from '../../mobx/USER_STORE';
-import { STUDENT_EDIT_PROFILE_STORE } from '../../mobx/STUDENT_EDIT_PROFILE_STORE';
 
-const EditProfileScreen = ({navigation}) => {
-  const [first_name, setFirst_Name] = useState('');
-  const [last_name, setLast_Name] = useState('');
-  const [department, setDepartment] = useState('');
-  const [dob, setDob] = useState(new Date());
-  const [showDatePicker, setDatePicker] = useState(false);
-  const [aadharNumber, setAadharNumber] = useState('');
-  const [mobile_no,setMobile_No] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [address, setAddress] = useState();
-  const [studentPic, setStudentPic] = useState('');
-  const [isStudentPicSelected, setStudentPicSelected] = useState(false);
+import {STUDENT_EDIT_PROFILE_STORE} from '../../mobx/STUDENT_EDIT_PROFILE_STORE';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import LoaderPage from '../../components/LoadingScreen';
+import ErrorScreen from '../../components/ErrorScreen';
+import SuccessScreen from '../../components/SuccessScreen';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {observer} from 'mobx-react';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 
-  const maxNameLength = 50;
-  const maxAddressLength = 300;
-  const [nameLength, setNameLength] = useState(maxNameLength);
-  const [addressLength, setAddressLength] = useState(maxAddressLength);
+const PopulateData = () => {
+  console.log('Pop');
+  STUDENT_EDIT_PROFILE_STORE.setFirstName(STUDENT_DETAILS_STORE.getFirstName);
+  STUDENT_EDIT_PROFILE_STORE.setLastName(STUDENT_DETAILS_STORE.getLastName);
+  STUDENT_EDIT_PROFILE_STORE.setDOB(new Date(STUDENT_DETAILS_STORE.getDob));
+  STUDENT_EDIT_PROFILE_STORE.setAddress(STUDENT_DETAILS_STORE.getAddress);
+  STUDENT_EDIT_PROFILE_STORE.setMobile(STUDENT_DETAILS_STORE.getMobileNo);
+  STUDENT_EDIT_PROFILE_STORE.setAadhar(STUDENT_DETAILS_STORE.getAadhar);
+  if (STUDENT_DETAILS_STORE.getProfilePic === '') {
+    STUDENT_EDIT_PROFILE_STORE.setPic(STUDENT_DETAILS_STORE.getProfilePic);
+  } else {
+    STUDENT_EDIT_PROFILE_STORE.setPic(
+      API_GET_IMAGE + STUDENT_DETAILS_STORE.getProfilePic,
+    );
+  }
+};
 
-  const inputStates = {
-    first_name,
-    setFirst_Name,
-    last_name,
-    setLast_Name,
-    department,
-    setDepartment,
-    aadharNumber,
-    setAadharNumber,
-    address,
-    setAddress,
-    dob,
-    setDob,
-    mobile_no,
-    setMobile_No,
-    showDatePicker,
-    setDatePicker,
-    nameLength,
-    setNameLength,
-    addressLength,
-    setAddressLength,
-    maxAddressLength,
-    maxNameLength,
-  };
+const handleApiCall = () => {
+  STUDENT_EDIT_PROFILE_STORE.setErrorText(null);
 
-  const PhotoStates = {
-    studentPic,
-    setStudentPic,
-    isStudentPicSelected,
-    setStudentPicSelected,
-  };
+  const formData = new FormData();
+  formData.append('first_name', STUDENT_EDIT_PROFILE_STORE.getFirstName);
+  formData.append('last_name', STUDENT_EDIT_PROFILE_STORE.getLastName);
+  formData.append('department', STUDENT_EDIT_PROFILE_STORE.getDepartment);
+  formData.append('address', STUDENT_EDIT_PROFILE_STORE.getAddress);
+  formData.append('aadhar_no', STUDENT_EDIT_PROFILE_STORE.getAadhar);
 
+  formData.append('mobile_no', STUDENT_EDIT_PROFILE_STORE.getMobile);
+  formData.append('dob', STUDENT_EDIT_PROFILE_STORE.getDOB.toString());
+  if (
+    STUDENT_EDIT_PROFILE_STORE.getPic ===
+    API_GET_IMAGE + STUDENT_DETAILS_STORE.getProfilePic
+  ) {
+    console.log('Not updating profile Pic');
+    formData.append('profileImg', '');
+  } else {
+    console.log('Updating profile Pic');
+    console.log(
+      STUDENT_EDIT_PROFILE_STORE.getPic,
+      STUDENT_DETAILS_STORE.getProfilePic,
+    );
+    formData.append('profileImg', {
+      uri: STUDENT_EDIT_PROFILE_STORE.getImage.uri,
+      type: STUDENT_EDIT_PROFILE_STORE.getImage.type,
+      name: STUDENT_EDIT_PROFILE_STORE.getImage.name,
+    });
+  }
+
+  EditProfileAPI(formData);
+};
+
+const EditProfileScreen = observer(({navigation}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
 
-  const selectFiles = async () => {
-    try {
-      const files = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.allFiles],
-      });
-      setSelectedFiles(prevList => {
-        return [...prevList, ...files];
-      });
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) console.log(err);
-      else throw err;
-    }
-  };
-
-  const removeFile = uri => {
-    setSelectedFiles(prevList => {
-      return prevList.filter(item => item.uri !== uri);
-    });
-  };
-
-  const handleAPICALL = () => {
-    STUDENT_EDIT_PROFILE_STORE.setErrorText(null);
-    let profileImg = studentPic;
-    let passportImg = selectedFiles;
-    const formData = new FormData();
-    formData.append('first_name', first_name);
-    formData.append('last_name', last_name);
-    formData.append('department', department);
-    formData.append('address', address);
-    formData.append('aadhar_no', aadharNumber);
-    formData.append('profileImg', profileImg);
-    formData.append('passportImg', passportImg);
-    formData.append('mobile_no',mobile_no);
-    EditProfileAPI(formData, navigation);
-  };
-
-  const userToken = USER_STORE.getUserToken;
-
-
   useEffect(() => {
+    PopulateData();
     toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
 
@@ -129,7 +100,7 @@ const EditProfileScreen = ({navigation}) => {
         text: 'DISCARD',
         onPress: () => {
           toggleTab(true);
-          navigation.goBack();
+          navigation.pop();
         },
         style: 'cancel',
       },
@@ -139,45 +110,60 @@ const EditProfileScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <EditProfileScreenHeader
-        navigation={navigation}
-        isValid={addressLength >= 0 && nameLength >= 0}
-        handleAPICALL={handleAPICALL}
-      />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        ListFooterComponentStyle={{flex: 1, justifyContent: 'flex-end'}}
-        ListFooterComponent={
-          <View
-            style={{
-              height: verticalScale(200),
-            }}
-          />
-        }
-        ListHeaderComponent={
-          <>
-            <StudentPhoto PhotoStates={PhotoStates} />
-            <EditProfileInputs inputStates={inputStates} />
-            <View style={styles.uploadButton}>
-              <Button
-                icon="upload"
-                mode="text"
-                onPress={() => selectFiles()}
-                color={colors.WHITE}>
-                UPDATE PASSPORT
-              </Button>
-            </View>
-          </>
-        }
-        data={selectedFiles}
-        renderItem={({item}) => (
-          <FileItem item={item} deleteItem={removeFile} />
-        )}
-      />
-    </SafeAreaView>
+    <>
+      {STUDENT_EDIT_PROFILE_STORE.getLoading ? (
+        <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+      ) : (
+        <>
+          {STUDENT_EDIT_PROFILE_STORE.getError ? (
+            <ErrorScreen
+              errorMessage={STUDENT_EDIT_PROFILE_STORE.getErrorText}
+              fn={() => {
+                if (STUDENT_EDIT_PROFILE_STORE.getErrorText === NO_NETWORK) {
+                  handleApiCall();
+                } else {
+                  STUDENT_EDIT_PROFILE_STORE.setErrorText('');
+                  STUDENT_EDIT_PROFILE_STORE.setError(false);
+                }
+              }}
+            />
+          ) : (
+            <>
+              {STUDENT_EDIT_PROFILE_STORE.getSuccess ? (
+                <SuccessScreen
+                  fn={() => {
+                    STUDENT_EDIT_PROFILE_STORE.setSuccess(false);
+                    navigation.pop();
+                  }}
+                />
+              ) : (
+                <>
+                  <SafeAreaView style={styles.container}>
+                    <EditProfileScreenHeader
+                      navigation={navigation}
+                      isValid={
+                        STUDENT_EDIT_PROFILE_STORE.getAddress.length >= 0 &&
+                        STUDENT_EDIT_PROFILE_STORE.getFirstName.length > 0
+                      }
+                      handleApiCall={handleApiCall}
+                    />
+                    <>
+                      <ScrollView>
+                        <StudentPhoto />
+                        <EditProfileInputs />
+                        <View style={{height: verticalScale(20)}} />
+                      </ScrollView>
+                    </>
+                  </SafeAreaView>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

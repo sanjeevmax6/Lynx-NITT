@@ -6,6 +6,9 @@ import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {STUDENT_EDIT_PROFILE_STORE} from '../../mobx/STUDENT_EDIT_PROFILE_STORE';
+import {observer} from 'mobx-react';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
 const DATE_FORMAT = 'MMMM DD, YYYY';
 
@@ -16,6 +19,7 @@ const TEXT_INPUT = ({
   onTextChange,
   showCharCount,
   charCount,
+  value,
   maxLength = 1000,
   keyboardType = 'default',
   multiline = false,
@@ -24,6 +28,7 @@ const TEXT_INPUT = ({
     <TextInput
       underlineColor="transparent"
       label={label}
+      value={value}
       maxLength={maxLength}
       style={{
         backgroundColor: colors.GRAY_LIGHT,
@@ -48,9 +53,10 @@ const TEXT_INPUT = ({
       right={
         showCharCount ? (
           <TextInput.Affix
-            text={'/' + charCount}
+            text={'/' + (maxLength - charCount)}
             textStyle={{
-              color: charCount < 0 ? colors.Tertiary : colors.GRAY_DARK,
+              color:
+                maxLength - charCount < 0 ? colors.Tertiary : colors.GRAY_DARK,
             }}
           />
         ) : (
@@ -61,17 +67,11 @@ const TEXT_INPUT = ({
   );
 };
 
-const EditProfileInputs = ({inputStates}) => {
+const EditProfileInputs = observer(() => {
   const onChangeDate = newDate => {
-    const currentDate = newDate || inputStates.dob;
-    inputStates.setDatePicker(false);
-    inputStates.setDob(currentDate);
-  };
-  const onChangeNameLength = text => {
-    inputStates.setNameLength(inputStates.maxNameLength - text.length);
-  };
-  const onChangeAddressLength = text => {
-    inputStates.setAddressLength(inputStates.maxAddressLength - text.length);
+    const currentDate = newDate || STUDENT_EDIT_PROFILE_STORE.getDOB;
+    STUDENT_EDIT_PROFILE_STORE.setDatePicker(false);
+    STUDENT_EDIT_PROFILE_STORE.setDOB(currentDate);
   };
 
   return (
@@ -80,11 +80,12 @@ const EditProfileInputs = ({inputStates}) => {
         label="First Name"
         placeholder="First Name"
         icon="account"
+        value={STUDENT_EDIT_PROFILE_STORE.getFirstName}
         showCharCount={true}
-        charCount={inputStates.nameLength}
+        maxLength={30}
+        charCount={STUDENT_EDIT_PROFILE_STORE.getFirstName.length}
         onTextChange={nName => {
-          inputStates.setFirst_Name(nName);
-          onChangeNameLength(nName);
+          STUDENT_EDIT_PROFILE_STORE.setFirstName(nName);
         }}
       />
       <TEXT_INPUT
@@ -92,36 +93,36 @@ const EditProfileInputs = ({inputStates}) => {
         placeholder="Last Name"
         icon="account"
         showCharCount={true}
-        charCount={inputStates.nameLength}
+        value={STUDENT_EDIT_PROFILE_STORE.getLastName}
+        maxLength={30}
+        charCount={STUDENT_EDIT_PROFILE_STORE.getLastName.length}
         onTextChange={nName => {
-          inputStates.setLast_Name(nName);
-          onChangeNameLength(nName);
+          STUDENT_EDIT_PROFILE_STORE.setLastName(nName);
         }}
       />
       <View style={styles.viewScale}>
-        <TouchableOpacity>
-          <TextInput
-            disabled={true}
-            style={{
-              backgroundColor: colors.GRAY_LIGHT,
-              borderTopLeftRadius: moderateScale(6),
-              borderTopRightRadius: moderateScale(6),
-              marginHorizontal: HorizontalPadding,
-            }}
-            theme={{
-              colors: {
-                primary: 'black',
-              },
-            }}
-            left={
-              <TextInput.Icon name="book" size={25} color={colors.Accent} />
-            }>
-            Department : MME
-          </TextInput>
-        </TouchableOpacity>
+        <TextInput
+          disabled={true}
+          style={{
+            backgroundColor: colors.GRAY_LIGHT,
+            borderTopLeftRadius: moderateScale(6),
+            borderTopRightRadius: moderateScale(6),
+            marginHorizontal: HorizontalPadding,
+          }}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
+          left={
+            <TextInput.Icon name="book" size={25} color={colors.GRAY_DARK} />
+          }>
+          Department : {STUDENT_DETAILS_STORE.getDepartment}
+        </TextInput>
       </View>
       <View style={styles.viewScale}>
-        <TouchableOpacity onPress={() => inputStates.setDatePicker(true)}>
+        <TouchableOpacity
+          onPress={() => STUDENT_EDIT_PROFILE_STORE.setDatePicker(true)}>
           <TextInput
             disabled={true}
             style={{
@@ -139,16 +140,17 @@ const EditProfileInputs = ({inputStates}) => {
             left={
               <TextInput.Icon name="calendar" size={25} color={colors.Accent} />
             }>
-            Date of Birth: {moment(inputStates.dob).format(DATE_FORMAT)}
+            Date of Birth:{' '}
+            {moment(STUDENT_EDIT_PROFILE_STORE.getDOB).format(DATE_FORMAT)}
           </TextInput>
         </TouchableOpacity>
-        {inputStates.showDatePicker && (
+        {STUDENT_EDIT_PROFILE_STORE.getDatePicker && (
           <DateTimePickerModal
-            isVisible={inputStates.showDatePicker}
-            date={inputStates.dob}
+            isVisible={STUDENT_EDIT_PROFILE_STORE.getDatePicker}
+            date={STUDENT_EDIT_PROFILE_STORE.getDOB}
             mode="date"
             onConfirm={onChangeDate}
-            onCancel={() => inputStates.setDatePicker(false)}
+            onCancel={() => STUDENT_EDIT_PROFILE_STORE.setDatePicker(false)}
           />
         )}
       </View>
@@ -159,9 +161,10 @@ const EditProfileInputs = ({inputStates}) => {
         showCharCount={false}
         keyboardType="number-pad"
         maxLength={12}
+        value={STUDENT_EDIT_PROFILE_STORE.getAadhar.toString()}
         icon={'card-account-details'}
         onTextChange={nAadharNumber => {
-          inputStates.setAadharNumber(nAadharNumber);
+          STUDENT_EDIT_PROFILE_STORE.setAadhar(nAadharNumber);
         }}
       />
       <TEXT_INPUT
@@ -170,26 +173,27 @@ const EditProfileInputs = ({inputStates}) => {
         showCharCount={true}
         icon={'map-marker'}
         multiline={true}
-        charCount={inputStates.addressLength}
+        maxLength={300}
+        value={STUDENT_EDIT_PROFILE_STORE.getAddress}
+        charCount={STUDENT_EDIT_PROFILE_STORE.getAddress.length}
         onTextChange={nAddress => {
-          inputStates.setAddress(nAddress);
-          onChangeAddressLength(nAddress);
+          STUDENT_EDIT_PROFILE_STORE.setAddress(nAddress);
         }}
       />
       <TEXT_INPUT
-        label="Mobile No."
-        placeholder="Mobile No."
+        label="Mobile Number"
+        placeholder="Mobile Number"
         icon="phone"
+        maxLength={14}
         showCharCount={false}
-        charCount={inputStates.nameLength}
-        onTextChange={nName => {
-          inputStates.setMobile_No(nName);
-          onChangeNameLength(nName);
+        value={STUDENT_EDIT_PROFILE_STORE.getMobile.toString()}
+        onTextChange={val => {
+          STUDENT_EDIT_PROFILE_STORE.setMobile(val);
         }}
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

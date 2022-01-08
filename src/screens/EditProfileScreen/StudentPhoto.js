@@ -6,17 +6,20 @@ import {ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
 import {Avatar} from 'react-native-paper';
+import {STUDENT_EDIT_PROFILE_STORE} from '../../mobx/STUDENT_EDIT_PROFILE_STORE';
 
 const WIDTH = Dimensions.get('window').width;
+import {observer} from 'mobx-react';
 
-const StudentPhoto = ({PhotoStates}) => {
+const StudentPhoto = observer(() => {
   const selectImage = async () => {
     try {
       const image = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-      PhotoStates.setStudentPic(image.uri);
-      PhotoStates.setStudentPicSelected(true);
+      console.log(image);
+      STUDENT_EDIT_PROFILE_STORE.setImage(image);
+      STUDENT_EDIT_PROFILE_STORE.setPic(image.uri);
     } catch (err) {
       if (DocumentPicker.isCancel()) console.log(err);
       else throw err;
@@ -28,7 +31,9 @@ const StudentPhoto = ({PhotoStates}) => {
       <View style={styles.imageView}>
         <Image
           source={{
-            uri: 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
+            uri: STUDENT_EDIT_PROFILE_STORE.getPic
+              ? STUDENT_EDIT_PROFILE_STORE.getPic
+              : 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
           }}
           style={styles.image}
         />
@@ -43,7 +48,7 @@ const StudentPhoto = ({PhotoStates}) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {
