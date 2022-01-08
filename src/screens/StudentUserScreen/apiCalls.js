@@ -13,69 +13,54 @@ export const getAllStudentDetails = async () => {
   reset();
   try {
     const netInfo = await NetInfo.fetch();
+    if (!netInfo.isConnected) {
+      STUDENT_DETAILS_STORE.setIsError(true);
+      STUDENT_DETAILS_STORE.setErrorText(NO_NETWORK);
+      return;
+    }
+    STUDENT_DETAILS_STORE.setIsLoading(true);
     const headerInfo = {
       headers: {
         'Content-Type': 'application/json',
         token: USER_STORE.getUserToken,
       },
     };
-    if (netInfo.isConnected) {
-      getDetails(headerInfo);
-      getClubs(headerInfo);
-      getInterests(headerInfo);
+    const [detailsResponse, clubFollowResponse, intersetedEventsResponse] =
+      await axios.all([
+        axios.get(API_GET_STUDENT_DETAILS, headerInfo),
+        axios.get(API_GET_STUDENT_CLUBS, headerInfo),
+        axios.get(API_GET_STUDENT_INTERESTS, headerInfo),
+      ]);
+    if (
+      detailsResponse.status === 200 &&
+      clubFollowResponse.status === 200 &&
+      intersetedEventsResponse.status === 200
+    ) {
+      STUDENT_DETAILS_STORE.setIsLoading(false);
+      STUDENT_DETAILS_STORE.setIsError(false);
+      STUDENT_DETAILS_STORE.setErrorText('');
+
+      STUDENT_DETAILS_STORE.setDetails(detailsResponse.data.details);
+      STUDENT_DETAILS_STORE.setClubs(clubFollowResponse.data.clubs);
+      STUDENT_DETAILS_STORE.setInterests(
+        intersetedEventsResponse.data.intersetedEvents,
+      );
     } else {
+      STUDENT_DETAILS_STORE.setIsLoading(false);
       STUDENT_DETAILS_STORE.setIsError(true);
-      STUDENT_DETAILS_STORE.setErrorText(NO_NETWORK);
+      STUDENT_DETAILS_STORE.setErrorText(
+        'An error has occured in gathering your details',
+      );
     }
   } catch (e) {
+    STUDENT_DETAILS_STORE.setIsLoading(false);
     STUDENT_DETAILS_STORE.setIsError(true);
     STUDENT_DETAILS_STORE.setErrorText(e.message);
-  }
-};
-
-export const getDetails = async headerInfo => {
-  const response = await axios.get(API_GET_STUDENT_DETAILS, headerInfo);
-  if (response.status === 200) {
-    STUDENT_DETAILS_STORE.setIsError(false);
-    STUDENT_DETAILS_STORE.setErrorText('');
-    STUDENT_DETAILS_STORE.setHasDetailsLoaded(true);
-    STUDENT_DETAILS_STORE.setDetails(response.data.details);
-  } else {
-    STUDENT_DETAILS_STORE.setIsError(true);
-    STUDENT_DETAILS_STORE.setErrorText(response.data.message);
-  }
-};
-
-export const getClubs = async headerInfo => {
-  const response = await axios.get(API_GET_STUDENT_CLUBS, headerInfo);
-  if (response.status === 200) {
-    STUDENT_DETAILS_STORE.setIsError(false);
-    STUDENT_DETAILS_STORE.setErrorText('');
-    STUDENT_DETAILS_STORE.setHasClubsLoaded(true);
-    STUDENT_DETAILS_STORE.setClubs(response.data.clubs);
-  } else {
-    STUDENT_DETAILS_STORE.setIsError(true);
-    STUDENT_DETAILS_STORE.setErrorText(response.data.message);
-  }
-};
-
-export const getInterests = async headerInfo => {
-  const response = await axios.get(API_GET_STUDENT_INTERESTS, headerInfo);
-  if (response.status === 200) {
-    STUDENT_DETAILS_STORE.setIsError(false);
-    STUDENT_DETAILS_STORE.setErrorText('');
-    STUDENT_DETAILS_STORE.setHasInterestsLoaded(true);
-    STUDENT_DETAILS_STORE.setInterests(response.data.intersetedEvents);
-  } else {
-    STUDENT_DETAILS_STORE.setIsError(true);
-    STUDENT_DETAILS_STORE.setErrorText(response.data.message);
   }
 };
 
 const reset = () => {
   STUDENT_DETAILS_STORE.setIsError(false);
   STUDENT_DETAILS_STORE.setErrorText('');
-  STUDENT_DETAILS_STORE.setHasDetailsLoaded(false);
-  STUDENT_DETAILS_STORE.setHasClubsLoaded(false);
-  STUDENT_DETAILS_STORE.setHasInterestsLoaded(false);
+  STUDENT_DETAILS_STORE.setIsLoading(false);
 };

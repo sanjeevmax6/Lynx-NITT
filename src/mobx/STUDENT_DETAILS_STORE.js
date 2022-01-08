@@ -20,9 +20,7 @@ class StudentDetailStore {
     clubsFollowingList: [],
 
     // loading and error values
-    hasDetailsLoaded: false,
-    hasInterestsLoaded: false,
-    hasClubsLoaded: false,
+    isLoading: false,
     isError: false,
     errorText: '',
     refresh: false,
@@ -87,18 +85,12 @@ class StudentDetailStore {
   setIsError = isError => {
     this.state.isError = isError;
   };
-  setHasDetailsLoaded = hasDetailsLoaded => {
-    this.state.hasDetailsLoaded = hasDetailsLoaded;
-  };
-  setHasClubsLoaded = hasClubsLoaded => {
-    this.state.hasClubsLoaded = hasClubsLoaded;
-  };
-  setHasInterestsLoaded = hasInterestsLoaded => {
-    this.state.hasInterestsLoaded = hasInterestsLoaded;
+  setIsLoading = isLoading => {
+    this.state.isLoading = isLoading;
   };
   setRefresh = val => {
     this.state.val = val;
-  }
+  };
 
   /*
     ^^^^^ GETTERS ^^^^^
@@ -146,11 +138,7 @@ class StudentDetailStore {
 
   // getters for loading and errors
   get isLoading() {
-    return !(
-      this.state.hasDetailsLoaded &&
-      this.state.hasClubsLoaded &&
-      this.state.hasInterestsLoaded
-    );
+    return this.state.isLoading;
   }
   get isError() {
     return this.state.isError;
@@ -158,7 +146,7 @@ class StudentDetailStore {
   get errorText() {
     return this.state.errorText;
   }
-  get getRefresh(){
+  get getRefresh() {
     return this.state.refresh;
   }
 
@@ -172,9 +160,7 @@ class StudentDetailStore {
       // all setters
       setIsError: action,
       setErrorText: action,
-      setHasDetailsLoaded: action,
-      setHasClubsLoaded: action,
-      setHasInterestsLoaded: action,
+      setIsLoading: action,
       setDetails: action,
       setInterests: action,
       setClubs: action,
