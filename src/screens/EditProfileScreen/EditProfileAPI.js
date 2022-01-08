@@ -7,8 +7,11 @@ import {
   SERVER_ERROR,
   UNEXPECTED_ERROR,
 } from '../../utils/ERROR_MESSAGES';
+import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 
-const UpdateStudentStore = () => {};
+const UpdateStudentStore = () => {
+  getAllStudentDetails(true);
+};
 
 export const EditProfileAPI = formData => {
   const axios = require('axios');

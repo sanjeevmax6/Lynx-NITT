@@ -5,16 +5,16 @@ import {listScreenStyles} from './styles';
 import {verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {getAllStudentDetails} from './apiCalls';
+import {observer} from 'mobx-react';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
 const headerFooterComponent = () => {
   return <View style={{height: verticalScale(6)}} />;
 };
 
-const InterestedEventsScreen = ({interestedEvents, goToEvent}) => {
-  const [refreshing, setRefreshing] = React.useState(false);
+const InterestedEventsScreen = observer(({interestedEvents, goToEvent}) => {
   const onRefresh = () => {
-    setRefreshing(false);
-    console.log('refreshing');
+    STUDENT_DETAILS_STORE.setRefresh(true);
     getAllStudentDetails();
   };
 
@@ -23,7 +23,7 @@ const InterestedEventsScreen = ({interestedEvents, goToEvent}) => {
       <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={STUDENT_DETAILS_STORE.getRefresh}
             colors={[colors.Accent]}
             onRefresh={onRefresh}
           />
@@ -38,6 +38,6 @@ const InterestedEventsScreen = ({interestedEvents, goToEvent}) => {
       />
     </View>
   );
-};
+});
 
 export default InterestedEventsScreen;

@@ -8,7 +8,10 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {observer} from 'mobx-react';
 import ErrorScreen from '../../components/ErrorScreen';
 import LoaderPage from '../../components/LoadingScreen';
-import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {
+  ACCENT_LOTTIE,
+  ACCENT_STUDENT_USER_LOADER,
+} from '../../utils/LOADING_TYPES';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
@@ -64,7 +67,7 @@ const StudentUserScreen = observer(({navigation}) => {
           }}
         />
       ) : STUDENT_DETAILS_STORE.isLoading ? (
-        <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+        <LoaderPage LoadingAccent={ACCENT_STUDENT_USER_LOADER} />
       ) : (
         <>
           <Header studentDetails={studentDetails} navigation={navigation} />

@@ -7,12 +7,14 @@ import {scale, verticalScale} from 'react-native-size-matters';
 
 import {
   ACCENT_ACTIVITY_SCREEN,
+  ACCENT_EVENT_SCREEN,
   ACCENT_LOTTIE,
   LOADING_LOTTIE,
 } from '../../utils/LOADING_TYPES';
 
 import ActivityLoader from './ActivityLoader';
 import EventLoader from './EventLoader';
+import StudentUserLoader from './StudentLoader';
 
 //loading accent decides what type of loader is to be displayed
 //LoaderLottieType is to choose the Lottie file to be displayed when the Loading accent is chosen as lottie
@@ -66,10 +68,18 @@ const LoaderPage = ({
             </>
           ) : (
             <>
-              <View style={{height: verticalScale(HeaderHeight)}} />
-              {[...Array(repeat)].map((e, i) => (
-                <EventLoader key={i} />
-              ))}
+              {LoadingAccent === ACCENT_EVENT_SCREEN ? (
+                <>
+                  <View style={{height: verticalScale(HeaderHeight)}} />
+                  {[...Array(repeat)].map((e, i) => (
+                    <EventLoader key={i} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <StudentUserLoader />
+                </>
+              )}
             </>
           )}
         </>

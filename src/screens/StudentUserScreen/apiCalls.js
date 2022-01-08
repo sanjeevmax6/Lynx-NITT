@@ -9,8 +9,9 @@ import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 
-export const getAllStudentDetails = async () => {
+export const getAllStudentDetails = async (refreshing = false) => {
   reset();
+
   try {
     const netInfo = await NetInfo.fetch();
     if (!netInfo.isConnected) {
@@ -18,14 +19,15 @@ export const getAllStudentDetails = async () => {
       STUDENT_DETAILS_STORE.setErrorText(NO_NETWORK);
       return;
     }
-    STUDENT_DETAILS_STORE.setIsLoading(true);
+    if (!refreshing) STUDENT_DETAILS_STORE.setIsLoading(true);
+
     const headerInfo = {
       headers: {
         'Content-Type': 'application/json',
         token: USER_STORE.getUserToken,
       },
     };
-    const [detailsResponse, clubFollowResponse, intersetedEventsResponse] =
+    const [detailsResponse, clubFollowResponse, interestedEventsResponse] =
       await axios.all([
         axios.get(API_GET_STUDENT_DETAILS, headerInfo),
         axios.get(API_GET_STUDENT_CLUBS, headerInfo),
@@ -34,26 +36,30 @@ export const getAllStudentDetails = async () => {
     if (
       detailsResponse.status === 200 &&
       clubFollowResponse.status === 200 &&
-      intersetedEventsResponse.status === 200
+      interestedEventsResponse.status === 200
     ) {
       STUDENT_DETAILS_STORE.setIsLoading(false);
+      if (refreshing) STUDENT_DETAILS_STORE.setRefresh(false);
+
       STUDENT_DETAILS_STORE.setIsError(false);
       STUDENT_DETAILS_STORE.setErrorText('');
 
       STUDENT_DETAILS_STORE.setDetails(detailsResponse.data.details);
       STUDENT_DETAILS_STORE.setClubs(clubFollowResponse.data.clubs);
       STUDENT_DETAILS_STORE.setInterests(
-        intersetedEventsResponse.data.intersetedEvents,
+        interestedEventsResponse.data.interestedEvents,
       );
     } else {
       STUDENT_DETAILS_STORE.setIsLoading(false);
+      if (refreshing) STUDENT_DETAILS_STORE.setRefresh(false);
+
       STUDENT_DETAILS_STORE.setIsError(true);
-      STUDENT_DETAILS_STORE.setErrorText(
-        'An error has occured in gathering your details',
-      );
+      STUDENT_DETAILS_STORE.setErrorText(USER_DETAILS_FETCH);
     }
   } catch (e) {
     STUDENT_DETAILS_STORE.setIsLoading(false);
+    if (refreshing) STUDENT_DETAILS_STORE.setRefresh(false);
+
     STUDENT_DETAILS_STORE.setIsError(true);
     STUDENT_DETAILS_STORE.setErrorText(e.message);
   }
