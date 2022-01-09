@@ -5,7 +5,7 @@ import noEventLottie from '../../res/lottieFiles/noEventLottie.json';
 import * as Animatable from 'react-native-animatable';
 import {scale, verticalScale} from 'react-native-size-matters';
 
-const NoEventScreen = ({errorMessage = 'No'}) => {
+const NoEventScreen = ({errorMessage}) => {
   const [STATE, setSTATE] = useState(1);
   const toggler = () => {
     //force reload as there is a bug in the LF library
@@ -22,6 +22,7 @@ const NoEventScreen = ({errorMessage = 'No'}) => {
         alignSelf: 'center',
         flexDirection: 'column',
         backgroundColor: 'transparent',
+        flex: 1,
       }}>
       <LottieView
         style={{

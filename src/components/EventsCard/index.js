@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
+import {IconButton} from 'react-native-paper';
+import {toggleInterestedApi} from '../../apis/toggleInterested';
 
 const EventsCard = ({
   date,
@@ -14,7 +16,12 @@ const EventsCard = ({
   eventImage,
   organizer,
   isLive = false,
+  wasInterested = false,
+  eventId,
 }) => {
+  console.log(eventId, ' ', wasInterested);
+  const [interest, setInterest] = useState(wasInterested);
+  const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={styles.card}>
       {isLive ? (
@@ -75,23 +82,40 @@ const EventsCard = ({
           <Text numberOfLines={1} style={styles.organizer}>
             {organizer}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={styles.icon} onPress={() => {}}>
-              <Icon
-                name="turned-in-not"
-                color={colors.EventCard_Bookmark}
-                size={scale(ICON_SIZE)}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{...styles.icon, paddingRight: 0}}
-              onPress={() => {}}>
-              <Icon
-                name="share"
-                color={colors.EventCard_ShareIcon}
-                size={scale(ICON_SIZE)}
-              />
-            </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: verticalScale(0),
+            }}>
+            <IconButton
+              onPress={() => {
+                setApiCall(true);
+                toggleInterestedApi(
+                  eventId,
+                  () => {
+                    setApiCall(false);
+                    setInterest(!interest);
+                  },
+                  () => {
+                    setApiCall(false);
+                    //failure
+                  },
+                );
+              }}
+              color={colors.EventCard_Bookmark}
+              style={styles.icon}
+              icon={interest ? 'bookmark' : 'bookmark-outline'}
+              disabled={ApiCall}
+            />
+            <IconButton
+              onPress={() => {
+                console.log('sharing');
+              }}
+              color={colors.EventCard_ShareIcon}
+              style={{...styles.icon, marginLeft: scale(2)}}
+              icon={'share-variant'}
+              disabled={false}
+            />
           </View>
         </View>
       </View>
@@ -144,8 +168,8 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   icon: {
-    paddingHorizontal: '10@s',
-    paddingBottom: '7@vs',
+    marginHorizontal: '6@s',
+    marginBottom: '3@vs',
     alignSelf: 'flex-end',
   },
   link: {

@@ -29,8 +29,8 @@ export const API_GET_STUDENT_INTERESTS =
 
 export const API_DELETE_STUDENT_INTEREST =
   API_BASE_URL + '/api/student/interest/remove';
-  
-export const API_EDIT_PROFILE_STUDENT = API_BASE_URL + 'api/student/edit'; 
+
+export const API_EDIT_PROFILE_STUDENT = API_BASE_URL + 'api/student/edit';
 
 export const API_EDIT_PROFILE_CLUB = API_BASE_URL + 'api/club/edit-clubs';
 
@@ -48,7 +48,8 @@ export const API_UPCOMING_EVENTS = 'api/student/upcoming-events';
 export const API_CIRCULAR_CREATION = '/api/circular';
 
 export const API_SEARCH = '/api/student/search';
-//reg token
+
+//temporary firebase reg token
 export const reg_token = '123abc';
 
 export const API_RESET_PASSWORD_GENERATE_OTP_CLUBS =
@@ -65,3 +66,5 @@ export const API_RESET_PASSWORD_VALIDATE_STUDENT =
 
 export const API_RESET_PASSWORD_STUDENT =
   API_BASE_URL + 'auth/forgotpwd/student/newPassword';
+
+export const API_TOGGLE_INTERESTED = '/api/student/interest/toggle/';

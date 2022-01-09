@@ -27,7 +27,7 @@ import {
 import {observer} from 'mobx-react';
 import moment from 'moment';
 import {USER_STORE} from '../../mobx/USER_STORE';
-import {STUDENT} from '../../utils/USER_TYPE';
+import {CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {isLive} from '../../utils/helperFunction/isLive';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
@@ -181,6 +181,7 @@ const FeedScreen = observer(({navigation}) => {
           <FlatList
             data={FEEDS_STORE.getData.upcomingEvents}
             showsVerticalScrollIndicator={false}
+            style={{height: '100%'}}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<NoEventScreen errorMessage={NO_EVENTS} />}
             ListHeaderComponent={
@@ -216,6 +217,8 @@ const FeedScreen = observer(({navigation}) => {
                     eventImage={item.poster}
                     organizer={item.club.name}
                     isLive={item.live}
+                    wasInterested={item.isInterested}
+                    eventId={item.EventId}
                   />
                 </TouchableOpacity>
               </View>
