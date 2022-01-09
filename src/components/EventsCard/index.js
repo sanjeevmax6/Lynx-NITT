@@ -20,9 +20,11 @@ const EventsCard = ({
   eventId,
 }) => {
   const [interest, setInterest] = useState(false);
+
   useEffect(() => {
     setInterest(wasInterested);
-  });
+  }, [wasInterested]);
+
   const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={styles.card}>
