@@ -68,3 +68,6 @@ export const API_RESET_PASSWORD_STUDENT =
   API_BASE_URL + 'auth/forgotpwd/student/newPassword';
 
 export const API_TOGGLE_INTERESTED = '/api/student/interest/toggle/';
+
+export const API_STUDENT_INTERESTED_IN_EVENT =
+  '/api/student/interest/is-interested/';

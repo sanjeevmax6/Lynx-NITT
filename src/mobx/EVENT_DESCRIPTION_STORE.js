@@ -9,7 +9,17 @@ class eventDescriptionStore {
     data: '',
     eventID: '',
     isFollowingClub: false,
+    wasStudentInterested: false,
   };
+
+  setWasStudentInterested = val => {
+    this.state.wasStudentInterested = val;
+  };
+
+  get getWasStudentInterested() {
+    return this.state.wasStudentInterested;
+  }
+
   setIsFollowingClub = val => {
     this.state.isFollowingClub = val;
   };
@@ -90,6 +100,9 @@ class eventDescriptionStore {
 
       setIsFollowingClub: action,
       getIsFollowingClub: computed,
+
+      setWasStudentInterested: action,
+      getWasStudentInterested: computed,
     });
   }
 }

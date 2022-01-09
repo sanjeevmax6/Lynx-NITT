@@ -22,6 +22,7 @@ import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {isLive} from '../../utils/helperFunction/isLive';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import EventStatusTag from './EventStatusTag';
+import EventDescriptionHeader from './eventDescriptionHeader';
 
 const EventDescriptionScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -62,70 +63,73 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             }}
           />
         ) : (
-          <ScrollView>
-            <Images
-              images={EVENT_DESCRIPTION_STORE.getData.photos}
-              navigation={navigation}
-            />
-            <Divider style={styles.divider} />
-            <EventStatusTag
-              startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
-              endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
-            />
-            <Text style={styles.eventName}>
-              {EVENT_DESCRIPTION_STORE.getData.Title}
-            </Text>
-
-            <Divider style={styles.divider} />
-            <View style={{marginHorizontal: scale(3)}}>
-              <ClubCard
-                name={EVENT_DESCRIPTION_STORE.getData.club.name}
-                imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
-                followers={EVENT_DESCRIPTION_STORE.getData.club_followers}
+          <>
+            <EventDescriptionHeader navigation={navigation} />
+            <ScrollView>
+              <Images
+                images={EVENT_DESCRIPTION_STORE.getData.photos}
                 navigation={navigation}
-                clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
               />
-            </View>
-            <Divider style={styles.divider} />
+              <Divider style={styles.divider} />
+              <EventStatusTag
+                startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
+                endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
+              />
+              <Text style={styles.eventName}>
+                {EVENT_DESCRIPTION_STORE.getData.Title}
+              </Text>
 
-            <About
-              about={EVENT_DESCRIPTION_STORE.getData.Description}
-              startDate={moment(
-                new Date(
-                  EVENT_DESCRIPTION_STORE.getData.startDate,
-                ).toLocaleString(),
-              ).format('DD-MM-YYYY')}
-              startTime={moment(
-                new Date(
-                  EVENT_DESCRIPTION_STORE.getData.startDate,
-                ).toLocaleString(),
-              ).format('hh:mm A')}
-              endDate={moment(
-                new Date(
-                  EVENT_DESCRIPTION_STORE.getData.endDate,
-                ).toLocaleString(),
-              ).format('DD-MM-YYYY')}
-              endTime={moment(
-                new Date(
-                  EVENT_DESCRIPTION_STORE.getData.endDate,
-                ).toLocaleString(),
-              ).format('hh:mm A')}
-            />
-            <Divider style={styles.divider} />
-            {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
-              <>
-                <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
-              </>
-            ) : (
-              <></>
-            )}
+              <Divider style={styles.divider} />
+              <View style={{marginHorizontal: scale(3)}}>
+                <ClubCard
+                  name={EVENT_DESCRIPTION_STORE.getData.club.name}
+                  imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
+                  followers={EVENT_DESCRIPTION_STORE.getData.club_followers}
+                  navigation={navigation}
+                  clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
+                />
+              </View>
+              <Divider style={styles.divider} />
 
-            <Divider style={styles.divider} />
-            <Tags
-              tags={EVENT_DESCRIPTION_STORE.getData.tags}
-              navigation={navigation}
-            />
-          </ScrollView>
+              <About
+                about={EVENT_DESCRIPTION_STORE.getData.Description}
+                startDate={moment(
+                  new Date(
+                    EVENT_DESCRIPTION_STORE.getData.startDate,
+                  ).toLocaleString(),
+                ).format('DD-MM-YYYY')}
+                startTime={moment(
+                  new Date(
+                    EVENT_DESCRIPTION_STORE.getData.startDate,
+                  ).toLocaleString(),
+                ).format('hh:mm A')}
+                endDate={moment(
+                  new Date(
+                    EVENT_DESCRIPTION_STORE.getData.endDate,
+                  ).toLocaleString(),
+                ).format('DD-MM-YYYY')}
+                endTime={moment(
+                  new Date(
+                    EVENT_DESCRIPTION_STORE.getData.endDate,
+                  ).toLocaleString(),
+                ).format('hh:mm A')}
+              />
+              <Divider style={styles.divider} />
+              {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
+                <>
+                  <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
+                </>
+              ) : (
+                <></>
+              )}
+
+              <Divider style={styles.divider} />
+              <Tags
+                tags={EVENT_DESCRIPTION_STORE.getData.tags}
+                navigation={navigation}
+              />
+            </ScrollView>
+          </>
         )}
       </SafeAreaView>
     </View>

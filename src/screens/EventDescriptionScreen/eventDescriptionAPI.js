@@ -1,4 +1,8 @@
-import {API_EVENT_BY_ID, API_IS_FOLLOWING} from '../../utils/API_CONSTANTS';
+import {
+  API_EVENT_BY_ID,
+  API_IS_FOLLOWING,
+  API_STUDENT_INTERESTED_IN_EVENT,
+} from '../../utils/API_CONSTANTS';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {NO_NETWORK, SERVER_ERROR} from '../../utils/ERROR_MESSAGES';
@@ -11,17 +15,26 @@ async function API_CALL() {
   try {
     const response = await axios.get(
       API_EVENT_BY_ID + '/' + EVENT_DESCRIPTION_STORE.getID,
-      // Token from Mobux
-      {headers: {token: USER_STORE.getUserToken}},
+      // Token from Mobx
+      {headers: {token: USER_STORE.getUserToken}, timeout: 5000},
     );
     if (USER_STORE.getUserType === STUDENT) {
+      // checking if the student follows the club that made the event
       const isFollowing = await axios.get(
         API_STORE.getBaseUrl + API_IS_FOLLOWING + response.data.events.club.id,
-        {headers: {token: USER_STORE.getUserToken}},
+        {headers: {token: USER_STORE.getUserToken}, timeout: 5000},
       );
-      console.log(
-        'initially following the club: ',
-        isFollowing.data.isFollowing,
+
+      // checking if the student was already interested in the event
+      const interested = await axios.get(
+        API_STORE.getBaseUrl +
+          API_STUDENT_INTERESTED_IN_EVENT +
+          EVENT_DESCRIPTION_STORE.getID,
+        {headers: {token: USER_STORE.getUserToken}, timeout: 5000},
+      );
+
+      EVENT_DESCRIPTION_STORE.setWasStudentInterested(
+        interested.data.isInterested,
       );
       EVENT_DESCRIPTION_STORE.setIsFollowingClub(isFollowing.data.isFollowing);
     }

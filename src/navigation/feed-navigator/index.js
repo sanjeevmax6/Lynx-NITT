@@ -24,7 +24,7 @@ function FeedNavigator() {
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}

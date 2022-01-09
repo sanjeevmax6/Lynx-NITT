@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
@@ -19,7 +19,10 @@ const EventsCard = ({
   wasInterested = false,
   eventId,
 }) => {
-  const [interest, setInterest] = useState(wasInterested);
+  const [interest, setInterest] = useState(false);
+  useEffect(() => {
+    setInterest(wasInterested);
+  });
   const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={styles.card}>

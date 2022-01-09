@@ -29,7 +29,7 @@ function CalendarNavigator() {
         component={EventDescriptionScreen}
         options={{
           animation: 'slide_from_right',
-          headerShown: true,
+          headerShown: false,
           header: props => <Header props={props} />,
         }}
       />
