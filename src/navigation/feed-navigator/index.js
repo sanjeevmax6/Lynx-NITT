@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import FeedScreen from '../../screens/FeedScreen';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
+import EventEditScreen from '../../screens/EventEditScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import * as color from '../../utils/colors';
@@ -23,6 +24,15 @@ function FeedNavigator() {
       <FeedStack.Screen
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
+        options={{
+          headerShown: false,
+          animation: 'slide_from_right',
+          header: props => <Header props={props} />,
+        }}
+      />
+      <FeedStack.Screen
+        name="EventEditScreen"
+        component={EventEditScreen}
         options={{
           headerShown: false,
           animation: 'slide_from_right',

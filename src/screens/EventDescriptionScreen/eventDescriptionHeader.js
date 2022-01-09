@@ -69,7 +69,7 @@ const EventDescriptionHeader = observer(({navigation}) => {
             <>
               <IconButton
                 onPress={() => {
-                  console.log('take me to the edit event page');
+                  navigation.navigate('EventEditScreen');
                 }}
                 disabled={false}
                 icon={'border-color'}

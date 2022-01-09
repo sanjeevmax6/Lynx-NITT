@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
+import EventEditScreen from '../../screens/EventEditScreen';
 
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
@@ -30,7 +31,15 @@ function SearchNavigator() {
           header: props => <Header props={props} />,
         }}
       />
-
+      <CalendarStack.Screen
+        name="EventEditScreen"
+        component={EventEditScreen}
+        options={{
+          animation: 'slide_from_right',
+          headerShown: false,
+          header: props => <Header props={props} />,
+        }}
+      />
       <CalendarStack.Screen
         name="ImageScreen"
         children={ImageZoomScreen}

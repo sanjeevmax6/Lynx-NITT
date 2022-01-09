@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
+import EventEditScreen from '../../screens/EventEditScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import AnnouncementDetailScreen from '../../screens/AnnouncementDetailScreen';
@@ -34,6 +35,15 @@ function ActivityNavigator() {
       <AnnouncementStack.Screen
         name="EventDescriptionScreen"
         component={EventDescriptionScreen}
+        options={{
+          animation: 'slide_from_right',
+          headerShown: false,
+          header: props => <Header props={props} />,
+        }}
+      />
+      <AnnouncementStack.Screen
+        name="EventEditScreen"
+        component={EventEditScreen}
         options={{
           animation: 'slide_from_right',
           headerShown: false,

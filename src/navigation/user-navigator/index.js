@@ -8,6 +8,7 @@ import StudentUserScreen from '../../screens/StudentUserScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
 import SettingsSceen from '../../screens/SettingsScreen';
 import EventDescriptionScreen from '../../screens/EventDescriptionScreen';
+import EventEditScreen from '../../screens/EventEditScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import EditClubProfileScreen from '../../screens/EditProfileScreen_Club';
@@ -58,6 +59,15 @@ function UserNavigator() {
       <UserStack.Screen
         name="EventDescription"
         component={EventDescriptionScreen}
+        options={{
+          headerShown: false,
+          animation: 'slide_from_right',
+          header: props => <Header props={props} />,
+        }}
+      />
+      <UserStack.Screen
+        name="EventEditScreen"
+        component={EventEditScreen}
         options={{
           headerShown: false,
           animation: 'slide_from_right',
