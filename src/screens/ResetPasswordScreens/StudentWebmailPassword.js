@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
   moderateScale,
@@ -9,8 +9,61 @@ import {
 import * as colors from '../../utils/colors';
 import {TextInput, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NetInfo from '@react-native-community/netinfo';
+import {API_RESET_PASSWORD_VALIDATE_STUDENT} from '../../utils/API_CONSTANTS';
+import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
 
 const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
+  const axios = require('axios');
+
+  const [password, setPass] = useState();
+
+  const setPassword = () => {
+    RESET_STORE.setStudentPassword(password);
+  };
+
+  const validateStudentLogin = () => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected == true) {
+        if (
+          RESET_STORE.getStudentPassword != '' &&
+          RESET_STORE.getUsername != ''
+        ) {
+          studentRoll = RESET_STORE.getUsername;
+          studentPassword = RESET_STORE.getStudentPassword;
+          const axiosHeaders = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
+          const body = JSON.stringify({
+            rollNo: studentRoll,
+            webmail_password: studentPassword,
+          });
+
+          axios
+            .post(API_RESET_PASSWORD_VALIDATE_STUDENT, body, axiosHeaders)
+            .then(response => {
+              if (response.data.message === 'Success') {
+                // console.log(response.data.token);
+                RESET_STORE.setStudentToken(response.data.token);
+                console.log(RESET_STORE.getStudentToken);
+                RESET_STORE.setStudentTokenFetched(1);
+                forwardAction();
+              }
+              // console.log(RESET_STORE.getStudentToken);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      } else {
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+      }
+    });
+  };
+
   return (
     <View
       style={{
@@ -35,8 +88,8 @@ const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
           },
         }}
         selectionColor={colors.WHITE}
-        onChangeText={user => {
-          console.log(5);
+        onChangeText={pass => {
+          setPass(pass);
         }}
       />
       <View style={styles.loginBtnView}>
@@ -54,7 +107,11 @@ const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
             borderRadius: verticalScale(22),
           }}
           onPress={() => {
-            forwardAction();
+            setPassword();
+            validateStudentLogin();
+            console.log(RESET_STORE.getStudentTokenFetched);
+            // if (RESET_STORE.getStudentTokenFetched != 0) {
+            // }
           }}>
           <Icon
             name="chevron-right"

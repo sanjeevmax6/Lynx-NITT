@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
   moderateScale,
@@ -9,8 +9,70 @@ import {
 import * as colors from '../../utils/colors';
 import {TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NetInfo from '@react-native-community/netinfo';
+import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
+import {
+  API_RESET_PASSWORD_CLUBS,
+  API_RESET_PASSWORD_STUDENT,
+} from '../../utils/API_CONSTANTS';
 
-const SetNewPassword = ({forwardAction}) => {
+const SetNewPassword = ({forwardAction, backwardAction, buttonHome}) => {
+  const axios = require('axios');
+  const [newPassword, setNewPass] = useState('');
+  const [newConfirmPassword, setNewConfirmPass] = useState('');
+
+  const changePassword = () => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected == true) {
+        //If it is a student account
+        token = null;
+        if (RESET_STORE.getIsStudent) {
+          token = RESET_STORE.getStudentToken;
+        } else {
+          token = RESET_STORE.getClubsToken;
+        }
+        const axiosHeaders = {
+          headers: {
+            token: token,
+            'Content-Type': 'application/json',
+          },
+        };
+        console.log(newPassword);
+        console.log(newConfirmPassword);
+        const body = JSON.stringify({
+          new_password: newPassword,
+          new_cpassword: newConfirmPassword,
+        });
+        url = null;
+        if (RESET_STORE.getIsStudent) {
+          url = API_RESET_PASSWORD_STUDENT;
+        } else {
+          url = API_RESET_PASSWORD_CLUBS;
+        }
+        axios
+          .post(url, body, axiosHeaders)
+          .then(response => {
+            if (response.data.message === 'Success') {
+              // forwardAction();
+              buttonHome();
+              RESET_STORE.setStudentToken('');
+            }
+            // RESET_STORE.setStudentToken('');
+          })
+          .catch(error => {
+            console.log(error);
+            // RESET_STORE.setStudentToken('');
+          });
+        //If it is a clubs account
+        // else {
+        //   console.log(RESET_STORE.getClubsToken);
+        // }
+      } else {
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+      }
+    });
+  };
   return (
     <View
       style={{
@@ -35,8 +97,8 @@ const SetNewPassword = ({forwardAction}) => {
           },
         }}
         selectionColor={colors.WHITE}
-        onChangeText={user => {
-          console.log(5);
+        onChangeText={pass => {
+          setNewPass(pass);
         }}
       />
       <TextInput
@@ -50,8 +112,8 @@ const SetNewPassword = ({forwardAction}) => {
           },
         }}
         selectionColor={colors.WHITE}
-        onChangeText={user => {
-          console.log(5);
+        onChangeText={pass => {
+          setNewConfirmPass(pass);
         }}
       />
       <View style={styles.loginBtnView}>
@@ -61,7 +123,8 @@ const SetNewPassword = ({forwardAction}) => {
             borderRadius: verticalScale(22),
           }}
           onPress={() => {
-            forwardAction();
+            // forwardAction();
+            changePassword();
           }}>
           <Icon
             name="chevron-right"

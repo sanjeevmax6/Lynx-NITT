@@ -30,6 +30,7 @@ import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
 
 //scaling
 const height2 = 737.1;
@@ -166,6 +167,7 @@ const LoginScreen = observer(({navigation}) => {
                           <TouchableOpacity
                             onPress={() => {
                               navigation.push('Reset');
+                              RESET_STORE.setStudentToken('');
                             }}>
                             <Text
                               style={{

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
   moderateScale,
@@ -7,10 +7,107 @@ import {
   verticalScale,
 } from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import {TextInput, Button} from 'react-native-paper';
+import {HelperText, TextInput, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
+import {
+  API_RESET_PASSWORD_GENERATE_OTP_CLUBS,
+  API_RESET_PASSWORD_VALIDATE_OTP_CLUBS,
+} from '../../utils/API_CONSTANTS';
+import NetInfo from '@react-native-community/netinfo';
 
 const ClubEnterOTP = ({forwardAction, backwardAction}) => {
+  const [OTP, setOTP] = useState(0);
+  const [validate, setValidate] = useState(false);
+  const [over, setOver] = useState(false);
+  const [sec, setSeconds] = useState(30);
+  const [resendButton, sendResendButton] = useState(false);
+  const [errorOTP, setErrorOTP] = useState(false);
+  const axios = require('axios');
+
+  useEffect(() => {
+    sendClubOTP();
+    sleepTimer();
+  }, []);
+
+  const sleepTimer = () => {
+    setTimeout(function () {
+      sendResendButton(true);
+    }, 30000);
+  };
+
+  const sendClubOTP = () => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected == true) {
+        if (RESET_STORE.getUsername != '') {
+          userEmail = RESET_STORE.getUsername;
+          console.log('Processing');
+          const axiosHeaders = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
+          const body = JSON.stringify({
+            email: userEmail,
+          });
+          axios
+            .post(API_RESET_PASSWORD_GENERATE_OTP_CLUBS, body, axiosHeaders)
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      } else {
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+      }
+    });
+  };
+
+  const validateOtp = () => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected == true) {
+        console.log('Processing');
+        console.log('OTP type', typeof OTP);
+        userEmail = RESET_STORE.getUsername;
+        console.log(userEmail);
+        const axiosHeaders = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        const body = JSON.stringify({
+          otp: OTP,
+          email: userEmail,
+        });
+
+        axios
+          .post(API_RESET_PASSWORD_VALIDATE_OTP_CLUBS, body, axiosHeaders)
+          .then(response => {
+            console.log(response.data);
+            if (response.data.message === 'Success') {
+              RESET_STORE.setClubsToken(response.data.token);
+              RESET_STORE.setClubsTokenFetched(true);
+              forwardAction();
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            setErrorOTP(true);
+          });
+      } else {
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+      }
+    });
+  };
+
+  const hasErrors = () => {
+    return errorOTP;
+  };
+
   return (
     <View
       style={{
@@ -21,7 +118,6 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
       }}>
       <Text style={styles.title}>Verify Email</Text>
       <Text style={{...styles.title, fontSize: scale(14)}}>Enter your OTP</Text>
-
       <TextInput
         label="OTP"
         placeholder="Enter your OTP"
@@ -33,11 +129,14 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
           },
         }}
         selectionColor={colors.WHITE}
-        onChangeText={user => {
+        onChangeText={otp => {
+          setOTP(parseInt(otp));
           console.log(5);
         }}
       />
-
+      <HelperText type="error" visible={hasErrors()}>
+        Invalid OTP
+      </HelperText>
       <View style={styles.loginBtnView}>
         <Button
           icon={'chevron-left'}
@@ -53,7 +152,9 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
             borderRadius: verticalScale(22),
           }}
           onPress={() => {
-            forwardAction();
+            validateOtp();
+            // if (RESET_STORE.getClubsTokenFetched) {
+            // }
           }}>
           <Icon
             name="chevron-right"
@@ -62,6 +163,41 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
           />
         </TouchableOpacity>
       </View>
+      <View>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: scale(14),
+
+            marginTop: verticalScale(6),
+          }}>
+          <Text>The resend button will appear in</Text>
+
+          <Text
+            style={{
+              color: 'darkgreen',
+              fontWeight: 'bold',
+            }}>
+            {' '}
+            {'30 seconds'}
+          </Text>
+        </Text>
+      </View>
+      {/* {resendButton && ( */}
+      <View style={styles.otpButton}>
+        <Button
+          mode="contained"
+          loading={!resendButton}
+          disabled={!resendButton}
+          onPress={() => {
+            sendClubOTP();
+            sendResendButton(false);
+            sleepTimer();
+          }}>
+          <Text style={styles.otpText}>Send OTP</Text>
+        </Button>
+      </View>
+      {/* )} */}
     </View>
   );
 };
@@ -99,6 +235,20 @@ const styles = ScaledSheet.create({
   },
   loginBtnView: {
     justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    paddingHorizontal: moderateScale(0),
+    paddingTop: verticalScale(9),
+    flexDirection: 'row',
+  },
+  otpText: {
+    fontSize: '12@s',
+    color: colors.FontColor,
+    fontWeight: '500',
+    marginTop: '10@vs',
+    textAlign: 'center',
+  },
+  otpButton: {
+    justifyContent: 'center',
     alignItems: 'flex-end',
     paddingHorizontal: moderateScale(0),
     paddingTop: verticalScale(9),

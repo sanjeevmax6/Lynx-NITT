@@ -4,6 +4,13 @@ class RESET_DATA {
   state = {
     isStudent: true,
     username: '',
+    error: '',
+    errorText: '',
+    password: '',
+    studentToken: '',
+    tokenFetched: false,
+    clubsToken: '',
+    clubsTokenFetched: false,
   };
 
   setIsStudent = val => {
@@ -22,6 +29,62 @@ class RESET_DATA {
     return this.state.username;
   }
 
+  setError = val => {
+    this.state.error = val;
+  };
+
+  get getError() {
+    return this.state.error;
+  }
+
+  setErrorText = val => {
+    this.state.errorText = val;
+  };
+
+  get getErrorText() {
+    return this.state.errorText;
+  }
+
+  setStudentPassword = val => {
+    this.state.password = val;
+  };
+
+  get getStudentPassword() {
+    return this.state.password;
+  }
+
+  setStudentToken = val => {
+    this.state.studentToken = val;
+  };
+
+  get getStudentToken() {
+    return this.state.studentToken;
+  }
+
+  setStudentTokenFetched = val => {
+    this.state.tokenFetched = val;
+  };
+
+  get getStudentTokenFetched() {
+    return this.state.tokenFetched;
+  }
+
+  setClubsToken = val => {
+    this.state.clubsToken = val;
+  };
+
+  get getClubsToken() {
+    return this.state.clubsToken;
+  }
+
+  setClubsTokenFetched = val => {
+    this.state.clubsTokenFetched = val;
+  };
+
+  get getClubsTokenFetched() {
+    return this.state.clubsTokenFetched;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -31,6 +94,27 @@ class RESET_DATA {
 
       setUsername: action,
       getUsername: computed,
+
+      setError: action,
+      getError: computed,
+
+      setErrorText: action,
+      getErrorText: computed,
+
+      setStudentPassword: action,
+      getStudentPassword: computed,
+
+      setStudentToken: action,
+      getStudentToken: computed,
+
+      setStudentTokenFetched: action,
+      getStudentTokenFetched: computed,
+
+      setClubsToken: action,
+      getClubsToken: computed,
+
+      setClubsTokenFetched: action,
+      getClubsTokenFetched: computed,
     });
   }
 }

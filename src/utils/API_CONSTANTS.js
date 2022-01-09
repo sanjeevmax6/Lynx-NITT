@@ -50,3 +50,18 @@ export const API_CIRCULAR_CREATION = '/api/circular';
 export const API_SEARCH = '/api/student/search';
 //reg token
 export const reg_token = '123abc';
+
+export const API_RESET_PASSWORD_GENERATE_OTP_CLUBS =
+  API_BASE_URL + 'auth/forgotpwd/club/sendOtp';
+
+export const API_RESET_PASSWORD_VALIDATE_OTP_CLUBS =
+  API_BASE_URL + 'auth/forgotpwd/club/validateOtp';
+
+export const API_RESET_PASSWORD_CLUBS =
+  API_BASE_URL + 'auth/forgotpwd/club/newPassword';
+
+export const API_RESET_PASSWORD_VALIDATE_STUDENT =
+  API_BASE_URL + 'auth/forgotpwd/student/webmail';
+
+export const API_RESET_PASSWORD_STUDENT =
+  API_BASE_URL + 'auth/forgotpwd/student/newPassword';

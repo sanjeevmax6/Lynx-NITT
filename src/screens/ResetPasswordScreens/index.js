@@ -14,6 +14,7 @@ import ClubEnterOTP from './ClubEnterOTP';
 
 import {observer} from 'mobx-react';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
+// import {SuccessPage} from './Sucess';
 
 const ResetPasswordScreen = observer(({navigation}) => {
   const ref = useRef(PagerView);
@@ -22,8 +23,12 @@ const ResetPasswordScreen = observer(({navigation}) => {
     ref.current.setPage(Page + 1);
   };
   const buttonBackwardAction = () => {
-    console.log(0);
     ref.current.setPage(Page - 1);
+    console.log(0);
+  };
+  const buttonHomeAction = pg => {
+    ref.current.setPage(pg);
+    console.log(pg);
   };
 
   const [Page, setPage] = useState(0);
@@ -54,8 +59,15 @@ const ResetPasswordScreen = observer(({navigation}) => {
             key={2}
             forwardAction={buttonForwardAction}
             backwardAction={buttonBackwardAction}
+            buttonHome={buttonHomeAction}
           />
-          <SetNewPassword key={3} />
+          <SetNewPassword
+            key={3}
+            forwardAction={buttonForwardAction}
+            backwardAction={buttonBackwardAction}
+            buttonHome={buttonHomeAction}
+          />
+          {/* <SuccessPage key={4} buttonHome={buttonHomeAction} /> */}
         </>
       ) : (
         <>
@@ -64,7 +76,12 @@ const ResetPasswordScreen = observer(({navigation}) => {
             forwardAction={buttonForwardAction}
             backwardAction={buttonBackwardAction}
           />
-          <SetNewPassword key={3} />
+          <SetNewPassword
+            key={3}
+            forwardAction={buttonForwardAction}
+            backwardAction={buttonBackwardAction}
+          />
+          {/* <SuccessPage key={4} buttonHome={buttonHomeAction} /> */}
         </>
       )}
     </PagerView>
