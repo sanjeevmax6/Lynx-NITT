@@ -10,7 +10,7 @@ const windowHeight = Dimensions.get('window').height;
 const StudentUserLoader = () => {
   return (
     <ContentLoader
-      speed={1.5}
+      speed={1.75}
       style={{marginHorizontal: scale(9), marginVertical: verticalScale(9)}}
       width={windowWidth * 0.95}
       height={windowHeight}
@@ -23,176 +23,79 @@ const StudentUserLoader = () => {
         rx="6"
         ry="6"
         width={windowWidth * 0.95}
-        height={verticalScale(180)}
+        height={verticalScale(190)}
       />
       <Rect
         x="0"
         y={verticalScale(200)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(225)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.85}
-        height={verticalScale(9)}
+        y={verticalScale(270)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(250)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
+        y={verticalScale(340)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(275)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.65}
-        height={verticalScale(9)}
+        y={verticalScale(410)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(300)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.55}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(325)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
-      />
-
-      <Rect
-        x="0"
-        y={verticalScale(350)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.85}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(375)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(400)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.55}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(425)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.65}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(450)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(475)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(500)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.85}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(525)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
+        y={verticalScale(480)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
         y={verticalScale(550)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.65}
-        height={verticalScale(9)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(575)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.55}
-        height={verticalScale(9)}
+        y={verticalScale(620)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(600)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.65}
-        height={verticalScale(9)}
+        y={verticalScale(690)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
       <Rect
         x="0"
-        y={verticalScale(625)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.55}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(650)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.75}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(675)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.65}
-        height={verticalScale(9)}
-      />
-      <Rect
-        x="0"
-        y={verticalScale(700)}
-        rx="4"
-        ry="4"
-        width={windowWidth * 0.85}
-        height={verticalScale(9)}
+        y={verticalScale(760)}
+        rx="6"
+        ry="6"
+        width={windowWidth * 0.95}
+        height={verticalScale(60)}
       />
     </ContentLoader>
   );

@@ -19,7 +19,6 @@ const EventsCard = ({
   wasInterested = false,
   eventId,
 }) => {
-  console.log(eventId, ' ', wasInterested);
   const [interest, setInterest] = useState(wasInterested);
   const [ApiCall, setApiCall] = useState(false);
   return (
