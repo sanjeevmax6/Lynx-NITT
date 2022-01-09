@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
-import Icon from 'react-native-vector-icons/Ionicons';
+
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
-import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const ClubSearchCard = ({clubIconUrl, clubName, clubDescription}) => {
   return (
@@ -22,7 +22,12 @@ const ClubSearchCard = ({clubIconUrl, clubName, clubDescription}) => {
             style={styles.clubIcon}
             resizeMode="cover"
             PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
-            source={{uri: API_GET_IMAGE + clubIconUrl}}
+            source={{
+              uri:
+                clubIconUrl === '' || clubIconUrl === 'sample.jpg'
+                  ? NO_IMAGE_URL
+                  : API_GET_IMAGE + clubIconUrl,
+            }}
           />
         </View>
         <View style={styles.item}>

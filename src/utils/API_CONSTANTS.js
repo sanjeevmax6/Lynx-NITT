@@ -71,3 +71,5 @@ export const API_TOGGLE_INTERESTED = '/api/student/interest/toggle/';
 
 export const API_STUDENT_INTERESTED_IN_EVENT =
   '/api/student/interest/is-interested/';
+
+export const API_CLUB_LIST = '/api/clubList/club';

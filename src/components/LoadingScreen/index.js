@@ -9,12 +9,15 @@ import {
   ACCENT_ACTIVITY_SCREEN,
   ACCENT_EVENT_SCREEN,
   ACCENT_LOTTIE,
+  ACCENT_SEARCH_SCREEN,
+  ACCENT_STUDENT_USER_LOADER,
   LOADING_LOTTIE,
 } from '../../utils/LOADING_TYPES';
 
 import ActivityLoader from './ActivityLoader';
 import EventLoader from './EventLoader';
 import StudentUserLoader from './StudentLoader';
+import SearchLoader from './SearchLoader';
 
 //loading accent decides what type of loader is to be displayed
 //LoaderLottieType is to choose the Lottie file to be displayed when the Loading accent is chosen as lottie
@@ -77,7 +80,23 @@ const LoaderPage = ({
                 </>
               ) : (
                 <>
-                  <StudentUserLoader />
+                  {LoadingAccent === ACCENT_STUDENT_USER_LOADER ? (
+                    <>
+                      <StudentUserLoader />
+                    </>
+                  ) : (
+                    <>
+                      {LoadingAccent === ACCENT_SEARCH_SCREEN ? (
+                        <>
+                          {[...Array(repeat)].map((e, i) => (
+                            <SearchLoader key={i} />
+                          ))}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
                 </>
               )}
             </>
