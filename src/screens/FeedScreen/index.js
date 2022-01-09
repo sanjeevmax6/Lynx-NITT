@@ -33,7 +33,8 @@ import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import NoEventScreen from '../../components/NoEventScreen';
 import {NO_EVENTS} from '../../utils/ERROR_MESSAGES';
-
+import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
+import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 const FeedScreen = observer(({navigation}) => {
   const onRefresh = React.useCallback(() => {
     if (USER_STORE.getUserType === STUDENT) {
@@ -213,8 +214,8 @@ const FeedScreen = observer(({navigation}) => {
                     });
                   }}>
                   <EventsCard
-                    date={moment(item.startDate).format('DD/MM/YY')}
-                    time={moment(item.startDate).format('HH:mm')}
+                    date={getFormattedDate(item.startDate)}
+                    time={getFormattedTime(item.startDate)}
                     name={item.Title}
                     desc={item.Description}
                     eventImage={item.poster}

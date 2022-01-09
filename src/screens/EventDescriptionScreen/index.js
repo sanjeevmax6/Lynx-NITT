@@ -23,6 +23,8 @@ import {isLive} from '../../utils/helperFunction/isLive';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import EventStatusTag from './EventStatusTag';
 import EventDescriptionHeader from './eventDescriptionHeader';
+import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
+import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 
 const EventDescriptionScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -91,26 +93,18 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
 
               <About
                 about={EVENT_DESCRIPTION_STORE.getData.Description}
-                startDate={moment(
-                  new Date(
-                    EVENT_DESCRIPTION_STORE.getData.startDate,
-                  ).toLocaleString(),
-                ).format('DD-MM-YYYY')}
-                startTime={moment(
-                  new Date(
-                    EVENT_DESCRIPTION_STORE.getData.startDate,
-                  ).toLocaleString(),
-                ).format('hh:mm A')}
-                endDate={moment(
-                  new Date(
-                    EVENT_DESCRIPTION_STORE.getData.endDate,
-                  ).toLocaleString(),
-                ).format('DD-MM-YYYY')}
-                endTime={moment(
-                  new Date(
-                    EVENT_DESCRIPTION_STORE.getData.endDate,
-                  ).toLocaleString(),
-                ).format('hh:mm A')}
+                startDate={getFormattedDate(
+                  EVENT_DESCRIPTION_STORE.getData.startDate,
+                )}
+                startTime={getFormattedTime(
+                  EVENT_DESCRIPTION_STORE.getData.startDate,
+                )}
+                endDate={getFormattedDate(
+                  EVENT_DESCRIPTION_STORE.getData.endDate,
+                )}
+                endTime={getFormattedTime(
+                  EVENT_DESCRIPTION_STORE.getData.endDate,
+                )}
               />
               <Divider style={styles.divider} />
               {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
