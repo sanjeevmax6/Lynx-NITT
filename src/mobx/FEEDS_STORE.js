@@ -6,8 +6,17 @@ class feedsStore {
     errorText: '',
     loading: true,
     success: false,
-    data: '',
+    data: {},
     refreshing: false,
+  };
+  const;
+  formatData = () => {
+    this.state.data.liveEvents.forEach(function (element) {
+      element.isLive = true;
+    });
+    this.state.data.upcomingEvents.forEach(function (element) {
+      element.isLive = false;
+    });
   };
   setRefreshing = val => {
     this.state.refreshing = val;
@@ -60,7 +69,7 @@ class feedsStore {
   constructor() {
     makeObservable(this, {
       state: observable,
-
+      formatData: action,
       setError: action,
       getError: computed,
 

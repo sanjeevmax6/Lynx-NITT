@@ -29,6 +29,8 @@ export const feedsAPI = refreshing => {
             //   'Response from FEEDS API Call' + JSON.stringify(response.data),
             // );
             FEEDS_STORE.setData(response.data);
+            FEEDS_STORE.formatData();
+
             FEEDS_STORE.setSuccess(true);
           }
           FEEDS_STORE.setLoading(false);

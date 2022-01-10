@@ -179,7 +179,10 @@ const FeedScreen = observer(({navigation}) => {
             </SafeAreaView>
           </Animated.View>
           <FlatList
-            data={FEEDS_STORE.getData.upcomingEvents}
+            data={[
+              ...FEEDS_STORE.getData.liveEvents,
+              ...FEEDS_STORE.getData.upcomingEvents,
+            ]}
             showsVerticalScrollIndicator={false}
             style={{height: '100%'}}
             showsHorizontalScrollIndicator={false}
@@ -216,7 +219,7 @@ const FeedScreen = observer(({navigation}) => {
                     desc={item.Description}
                     eventImage={item.poster}
                     organizer={item.club.name}
-                    isLive={item.live}
+                    isLive={item.isLive}
                     wasInterested={item.isInterested}
                     eventId={item.EventId}
                   />

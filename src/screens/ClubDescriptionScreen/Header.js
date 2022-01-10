@@ -70,7 +70,7 @@ const Header = observer(
         setCoverColor(res.cover);
       });
     }, [url]);
-
+    console.log(CLUB_DESCRIPTION_STORE.getData.links);
     return coverColor === colors.Tertiary ? (
       <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
     ) : (

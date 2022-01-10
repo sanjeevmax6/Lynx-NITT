@@ -57,6 +57,11 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
                 clubID,
                 () => {
                   //success callback
+                  if (EVENT_DESCRIPTION_STORE.getIsFollowingClub) {
+                    EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                  } else {
+                    EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                  }
                   EVENT_DESCRIPTION_STORE.setIsFollowingClub(
                     !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
                   );
