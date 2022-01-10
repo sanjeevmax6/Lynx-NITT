@@ -10,10 +10,17 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {observer} from 'mobx-react';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
+import {useToast} from 'react-native-toast-notifications';
+import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 
 const WIDTH = Dimensions.get('window').width;
 
 const ClubCard = observer(({name, imgID, navigation, clubID}) => {
+  const toast = useToast();
+
+  const showToast = () => {
+    toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+  };
   const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
@@ -57,6 +64,7 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
                 },
                 () => {
                   //failure callback
+                  showToast();
                   setApiCall(false);
                 },
               );

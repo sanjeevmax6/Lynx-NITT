@@ -106,3 +106,9 @@ export const HeaderText = BLACK;
 export const regBackground = Secondary;
 export const regAttach = Accent;
 export const regNext = Primary;
+
+//toast colors
+
+export const successColor = UPCOMING;
+export const dangerColor = '#540b0e';
+export const warningColor = '#e09f3e';

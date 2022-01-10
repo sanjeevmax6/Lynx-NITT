@@ -7,6 +7,8 @@ import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 import {IconButton} from 'react-native-paper';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
+import {useToast} from 'react-native-toast-notifications';
+import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 
 const EventsCard = ({
   date,
@@ -20,12 +22,18 @@ const EventsCard = ({
   eventId,
 }) => {
   const [interest, setInterest] = useState(false);
+  const toast = useToast();
+
+  const showToast = () => {
+    toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+  };
 
   useEffect(() => {
     setInterest(wasInterested);
   }, [wasInterested]);
 
   const [ApiCall, setApiCall] = useState(false);
+
   return (
     <View style={styles.card}>
       {isLive ? (
@@ -101,6 +109,7 @@ const EventsCard = ({
                     setInterest(!interest);
                   },
                   () => {
+                    showToast();
                     setApiCall(false);
                     //failure
                   },

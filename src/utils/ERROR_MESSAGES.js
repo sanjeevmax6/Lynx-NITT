@@ -9,3 +9,5 @@ export const FILL_REQUIRED_FIELDS = 'Please fill the required fields';
 export const CHECK_VALUES_ENTERED = 'Please check the values filed';
 export const USER_DETAILS_FETCH =
   'An error has occurred in gathering your details';
+
+export const TOAST_ERROR_MESSAGE = 'Failed to process your request!';

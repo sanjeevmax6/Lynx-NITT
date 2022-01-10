@@ -27,11 +27,18 @@ import {toggleFollowApi} from '../../apis/followUnfollowApi';
 import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
+import {useToast} from 'react-native-toast-notifications';
+import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 
 const Header = observer(
   ({name, followers, url, email, description, navigation}) => {
     const [coverColor, setCoverColor] = useState('');
     const [ApiCall, setApiCall] = useState(false);
+    const toast = useToast();
+
+    const showToast = () => {
+      toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+    };
 
     const openLink = url => {
       try {
@@ -151,6 +158,7 @@ const Header = observer(
                   );
                 },
                 () => {
+                  showToast();
                   setApiCall(false);
                 },
               );

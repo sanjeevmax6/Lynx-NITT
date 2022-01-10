@@ -5,11 +5,6 @@ import {USER_STORE} from '../mobx/USER_STORE';
 import axios from 'axios';
 import {STUDENT} from '../utils/USER_TYPE';
 import {API_STORE} from '../mobx/API_STORE';
-import {ToastAndroid} from 'react-native';
-
-const showToast = () => {
-  ToastAndroid.show('Failed to follow/unfollow the club!', ToastAndroid.SHORT);
-};
 
 async function API_CALL(eventId, successCallback, failureCallBack) {
   try {
@@ -26,7 +21,6 @@ async function API_CALL(eventId, successCallback, failureCallBack) {
     console.log(error.response);
 
     failureCallBack();
-    showToast();
   }
 }
 export const toggleInterestedApi = (
@@ -39,7 +33,7 @@ export const toggleInterestedApi = (
     if (state.isConnected === true) {
       API_CALL(eventId, successCallback, failureCallBack);
     } else {
-      showToast();
+      failureCallBack();
     }
   });
 };
