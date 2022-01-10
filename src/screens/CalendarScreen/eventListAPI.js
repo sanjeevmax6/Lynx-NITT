@@ -30,14 +30,14 @@ export const eventList = () => {
         .then(
           axios.spread((firstResponse, secondResponse) => {
             if (firstResponse.status == 200 && secondResponse.status == 200) {
-              console.log(
-                'Response from First API Call' +
-                  JSON.stringify(firstResponse.data),
-              );
-              console.log(
-                'Response from Second API Call' +
-                  JSON.stringify(secondResponse.data),
-              );
+              // console.log(
+              //   'Response from First API Call' +
+              //     JSON.stringify(firstResponse.data),
+              // );
+              // console.log(
+              //   'Response from Second API Call' +
+              //     JSON.stringify(secondResponse.data),
+              // );
               CALENDAR_STORE.setEventData(firstResponse.data);
               CALENDAR_STORE.setAdminEventData(secondResponse.data);
               CALENDAR_STORE.setSuccess(true);

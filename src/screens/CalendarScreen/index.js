@@ -42,10 +42,10 @@ const CalendarScreen = observer(({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   var eventDATA,
-    filteredEventData,
+    filteredEventData = [],
     finalEventData = [];
   var adminEventDATA,
-    filteredAdminEventData,
+    filteredAdminEventData = [],
     finalAdminEventData = [];
   var filteredData = [];
   var selectedDate = CALENDAR_STORE.getSelectedDate;
@@ -59,7 +59,6 @@ const CalendarScreen = observer(({navigation}) => {
     CALENDAR_STORE.setSelectedDate(
       moment(new Date().toLocaleString()).format('DD-MM-YYYY'),
     );
-    console.log(new Date().toLocaleString());
     eventList();
     setRefreshing(false);
   }, []);
@@ -73,50 +72,37 @@ const CalendarScreen = observer(({navigation}) => {
     eventDATA = CALENDAR_STORE.getEventData.events;
     adminEventDATA = CALENDAR_STORE.getAdminEventData.events;
 
-    filteredEventData = eventDATA.filter(function (event) {
-      return (
-        moment(new Date(event.data[0].startDate).toLocaleDateString()).format(
-          'DD-MM-YYYY',
-        ) == selectedDate
-      );
-    });
-    filteredAdminEventData = adminEventDATA.filter(function (event) {
-      return (
-        moment(new Date(event.data[0].startDate).toLocaleDateString()).format(
-          'DD-MM-YYYY',
-        ) == selectedDate
-      );
-    });
-    console.log(JSON.stringify(filteredAdminEventData));
+    for (var i = 0; i < eventDATA.length; i++) {
+      filteredEventData = eventDATA[i].data.filter(function (event) {
+        return (
+          moment(new Date(event.startDate).toLocaleDateString()).format(
+            'DD-MM-YYYY',
+          ) == selectedDate
+        );
+      });
 
-    if (filteredEventData.length == 0) {
-      filteredEventData = [];
-    } else {
-      //console.log(JSON.stringify(filteredEventData));
-      for (var i = 0; i < filteredEventData.length; i++) {
-        finalEventData = [...finalEventData, ...filteredEventData[i].data];
-      }
-      //console.log('Finale: ' + JSON.stringify(finalEventData));
+      finalEventData = [...finalEventData, ...filteredEventData];
+    }
+    // console.log('Final Event Data:' + JSON.stringify(finalEventData));
+
+    for (var i = 0; i < adminEventDATA.length; i++) {
+      filteredAdminEventData = adminEventDATA[i].data.filter(function (notice) {
+        return (
+          moment(new Date(notice.startDate).toLocaleDateString()).format(
+            'DD-MM-YYYY',
+          ) == selectedDate
+        );
+      });
+      filteredAdminEventData.forEach(element => {
+        element['admin_event'] = true;
+      });
+
+      finalAdminEventData = [...finalAdminEventData, ...filteredAdminEventData];
     }
 
-    if (filteredAdminEventData.length == 0) {
-      filteredAdminEventData = [];
-    } else {
-      for (var i = 0; i < filteredAdminEventData.length; i++) {
-        filteredAdminEventData[i].data.forEach(element => {
-          element['admin_event'] = true;
-        });
-      }
-      //console.log(JSON.stringify(filteredAdminEventData));
-      for (var i = 0; i < filteredAdminEventData.length; i++) {
-        finalAdminEventData = [
-          ...finalAdminEventData,
-          ...filteredAdminEventData[i].data,
-        ];
-      }
-      //console.log('Finale: ' + JSON.stringify(finalAdminEventData));
-    }
-
+    // console.log(
+    //   'Final Admin Event Data:' + JSON.stringify(finalAdminEventData),
+    // );
     filteredData = [...finalAdminEventData, ...finalEventData];
   }
 
