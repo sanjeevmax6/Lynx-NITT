@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, View, Text, BackHandler} from 'react-native';
 import * as colors from '../../utils/colors';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventsView from './EventsView';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {Divider} from 'react-native-paper';
@@ -24,14 +24,24 @@ const renderTopLayout = (data, navigation) => (
       followers={data.followers_count}
       url={data.profile_pic}
       description={data.description}
-      facebook={data.links.facebook}
-      instagram={data.links.instagram}
-      linkedIn={data.links.linkedin}
-      medium={data.links.medium}
-      web={data.links.website}
       navigation={navigation}
     />
     <Divider style={styles.divider} />
+    {CLUB_DESCRIPTION_STORE.getLiveEvents.length === 0 &&
+    CLUB_DESCRIPTION_STORE.getUpcomingEvents.length === 0 ? (
+      <></>
+    ) : (
+      <Text
+        style={{
+          fontSize: scale(18),
+          paddingTop: verticalScale(6),
+          fontWeight: '500',
+          color: colors.BLACK,
+          marginHorizontal: scale(HorizontalPadding),
+        }}>
+        Events
+      </Text>
+    )}
   </View>
 );
 
@@ -45,7 +55,6 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        BOTTOM_NAV_STORE.setTabVisibility(true);
         navigation.pop();
         return true;
       },
@@ -57,10 +66,11 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
   }, []);
 
   const goToEvent = eventId => {
-    navigation.push('EventDescription', {
+    navigation.push('EventDescriptionScreen', {
       eventId: eventId,
     });
   };
+
   return (
     <SafeAreaView style={{backgroundColor: colors.WHITE, flex: 1}}>
       {CLUB_DESCRIPTION_STORE.getLoading ? (
@@ -78,7 +88,6 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
         <EventsView
           liveEventArray={CLUB_DESCRIPTION_STORE.getLiveEvents}
           upcomingEventArray={CLUB_DESCRIPTION_STORE.getUpcomingEvents}
-          pastEventArray={CLUB_DESCRIPTION_STORE.getPastEvents}
           topLayout={renderTopLayout(
             CLUB_DESCRIPTION_STORE.getData,
             navigation,

@@ -14,26 +14,17 @@ import {API_STORE} from '../../mobx/API_STORE';
 
 async function API_CALL() {
   try {
-    // const responseData = await axios.get(
-    //   API_CLUB_DATA_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
-    // );
-    // const responseUpcomingLive = await axios.get(
-    //   API_CLUB_UPCOMING_EVENTS_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
-    // );
-    // const responsePast = await axios.get(
-    //   API_CLUB_PAST_EVENTS_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
-    // );
-
-    const [responseData, responseUpcomingLive, responsePast] = await axios.all([
+    const [responseData, responseUpcomingLive] = await axios.all([
       axios.get(API_CLUB_DATA_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID),
       axios.get(
         API_CLUB_UPCOMING_EVENTS_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
       ),
-      axios.get(
-        API_CLUB_PAST_EVENTS_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
-      ),
+      // axios.get(
+      //   API_CLUB_PAST_EVENTS_BY_ID + '/' + CLUB_DESCRIPTION_STORE.getID,
+      // ),
     ]);
 
+    // if the user is a student check if he is following that club
     if (USER_STORE.getUserType === STUDENT) {
       const isFollowing = await axios.get(
         API_STORE.getBaseUrl + API_IS_FOLLOWING + CLUB_DESCRIPTION_STORE.getID,
@@ -41,11 +32,8 @@ async function API_CALL() {
       );
       CLUB_DESCRIPTION_STORE.setIsFollowingClub(isFollowing.data.isFollowing);
     }
-    if (
-      responseData.status == 200 &&
-      responseUpcomingLive.status == 200 &&
-      responsePast.status == 200
-    ) {
+
+    if (responseData.status == 200 && responseUpcomingLive.status == 200) {
       CLUB_DESCRIPTION_STORE.setData(responseData.data.details);
       CLUB_DESCRIPTION_STORE.setLiveEvents(
         responseUpcomingLive.data.liveEvents,
@@ -53,7 +41,7 @@ async function API_CALL() {
       CLUB_DESCRIPTION_STORE.setUpcomingEvents(
         responseUpcomingLive.data.upcomingEvents,
       );
-      CLUB_DESCRIPTION_STORE.setPastEvents(responsePast.data.pastEvents);
+      // CLUB_DESCRIPTION_STORE.setPastEvents(responsePast.data.pastEvents);
       CLUB_DESCRIPTION_STORE.setSuccess(true);
     } else {
       CLUB_DESCRIPTION_STORE.setSuccess(false);

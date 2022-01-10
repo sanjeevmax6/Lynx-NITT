@@ -14,7 +14,7 @@ import {API_CLUB_LIST} from '../../utils/API_CONSTANTS';
 import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_SEARCH_SCREEN} from '../../utils/LOADING_TYPES';
 
-const ClubSearchResult = ({searchQuery, setScreen}) => {
+const ClubSearchResult = ({searchQuery, setScreen, navigation}) => {
   const footer = () => {
     return <View style={{height: verticalScale(6)}} />;
   };
@@ -105,6 +105,8 @@ const ClubSearchResult = ({searchQuery, setScreen}) => {
                         clubIconUrl={item.profilePic}
                         clubName={item.name}
                         clubDescription={item.description}
+                        navigation={navigation}
+                        id={item._id}
                       />
                     </View>
                   )}
@@ -128,6 +130,8 @@ const ClubSearchResult = ({searchQuery, setScreen}) => {
                           clubIconUrl={item.profilePic}
                           clubName={item.name}
                           clubDescription={item.description}
+                          navigation={navigation}
+                          id={item._id}
                         />
                       </View>
                     )}

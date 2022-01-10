@@ -57,7 +57,7 @@ function UserNavigator() {
         }}
       />
       <UserStack.Screen
-        name="EventDescription"
+        name="EventDescriptionScreen"
         component={EventDescriptionScreen}
         options={{
           headerShown: false,

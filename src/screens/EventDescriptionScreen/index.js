@@ -46,7 +46,6 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     eventDescriptionAPI();
     return () => backHandler.remove();
   }, []);
-
   return (
     <View
       style={{backgroundColor: colors.EventDescriptionScreen_Back, flex: 1}}>
@@ -84,7 +83,6 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                 <ClubCard
                   name={EVENT_DESCRIPTION_STORE.getData.club.name}
                   imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
-                  followers={EVENT_DESCRIPTION_STORE.getData.club_followers}
                   navigation={navigation}
                   clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
                 />

@@ -12,7 +12,8 @@ import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
 
 const WIDTH = Dimensions.get('window').width;
-const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
+
+const ClubCard = observer(({name, imgID, navigation, clubID}) => {
   const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
@@ -34,7 +35,9 @@ const ClubCard = observer(({name, imgID, followers, navigation, clubID}) => {
             {name}
           </Text>
         </TouchableOpacity>
-        <Text style={styles.followers}>{followers} FOLLOWERS</Text>
+        <Text style={styles.followers}>
+          {EVENT_DESCRIPTION_STORE.getData.club.followers} FOLLOWERS
+        </Text>
         {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
           <Button
             mode="outlined"

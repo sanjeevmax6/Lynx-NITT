@@ -9,67 +9,62 @@ import {
   emptyUpcomingEventArray,
   emptyPastEventArray,
 } from '../../utils/stringConstants';
+import {CLUB_DESCRIPTION_STORE} from '../../mobx/CLUB_DESCRIPTION_STORE';
 const EventsView = ({
   liveEventArray,
   upcomingEventArray,
-  pastEventArray,
+
   topLayout,
   goToEvent,
 }) => {
-  return (
-    <View style={styles.card}>
-      <SectionList
-        sections={[
+  const NoEventString =
+    CLUB_DESCRIPTION_STORE.getData.name + ' has no upcoming events scheduled';
+
+  const sections =
+    upcomingEventArray.length === 0 && liveEventArray.length === 0
+      ? []
+      : [
           {
             title: 'Live Events',
-            data:
-              liveEventArray.length != 0
-                ? liveEventArray.slice()
-                : [emptyLiveEventArray],
+            isLive: true,
+            data: liveEventArray.slice(),
           },
           {
             title: 'Upcoming Events',
-            data:
-              upcomingEventArray.length != 0
-                ? upcomingEventArray.slice()
-                : [emptyUpcomingEventArray],
+            isLive: false,
+            data: upcomingEventArray.slice(),
           },
-          {
-            title: 'Past Events',
-            data:
-              pastEventArray.length != 0
-                ? pastEventArray.slice()
-                : [emptyPastEventArray],
-          },
-        ]}
-        renderItem={({item}) =>
-          item == emptyLiveEventArray ||
-          item == emptyUpcomingEventArray ||
-          item == emptyPastEventArray ? (
-            <Text style={styles.emptyArray}>{item}</Text>
-          ) : (
-            <View
-              style={{
-                marginHorizontal: scale(HorizontalPadding),
-              }}>
-              <EventCard
-                name={item.Title}
-                url={item.poster}
-                description={item.Description}
-                date={item.startDate}
-                eventId={item.EventId}
-                goToEvent={goToEvent}
-              />
-            </View>
-          )
+        ];
+  console.log('R');
+
+  return (
+    <View style={styles.card}>
+      <SectionList
+        sections={sections}
+        ListEmptyComponent={
+          <Text style={styles.emptyArray}>{NoEventString}</Text>
         }
-        renderSectionHeader={({section}) => (
-          <Text style={styles.head}>{section.title}</Text>
+        renderItem={({item, section}) => (
+          <View
+            style={{
+              marginHorizontal: scale(HorizontalPadding),
+            }}>
+            <EventCard
+              isLive={section.isLive}
+              name={item.Title}
+              url={item.poster}
+              description={item.Description}
+              date={item.startDate}
+              eventId={item.EventId}
+              goToEvent={goToEvent}
+            />
+          </View>
         )}
+        renderSectionHeader={({section}) => <></>}
         keyExtractor={(item, index) => index}
         ListHeaderComponent={topLayout}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={<View style={{padding: verticalScale(4)}} />}
+        ListFooterComponent={<View style={{padding: verticalScale(6)}} />}
         showsHorizontalScrollIndicator={false}
         bounces={false}
         bouncesZoom={false}

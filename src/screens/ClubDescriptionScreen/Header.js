@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,67 +16,35 @@ import {
   verticalScale,
 } from 'react-native-size-matters';
 
-import {Card, Paragraph, Button} from 'react-native-paper';
+import {Button, IconButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ImageColors from 'react-native-image-colors';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
 import {CLUB_DESCRIPTION_STORE} from '../../mobx/CLUB_DESCRIPTION_STORE';
-import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
+import LoaderPage from '../../components/LoadingScreen';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 
 const Header = observer(
-  ({
-    name,
-    followers,
-    url,
-    email,
-    description,
-    navigation,
-    facebook,
-    instagram,
-    linkedIn,
-    web,
-    medium,
-  }) => {
+  ({name, followers, url, email, description, navigation}) => {
     const [coverColor, setCoverColor] = useState('');
     const [ApiCall, setApiCall] = useState(false);
 
-    const openLink = choice => {
-      switch (choice) {
-        case 1:
-          web.length != 0
-            ? Linking.openURL(web)
-            : Linking.openURL('https://spider.nitt.edu/');
-          break;
-        case 2:
-          instagram.length != 0
-            ? Linking.openURL(instagram)
-            : Linking.openURL('https://www.instagram.com/');
-          break;
-        case 3:
-          linkedIn.length != 0
-            ? Linking.openURL(linkedIn)
-            : Linking.openURL('https://www.linkedin.com/');
-          break;
-        case 4:
-          facebook.length != 0
-            ? Linking.openURL(facebook)
-            : Linking.openURL('https://www.facebook.com/');
-          break;
-        case 5:
-          medium.length != 0
-            ? Linking.openURL(medium)
-            : Linking.openURL('https://medium.com/');
-          break;
-        default:
+    const openLink = url => {
+      try {
+        Linking.openURL(url);
+      } catch (error) {
+        console.log(error);
       }
     };
 
-    const getColors = async () => {
-      const result = await ImageColors.getColors(url, {
-        fallback: colors.primary,
-        cache: true,
+    const getColors = async URL => {
+      const result = await ImageColors.getColors(URL, {
+        fallback: colors.Primary,
+        cache: false,
         key: 'unique_key',
       });
       switch (result.platform) {
@@ -90,17 +58,14 @@ const Header = observer(
           return {cover: colors.Primary, icon: colors.Secondary};
       }
     };
-
-    getColors().then(res => {
-      setCoverColor(res.cover);
-    });
+    useEffect(() => {
+      getColors(url ? API_GET_IMAGE + url : NO_IMAGE_URL).then(res => {
+        setCoverColor(res.cover);
+      });
+    }, [url]);
 
     return coverColor === colors.Tertiary ? (
-      <SafeAreaView>
-        <View>
-          <Text>LOADING</Text>
-        </View>
-      </SafeAreaView>
+      <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
     ) : (
       <View style={{backgroundColor: colors.WHITE}}>
         <View
@@ -109,13 +74,14 @@ const Header = observer(
             height: verticalScale(81),
           }}></View>
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={() => {
             navigation.navigate('ImageScreen', {imgUrl: API_GET_IMAGE + url});
           }}>
           <View style={styles.imageView}>
             <Image
               source={{
-                uri: API_GET_IMAGE + url || '../../assests/images/spider.png',
+                uri: url ? API_GET_IMAGE + url : NO_IMAGE_URL,
               }}
               style={styles.image}
             />
@@ -127,15 +93,30 @@ const Header = observer(
             marginHorizontal: scale(HorizontalPadding),
             paddingBottom: verticalScale(10),
           }}>
-          <Text style={styles.name}>{name}</Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL('mailto:' + email);
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
             }}>
-            <Text style={styles.email}>{email}</Text>
-          </TouchableOpacity>
+            <Text
+              style={{
+                ...styles.name,
+                maxWidth: '90%',
+                textTransform: 'uppercase',
+              }}>
+              {name}
+            </Text>
 
+            <IconButton
+              onPress={() => {
+                Linking.openURL('mailto:' + email);
+              }}
+              size={20}
+              color={colors.Tertiary}
+              icon={'message-outline'}
+            />
+          </View>
           <Text style={styles.followers}>{followers} followers</Text>
           <Text
             style={{
@@ -154,8 +135,19 @@ const Header = observer(
                 CLUB_DESCRIPTION_STORE.getID,
                 () => {
                   setApiCall(false);
+                  if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                    CLUB_DESCRIPTION_STORE.setDecrementFollower();
+                    EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                  } else {
+                    CLUB_DESCRIPTION_STORE.setIncrementFollower();
+                    EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                  }
+
                   CLUB_DESCRIPTION_STORE.setIsFollowingClub(
                     !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                  );
+                  EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                    CLUB_DESCRIPTION_STORE.getIsFollowingClub,
                   );
                 },
                 () => {
@@ -171,66 +163,109 @@ const Header = observer(
           </Button>
 
           <View style={styles.icons}>
-            <TouchableOpacity
-              style={styles.iconTouch}
-              onPress={() => {
-                openLink(1);
-              }}>
-              <Icon
-                style={styles.icon}
-                color={colors.ClubDescriptionScreen_ICON}
-                name="globe-outline"
-                size={moderateScale(ICON_SIZE_LARGE)}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.iconTouch}
-              onPress={() => {
-                openLink(2);
-              }}>
-              <Icon
-                name="logo-instagram"
-                size={moderateScale(ICON_SIZE_LARGE)}
-                style={styles.icon}
-                color={colors.ClubDescriptionScreen_ICON}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.iconTouch}
-              onPress={() => {
-                openLink(3);
-              }}>
-              <Icon
-                name="logo-linkedin"
-                size={moderateScale(ICON_SIZE_LARGE)}
-                color={colors.ClubDescriptionScreen_ICON}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.iconTouch}
-              onPress={() => {
-                openLink(4);
-              }}>
-              <Icon
-                name="logo-facebook"
-                size={moderateScale(ICON_SIZE_LARGE)}
-                color={colors.ClubDescriptionScreen_ICON}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.iconTouch}
-              onPress={() => {
-                openLink(5);
-              }}>
-              <Entypo
-                name="medium"
-                size={moderateScale(ICON_SIZE_LARGE)}
-                color={colors.ClubDescriptionScreen_ICON}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
+            {CLUB_DESCRIPTION_STORE.getData.links.website ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(CLUB_DESCRIPTION_STORE.getData.links.website.trim());
+                }}>
+                <Icon
+                  style={styles.icon}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  name="logo-chrome"
+                  size={moderateScale(ICON_SIZE_LARGE)}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
+
+            {CLUB_DESCRIPTION_STORE.getData.links.linkedin ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(
+                    CLUB_DESCRIPTION_STORE.getData.links.linkedin.trim(),
+                  );
+                }}>
+                <Icon
+                  style={styles.icon}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  name="logo-linkedin"
+                  size={moderateScale(ICON_SIZE_LARGE)}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
+            {CLUB_DESCRIPTION_STORE.getData.links.instagram ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(
+                    CLUB_DESCRIPTION_STORE.getData.links.instagram.trim(),
+                  );
+                }}>
+                <Icon
+                  style={styles.icon}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  name="logo-instagram"
+                  size={moderateScale(ICON_SIZE_LARGE)}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
+            {CLUB_DESCRIPTION_STORE.getData.links.facebook ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(
+                    CLUB_DESCRIPTION_STORE.getData.links.facebook.trim(),
+                  );
+                }}>
+                <Icon
+                  style={styles.icon}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  name="logo-facebook"
+                  size={moderateScale(ICON_SIZE_LARGE)}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
+            {CLUB_DESCRIPTION_STORE.getData.links.medium ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(CLUB_DESCRIPTION_STORE.getData.links.medium.trim());
+                }}>
+                <Entypo
+                  name="medium"
+                  size={moderateScale(ICON_SIZE_LARGE + 3)}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
+            {CLUB_DESCRIPTION_STORE.getData.links.youtube ? (
+              <TouchableOpacity
+                style={styles.iconTouch}
+                onPress={() => {
+                  openLink(CLUB_DESCRIPTION_STORE.getData.links.youtube.trim());
+                }}>
+                <Entypo
+                  name="youtube"
+                  size={moderateScale(ICON_SIZE_LARGE + 2)}
+                  color={colors.ClubDescriptionScreen_ICON}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
           </View>
         </View>
       </View>
@@ -263,6 +298,7 @@ const styles = ScaledSheet.create({
     borderRadius: '60@s',
     justifyContent: 'center',
     borderColor: colors.Primary,
+    backgroundColor: 'white',
   },
   numbers: {
     color: colors.WHITE,
@@ -271,7 +307,7 @@ const styles = ScaledSheet.create({
   },
   name: {
     fontSize: '18@s',
-    fontWeight: 'bold',
+    fontWeight: '500',
     color: colors.BLACK,
   },
   email: {
@@ -305,5 +341,6 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingRight: scale(15),
     paddingTop: '10@vs',
+    alignItems: 'center',
   },
 });

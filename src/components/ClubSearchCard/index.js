@@ -13,9 +13,18 @@ import * as color from '../../utils/colors';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
-const ClubSearchCard = ({clubIconUrl, clubName, clubDescription}) => {
+const ClubSearchCard = ({
+  clubIconUrl,
+  clubName,
+  clubDescription,
+  navigation,
+  id,
+}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.push('ClubDescription', {data: {ClubId: id}});
+      }}>
       <View style={styles.container}>
         <View style={styles.center}>
           <Image
@@ -24,9 +33,7 @@ const ClubSearchCard = ({clubIconUrl, clubName, clubDescription}) => {
             PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
             source={{
               uri:
-                clubIconUrl === '' || clubIconUrl === 'sample.jpg'
-                  ? NO_IMAGE_URL
-                  : API_GET_IMAGE + clubIconUrl,
+                clubIconUrl === '' ? NO_IMAGE_URL : API_GET_IMAGE + clubIconUrl,
             }}
           />
         </View>

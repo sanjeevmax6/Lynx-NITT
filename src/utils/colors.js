@@ -81,7 +81,7 @@ export const EventDescriptionScreen_TagBackGround = '#DFE7FD';
 export const EventDescriptionScreen_TagText = Accent;
 
 //clubDescription
-export const ClubDescriptionScreen_ICON = BLACK;
+export const ClubDescriptionScreen_ICON = '#343a40';
 
 //Creation Page
 export const CreationScreen_Icon = Primary;

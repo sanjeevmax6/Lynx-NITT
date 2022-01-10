@@ -73,6 +73,7 @@ const SearchScreen = ({route, navigation}) => {
               <ClubSearchResult
                 searchQuery={searchQuery}
                 setScreen={setScreen}
+                navigation={navigation}
               />
             )}
           />
@@ -102,6 +103,7 @@ const SearchScreen = ({route, navigation}) => {
               <AcadSearchResult
                 searchQuery={searchQuery}
                 setScreen={setScreen}
+                navigation={navigation}
               />
             )}
           />

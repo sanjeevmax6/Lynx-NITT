@@ -76,9 +76,22 @@ class eventDescriptionStore {
     return this.state.success;
   }
 
+  setIncrementFollower() {
+    this.state.data.club.followers = this.state.data.club.followers + 1;
+    console.log(this.state.data.club.followers);
+  }
+
+  setDecrementFollower() {
+    this.state.data.club.followers = this.state.data.club.followers - 1;
+    console.log(this.state.data.club.followers);
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
+
+      setIncrementFollower: action,
+      setDecrementFollower: action,
 
       setError: action,
       getError: computed,

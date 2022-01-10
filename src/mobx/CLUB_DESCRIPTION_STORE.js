@@ -93,9 +93,22 @@ class clubDescriptionStore {
     return this.state.success;
   }
 
+  setIncrementFollower = () => {
+    console.log(this.state.data.followers_count);
+    this.state.data.followers_count = this.state.data.followers_count + 1;
+  };
+  setDecrementFollower = () => {
+    console.log(this.state.data.followers_count);
+    this.state.data.followers_count = this.state.data.followers_count - 1;
+  };
+
   constructor() {
     makeObservable(this, {
       state: observable,
+
+      setIncrementFollower: action,
+
+      setDecrementFollower: action,
 
       setError: action,
       getError: computed,

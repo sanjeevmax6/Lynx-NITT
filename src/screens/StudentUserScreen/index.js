@@ -46,7 +46,7 @@ const StudentUserScreen = observer(({navigation}) => {
   };
 
   const goToEvent = event => {
-    navigation.push('EventDescription', {
+    navigation.push('EventDescriptionScreen', {
       eventId: event._id,
     });
     //navigation.push('EventDescription', {data: {EventId: event._id}});
