@@ -67,6 +67,14 @@ export const API_RESET_PASSWORD_VALIDATE_STUDENT =
 export const API_RESET_PASSWORD_STUDENT =
   API_BASE_URL + 'auth/forgotpwd/student/newPassword';
 
+
+export const API_CLUB_DATA_BY_ID = API_BASE_URL + 'api/getclub/';
+
+export const API_CLUB_UPCOMING_EVENTS_BY_ID =
+  API_BASE_URL + 'api/upcomingClubEvents/';
+
+export const API_CLUB_PAST_EVENTS_BY_ID = API_BASE_URL + 'api/pastClubEvents/';
+
 export const API_TOGGLE_INTERESTED = '/api/student/interest/toggle/';
 
 export const API_STUDENT_INTERESTED_IN_EVENT =

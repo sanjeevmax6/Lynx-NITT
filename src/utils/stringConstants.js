@@ -8,3 +8,6 @@ export const calendarNoticeCreation_DateTitle = 'Specify date of notice!';
 export const calendarNoticeCreation_NoticeTitle = 'Give notice title!';
 export const calendarNoticeCreation_DescriptionTitle =
   'Add description to your notice!';
+export const emptyLiveEventArray = 'No live events!';
+export const emptyUpcomingEventArray = 'No scheduled events!';
+export const emptyPastEventArray = 'No past events!';
