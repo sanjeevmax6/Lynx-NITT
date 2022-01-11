@@ -7,6 +7,14 @@ class clubRegisterStore {
     error: false,
     success: false,
   };
+
+  reset = () => {
+    this.state.errorText = '';
+    this.state.loading = false;
+    this.state.error = false;
+    this.state.success = false;
+  };
+
   setErrorText = txt => {
     this.state.errorText = txt;
   };
@@ -54,6 +62,8 @@ class clubRegisterStore {
 
       setSuccess: action,
       getSuccess: computed,
+
+      reset: action,
     });
   }
 }

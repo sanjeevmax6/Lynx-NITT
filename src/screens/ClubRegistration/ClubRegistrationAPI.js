@@ -10,6 +10,8 @@ import axios from 'axios';
 import * as ERROR_MESSAGES from '../../utils/ERROR_MESSAGES';
 
 export const clubRegisterAPI = () => {
+  console.log('HEY API CALL');
+
   CLUB_REGISTER_STORE.setError(false);
   CLUB_REGISTER_STORE.setLoading(true);
 
@@ -56,9 +58,8 @@ export const clubRegisterAPI = () => {
         })
         .then(response => {
           if (response.status == 200) {
-            console.log(1);
-            USER_STORE.setRedirectUpdate(false);
-            AsyncStorage.setItem(USER_TOKEN, USER_STORE.getUserToken); //user token stored locally
+            console.log('HEY API CALL');
+            console.log(response.data.message);
             CLUB_REGISTER_STORE.setSuccess(true);
           } else {
             CLUB_REGISTER_STORE.setErrorText(ERROR_MESSAGES.UNEXPECTED_ERROR);
@@ -67,7 +68,7 @@ export const clubRegisterAPI = () => {
           CLUB_REGISTER_STORE.setLoading(false);
         })
         .catch(error => {
-          console.log(0);
+          console.log('failure');
           if (error.response) {
             CLUB_REGISTER_STORE.setErrorText(error.response.data.message);
           } else if (error.request) {

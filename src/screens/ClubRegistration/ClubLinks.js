@@ -16,10 +16,17 @@ import {clubRegisterAPI} from './ClubRegistrationAPI';
 import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
 import Error from '../../components/Error';
 
-const TEXT_INPUT = ({placeholder, label = placeholder, icon, onTextChange}) => {
+const TEXT_INPUT = ({
+  placeholder,
+  label = placeholder,
+  icon,
+  onTextChange,
+  value,
+}) => {
   return (
     <TextInput
       underlineColor="transparent"
+      value={value}
       label={label}
       style={{
         backgroundColor: colors.GRAY_LIGHT,
@@ -60,6 +67,7 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Website Link'}
           label={'Website Link'}
           icon={'google-chrome'}
+          value={EDIT_CLUB_PROFILE_STORE.getWebsiteLink}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setWebsiteLink(val);
           }}
@@ -68,6 +76,7 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Instagram Link'}
           label={'Instagram Link'}
           icon={'instagram'}
+          value={EDIT_CLUB_PROFILE_STORE.getInstagramLink}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setInstagramLink(val);
           }}
@@ -76,6 +85,7 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Facebook Link'}
           label={'Facebook Link'}
           icon={'facebook'}
+          value={EDIT_CLUB_PROFILE_STORE.getFacebookLink}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setFacebookLink(val);
           }}
@@ -84,6 +94,7 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Youtube Link'}
           label={'Youtube Link'}
           icon={'youtube'}
+          value={EDIT_CLUB_PROFILE_STORE.getYoutubeLink}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setYoutubeLink(val);
           }}
@@ -91,6 +102,7 @@ const ClubLinks = observer(({backwardAction}) => {
         <TEXT_INPUT
           placeholder={'LinkedIn Link'}
           label={'LinkedIn Link'}
+          value={EDIT_CLUB_PROFILE_STORE.getLinkedInLink}
           icon={'linkedin'}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setLinkedInLink(val);
@@ -100,6 +112,7 @@ const ClubLinks = observer(({backwardAction}) => {
           placeholder={'Medium Link'}
           label={'Medium Link'}
           icon={'alpha-m-box'}
+          value={EDIT_CLUB_PROFILE_STORE.getMediumLink}
           onTextChange={val => {
             EDIT_CLUB_PROFILE_STORE.setMediumLink(val);
           }}

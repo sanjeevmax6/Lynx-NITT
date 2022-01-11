@@ -44,6 +44,7 @@ const ClubDescription = observer(({forwardAction}) => {
       </Text>
       <TextInput
         underlineColor="transparent"
+        value={EDIT_CLUB_PROFILE_STORE.getClubDescription}
         label="Club Description"
         style={{
           backgroundColor: colors.GRAY_LIGHT,

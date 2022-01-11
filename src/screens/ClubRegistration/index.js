@@ -10,6 +10,12 @@ import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_TOKEN} from '../../utils/STORAGE_KEYS';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+import {clubRegisterAPI} from './ClubRegistrationAPI';
+import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 
 const ClubRegistration = observer(() => {
   const ref = useRef(PagerView);
@@ -33,11 +39,29 @@ const ClubRegistration = observer(() => {
       ) : (
         <>
           {CLUB_REGISTER_STORE.getError ? (
-            <ErrorScreen />
+            <ErrorScreen
+              errorMessage={CLUB_REGISTER_STORE.getErrorText}
+              fn={() => {
+                if (CLUB_REGISTER_STORE.getErrorText === NO_NETWORK) {
+                  clubRegisterAPI();
+                } else {
+                  CLUB_REGISTER_STORE.setLoading(false);
+                  CLUB_REGISTER_STORE.setErrorText('');
+                  CLUB_REGISTER_STORE.setError(false);
+                }
+              }}
+            />
           ) : (
             <>
               {CLUB_REGISTER_STORE.getSuccess ? (
-                <SuccessScreen />
+                <SuccessScreen
+                  fn={() => {
+                    USER_STORE.setRedirectUpdate(false);
+                    AsyncStorage.setItem(USER_TOKEN, USER_STORE.getUserToken); //user token stored locally
+
+                    EDIT_CLUB_PROFILE_STORE.reset();
+                  }}
+                />
               ) : (
                 <PagerView
                   style={styles.pagerView}

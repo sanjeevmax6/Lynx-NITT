@@ -14,6 +14,22 @@ class ClubProfile {
     errorText: '',
     loading: false,
   };
+
+  reset = () => {
+    this.state.clubImage =
+      'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg';
+    this.state.clubDescription = '';
+    this.state.instagramLink = '';
+    this.state.websiteLink = '';
+    this.state.facebookLink = '';
+    this.state.youtubeLink = '';
+    this.state.linkedInLink = '';
+    this.state.mediumLink = '';
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.loading = false;
+  };
+
   setClubDescription = val => {
     this.state.clubDescription = val;
   };
@@ -105,7 +121,7 @@ class ClubProfile {
   constructor() {
     makeObservable(this, {
       state: observable,
-
+      reset: action,
       setInstagramLink: action,
       getInstagramLink: computed,
 
