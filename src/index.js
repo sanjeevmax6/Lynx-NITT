@@ -14,6 +14,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import {navigateApp} from './navigation/app-navigator';
 
 class App extends Component {
   componentDidMount() {
@@ -38,7 +39,14 @@ class App extends Component {
 
       onNotification: function (notification) {
         console.log('NOTIFICATION:', notification);
-        //call below event descrription screen with event id as notification.data.eventId
+        //call below event description screen with event id as notification.data.eventId
+
+        console.log('pressed');
+        navigateApp('ActivityNavigator');
+        // navigateApp('ActivityNavigator', {
+        //   screen: 'EventDescriptionScreen',
+        //   params: {eventId: '61dc2a99b096cca58f40cda3'},
+        // });
       },
 
       onAction: function (notification) {

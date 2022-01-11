@@ -21,7 +21,7 @@ const EventDescriptionHeader = observer(({navigation}) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.pop();
+          navigation.goBack();
         }}>
         {Platform.OS === 'ios' ? (
           <Icon
