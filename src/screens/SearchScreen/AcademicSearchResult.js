@@ -35,7 +35,7 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
   const isFocused = useIsFocused();
 
   if (isFocused) {
-    setScreen('');
+    setScreen('NOTICE');
     BOTTOM_NAV_STORE.setTabVisibility(true);
     if (searchQuery != '') {
       if (searchQuery != API) {
@@ -107,7 +107,9 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
                       }}>
                       <AcademicSearchCard
                         title={item.title}
+                        name={item.club.name}
                         desc={item.description}
+                        url={item.club.profilePic}
                       />
                       <Separator />
                     </TouchableOpacity>

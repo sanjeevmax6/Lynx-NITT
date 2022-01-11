@@ -1,15 +1,41 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
-import * as c from '../../utils/colors';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
-const AcademicSearchCard = ({title, desc}) => {
+const AcademicSearchCard = ({title, desc, url, name}) => {
+  console.log(url);
   return (
     <View style={styles.card}>
-      <View style={styles.cardDetails}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.desc}>{desc}</Text>
+      <Image source={{uri: API_GET_IMAGE + url}} style={styles.poster} />
+      <View style={{flex: 1, marginLeft: scale(HorizontalPadding)}}>
+        <Text>
+          <Text numberOfLines={1} style={styles.notifier}>
+            {name}
+          </Text>
+          <Text style={styles.notifier}>: </Text>
+          <Text
+            numberOfLines={1}
+            style={{
+              fontSize: scale(12),
+              fontWeight: '500',
+              textTransform: 'uppercase',
+            }}>
+            {title}
+          </Text>
+          <Text>{'\n'}</Text>
+          <Text
+            numberOfLines={2}
+            style={{
+              flexShrink: 1,
+              marginRight: scale(HorizontalPadding),
+              fontSize: scale(12),
+            }}>
+            {desc}
+          </Text>
+        </Text>
       </View>
     </View>
   );
@@ -23,11 +49,13 @@ const styles = ScaledSheet.create({
     marginBottom: '5@msr',
     display: 'flex',
     flexDirection: 'column',
+    flexDirection: 'row',
     marginHorizontal: scale(HorizontalPadding),
+    alignItems: 'center',
   },
   cardDetails: {
-    flexGrow: 1,
     margin: '5@s',
+    flexDirection: 'row',
     justifyContent: 'space-around',
   },
   title: {
@@ -37,4 +65,17 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
   },
   desc: {},
+  poster: {
+    height: '60@s',
+    width: '60@s',
+    borderRadius: '30@s',
+    alignSelf: 'center',
+    backgroundColor: colors.GRAY_MEDIUM,
+  },
+  notifier: {
+    color: colors.Tertiary,
+    fontSize: scale(14),
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
 });

@@ -49,6 +49,7 @@ const SearchScreen = ({route, navigation}) => {
         />
 
         <Tab.Navigator
+          keyboardDismissMode="none"
           screenOptions={{
             tabBarLabelStyle: {
               fontSize: Math.floor(
@@ -98,7 +99,7 @@ const SearchScreen = ({route, navigation}) => {
             )}
           />
           <Tab.Screen
-            name="Acads"
+            name="Notice"
             children={() => (
               <AcadSearchResult
                 searchQuery={searchQuery}

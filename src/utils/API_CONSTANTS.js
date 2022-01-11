@@ -47,7 +47,7 @@ export const API_UPCOMING_EVENTS = 'api/student/upcoming-events';
 
 export const API_CIRCULAR_CREATION = '/api/circular';
 
-export const API_SEARCH = '/api/student/search';
+export const API_SEARCH = '/api/search';
 
 //temporary firebase reg token
 export const reg_token = '123abc';
@@ -66,7 +66,6 @@ export const API_RESET_PASSWORD_VALIDATE_STUDENT =
 
 export const API_RESET_PASSWORD_STUDENT =
   API_BASE_URL + 'auth/forgotpwd/student/newPassword';
-
 
 export const API_CLUB_DATA_BY_ID = API_BASE_URL + 'api/getclub/';
 

@@ -5,20 +5,22 @@ import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {isLive} from '../../utils/helperFunction/isLive';
+import {isComplete} from '../../utils/helperFunction/isComplete';
 
 const EventSearchCard = ({
   date,
-  time,
+  startTime,
+  endTime,
   name,
   desc,
   eventImage,
   organizer,
-  isLive = false,
 }) => {
   const d = new Date(date);
   return (
     <View style={styles.card}>
-      {isLive ? (
+      {isLive(startTime, endTime) ? (
         <View
           style={{
             position: 'absolute',
@@ -45,7 +47,57 @@ const EventSearchCard = ({
           </Text>
         </View>
       ) : (
-        <></>
+        <>
+          {isComplete(endTime) ? (
+            <View
+              style={{
+                position: 'absolute',
+                paddingHorizontal: scale(3),
+                flexDirection: 'row',
+                right: scale(9),
+                top: verticalScale(1),
+                borderRadius: scale(18),
+                alignItems: 'center',
+              }}>
+              <Icon name="circle" color={colors.CLOSED} size={scale(10)} />
+              <Text
+                style={{
+                  fontSize: scale(9),
+                  color: colors.GRAY_DARK,
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                }}>
+                {' '}
+                Completed
+              </Text>
+            </View>
+          ) : (
+            <>
+              <View
+                style={{
+                  position: 'absolute',
+                  paddingHorizontal: scale(3),
+                  flexDirection: 'row',
+                  right: scale(9),
+                  top: verticalScale(1),
+                  borderRadius: scale(18),
+                  alignItems: 'center',
+                }}>
+                <Icon name="circle" color={colors.UPCOMING} size={scale(10)} />
+                <Text
+                  style={{
+                    fontSize: scale(9),
+                    color: colors.GRAY_DARK,
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                  }}>
+                  {' '}
+                  Upcoming
+                </Text>
+              </View>
+            </>
+          )}
+        </>
       )}
 
       <View

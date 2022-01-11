@@ -93,16 +93,17 @@ const TagSearchResult = ({searchQuery, setScreen, navigation}) => {
                       activeOpacity={0.7}
                       onPress={() => {
                         navigation.push('EventDescriptionScreen', {
-                          eventId: item._id,
+                          eventId: item.id,
                         });
                       }}>
                       <EventSearchCard
                         name={item.title}
                         desc={item.description}
-                        organizer={'NA'}
-                        eventImage={'0c4ca42c-619d-4cbc-9124-4efe80cd5a56.jpg'}
+                        organizer={item.clubName}
+                        eventImage={item.image}
                         date={item.startDate}
-                        isLive={isLive(item.startDate, item.endDate)}
+                        startTime={item.startDate}
+                        endTime={item.endDate}
                       />
                     </TouchableOpacity>
                   )}
