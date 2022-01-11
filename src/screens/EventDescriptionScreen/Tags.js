@@ -28,8 +28,11 @@ const Tags = ({tags, navigation}) => {
                 }}
                 onPress={() => {
                   navigation.navigate('Search', {
-                    screen: 'Tags',
-                    params: {searchText: item},
+                    screen: 'SearchScreen',
+                    params: {
+                      screen: 'Tags',
+                      params: {searchText: item},
+                    },
                   });
                 }}
                 textStyle={{

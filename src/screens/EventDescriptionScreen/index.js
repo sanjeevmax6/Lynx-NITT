@@ -120,6 +120,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                 tags={EVENT_DESCRIPTION_STORE.getData.tags}
                 navigation={navigation}
               />
+              <View style={{height: verticalScale(150)}} />
             </ScrollView>
           </>
         )}
