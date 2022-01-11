@@ -94,7 +94,7 @@ export default Images;
 const styles = ScaledSheet.create({
   wrap: {
     width: WIDTH,
-    height: HEIGHT * 0.35,
+    height: HEIGHT * 0.45,
     backgroundColor: colors.Secondary,
   },
   wrapDot: {

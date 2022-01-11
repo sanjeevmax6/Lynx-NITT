@@ -60,67 +60,80 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             fn={() => {
               EVENT_DESCRIPTION_STORE.setErrorText('');
               EVENT_DESCRIPTION_STORE.setError(false);
-              eventDescriptionAPI();
+              // eventDescriptionAPI();
             }}
           />
         ) : (
           <>
             <EventDescriptionHeader navigation={navigation} />
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <Images
                 images={EVENT_DESCRIPTION_STORE.getData.photos}
                 navigation={navigation}
               />
-              <Divider style={styles.divider} />
-              <EventStatusTag
-                startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
-                endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
-              />
-              <Text style={styles.eventName}>
-                {EVENT_DESCRIPTION_STORE.getData.Title}
-              </Text>
+              <View
+                style={{
+                  paddingTop: verticalScale(27),
+                  elevation: 1,
+                  borderTopRightRadius: scale(16),
+                  borderTopLeftRadius: scale(16),
+                  paddingHorizontal: scale(HorizontalPadding * 1.45),
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
 
-              <Divider style={styles.divider} />
-              <View style={{marginHorizontal: scale(3)}}>
+                    paddingBottom: verticalScale(10),
+                  }}>
+                  <Text style={styles.eventName}>
+                    {EVENT_DESCRIPTION_STORE.getData.Title}
+                  </Text>
+                  <EventStatusTag
+                    startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
+                    endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
+                  />
+                </View>
+                <Tags
+                  tags={EVENT_DESCRIPTION_STORE.getData.tags}
+                  navigation={navigation}
+                />
+                <View style={{marginHorizontal: scale(3)}}></View>
+
+                <About
+                  about={EVENT_DESCRIPTION_STORE.getData.Description}
+                  startDate={getFormattedDate(
+                    EVENT_DESCRIPTION_STORE.getData.startDate,
+                  )}
+                  startTime={getFormattedTime(
+                    EVENT_DESCRIPTION_STORE.getData.startDate,
+                  )}
+                  endDate={getFormattedDate(
+                    EVENT_DESCRIPTION_STORE.getData.endDate,
+                  )}
+                  endTime={getFormattedTime(
+                    EVENT_DESCRIPTION_STORE.getData.endDate,
+                  )}
+                />
+
+                {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
+                  <>
+                    <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <ClubCard
                   name={EVENT_DESCRIPTION_STORE.getData.club.name}
                   imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
                   navigation={navigation}
                   clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
                 />
+
+                <View style={{height: verticalScale(150)}} />
               </View>
-              <Divider style={styles.divider} />
-
-              <About
-                about={EVENT_DESCRIPTION_STORE.getData.Description}
-                startDate={getFormattedDate(
-                  EVENT_DESCRIPTION_STORE.getData.startDate,
-                )}
-                startTime={getFormattedTime(
-                  EVENT_DESCRIPTION_STORE.getData.startDate,
-                )}
-                endDate={getFormattedDate(
-                  EVENT_DESCRIPTION_STORE.getData.endDate,
-                )}
-                endTime={getFormattedTime(
-                  EVENT_DESCRIPTION_STORE.getData.endDate,
-                )}
-              />
-              <Divider style={styles.divider} />
-              {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
-                <>
-                  <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
-                </>
-              ) : (
-                <></>
-              )}
-
-              <Divider style={styles.divider} />
-              <Tags
-                tags={EVENT_DESCRIPTION_STORE.getData.tags}
-                navigation={navigation}
-              />
-              <View style={{height: verticalScale(150)}} />
             </ScrollView>
           </>
         )}
@@ -134,11 +147,10 @@ const styles = ScaledSheet.create({
   eventName: {
     fontSize: '18@s',
     paddingTop: '0@vs',
-    paddingBottom: '10@vs',
-    paddingHorizontal: HorizontalPadding,
+
     fontWeight: 'bold',
     backgroundColor: colors.WHITE,
-    marginTop: verticalScale(-6),
+    marginTop: verticalScale(0),
     color: colors.EventDescriptionScreen_Title,
   },
   divider: {

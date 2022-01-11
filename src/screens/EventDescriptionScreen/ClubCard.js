@@ -12,6 +12,7 @@ import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
+import EventStatusTag from './EventStatusTag';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -23,7 +24,7 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
   };
   const [ApiCall, setApiCall] = useState(false);
   return (
-    <View style={{flexDirection: 'row', paddingHorizontal: HorizontalPadding}}>
+    <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
         onPress={() => {
           navigation.push('ClubDescription', {data: {ClubId: clubID}});
@@ -92,11 +93,11 @@ export default ClubCard;
 const styles = ScaledSheet.create({
   image: {
     marginTop: '5@s',
-    width: '100@s',
+    width: '80@s',
     marginBottom: '5@s',
     marginRight: '5@s',
-    height: '100@s',
-    borderRadius: '8@s',
+    height: '80@s',
+    borderRadius: '40@s',
     elevation: 1,
     shadowColor: 'black',
   },

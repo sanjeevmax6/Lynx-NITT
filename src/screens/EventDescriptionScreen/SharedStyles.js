@@ -4,7 +4,7 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const sharedStyles = ScaledSheet.create({
   fragment: {
-    paddingHorizontal: scale(HorizontalPadding),
+    paddingHorizontal: scale(0),
     paddingBottom: '10@vs',
   },
   title: {

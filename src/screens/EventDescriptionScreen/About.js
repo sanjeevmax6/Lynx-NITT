@@ -17,56 +17,19 @@ const About = ({about, startDate, endDate, startTime, endTime}) => {
   const [numOfLines, setNumOfLines] = useState(0);
   const NO_OF_LINES = 3;
 
-  const onTextLayout = e => {
-    if (numOfLines == 0) setNumOfLines(e.nativeEvent.lines.length);
-  };
-
   const onModalToggle = () => {
     setModalVisible(!modalVisible);
   };
 
   return (
     <View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>ABOUT</Text>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Text style={styles.modalText}>{about}</Text>
-            </ScrollView>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}>
-              <Text style={styles.textStyle}>CLOSE</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
       <View style={{...sharedStyles.fragment, backgroundColor: colors.WHITE}}>
-        <Text style={sharedStyles.title}>About</Text>
         <Text
           style={{
-            fontSize: scale(12),
-            textAlign: 'justify',
-            lineHeight: 20,
-          }}
-          onTextLayout={onTextLayout}
-          numberOfLines={
-            numOfLines == 0
-              ? null
-              : numOfLines > NO_OF_LINES
-              ? NO_OF_LINES
-              : numOfLines
-          }>
+            fontSize: scale(14),
+            lineHeight: verticalScale(25),
+            fontWeight: '300',
+          }}>
           {about}
         </Text>
         {numOfLines > NO_OF_LINES && (
@@ -90,28 +53,42 @@ const About = ({about, startDate, endDate, startTime, endTime}) => {
           ...sharedStyles.fragment,
           backgroundColor: colors.WHITE,
           paddingTop: 0,
+          borderRadius: verticalScale(40),
+          borderColor: colors.GRAY_LIGHT,
+          borderWidth: 1,
         }}>
-        <View style={{flexDirection: 'row', marginVertical: verticalScale(3)}}>
-          <Icon
-            style={{paddingHorizontal: scale(0)}}
-            name="calendar-plus-o"
-            color={colors.EventDescriptionScreen_CalendarIcon}
-            size={scale(20)}
-          />
-          <Text style={styles.eventDate}>
-            From : {startTime} | {startDate}
-          </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: verticalScale(15),
+            paddingHorizontal: scale(15),
+          }}>
+          <Text style={styles.eventText}>Event Starts</Text>
+          <Text style={styles.eventText}>Event Ends</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Icon
-            style={{paddingHorizontal: scale(0)}}
-            name="calendar-minus-o"
-            color={colors.EventDescriptionScreen_CalendarIcon}
-            size={scale(20)}
-          />
-          <Text style={styles.eventDate}>
-            To : {endTime} | {endDate}
-          </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: verticalScale(6),
+            paddingHorizontal: scale(15),
+          }}>
+          <Text style={styles.eventTime}>{startTime}</Text>
+          <Text style={styles.eventTime}>{endTime}</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingBottom: verticalScale(15),
+            paddingHorizontal: scale(15),
+          }}>
+          <Text style={styles.eventTime}>{startDate}</Text>
+          <Text style={styles.eventTime}>{endDate}</Text>
         </View>
       </View>
     </View>
@@ -121,58 +98,12 @@ const About = ({about, startDate, endDate, startTime, endTime}) => {
 export default About;
 
 const styles = ScaledSheet.create({
-  modalView: {
-    marginVertical: scale(12),
-    marginHorizontal: scale(8),
-    height: (2.3 * Dimensions.get('window').height) / 3,
-    backgroundColor: 'rgba(63,80,180,0.99)',
-    opacity: 0.99,
-    borderRadius: scale(20),
-    padding: scale(20),
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: scale(2),
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 0,
-  },
-  modalText: {
-    marginBottom: scale(15),
-    letterSpacing: 0.7,
-    color: colors.GRAY_LIGHT,
-    fontSize: scale(16),
-    textAlign: 'justify',
-  },
-  modalTitle: {
-    fontSize: scale(18),
-    color: colors.GRAY_LIGHT,
-    fontWeight: 'bold',
-  },
-  closeButton: {
-    borderRadius: scale(10),
-    padding: scale(10),
-    elevation: 2,
-    backgroundColor: colors.EventDescriptionScreen_Button,
-    marginTop: verticalScale(6),
-  },
-  textStyle: {
-    color: 'white',
-    fontSize: scale(15),
-    paddingHorizontal: scale(18),
-    textAlign: 'center',
-  },
-  eventDate: {
+  eventText: {
+    color: colors.GRAY_DARK,
     fontSize: '14@s',
-    marginHorizontal: '10@s',
-    fontWeight: 'bold',
+  },
+  eventTime: {
+    color: colors.BLACK,
+    fontSize: '12@s',
   },
 });

@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, Linking, Alert} from 'react-native';
 import styles from './SharedStyles';
 import * as colors from '../../utils/colors';
 import {InAppBrowser} from 'react-native-inappbrowser-reborn';
+import {verticalScale} from 'react-native-size-matters';
 
 const openLink = async url => {
   try {
@@ -49,8 +50,12 @@ const openLink = async url => {
 
 const Links = ({links}) => {
   return (
-    <View style={{...styles.fragment, backgroundColor: colors.WHITE}}>
-      <Text style={styles.title}>Links</Text>
+    <View
+      style={{
+        ...styles.fragment,
+        backgroundColor: colors.WHITE,
+        paddingTop: verticalScale(10),
+      }}>
       <View style={{}}>
         {links.map((item, index) => {
           return (
@@ -62,7 +67,10 @@ const Links = ({links}) => {
                 // );
                 openLink(item);
               }}>
-              <Text style={styles.url} ellipsizeMode="tail" numberOfLines={1}>
+              <Text
+                numberOfLines={1}
+                style={{...styles.url, textAlign: 'center'}}
+                ellipsizeMode="head">
                 {item}
               </Text>
             </TouchableOpacity>

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {isLive} from '../../utils/helperFunction/isLive';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const UI = ({text, color}) => {
@@ -16,6 +16,7 @@ const UI = ({text, color}) => {
         marginHorizontal: scale(HorizontalPadding),
         elevation: 1,
         justifyContent: 'center',
+        //marginTop: verticalScale(-6),
       }}>
       <Icon name="circle" color={color} size={scale(10)} />
       <Text

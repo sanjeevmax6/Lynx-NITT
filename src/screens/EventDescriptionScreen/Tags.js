@@ -9,7 +9,6 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 const Tags = ({tags, navigation}) => {
   return (
     <View style={{...styles.fragment, backgroundColor: colors.WHITE}}>
-      <Text style={styles.title}>Tags</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {tags.map((item, index) => {
           return (
@@ -41,7 +40,7 @@ const Tags = ({tags, navigation}) => {
                 }}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                {item}
+                {item.toLowerCase()}
               </Chip>
             </View>
           );
