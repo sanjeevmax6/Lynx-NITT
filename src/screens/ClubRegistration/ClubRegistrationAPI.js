@@ -6,30 +6,48 @@ import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_TOKEN} from '../../utils/STORAGE_KEYS';
+import axios from 'axios';
 import * as ERROR_MESSAGES from '../../utils/ERROR_MESSAGES';
+
 export const clubRegisterAPI = () => {
   CLUB_REGISTER_STORE.setError(false);
+  CLUB_REGISTER_STORE.setLoading(true);
+
   const token = USER_STORE.getUserToken;
-  const axios = require('axios');
 
   const form = new FormData();
 
-  form.append('profilePic', EDIT_CLUB_PROFILE_STORE.getClubImage);
-  form.append('description', EDIT_CLUB_PROFILE_STORE.getClubDescription);
-  const links = {
-    website: EDIT_CLUB_PROFILE_STORE.getWebsiteLink,
-    instagram: EDIT_CLUB_PROFILE_STORE.getInstagramLink,
-    facebook: EDIT_CLUB_PROFILE_STORE.getFacebookLink,
-    youtube: EDIT_CLUB_PROFILE_STORE.getYoutubeLink,
-    linkedin: EDIT_CLUB_PROFILE_STORE.getLinkedInLink,
-    medium: EDIT_CLUB_PROFILE_STORE.getMediumLink,
-  };
+  form.append('profilePic', {
+    uri: EDIT_CLUB_PROFILE_STORE.getClubImage.uri,
+    type: EDIT_CLUB_PROFILE_STORE.getClubImage.type,
+    name: EDIT_CLUB_PROFILE_STORE.getClubImage.name,
+  });
 
-  form.append('links', JSON.stringify(links));
+  form.append('description', EDIT_CLUB_PROFILE_STORE.getClubDescription.trim());
+
+  form.append('links[website]', EDIT_CLUB_PROFILE_STORE.getWebsiteLink.trim());
+
+  form.append(
+    'links[linkedin]',
+    EDIT_CLUB_PROFILE_STORE.getLinkedInLink.trim(),
+  );
+
+  form.append('links[youtube]', EDIT_CLUB_PROFILE_STORE.getYoutubeLink.trim());
+
+  form.append(
+    'links[instagram]',
+    EDIT_CLUB_PROFILE_STORE.getInstagramLink.trim(),
+  );
+
+  form.append('links[medium]', EDIT_CLUB_PROFILE_STORE.getMediumLink.trim());
+
+  form.append(
+    'links[facebook]',
+    EDIT_CLUB_PROFILE_STORE.getFacebookLink.trim(),
+  );
 
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
-      CLUB_REGISTER_STORE.setLoading(true);
       axios
         .put(API_STORE.getBaseUrl + API_CLUB_REGISTER, form, {
           headers: {
@@ -37,24 +55,32 @@ export const clubRegisterAPI = () => {
           },
         })
         .then(response => {
-          CLUB_REGISTER_STORE.setLoading(false);
           if (response.status == 200) {
+            console.log(1);
             USER_STORE.setRedirectUpdate(false);
             AsyncStorage.setItem(USER_TOKEN, USER_STORE.getUserToken); //user token stored locally
+            CLUB_REGISTER_STORE.setSuccess(true);
+          } else {
+            CLUB_REGISTER_STORE.setErrorText(ERROR_MESSAGES.UNEXPECTED_ERROR);
+            CLUB_REGISTER_STORE.setError(true);
           }
+          CLUB_REGISTER_STORE.setLoading(false);
         })
         .catch(error => {
-          CLUB_REGISTER_STORE.setError(true);
-          CLUB_REGISTER_STORE.setLoading(false);
+          console.log(0);
           if (error.response) {
             CLUB_REGISTER_STORE.setErrorText(error.response.data.message);
           } else if (error.request) {
             console.log(error.request);
-            CLUB_REGISTER_STORE.setError(ERROR_MESSAGES.SERVER_ERROR);
+            CLUB_REGISTER_STORE.setErrorText(ERROR_MESSAGES.SERVER_ERROR);
           }
+          CLUB_REGISTER_STORE.setError(true);
+          CLUB_REGISTER_STORE.setLoading(false);
         });
     } else {
       CLUB_REGISTER_STORE.setErrorText(ERROR_MESSAGES.NO_NETWORK);
+      CLUB_REGISTER_STORE.setError(true);
+      CLUB_REGISTER_STORE.setLoading(false);
     }
   });
 };

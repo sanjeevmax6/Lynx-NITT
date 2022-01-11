@@ -118,7 +118,6 @@ const ClubLinks = observer(({backwardAction}) => {
         <View
           style={{
             height: verticalScale(170),
-
             width: scale(50),
           }}
         />

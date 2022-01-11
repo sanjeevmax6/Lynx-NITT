@@ -8,6 +8,8 @@ import DocumentPicker from 'react-native-document-picker';
 import {observer} from 'mobx-react';
 import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
 import Error from '../../components/Error';
+import {useToast} from 'react-native-toast-notifications';
+import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -16,9 +18,8 @@ const selectFile = async () => {
     const file = await DocumentPicker.pickSingle({
       type: [DocumentPicker.types.images],
     });
-    console.log(file.fileCopyUri);
-
-    EDIT_CLUB_PROFILE_STORE.setClubImage(file.fileCopyUri);
+    console.log(file);
+    EDIT_CLUB_PROFILE_STORE.setClubImage(file);
     CLUB_REGISTER_STORE.setError(false);
   } catch (err) {
     if (DocumentPicker.isCancel(err)) console.log(err);
@@ -27,15 +28,20 @@ const selectFile = async () => {
 };
 
 const ClubLogo = observer(({forwardAction, backwardAction}) => {
+  const toast = useToast();
+
+  const showToast = msg => {
+    toast.show(msg, {type: 'warning'});
+  };
+
   const checkError = () => {
     if (
       EDIT_CLUB_PROFILE_STORE.getClubImage ==
       'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg'
     )
-      CLUB_REGISTER_STORE.setError(true);
+      showToast('Upload a profile picture for your club');
     else {
       forwardAction();
-      CLUB_REGISTER_STORE.setError(false);
     }
   };
   return (
@@ -49,7 +55,9 @@ const ClubLogo = observer(({forwardAction, backwardAction}) => {
       <View style={styles.imageView}>
         <Image
           source={{
-            uri: EDIT_CLUB_PROFILE_STORE.getClubImage,
+            uri: EDIT_CLUB_PROFILE_STORE.getClubImage.uri
+              ? EDIT_CLUB_PROFILE_STORE.getClubImage.uri
+              : NO_IMAGE_URL,
           }}
           style={styles.image}
         />
@@ -63,9 +71,7 @@ const ClubLogo = observer(({forwardAction, backwardAction}) => {
         </TouchableOpacity>
       </View>
       <View style={{width: '90%', marginTop: verticalScale(50)}}>
-        {CLUB_REGISTER_STORE.getError && (
-          <Error text={'Please select a profile picture for your club!'} />
-        )}
+        {CLUB_REGISTER_STORE.getError && <Error text={''} />}
       </View>
       <Button
         style={styles.next}

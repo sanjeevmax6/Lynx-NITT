@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {
   moderateScale,
-  scale,
   ScaledSheet,
   verticalScale,
 } from 'react-native-size-matters';
@@ -10,22 +9,29 @@ import * as colors from '../../utils/colors';
 import {TextInput, Button} from 'react-native-paper';
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
-import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
-import Error from '../../components/Error';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {CLUB_DESCRIPTION_MAX_SIZE} from '../../utils/UI_CONSTANTS';
+import {useToast} from 'react-native-toast-notifications';
 
-const charLen = 500;
 const ClubDescription = observer(({forwardAction}) => {
+  const toast = useToast();
+
+  const showToast = msg => {
+    toast.show(msg, {type: 'warning'});
+  };
+
   const checkError = () => {
-    if (remainCharacter == charLen) CLUB_REGISTER_STORE.setError(true);
+    if (EDIT_CLUB_PROFILE_STORE.getClubDescription.trim() === '')
+      showToast('Fill in your club description');
     else {
       forwardAction();
-      CLUB_REGISTER_STORE.setError(false);
     }
   };
+
   const remainCharacter =
-    charLen - EDIT_CLUB_PROFILE_STORE.getClubDescription.length;
+    CLUB_DESCRIPTION_MAX_SIZE -
+    EDIT_CLUB_PROFILE_STORE.getClubDescription.length;
+
   return (
     <SafeAreaView
       style={{
@@ -33,7 +39,6 @@ const ClubDescription = observer(({forwardAction}) => {
         alignItems: 'center',
         backgroundColor: colors.Secondary,
       }}>
-      <Text style={styles.title}>Hello {'Spider'}</Text>
       <Text style={{...styles.title, marginTop: verticalScale(5)}}>
         Give your club a description!
       </Text>
@@ -70,11 +75,7 @@ const ClubDescription = observer(({forwardAction}) => {
           />
         }
       />
-      <View style={{width: '90%'}}>
-        {CLUB_REGISTER_STORE.getError && (
-          <Error text={'Please Enter a description for your club!'} />
-        )}
-      </View>
+      <View style={{width: '90%'}}></View>
       <Button
         style={styles.next}
         mode="contained"

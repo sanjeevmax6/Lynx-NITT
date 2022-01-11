@@ -5,10 +5,19 @@ class clubRegisterStore {
     errorText: '',
     loading: false,
     error: false,
+    success: false,
   };
   setErrorText = txt => {
     this.state.errorText = txt;
   };
+
+  setSuccess = val => {
+    this.state.success = val;
+  };
+
+  get getSuccess() {
+    return this.state.success;
+  }
 
   get getErrorText() {
     return this.state.errorText;
@@ -42,6 +51,9 @@ class clubRegisterStore {
 
       setError: action,
       getError: computed,
+
+      setSuccess: action,
+      getSuccess: computed,
     });
   }
 }
