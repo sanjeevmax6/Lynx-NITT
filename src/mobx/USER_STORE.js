@@ -11,6 +11,9 @@ class UserData {
     //unique ID (Android ID)
     uniqueID: '',
 
+    firebaseToken: '',
+
+
     //clubId to be used only if user type is club
     clubId: '',
   };
@@ -27,6 +30,7 @@ class UserData {
 
     //clubId to be used only if user type is club
     this.state.clubId = '';
+
   };
 
   setClubId = val => {
@@ -43,6 +47,14 @@ class UserData {
 
   get getUniqueId() {
     return this.state.uniqueID;
+  }
+
+  setFirebaseToken = val => {
+    this.state.firebaseToken = val;
+  };
+
+  get getFirebaseToken() {
+    return this.state.firebaseToken;
   }
 
   setUserType = type => {
@@ -92,8 +104,12 @@ class UserData {
       setRedirectUpdate: action,
       getRedirectUpdate: computed,
 
+      setFirebaseToken: action,
+      getFirebaseToken: computed,
+
       setClubId: action,
       getClubId: computed,
+
     });
   }
 }

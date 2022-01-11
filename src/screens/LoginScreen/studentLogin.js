@@ -1,4 +1,4 @@
-import {API_STUDENT_LOGIN, reg_token} from '../../utils/API_CONSTANTS';
+import {API_STUDENT_LOGIN} from '../../utils/API_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
@@ -6,12 +6,14 @@ import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 import {USER_TYPE, USER_TOKEN} from '../../utils/STORAGE_KEYS';
 import {STUDENT} from '../../utils/USER_TYPE';
+
 export const studentLogin = (rollNo, password, dispatch) => {
   const axios = require('axios');
   //using netinfo to check if online
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
       LOGIN_STORE.setLoading(true);
+      const reg_token = USER_STORE.getFirebaseToken;
       axios
         .post(API_STUDENT_LOGIN, {
           rollNo,

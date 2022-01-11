@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1022354282796",
+    "project_id": "nitt-app-b8826",
+    "storage_bucket": "nitt-app-b8826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022354282796:android:15bbb296cf81ff2d587489",
+        "android_client_info": {
+          "package_name": "org.spider.nittapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022354282796-i6mp3fmslo7to8ted07dvlha9sgsa84q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdpNdSiDldb2og8eZa8KIzx2UEYyWDMaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022354282796-i6mp3fmslo7to8ted07dvlha9sgsa84q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
