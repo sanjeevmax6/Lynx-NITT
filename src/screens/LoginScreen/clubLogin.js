@@ -5,7 +5,12 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 import {ADMIN, CLUB} from '../../utils/USER_TYPE';
-import {CLUB_REGISTERED, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {
+  CLUB_REGISTERED,
+  CLUB_USER_ID,
+  USER_TOKEN,
+  USER_TYPE,
+} from '../../utils/STORAGE_KEYS';
 
 export const clubLogin = (email, password) => {
   const axios = require('axios');
@@ -22,16 +27,17 @@ export const clubLogin = (email, password) => {
         .then(response => {
           if (response.status == 200) {
             //Differentiate club and admin based on backend
-            //console.log('IS ADMIN?' + response.data.isAdmin);
+
             if (response.data.isAdmin) {
               AsyncStorage.setItem(USER_TYPE, ADMIN);
               USER_STORE.setUserType(ADMIN);
             } else {
               USER_STORE.setUserType(CLUB);
-
               AsyncStorage.setItem(USER_TYPE, CLUB);
             }
+            AsyncStorage.setItem(CLUB_USER_ID, response.data.clubId);
 
+            USER_STORE.setClubId(response.data.clubId);
             USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
 
             USER_STORE.setUserToken(response.data.token);

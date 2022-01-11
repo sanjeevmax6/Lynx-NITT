@@ -14,8 +14,6 @@ import {observer} from 'mobx-react';
 const HomeTab = createMaterialBottomTabNavigator();
 
 const AppNavigator = observer(() => {
-  console.log(BOTTOM_NAV_STORE.getTabVisibility);
-
   return (
     <HomeTab.Navigator
       initialRouteName="Feed"

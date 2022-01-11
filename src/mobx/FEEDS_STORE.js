@@ -9,7 +9,16 @@ class feedsStore {
     data: {},
     refreshing: false,
   };
-  const;
+
+  reset = () => {
+    this.state.error = true;
+    this.state.errorText = '';
+    this.state.loading = true;
+    this.state.success = false;
+    this.state.data = {};
+    this.state.refreshing = false;
+  };
+
   formatData = () => {
     this.state.data.liveEvents.forEach(function (element) {
       element.isLive = true;
@@ -87,6 +96,8 @@ class feedsStore {
 
       setRefreshing: action,
       getRefreshing: computed,
+
+      reset: action,
     });
   }
 }

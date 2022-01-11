@@ -35,30 +35,26 @@ import NoEventScreen from '../../components/NoEventScreen';
 import {NO_EVENTS} from '../../utils/ERROR_MESSAGES';
 import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
 import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
+
 const FeedScreen = observer(({navigation}) => {
   const onRefresh = React.useCallback(() => {
-    if (USER_STORE.getUserType === STUDENT) {
-      FEEDS_STORE.setRefreshing(true);
-      FEEDS_STORE.setError(false);
-      FEEDS_STORE.setErrorText('');
-      FEEDS_STORE.setLoading(false);
-      FEEDS_STORE.setSuccess(false);
+    FEEDS_STORE.setRefreshing(true);
+    FEEDS_STORE.setError(false);
+    FEEDS_STORE.setErrorText('');
+    FEEDS_STORE.setLoading(false);
+    FEEDS_STORE.setSuccess(false);
 
-      feedsAPI(true);
-    }
+    feedsAPI(true);
   }, []);
 
   const isFocused = useIsFocused();
   if (isFocused) {
     BOTTOM_NAV_STORE.setTabVisibility(true);
   }
+
   useEffect(() => {
-    if (USER_STORE.getUserType === STUDENT) feedsAPI(false);
-    else {
-      FEEDS_STORE.setError(false);
-      FEEDS_STORE.setLoading(false);
-    }
-  }, []);
+    feedsAPI(false);
+  }, [USER_STORE.getUserToken]);
 
   const scrollY = new Animated.Value(0);
 
@@ -213,17 +209,33 @@ const FeedScreen = observer(({navigation}) => {
                       eventId: item.EventId,
                     });
                   }}>
-                  <EventsCard
-                    date={getFormattedDate(item.startDate)}
-                    time={getFormattedTime(item.startDate)}
-                    name={item.Title}
-                    desc={item.Description}
-                    eventImage={item.poster}
-                    organizer={item.club.name}
-                    isLive={item.isLive}
-                    wasInterested={item.isInterested}
-                    eventId={item.EventId}
-                  />
+                  {USER_STORE.getUserType === STUDENT ? (
+                    <EventsCard
+                      date={getFormattedDate(item.startDate)}
+                      time={getFormattedTime(item.startDate)}
+                      name={item.Title}
+                      desc={item.Description}
+                      eventImage={item.poster}
+                      organizer={
+                        item.club.name != undefined ? item.club.name : 'NA'
+                      }
+                      isLive={item.isLive}
+                      wasInterested={item.isInterested}
+                      eventId={item.EventId}
+                    />
+                  ) : (
+                    <EventsCard
+                      date={getFormattedDate(item.startDate)}
+                      time={getFormattedTime(item.startDate)}
+                      name={item.Title}
+                      desc={item.Description}
+                      eventImage={item.poster}
+                      organizer={'NA'}
+                      isLive={item.isLive}
+                      wasInterested={false}
+                      eventId={item.EventId}
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
             )}

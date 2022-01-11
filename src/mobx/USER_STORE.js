@@ -10,7 +10,32 @@ class UserData {
     redirectUpdate: false,
     //unique ID (Android ID)
     uniqueID: '',
+
+    //clubId to be used only if user type is club
+    clubId: '',
   };
+
+  reset = () => {
+    this.state.userName = '';
+    this.state.userType = '';
+    this.state.userRollNumber = '';
+    this.state.userToken = '';
+    this.state.userRegToken = '';
+    this.state.redirectUpdate = false;
+    //unique ID (Android ID)
+    this.state.uniqueID = '';
+
+    //clubId to be used only if user type is club
+    this.state.clubId = '';
+  };
+
+  setClubId = val => {
+    this.state.clubId = val;
+  };
+
+  get getClubId() {
+    return this.state.clubId;
+  }
 
   setUniqueId = val => {
     this.state.uniqueID = val;
@@ -21,7 +46,7 @@ class UserData {
   }
 
   setUserType = type => {
-    this.state.userType = type;
+    if (this.state.userType === '') this.state.userType = type;
   };
 
   get getUserType() {
@@ -55,7 +80,7 @@ class UserData {
   constructor() {
     makeObservable(this, {
       state: observable,
-
+      reset: action,
       setUserToken: action,
       getUserToken: computed,
       setUserRegToken: action,
@@ -66,6 +91,9 @@ class UserData {
 
       setRedirectUpdate: action,
       getRedirectUpdate: computed,
+
+      setClubId: action,
+      getClubId: computed,
     });
   }
 }

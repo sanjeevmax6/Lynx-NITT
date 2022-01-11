@@ -17,7 +17,12 @@ import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import {CLUB_REGISTERED, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {
+  CLUB_REGISTERED,
+  CLUB_USER_ID,
+  USER_TOKEN,
+  USER_TYPE,
+} from '../../utils/STORAGE_KEYS';
 import {GET_BASE_URL} from '../../utils/API_CONSTANTS';
 import {API_STORE} from '../../mobx/API_STORE';
 import {
@@ -31,6 +36,22 @@ const spiderLogo = require('../../res/images/spiderLogo.png');
 
 import DeviceInfo from 'react-native-device-info';
 
+async function loadCache() {
+  try {
+    const userToken = await AsyncStorage.getItem(USER_TOKEN);
+    const userType = await AsyncStorage.getItem(USER_TYPE);
+
+    if (userType != STUDENT) {
+      const userClubId = await AsyncStorage.getItem(CLUB_USER_ID);
+      USER_STORE.setClubId(userClubId);
+    }
+
+    USER_STORE.setUserToken(userToken);
+    USER_STORE.setUserType(userType);
+  } catch (error) {
+    USER_STORE.setUserToken(null);
+  }
+}
 const SplashScreen = () => {
   const [State, setState] = useState(0);
   const [API, setAPI] = useState(0);
@@ -38,24 +59,6 @@ const SplashScreen = () => {
   //1 error
   //2 maintain
   //3 no net
-
-  //200 (Api) Success
-  const getToken = () => {
-    AsyncStorage.getItem(USER_TYPE).then(value => {
-      if (value != null) {
-        if (value == STUDENT) USER_STORE.setUserType(STUDENT);
-        else if (value == CLUB) USER_STORE.setUserType(CLUB);
-        else if (value == ADMIN) USER_STORE.setUserType(ADMIN);
-      } else USER_STORE.setUserType(null);
-    });
-    AsyncStorage.getItem(USER_TOKEN).then(value => {
-      if (value != null) {
-        USER_STORE.setUserToken(value);
-      } else {
-        USER_STORE.setUserToken(null);
-      }
-    });
-  };
 
   const API_CALL = () => {
     NetInfo.fetch().then(state => {
@@ -87,9 +90,9 @@ const SplashScreen = () => {
 
   useEffect(() => {
     API_CALL();
-    getToken();
+    loadCache();
     ID();
-  });
+  }, []);
 
   setTimeout(() => {
     if (API === 200) {

@@ -17,7 +17,6 @@ import {USER_STORE} from '../mobx/USER_STORE';
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
-  console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
   return (
     <NavigationContainer>
       <RootStack.Navigator
