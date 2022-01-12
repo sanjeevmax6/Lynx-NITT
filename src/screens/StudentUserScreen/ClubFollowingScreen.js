@@ -15,7 +15,6 @@ const headerFooterComponent = () => {
 const ClubFollowingScreen = observer(({clubFollowing, goToClub}) => {
   const onRefresh = () => {
     STUDENT_DETAILS_STORE.setRefresh(true);
-
     getAllStudentDetails(true);
   };
 

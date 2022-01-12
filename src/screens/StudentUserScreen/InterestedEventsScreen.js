@@ -15,7 +15,7 @@ const headerFooterComponent = () => {
 const InterestedEventsScreen = observer(({interestedEvents, goToEvent}) => {
   const onRefresh = () => {
     STUDENT_DETAILS_STORE.setRefresh(true);
-    getAllStudentDetails();
+    getAllStudentDetails(true);
   };
 
   return (
