@@ -1,22 +1,31 @@
+import moment from 'moment';
 import React from 'react';
-import {View, Image} from 'react-native';
-import {Text, Card} from 'react-native-paper';
-import {
-  scale,
-  verticalScale,
-  moderateScale,
-  ScaledSheet,
-  ms,
-  vs,
-  s,
-} from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {View, Image, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native-paper';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
-import {ICON_SIZE} from '../../utils/UI_CONSTANTS';
-const RecentEventCard = ({name, date, time, id, url}) => {
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {isLive} from '../../utils/helperFunction/isLive';
+import LiveEventComponent from './LiveEventComponent';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+
+const DATE_FORMAT = 'DD/MM/YYYY';
+const TIME_FORMAT = 'hh:mm A';
+
+const RecentEventCard = ({eventItem, functions}) => {
+  const formattedDate = moment(eventItem.startDate).format(DATE_FORMAT);
+  const formattedTime = moment(eventItem.startDate).format(TIME_FORMAT);
+  const liveCheck = isLive(eventItem.startDate, eventItem.endDate);
   return (
-    <View style={styles.cardLayout}>
-      <Image style={styles.poster} source={{uri: url}} />
+    <TouchableOpacity
+      style={styles.cardLayout}
+      onPress={() => {
+        functions.onEventClick(eventItem.EventId);
+      }}>
+      <Image
+        style={styles.poster}
+        source={{uri: API_GET_IMAGE + eventItem.poster}}
+      />
       <View style={styles.eventInfo}>
         <Text
           style={{
@@ -25,20 +34,21 @@ const RecentEventCard = ({name, date, time, id, url}) => {
             paddingRight: scale(10),
           }}
           numberOfLines={1}>
-          {name}
+          {eventItem.Title}
         </Text>
         <Text style={{fontSize: scale(12)}}>
-          {date} | {time}
+          {formattedDate} | {formattedTime}
         </Text>
       </View>
       <View style={styles.notificationView}>
-        <Icon
-          name={'bullhorn'}
-          size={scale(ICON_SIZE)}
-          style={{color: color.Tertiary}}
+        <LiveEventComponent
+          isLive={liveCheck}
+          onDeletePress={() => {
+            functions.onDeleteClick(eventItem.EventId, eventItem.Title);
+          }}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -50,6 +60,8 @@ const styles = ScaledSheet.create({
     borderColor: 'grey',
     borderWidth: '0.5@s',
     borderRadius: '5@s',
+    marginHorizontal: scale(HorizontalPadding),
+    backgroundColor: color.WHITE,
   },
   poster: {
     height: '60@msr',

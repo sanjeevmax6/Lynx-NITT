@@ -23,7 +23,7 @@ const Header = ({name, followers, url, description, navigation}) => {
 
   const getColors = async () => {
     const result = await ImageColors.getColors(url, {
-      fallback: colors.primary,
+      fallback: colors.Primary,
       cache: true,
       key: 'unique_key',
     });
