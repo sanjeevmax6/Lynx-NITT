@@ -59,7 +59,7 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
         type: [DocumentPicker.types.images],
       });
 
-      STUDENT_REGISTRATION_STORE.setPicture(file);
+      STUDENT_REGISTRATION_STORE.setPicture(file.fileCopyUri);
       setURI(file.fileCopyUri);
       console.log(file.fileCopyUri);
       console.log(file.fileCopyUri);

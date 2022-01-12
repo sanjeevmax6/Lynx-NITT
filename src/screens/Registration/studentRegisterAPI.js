@@ -2,11 +2,17 @@ import {API_STUDENT_REGISTER} from '../../utils/API_CONSTANTS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
+import {API_STORE} from '../../mobx/API_STORE';
 import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 import {STUDENT} from '../../utils/USER_TYPE';
-import {NO_NETWORK, SERVER_ERROR} from '../../utils/ERROR_MESSAGES';
+import {
+  NO_NETWORK,
+  SERVER_ERROR,
+  UNEXPECTED_ERROR,
+} from '../../utils/ERROR_MESSAGES';
 
 export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
+  console.log(JSON.stringify(formData));
   const token = USER_STORE.getUserRegToken;
   const axios = require('axios');
   NetInfo.fetch().then(state => {
@@ -14,8 +20,7 @@ export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
       setLoading(true);
       axios
         .post(
-          API_STUDENT_REGISTER,
-
+          API_STORE.getBaseUrl + API_STUDENT_REGISTER,
           formData,
 
           {headers: {token: token}},
@@ -32,12 +37,14 @@ export const studentRegisterAPI = (formData, setLoading, setErrorText) => {
           }
         })
         .catch(error => {
+          setLoading(false);
+          console.log(JSON.stringify(error));
           if (error.response) {
-            setLoading(false);
             setErrorText(error.response.data.message);
           } else if (error.request) {
+            console.log(JSON.stringify(error.request));
             setErrorText(SERVER_ERROR);
-          }
+          } else setErrorText(UNEXPECTED_ERROR);
         });
     } else {
       setErrorText(NO_NETWORK);

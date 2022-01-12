@@ -2,21 +2,40 @@ import {action, makeObservable, observable, computed} from 'mobx';
 
 class Registration {
   state = {
+    coutryCode: '91', //index of default ie India in Database
     mobile: '',
     firstName: '',
     secondName: '',
-    department: '',
-    birthDay: '',
-    birthMonth: '',
-    birthYear: '',
+    department: 'Department',
+    birthDay: new Date(new Date().setHours(0, 0, 0, 0)),
+    gender: 'Gender',
+    nationality: 'India',
     address: '',
     aadhar: '',
     passport: null,
     profilePic: '',
     password: '',
     confirmPassword: '',
+    modalVisible: '',
   };
 
+  reset = () => {
+    this.state.coutryCode = '91'; //index of default ie India in Database
+    this.state.mobile = '';
+    this.state.firstName = '';
+    this.state.secondName = '';
+    this.state.department = 'Department';
+    this.state.birthDay = new Date(new Date().setHours(0, 0, 0, 0));
+    this.state.gender = 'Gender';
+    this.state.nationality = 'India';
+    this.state.address = '';
+    this.state.aadhar = '';
+    this.state.passport = null;
+    this.state.profilePic = '';
+    this.state.password = '';
+    this.state.confirmPassword = '';
+    this.state.modalVisible = '';
+  };
   setPicture = val => {
     this.state.profilePic = val;
   };
@@ -73,22 +92,6 @@ class Registration {
     return this.state.birthDay;
   }
 
-  setBirthYear = val => {
-    this.state.birthYear = val;
-  };
-
-  get getBirthYear() {
-    return this.state.birthYear;
-  }
-
-  setBirthMonth = val => {
-    this.state.birthMonth = val;
-  };
-
-  get getBirthMonth() {
-    return this.state.birthMonth;
-  }
-
   setDepartment = val => {
     this.state.department = val;
   };
@@ -113,12 +116,44 @@ class Registration {
     return this.state.firstName;
   }
 
+  setCountryCode = val => {
+    this.state.coutryCode = val;
+  };
+
+  get getCountryCode() {
+    return this.state.coutryCode;
+  }
+
   setMobileNumber = val => {
     this.state.mobile = val;
   };
 
   get getMobileNumber() {
     return this.state.mobile;
+  }
+
+  setGender = val => {
+    this.state.gender = val;
+  };
+
+  get getGender() {
+    return this.state.gender;
+  }
+
+  setNationality = val => {
+    this.state.nationality = val;
+  };
+
+  get getNationality() {
+    return this.state.nationality;
+  }
+
+  toggleModalVisible = () => {
+    this.state.modalVisible = !this.state.modalVisible;
+  };
+
+  get getModalVisible() {
+    return this.state.modalVisible;
   }
 
   constructor() {
@@ -155,14 +190,20 @@ class Registration {
       setBirthDay: action,
       getBirthDay: computed,
 
-      setBirthMonth: action,
-      getBirthMonth: computed,
-
-      setBirthYear: action,
-      getBirthYear: computed,
-
       setAddress: action,
       getAddress: computed,
+
+      setGender: action,
+      getGender: computed,
+
+      setNationality: action,
+      getNationality: computed,
+
+      toggleModalVisible: action,
+      getModalVisible: computed,
+
+      setCountryCode: action,
+      getCountryCode: computed,
     });
   }
 }

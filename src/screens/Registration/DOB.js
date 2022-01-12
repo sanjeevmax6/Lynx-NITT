@@ -1,25 +1,34 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, Dimensions} from 'react-native';
-import {TextInput} from 'react-native-paper';
-import {scale, verticalScale, ScaledSheet} from 'react-native-size-matters';
+import {View, SafeAreaView, Dimensions, TouchableOpacity} from 'react-native';
+import {Colors, TextInput} from 'react-native-paper';
+import {
+  scale,
+  verticalScale,
+  ScaledSheet,
+  moderateScale,
+} from 'react-native-size-matters';
 import NextButton from './nextButton';
 import BackButton from './backButton';
 
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {observer} from 'mobx-react';
 
 const WIDTH = Dimensions.get('window').width;
 
-const Name = ({scrollViewRef, callback}) => {
+const Name = observer(({scrollViewRef, callback}) => {
   const [dateEr, setDateEr] = useState(false);
   const [addEr, setAddEr] = useState(false);
+  const [datePicker, setDatePicker] = useState(false);
 
   const scroll = () => {
     if (
-      !STUDENT_REGISTRATION_STORE.getBirthDay ||
-      !STUDENT_REGISTRATION_STORE.getBirthMonth ||
-      !STUDENT_REGISTRATION_STORE.getBirthYear
+      STUDENT_REGISTRATION_STORE.getBirthDay.toDateString() ===
+      new Date().toDateString()
     ) {
       setDateEr(true);
       if (!STUDENT_REGISTRATION_STORE.getAddress) {
@@ -27,7 +36,7 @@ const Name = ({scrollViewRef, callback}) => {
       }
       return;
     }
-    if (!STUDENT_REGISTRATION_STORE.getAddress) {
+    if (!STUDENT_REGISTRATION_STORE.getAddress.trim()) {
       setDateEr(false);
       setAddEr(true);
       return;
@@ -56,15 +65,20 @@ const Name = ({scrollViewRef, callback}) => {
       });
     }
   };
+  const onChangeDate = newDate => {
+    const currentDate = newDate || STUDENT_REGISTRATION_STORE.getBirthDay;
+    setDatePicker(false);
+    STUDENT_REGISTRATION_STORE.setBirthDay(currentDate);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.split}>
+      <TouchableOpacity
+        style={{...styles.inputAd, marginTop: verticalScale(5)}}
+        onPress={() => setDatePicker(true)}>
         <TextInput
-          label="Day"
           mode="outlined"
-          keyboardType="phone-pad"
-          placeholder="dd"
+          disabled={true}
           theme={{
             colors: {
               primary: dateEr ? colors.Tertiary : 'black',
@@ -72,50 +86,13 @@ const Name = ({scrollViewRef, callback}) => {
           }}
           selectionColor={colors.WHITE}
           outlineColor={dateEr ? colors.Tertiary : null}
-          style={{...styles.inputDOB, marginRight: scale(4)}}
-          onChangeText={day => {
-            STUDENT_REGISTRATION_STORE.setBirthDay(day);
-          }}
-        />
-        <TextInput
-          label="Month"
-          mode="outlined"
-          placeholder="mm"
-          theme={{
-            colors: {
-              primary: dateEr ? colors.Tertiary : 'black',
-            },
-          }}
-          selectionColor={colors.WHITE}
-          outlineColor={dateEr ? colors.Tertiary : null}
-          keyboardType="phone-pad"
-          style={{
-            ...styles.inputDOB,
-            marginRight: scale(2),
-            marginLeft: scale(4),
-          }}
-          onChangeText={month => {
-            STUDENT_REGISTRATION_STORE.setBirthMonth(month);
-          }}
-        />
-        <TextInput
-          label="Year"
-          mode="outlined"
-          placeholder="yyyy"
-          keyboardType="phone-pad"
-          theme={{
-            colors: {
-              primary: dateEr ? colors.Tertiary : 'black',
-            },
-          }}
-          selectionColor={colors.WHITE}
-          outlineColor={dateEr ? colors.Tertiary : null}
-          style={{...styles.inputDOB, marginLeft: scale(4)}}
-          onChangeText={yr => {
-            STUDENT_REGISTRATION_STORE.setBirthYear(yr);
-          }}
-        />
-      </View>
+          left={
+            <TextInput.Icon name="calendar" size={25} color={colors.BLACK} />
+          }>
+          Date of Birth: {STUDENT_REGISTRATION_STORE.getBirthDay.toDateString()}
+        </TextInput>
+      </TouchableOpacity>
+
       {dateEr && <Error text="Enter your date of birth" />}
       <TextInput
         label="Address"
@@ -132,11 +109,20 @@ const Name = ({scrollViewRef, callback}) => {
         }}
       />
       {addEr && <Error text="Enter your address" />}
+      {datePicker && (
+        <DateTimePickerModal
+          isVisible={datePicker}
+          date={STUDENT_REGISTRATION_STORE.getBirthDay}
+          mode="date"
+          onConfirm={onChangeDate}
+          onCancel={() => setDatePicker(false)}
+        />
+      )}
       <NextButton handler={scroll} />
       <BackButton handler={back} />
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {
@@ -146,13 +132,12 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '20@s',
     alignItems: 'center',
   },
-  split: {
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
+  viewScale: {
+    paddingVertical: verticalScale(4),
+    //marginHorizontal: scale(HorizontalPadding),
+    height: '20%',
   },
-  inputDOB: {
-    flex: 1,
-  },
+
   inputAd: {width: '100%'},
 });
 

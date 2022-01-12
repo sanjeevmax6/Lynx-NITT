@@ -48,29 +48,40 @@ const Registration = observer(({navigation}) => {
   const handleAPICALL = () => {
     setErrorText(null);
     const formData = new FormData();
-    formData.append('first_name', STUDENT_REGISTRATION_STORE.getFirstName);
-    formData.append('last_name', STUDENT_REGISTRATION_STORE.getLastName);
-    formData.append('department', STUDENT_REGISTRATION_STORE.getDepartment);
-    formData.append('new_password', STUDENT_REGISTRATION_STORE.getPassword);
+    formData.append(
+      'first_name',
+      STUDENT_REGISTRATION_STORE.getFirstName.trim(),
+    );
+    formData.append('last_name', STUDENT_REGISTRATION_STORE.getLastName.trim());
+    formData.append(
+      'department',
+      STUDENT_REGISTRATION_STORE.getDepartment.trim(),
+    );
+    formData.append(
+      'new_password',
+      STUDENT_REGISTRATION_STORE.getPassword.trim(),
+    );
     formData.append(
       'confirm_password',
-      STUDENT_REGISTRATION_STORE.getConfirmPassword,
+      STUDENT_REGISTRATION_STORE.getConfirmPassword.trim(),
     );
-    formData.append(
-      'dob',
-      STUDENT_REGISTRATION_STORE.getBirthYear +
-        '-' +
-        STUDENT_REGISTRATION_STORE.getBirthMonth +
-        '-' +
-        STUDENT_REGISTRATION_STORE.getBirthDay +
-        'T00:00:00.000Z',
-    );
-    formData.append('address', STUDENT_REGISTRATION_STORE.getAddress);
-    formData.append('aadhar_no', STUDENT_REGISTRATION_STORE.getAadhar);
+    formData.append('dob', '' + STUDENT_REGISTRATION_STORE.getBirthDay);
+    formData.append('address', STUDENT_REGISTRATION_STORE.getAddress.trim());
+    formData.append('aadhar_no', STUDENT_REGISTRATION_STORE.getAadhar.trim());
     formData.append('profileImg', STUDENT_REGISTRATION_STORE.getPicture);
-    formData.append('passportImg', STUDENT_REGISTRATION_STORE.getPassport);
+
     formData.append('reg_token', reg_token);
-    formData.append('mobile_no', STUDENT_REGISTRATION_STORE.getMobileNumber);
+    formData.append(
+      'mobile_no',
+      '+' +
+        STUDENT_REGISTRATION_STORE.getCountryCode +
+        STUDENT_REGISTRATION_STORE.getMobileNumber.trim(),
+    );
+    formData.append('gender', STUDENT_REGISTRATION_STORE.getGender.trim());
+    formData.append(
+      'nationality',
+      STUDENT_REGISTRATION_STORE.getNationality.trim(),
+    );
     studentRegisterAPI(formData, setLoading, setErrorText);
   };
 

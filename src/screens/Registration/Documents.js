@@ -30,19 +30,6 @@ const Documents = observer(({scrollViewRef, callback}) => {
     callback('Profile Picture', 'Upload your profile photo', 3);
   };
 
-  const selectFile = async () => {
-    try {
-      const file = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.allFiles],
-      });
-
-      STUDENT_REGISTRATION_STORE.setPassport(file);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) console.log(err);
-      else throw err;
-    }
-  };
-
   const back = () => {
     callback('Basic Information', 'Enter your date of birth and address', 1);
     if (scrollViewRef.current !== null) {
@@ -69,27 +56,7 @@ const Documents = observer(({scrollViewRef, callback}) => {
           STUDENT_REGISTRATION_STORE.setAadhar(val);
         }}
       />
-      <Text style={styles.passtitle}>Passport Upload</Text>
-      {STUDENT_REGISTRATION_STORE.getPassport != null && (
-        <View style={styles.file}>
-          <Text style={styles.filename}>
-            {STUDENT_REGISTRATION_STORE.getPassport.name}
-          </Text>
-          <IconButton
-            size={scale(15)}
-            icon="close"
-            onPress={() => {
-              STUDENT_REGISTRATION_STORE.setPassport(null);
-            }}
-          />
-        </View>
-      )}
-      {!STUDENT_REGISTRATION_STORE.getPassport && (
-        <TouchableOpacity style={styles.attach} onPress={selectFile}>
-          <Icon name="attach-file" color={colors.Accent} size={16} />
-          <Text style={styles.attachText}>Attach</Text>
-        </TouchableOpacity>
-      )}
+
       <NextButton handler={scroll} />
       <BackButton handler={back} />
     </SafeAreaView>
