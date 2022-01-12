@@ -1,24 +1,21 @@
 import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
-import {scale, ScaledSheet} from 'react-native-size-matters';
-import {Button} from 'react-native-paper';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {Button, Chip} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as color from '../../utils/colors';
+import moment from 'moment';
 
 const ActivityCard = ({
-  notifier = 'Spider',
-  notification,
   date,
-  time,
-  id,
-  type = 0,
-  url = 'https://images-na.ssl-images-amazon.com/images/I/51K4bzCIe3L.png',
-  organizerUrl = 'https://media-exp1.licdn.com/dms/image/C510BAQF2qwmDE5B4UA/company-logo_200_200/0/1544248160311?e=2159024400&v=beta&t=g3fZgTrVPgM5pF_BYGaZW2InTI26WLfsFv4UOe0afew',
-
-  organizerFollower = 150,
+  title,
+  desc,
+  imageUrl,
+  type,
+  sender,
   navigation,
-  data,
 }) => {
+  const dateString = moment(date).format('DD/MM/YYYY | H:mm');
   const getTimeGap = d => {
     let date = new Date(d);
     var today = new Date();
@@ -26,90 +23,84 @@ const ActivityCard = ({
     var Difference_In_Days = Math.floor(
       Difference_In_Time / (1000 * 3600 * 24),
     );
-    // console.log(
-    //   'Today: ' +
-    //     time +
-    //     ' That day: ' +
-    //     d +
-    //     ' Difference: ' +
-    //     Difference_In_Days,
-    // );
     if (Math.floor(Difference_In_Days / 365) >= 1) {
-      return Math.floor(Difference_In_Days / 365) + ' yr';
+      return Math.floor(Difference_In_Days / 365) + ' Yr';
     }
     if (Math.floor(Difference_In_Days / 30) >= 1) {
-      return Math.floor(Difference_In_Days / 30) + ' mo';
+      return Math.floor(Difference_In_Days / 30) + ' Mo';
     }
     if (Math.floor(Difference_In_Days / 7) >= 1) {
-      return Math.floor(Difference_In_Days / 7) + ' w';
+      return Math.floor(Difference_In_Days / 7) + ' W';
     }
-    return Difference_In_Days + ' d';
+    return Difference_In_Days + ' D';
   };
 
   return (
     <View style={{paddingVertical: 6}}>
       <TouchableWithoutFeedback
         onPress={() => {
-          if (type == 0) {
-            navigation.navigate('AnnouncementDetail', {
-              data: {
-                organizer: notifier,
-                url: url,
-                links: 'awkjvbav',
-                description: notification,
-                time: getTimeGap(date),
-                organizerUrl: organizerUrl,
-                organizerFollower: organizerFollower,
-              },
-            });
+          if (type === 'circular') {
+            // navigation.navigate('AnnouncementDetail', {
+            //   data: {
+            //     // organizer: notifier,
+            //     // url: imageUrl,
+            //     // links: 'awkjvbav',
+            //     // description: notification,
+            //     // time: getTimeGap(date),
+            //     // organizerUrl: organizerUrl,
+            //     // organizerFollower: organizerFollower,
+            //   },
+            // });
+          } else if (type === 'event') {
+            // navigation.navigate('EventDescriptionScreen', {
+            //   // data: {
+            //   //   eventId:
+            //   // },
+            // });
           }
         }}>
         <View style={styles.cardLayout}>
-          <Image style={styles.poster} source={{uri: url}} />
+          <Image
+            style={styles.poster}
+            source={{
+              uri: 'https://nittapp-spidertesting.cloudns.nz/v1.5//api/image?photo=0590bd55-6248-4346-b051-2ef573785840.jpg',
+            }}
+          />
           <View style={styles.eventInfo}>
             <Text numberOfLines={3}>
-              <Text style={styles.notifier}>{notifier}</Text>
+              <Text style={styles.notifier}>{sender.name}</Text>
               <Text style={styles.notifier}>: </Text>
               <Text
                 style={{
-                  fontSize: scale(12),
+                  fontSize: scale(14),
                 }}>
-                {notification}
+                {title}
+                {'\n'}
+                {desc}
               </Text>
             </Text>
             <View
               style={{
                 flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginTop: verticalScale(2),
               }}>
-              <Text style={{fontSize: scale(12), fontWeight: '500'}}>
-                {date} | {time}
+              <Text style={styles.date}>{type.toUpperCase()}</Text>
+              <Text
+                style={{
+                  fontSize: scale(12),
+                  fontWeight: '500',
+                }}>
+                {dateString}
               </Text>
-              <Text style={{textAlign: 'right', flex: 1, fontSize: scale(12)}}>
+              <Text style={{fontSize: scale(12), marginRight: scale(2)}}>
                 {getTimeGap(date)}
               </Text>
             </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
-      {type === 1 ? (
-        <View style={styles.button}>
-          <Button
-            mode="outlined"
-            color={color.Accent}
-            style={styles.btn}
-            contentStyle={{padding: 0}}
-            onPress={() => {
-              navigation.navigate('EventDescriptionScreen', {
-                data: data,
-              });
-            }}
-            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}>
-            View event
-          </Button>
-        </View>
-      ) : (
-        <View></View>
-      )}
     </View>
   );
 };
@@ -124,6 +115,18 @@ const styles = ScaledSheet.create({
     width: '60@s',
     borderRadius: '30@s',
     alignSelf: 'center',
+  },
+  date: {
+    fontSize: scale(10),
+    color: color.Tertiary,
+    borderColor: 'black',
+    borderWidth: scale(1),
+    borderRadius: 10,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontWeight: 'bold',
+    paddingVertical: verticalScale(2),
+    paddingHorizontal: scale(5),
   },
   eventInfo: {
     marginLeft: '9@s',

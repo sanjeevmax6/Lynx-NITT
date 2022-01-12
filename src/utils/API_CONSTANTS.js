@@ -81,8 +81,10 @@ export const API_STUDENT_INTERESTED_IN_EVENT =
 
 export const API_CLUB_LIST = '/api/clubList/club';
 
-
 export const API_SUBSCRIBE_TOGGLE = '/api/student/subscribe/';
 
 export const API_GET_CLUB_UPCOMING_EVENTS = '/api/upcomingClubEvents/';
 
+export const API_STUDENT_ACTIVITY = 'api/notifications/student';
+
+export const API_CLUB_ACTIVITY = 'api/notifications/club';
