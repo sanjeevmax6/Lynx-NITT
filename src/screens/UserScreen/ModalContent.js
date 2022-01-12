@@ -71,24 +71,7 @@ const ModalContent = ({ModalVisible, navigation}) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={HandleLogout}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingLeft: scale(HorizontalPadding),
-            padding: scale(10),
-          }}>
-          <Icon
-            name="logout"
-            color={colors.EventCard_ShareIcon}
-            size={scale(ICON_SIZE_LARGE)}
-            style={{alignSelf: 'flex-end', paddingRight: scale(6)}}
-          />
-          <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
-            Log Out
-          </Text>
-        </View>
-      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => {
           {
@@ -110,6 +93,46 @@ const ModalContent = ({ModalVisible, navigation}) => {
           />
           <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
             Edit Profile
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.push('FeedBackScreen');
+          ModalVisible(false);
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingLeft: scale(HorizontalPadding),
+            padding: scale(10),
+          }}>
+          <Icon
+            name="rate-review"
+            color={colors.EventCard_ShareIcon}
+            size={scale(ICON_SIZE_LARGE)}
+            style={{alignSelf: 'flex-end', paddingRight: scale(6)}}
+          />
+          <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
+            Send Feedback
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={HandleLogout}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingLeft: scale(HorizontalPadding),
+            padding: scale(10),
+          }}>
+          <Icon
+            name="logout"
+            color={colors.EventCard_ShareIcon}
+            size={scale(ICON_SIZE_LARGE)}
+            style={{alignSelf: 'flex-end', paddingRight: scale(6)}}
+          />
+          <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
+            Log Out
           </Text>
         </View>
       </TouchableOpacity>

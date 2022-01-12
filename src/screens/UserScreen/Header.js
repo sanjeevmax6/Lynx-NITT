@@ -164,7 +164,7 @@ const styles = ScaledSheet.create({
   },
   modalView: {
     backgroundColor: colors.WHITE,
-    height: '200@vs',
+    height: '250@vs',
     width: '100%',
     bottom: '0%',
     position: 'absolute',

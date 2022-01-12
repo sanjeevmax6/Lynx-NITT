@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: color.WHITE,
-    height: verticalScale(200),
+    height: verticalScale(250),
     width: '100%',
     bottom: '0%',
     position: 'absolute',

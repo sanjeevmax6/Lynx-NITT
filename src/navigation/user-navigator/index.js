@@ -16,6 +16,7 @@ import * as color from '../../utils/colors';
 
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {STUDENT} from '../../utils/USER_TYPE';
+import FeedBackScreen from '../../screens/FeedbackScreen';
 
 const UserStack = createNativeStackNavigator();
 
@@ -84,6 +85,15 @@ function UserNavigator() {
           headerShadowVisible: false,
           title: '',
           headerTintColor: color.WHITE,
+        }}
+      />
+      <UserStack.Screen
+        name="FeedBackScreen"
+        component={FeedBackScreen}
+        options={{
+          headerShown: false,
+          animation: 'simple_push',
+          header: props => <Header props={props} title="Feedback" />,
         }}
       />
     </UserStack.Navigator>
