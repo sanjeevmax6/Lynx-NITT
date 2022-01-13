@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -27,6 +27,7 @@ import SuccessScreen from '../../components/SuccessScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import {observer} from 'mobx-react';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+import CustomAlert from '../../components/customAlert';
 
 const PopulateData = () => {
   console.log('Pop');
@@ -94,18 +95,28 @@ const EditProfileScreen = observer(({navigation}) => {
     };
   }, []);
 
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
+
   const onBackPress = () => {
-    Alert.alert('', 'Are you sure you want to discard changes?', [
+    setModalTitle('Confirmation');
+    setModalMessage('Are you sure you want to discard unsaved changes?');
+    setModalButtons([
       {
         text: 'DISCARD',
-        onPress: () => {
+        func: () => {
           toggleTab(true);
-          navigation.pop();
+          navigation.goBack();
         },
-        style: 'cancel',
       },
-      {text: 'KEEP EDITING'},
+      {
+        text: 'KEEP EDITING',
+        func: () => console.log('OK Pressed'),
+      },
     ]);
+    setModalVisible(true);
     return true;
   };
 
@@ -139,6 +150,15 @@ const EditProfileScreen = observer(({navigation}) => {
               ) : (
                 <>
                   <SafeAreaView style={styles.container}>
+                    <CustomAlert
+                      title={modalTitle}
+                      message={modalMessage}
+                      startDate={''}
+                      endDate={''}
+                      modalVisible={modalVisible}
+                      setModalVisible={setModalVisible}
+                      buttons={modalButtons}
+                    />
                     <EditProfileScreenHeader
                       navigation={navigation}
                       isValid={

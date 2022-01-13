@@ -20,6 +20,7 @@ import CalendarNoticeCreationTime from './CalendarNoticeCreationTime';
 import CalendarNoticeCreationScreenHeader from './CalendarNoticeCreationScreenHeader';
 import CalendarNoticeCreationDesc from './CalendarNoticeCreationDesc';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import CustomAlert from '../../components/customAlert';
 import {calendarNoticeCreation_NoticeTitle} from '../../utils/stringConstants';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {CALENDAR_NOTICE_STORE} from '../../mobx/CALENDAR_NOTICE_STORE';
@@ -55,17 +56,22 @@ const CalendarNoticeCreationScreen = observer(({navigation}) => {
           navigation.goBack();
         } else {
           if (page == 0) {
-            Alert.alert('', 'Are you sure you want to discard this notice?', [
+            setModalTitle('Confirmation');
+            setModalMessage('Are you sure you want to discard this notice?');
+            setModalButtons([
               {
                 text: 'DISCARD',
-                onPress: () => {
-                  navigation.goBack();
+                func: () => {
                   toggleTab(true);
+                  navigation.goBack();
                 },
-                style: 'cancel',
               },
-              {text: 'KEEP EDITING', onPress: () => console.log('OK Pressed')},
+              {
+                text: 'KEEP EDITING',
+                func: () => console.log('OK Pressed'),
+              },
             ]);
+            setModalVisible(true);
           }
 
           setPage(page - 1);
@@ -92,9 +98,22 @@ const CalendarNoticeCreationScreen = observer(({navigation}) => {
     toggleTab(false);
     return () => {};
   }, []);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
     <SafeAreaView style={styles.container}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       {CALENDAR_NOTICE_STORE.getLoading ? null : CALENDAR_NOTICE_STORE.getSuccess ? null : (
         <>
           <CalendarNoticeCreationScreenHeader navigation={navigation} />

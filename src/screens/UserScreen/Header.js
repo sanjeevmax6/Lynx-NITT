@@ -10,6 +10,7 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
+  Pressable,
 } from 'react-native';
 
 import * as colors from '../../utils/colors';
@@ -78,7 +79,7 @@ const Header = ({name, followers, url, description, navigation}) => {
   ) : (
     <View style={{backgroundColor: colors.WHITE}}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -98,9 +99,7 @@ const Header = ({name, followers, url, description, navigation}) => {
       </Modal>
 
       <View style={{backgroundColor: coverColor, height: verticalScale(81)}}>
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={() => setModalVisible(true)}>
+        <Pressable style={styles.icon} onPress={() => setModalVisible(true)}>
           <Icon
             name="menu"
             color={coverIconColor}
@@ -111,7 +110,7 @@ const Header = ({name, followers, url, description, navigation}) => {
               marginTop: verticalScale(6),
             }}
           />
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.imageView}>
         <Image
@@ -195,9 +194,9 @@ const styles = ScaledSheet.create({
   },
   modalScreen: {
     width: '100%',
-    height: '100%',
+    height: 'auto',
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.57)',
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   followers: {
     color: colors.Tertiary,
@@ -206,7 +205,8 @@ const styles = ScaledSheet.create({
   },
   modalView: {
     backgroundColor: colors.WHITE,
-    height: '250@vs',
+    borderTopLeftRadius: scale(10),
+    borderTopRightRadius: scale(10),
     width: '100%',
     bottom: '0%',
     position: 'absolute',

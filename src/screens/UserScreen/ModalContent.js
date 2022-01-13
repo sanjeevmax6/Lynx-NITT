@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
@@ -9,39 +9,48 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {CLUB_USER_ID, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
 import {LogOutHandler} from '../../utils/helperFunction/logOutHandler';
+import CustomAlert from '../../components/customAlert';
 
 const ModalContent = ({ModalVisible, navigation}) => {
   const HandleLogout = () => {
-    Alert.alert(
-      'Logout?',
-      'Are you sure you want to logout?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            console.log('LOGOUT');
-            LogOutHandler();
-          },
-        },
-      ],
-      {cancelable: false},
-    );
+    setModalTitle('Logout?');
+    setModalMessage('You will return to login screen');
+    setModalButtons([
+      {
+        text: 'NO',
+        func: () => {},
+      },
+      {
+        text: 'YES',
+        func: () => LogOutHandler(),
+      },
+    ]);
+    setModalVisible(true);
   };
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
-    <View style={{flex: 1, width: '100%'}}>
+    <View style={{flex: 1}}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       <TouchableOpacity onPress={() => ModalVisible(false)}>
         <Icon
-          name="keyboard-arrow-down"
+          name="close"
           color={colors.EventCard_ShareIcon}
           size={scale(ICON_SIZE_LARGE)}
           style={{
-            alignSelf: 'center',
-            paddingRight: scale(0),
+            alignSelf: 'flex-end',
+            paddingRight: scale(5),
             // backgroundColor: 'red',
           }}
         />

@@ -33,13 +33,13 @@ const AnnouncementCreationInputs = observer(() => {
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
-          label="Announcement Subject"
+          label="Announcement Title"
           style={{
             backgroundColor: color.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             borderTopLeftRadius: moderateScale(12),
           }}
-          placeholder="Announcement Subject (max 150)"
+          placeholder="Announcement Title (max 150)"
           value={ANNOUNCEMENT_CREATION_STORE.getTitle}
           multiline={true}
           theme={{

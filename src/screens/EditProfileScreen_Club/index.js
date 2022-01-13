@@ -12,7 +12,7 @@ import ScreenHeader from './ScreenHeader';
 const EditClubProfileScreen = ({navigation}) => {
   const [profilePic, setProfilePic] = useState('');
   const [isProfilePicSelected, setProfilePicSelected] = useState(false);
-  const [description,setDescription] = useState('');
+  const [description, setDescription] = useState('');
   const [links, setLinks] = useState([]);
 
   const PhotoStates = {
@@ -20,15 +20,12 @@ const EditClubProfileScreen = ({navigation}) => {
     setProfilePic,
     isProfilePicSelected,
     setProfilePicSelected,
-  }
+  };
   const inputStates = {
     description,
     setDescription,
-  }
-  const linksStates = [
-    links,
-    setLinks,
-  ]
+  };
+  const linksStates = [links, setLinks];
   const handleAPICALL = () => {
     EDIT_CLUB_PROFILE_STORE.setErrorText(null);
     const formData = new FormData();
@@ -49,10 +46,10 @@ const EditClubProfileScreen = ({navigation}) => {
         handleAPICALL={handleAPICALL}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <EditProfilePicture PhotoStates={PhotoStates}/>
-        <EditDescription inputStates={inputStates}/>
-        <EditClubLinks linksStates={linksStates}/>
-        <View style={{height: verticalScale(200)}} />
+        <EditProfilePicture PhotoStates={PhotoStates} />
+        <EditDescription inputStates={inputStates} />
+        <EditClubLinks linksStates={linksStates} />
+        <View style={{height: verticalScale(20)}} />
       </ScrollView>
     </>
   );

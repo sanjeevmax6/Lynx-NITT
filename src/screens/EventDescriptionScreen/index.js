@@ -50,7 +50,10 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
   }, []);
   return (
     <View
-      style={{backgroundColor: colors.EventDescriptionScreen_Back, flex: 1}}>
+      style={{
+        backgroundColor: colors.EventDescriptionScreen_Back,
+        flex: 1,
+      }}>
       <SafeAreaView>
         {EVENT_DESCRIPTION_STORE.getLoading ? (
           <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
@@ -131,8 +134,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                   navigation={navigation}
                   clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
                 />
-
-                <View style={{height: verticalScale(150)}} />
+                <View style={{height: verticalScale(50)}} />
               </View>
             </ScrollView>
           </>

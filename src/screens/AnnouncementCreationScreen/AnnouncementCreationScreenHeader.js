@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {clearData} from './createAnnouncementApi';
+import CustomAlert from '../../components/customAlert';
+
 const AnnouncementCreationScreenHeader = ({
   navigation,
   validLength,
@@ -17,31 +19,44 @@ const AnnouncementCreationScreenHeader = ({
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
     <View style={styles.header}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       <View style={styles.twoButtonLeft}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert(
-              '',
+            setModalTitle('Confirmation');
+            setModalMessage(
               'Are you sure you want to discard this announcement?',
-              [
-                {
-                  text: 'DISCARD',
-                  onPress: () => {
-                    clearData();
-                    toggleTab(true);
-                    navigation.pop();
-                  },
-                  style: 'cancel',
-                },
-                {
-                  text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
-                },
-              ],
             );
+            setModalButtons([
+              {
+                text: 'DISCARD',
+                func: () => {
+                  clearData();
+                  toggleTab(true);
+                  navigation.pop();
+                },
+              },
+              {
+                text: 'KEEP EDITING',
+                func: () => console.log('OK Pressed'),
+              },
+            ]);
+            setModalVisible(true);
           }}
           style={styles.button}>
           <Icon
@@ -57,14 +72,17 @@ const AnnouncementCreationScreenHeader = ({
         <TouchableOpacity
           onPress={() => {
             console.log('Create pressed');
-            if (!validLength)
-              Alert.alert('', 'The text entered exceeds the maximum length', [
+            if (!validLength) {
+              setModalTitle('Max Length Reached');
+              setModalMessage('The text entered exceeds the maximum length');
+              setModalButtons([
                 {
-                  text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
+                  text: 'CLOSE',
+                  func: () => console.log('OK Pressed'),
                 },
               ]);
-            else {
+              setModalVisible(true);
+            } else {
               createAnnouncement();
               //toggleTab(true); To be enabled after implementing save
             }

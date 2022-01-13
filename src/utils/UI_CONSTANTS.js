@@ -10,6 +10,6 @@ export const CLUB_DESCRIPTION_MAX_SIZE = 500;
 export const FEEDBACK_MAX_LENGTH = 250;
 
 // Club user page description line limit
-export const NUMBER_OF_LINES = 3;
+export const NUMBER_OF_LINES = 2;
 
 export const FONT = 'SourceSansPro-Regular';

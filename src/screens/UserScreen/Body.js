@@ -30,13 +30,13 @@ const Body = ({data, functions}) => {
           tabBarInactiveTintColor: colors.tabBarInactiveTintColor,
         }}>
         <Tab.Screen
-          name={`Upcoming events (${
+          name={`Live/Upcoming (${
             data.upcomingEvents.length + data.liveEvents.length
           })`}
           children={() => <UpcomingEventsComponent functions={functions} />}
         />
         <Tab.Screen
-          name={`Past events (${data.pastEvents.length})`}
+          name={`Completed (${data.pastEvents.length})`}
           children={() => <PastEventsComponent functions={functions} />}
         />
       </Tab.Navigator>

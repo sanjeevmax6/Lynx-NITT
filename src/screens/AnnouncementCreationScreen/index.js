@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -23,6 +23,7 @@ import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
+import CustomAlert from '../../components/customAlert';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 
 const AnnouncementCreationScreen = observer(({navigation}) => {
@@ -66,21 +67,30 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
     };
   }, []);
 
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
+
   const onBackPress = () => {
-    Alert.alert('', 'Are you sure you want to discard this announcement?', [
+    setModalTitle('Confirmation');
+    setModalMessage('Are you sure you want to discard this announcement?');
+    setModalButtons([
       {
         text: 'DISCARD',
-        onPress: () => {
+        func: () => {
           clearData();
-          console.log(55565);
           toggleTab(true);
           ANNOUNCEMENT_CREATION_STORE.setSuccess(false);
           navigation.pop();
         },
-        style: 'cancel',
       },
-      {text: 'KEEP EDITING'},
+      {
+        text: 'KEEP EDITING',
+        func: () => console.log('OK Pressed'),
+      },
     ]);
+    setModalVisible(true);
     return true;
   };
 
@@ -120,6 +130,15 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
               ) : (
                 <>
                   <SafeAreaView style={styles.container}>
+                    <CustomAlert
+                      title={modalTitle}
+                      message={modalMessage}
+                      startDate={''}
+                      endDate={''}
+                      modalVisible={modalVisible}
+                      setModalVisible={setModalVisible}
+                      buttons={modalButtons}
+                    />
                     <AnnouncementCreationScreenHeader
                       navigation={navigation}
                       validLength={

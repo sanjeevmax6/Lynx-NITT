@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
@@ -8,31 +8,48 @@ import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 import {CHECK_VALUES_ENTERED} from '../../utils/ERROR_MESSAGES';
+import CustomAlert from '../../components/customAlert';
 
 const EditProfileScreenHeader = ({navigation, isValid, handleApiCall}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
-
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
   return (
     <View style={styles.header}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       <View style={styles.twoButtonLeft}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('', 'Are you sure you want to discard changes?', [
+            setModalTitle('Confirmation');
+            setModalMessage(
+              'Are you sure you want to discard unsaved changes?',
+            );
+            setModalButtons([
               {
                 text: 'DISCARD',
-                onPress: () => {
+                func: () => {
                   toggleTab(true);
                   navigation.goBack();
                 },
-                style: 'cancel',
               },
               {
                 text: 'KEEP EDITING',
-                onPress: () => console.log('OK Pressed'),
+                func: () => console.log('OK Pressed'),
               },
             ]);
+            setModalVisible(true);
           }}
           style={styles.button}>
           <Icon
@@ -47,25 +64,31 @@ const EditProfileScreenHeader = ({navigation, isValid, handleApiCall}) => {
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
-            if (!isValid)
-              Alert.alert('', CHECK_VALUES_ENTERED, [
+            if (!isValid) {
+              setModalTitle('Verification');
+              setModalMessage(CHECK_VALUES_ENTERED);
+              setModalButtons([
                 {
                   text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
+                  func: () => console.log('OK Pressed'),
                 },
               ]);
-            else {
+              setModalVisible(true);
+            } else {
               //toggleTab(true); To be enabled after implementing save
-              Alert.alert('', 'Are you sure you want to update your details?', [
+              setModalTitle('Update Profile?');
+              setModalMessage('Are you sure you want to update your details?');
+              setModalButtons([
                 {
                   text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
+                  func: () => console.log('OK Pressed'),
                 },
                 {
                   text: 'YES',
-                  onPress: () => handleApiCall(),
+                  func: () => handleApiCall(),
                 },
               ]);
+              setModalVisible(true);
             }
           }}
           style={styles.button}>

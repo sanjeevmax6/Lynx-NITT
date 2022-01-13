@@ -194,7 +194,7 @@ const CustomAlert = props => {
                 {props.title}
               </Text>
             ) : null}
-            {props.startDate == props.endDate ? (
+            {props.startDate == '' ? null : props.startDate == props.endDate ? (
               <Text style={[styles.androidMessage2]}>
                 On : {props.startDate || ''}
               </Text>

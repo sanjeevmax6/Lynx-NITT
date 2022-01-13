@@ -20,7 +20,7 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
   return (
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.57)',
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   modalView: {
     backgroundColor: color.WHITE,

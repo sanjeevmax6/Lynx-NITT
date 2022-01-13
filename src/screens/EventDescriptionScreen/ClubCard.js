@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, View, TouchableOpacity} from 'react-native';
+import {Dimensions, View, Pressable} from 'react-native';
 import {Card, Paragraph, Button, Image, Text} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -25,7 +25,7 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
   const [ApiCall, setApiCall] = useState(false);
   return (
     <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           navigation.push('ClubDescription', {data: {ClubId: clubID}});
         }}>
@@ -33,16 +33,16 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
           source={{uri: API_GET_IMAGE + imgID.trim()}}
           style={styles.image}
         />
-      </TouchableOpacity>
+      </Pressable>
       <View style={styles.cardDetails}>
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             navigation.push('ClubDescription', {data: {ClubId: clubID}});
           }}>
           <Text numberOfLines={2} style={styles.title}>
             {name}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
         <Text style={styles.followers}>
           {EVENT_DESCRIPTION_STORE.getData.club.followers} FOLLOWERS
         </Text>
