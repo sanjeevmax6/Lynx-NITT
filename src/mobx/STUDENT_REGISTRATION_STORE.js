@@ -17,9 +17,20 @@ class Registration {
     password: '',
     confirmPassword: '',
     modalVisible: '',
+
+    apiSuccess: false,
+    apiCall: false,
+    apiErrorText: '',
+    apiError: false,
+    apiResponse: {},
   };
 
   reset = () => {
+    this.state.apiResponse = {};
+    this.state.apiSuccess = false;
+    this.state.apiCall = false;
+    this.state.apiErrorText = '';
+    this.state.apiError = false;
     this.state.coutryCode = '91'; //index of default ie India in Database
     this.state.mobile = '';
     this.state.firstName = '';
@@ -36,6 +47,43 @@ class Registration {
     this.state.confirmPassword = '';
     this.state.modalVisible = '';
   };
+  setApiResponse = val => {
+    this.state.apiResponse = val;
+  };
+
+  get getApiResponse() {
+    return this.state.apiResponse;
+  }
+
+  setApiError = val => {
+    this.state.apiError = val;
+  };
+
+  get getApiError() {
+    return this.state.apiError;
+  }
+  setApiErrorText = val => {
+    this.state.apiErrorText = val;
+  };
+
+  get getApiErrorText() {
+    return this.state.apiErrorText;
+  }
+  setApiCall = val => {
+    this.state.apiCall = val;
+  };
+
+  get getApiCall() {
+    return this.state.apiCall;
+  }
+  setApiSuccess = val => {
+    this.state.apiSuccess = val;
+  };
+
+  get getApiSuccess() {
+    return this.state.apiSuccess;
+  }
+
   setPicture = val => {
     this.state.profilePic = val;
   };
@@ -159,6 +207,7 @@ class Registration {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setMobileNumber: action,
       getMobileNumber: computed,
@@ -204,6 +253,21 @@ class Registration {
 
       setCountryCode: action,
       getCountryCode: computed,
+
+      setApiCall: action,
+      getApiCall: computed,
+
+      setApiError: action,
+      getApiError: computed,
+
+      setApiErrorText: action,
+      getApiErrorText: computed,
+
+      setApiSuccess: action,
+      getApiSuccess: computed,
+
+      setApiResponse: action,
+      getApiResponse: computed,
     });
   }
 }

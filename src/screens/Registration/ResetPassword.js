@@ -12,9 +12,9 @@ const WIDTH = Dimensions.get('window').width;
 
 const ResetPassword = ({
   scrollViewRef,
-  navigation,
+
   callback,
-  resetPasswordStates,
+
   handleAPICALL,
 }) => {
   const [eyeIcon, setEyeIcon] = useState('eye-off');
@@ -93,14 +93,7 @@ const ResetPassword = ({
         }
       />
       {cpassEr && <Error text="Enter Confirm Password" />}
-      {resetPasswordStates.errorText != null && (
-        <Error text={resetPasswordStates.errorText} />
-      )}
-      {resetPasswordStates.loading && (
-        <View style={{paddingTop: verticalScale(5)}}>
-          <ActivityIndicator size="small" color="#0000ff" />
-        </View>
-      )}
+
       <NextButton handler={register} label="Let's Go" />
       <BackButton handler={back} />
     </SafeAreaView>

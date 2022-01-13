@@ -58,11 +58,9 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
       const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-
-      STUDENT_REGISTRATION_STORE.setPicture(file.fileCopyUri);
+      console.log(file);
+      STUDENT_REGISTRATION_STORE.setPicture(file);
       setURI(file.fileCopyUri);
-      console.log(file.fileCopyUri);
-      console.log(file.fileCopyUri);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) console.log(err);
       else throw err;
@@ -77,7 +75,10 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
           }}
           style={styles.image}
         />
-        <TouchableOpacity style={styles.edit} onPress={selectFile}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.edit}
+          onPress={selectFile}>
           <Avatar.Icon
             icon="lead-pencil"
             size={35}
@@ -115,6 +116,7 @@ const styles = ScaledSheet.create({
     height: WIDTH / 1.75,
     width: WIDTH / 1.75,
     borderRadius: (WIDTH / 1.75) * 2,
+    backgroundColor: colors.GRAY_MEDIUM,
   },
   edit: {
     position: 'absolute',

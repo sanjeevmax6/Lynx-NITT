@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -13,21 +13,39 @@ import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NextButton from './nextButton';
 import BackButton from './backButton';
+import Error from '../../components/Error';
 
 import {observer} from 'mobx-react';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+import {isAadharValid} from '../../utils/helperFunction/FormValidation';
 
 const WIDTH = Dimensions.get('window').width;
 
 const Documents = observer(({scrollViewRef, callback}) => {
+  const [AadharError, setAadharError] = useState(false);
   const scroll = () => {
-    if (scrollViewRef.current !== null) {
-      scrollViewRef.current.scrollTo({
-        x: WIDTH * 3,
-        animated: true,
-      });
+    if (STUDENT_REGISTRATION_STORE.getAadhar === '') {
+      setAadharError(false);
+
+      if (scrollViewRef.current !== null) {
+        scrollViewRef.current.scrollTo({
+          x: WIDTH * 3,
+          animated: true,
+        });
+      }
+      callback('Profile Picture', 'Upload your profile photo', 3);
+    } else if (isAadharValid(STUDENT_REGISTRATION_STORE.getAadhar)) {
+      setAadharError(false);
+      if (scrollViewRef.current !== null) {
+        scrollViewRef.current.scrollTo({
+          x: WIDTH * 3,
+          animated: true,
+        });
+      }
+      callback('Profile Picture', 'Upload your profile photo', 3);
+    } else {
+      setAadharError(true);
     }
-    callback('Profile Picture', 'Upload your profile photo', 3);
   };
 
   const back = () => {
@@ -51,12 +69,15 @@ const Documents = observer(({scrollViewRef, callback}) => {
           },
         }}
         selectionColor={colors.WHITE}
+        keyboardType="numeric"
+        value={STUDENT_REGISTRATION_STORE.getAadhar}
+        maxLength={12}
         style={styles.inputAd}
         onChangeText={val => {
           STUDENT_REGISTRATION_STORE.setAadhar(val);
         }}
       />
-
+      {AadharError && <Error text="Enter a valid Aadhar Number" />}
       <NextButton handler={scroll} />
       <BackButton handler={back} />
     </SafeAreaView>

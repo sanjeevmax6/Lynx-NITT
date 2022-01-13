@@ -24,6 +24,10 @@ import {
   MODAL_TYPE_NATIONALITY,
 } from '../../utils/MODAL_DATABASE';
 import {observer} from 'mobx-react';
+import {
+  isStudentNameValid,
+  containOnlyNumbers,
+} from '../../utils/helperFunction/FormValidation';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -35,21 +39,26 @@ const Name = observer(({scrollViewRef, callback}) => {
   const scroll = () => {
     if (
       !STUDENT_REGISTRATION_STORE.getFirstName ||
-      !STUDENT_REGISTRATION_STORE.getLastName
+      !STUDENT_REGISTRATION_STORE.getLastName ||
+      !isStudentNameValid(STUDENT_REGISTRATION_STORE.getFirstName) ||
+      !isStudentNameValid(STUDENT_REGISTRATION_STORE.getLastName)
     ) {
       setEr(true);
-      setErMsg('Enter your name');
+      setErMsg('Enter a valid name');
       return;
     }
     if (STUDENT_REGISTRATION_STORE.getDepartment == 'Department') {
       setEr(true);
-      setErMsg('Enter your Department');
+      setErMsg('Select your Department');
       return;
     }
 
-    if (!STUDENT_REGISTRATION_STORE.getMobileNumber) {
+    if (
+      !STUDENT_REGISTRATION_STORE.getMobileNumber ||
+      !containOnlyNumbers(STUDENT_REGISTRATION_STORE.getMobileNumber)
+    ) {
       setEr(true);
-      setErMsg('Enter your Mobile Number');
+      setErMsg('Enter a valid Mobile Number');
       return;
     }
 
@@ -93,6 +102,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                 primary: er ? colors.Tertiary : 'black',
               },
             }}
+            value={STUDENT_REGISTRATION_STORE.getFirstName}
             selectionColor={colors.WHITE}
             outlineColor={er ? colors.Tertiary : null}
             style={styles.input}
@@ -110,6 +120,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                 primary: er ? colors.Tertiary : 'black',
               },
             }}
+            value={STUDENT_REGISTRATION_STORE.getLastName}
             selectionColor={colors.WHITE}
             outlineColor={er ? colors.Tertiary : null}
             style={{...styles.input, marginTop: verticalScale(5)}}
@@ -177,6 +188,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                 marginLeft: scale(5),
                 marginTop: verticalScale(5),
               }}
+              value={STUDENT_REGISTRATION_STORE.getMobileNumber}
               onChangeText={val => {
                 STUDENT_REGISTRATION_STORE.setMobileNumber(val);
               }}

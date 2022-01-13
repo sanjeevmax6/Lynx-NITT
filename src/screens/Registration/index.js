@@ -21,6 +21,15 @@ import {reg_token} from '../../utils/API_CONSTANTS';
 
 import {observer} from 'mobx-react';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+import LoaderPage from '../../components/LoadingScreen';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import ErrorScreen from '../../components/ErrorScreen';
+import SuccessScreen from '../../components/SuccessScreen';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
+import {STUDENT} from '../../utils/USER_TYPE';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -29,15 +38,6 @@ const Registration = observer(({navigation}) => {
   const [title, setTitle] = useState('Basic Information');
   const [subtitle, setSubTitle] = useState('Enter your name and department');
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [errorText, setErrorText] = useState();
-
-  const resetPasswordStates = {
-    loading,
-    setLoading,
-    errorText,
-    setErrorText,
-  };
 
   const changeText = (title, stitle, page) => {
     setTitle(title);
@@ -46,7 +46,7 @@ const Registration = observer(({navigation}) => {
   };
 
   const handleAPICALL = () => {
-    setErrorText(null);
+    // setErrorText(null);
     const formData = new FormData();
     formData.append(
       'first_name',
@@ -68,7 +68,11 @@ const Registration = observer(({navigation}) => {
     formData.append('dob', '' + STUDENT_REGISTRATION_STORE.getBirthDay);
     formData.append('address', STUDENT_REGISTRATION_STORE.getAddress.trim());
     formData.append('aadhar_no', STUDENT_REGISTRATION_STORE.getAadhar.trim());
-    formData.append('profileImg', STUDENT_REGISTRATION_STORE.getPicture);
+    formData.append('profileImg', {
+      uri: STUDENT_REGISTRATION_STORE.getPicture.uri,
+      type: STUDENT_REGISTRATION_STORE.getPicture.type,
+      name: STUDENT_REGISTRATION_STORE.getPicture.name,
+    });
 
     formData.append('reg_token', reg_token);
     formData.append(
@@ -82,7 +86,7 @@ const Registration = observer(({navigation}) => {
       'nationality',
       STUDENT_REGISTRATION_STORE.getNationality.trim(),
     );
-    studentRegisterAPI(formData, setLoading, setErrorText);
+    studentRegisterAPI(formData);
   };
 
   useFocusEffect(
@@ -110,30 +114,80 @@ const Registration = observer(({navigation}) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Registration</Text>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subtitle}>{subtitle}</Text>
-      <ScrollView
-        ref={scrollview}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        style={{width: WIDTH, marginTop: verticalScale(20)}}
-        scrollEnabled={false}>
-        <Name scrollViewRef={scrollview} callback={changeText} />
-        <DOB scrollViewRef={scrollview} callback={changeText} />
-        <Documents scrollViewRef={scrollview} callback={changeText} />
-        <ProfilePic scrollViewRef={scrollview} callback={changeText} />
-        <ResetPassword
-          scrollViewRef={scrollview}
-          navigation={navigation}
-          callback={changeText}
-          handleAPICALL={handleAPICALL}
-          resetPasswordStates={resetPasswordStates}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      {STUDENT_REGISTRATION_STORE.getApiCall ? (
+        <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+      ) : (
+        <>
+          {STUDENT_REGISTRATION_STORE.getApiError ? (
+            <ErrorScreen
+              errorMessage={STUDENT_REGISTRATION_STORE.getApiErrorText}
+              fn={() => {
+                if (STUDENT_REGISTRATION_STORE.getApiErrorText === NO_NETWORK) {
+                  handleAPICALL();
+                } else {
+                  STUDENT_REGISTRATION_STORE.setApiCall(false);
+                  STUDENT_REGISTRATION_STORE.setApiErrorText('');
+                  STUDENT_REGISTRATION_STORE.setApiError(false);
+                }
+              }}
+            />
+          ) : (
+            <>
+              {STUDENT_REGISTRATION_STORE.getApiSuccess ? (
+                <SuccessScreen
+                  fn={() => {
+                    USER_STORE.setUserType(STUDENT);
+                    AsyncStorage.setItem(
+                      USER_TOKEN,
+                      STUDENT_REGISTRATION_STORE.getApiResponse.data.token,
+                    );
+                    AsyncStorage.setItem(USER_TYPE, STUDENT); //stored items should be string
+
+                    USER_STORE.setUserToken(
+                      STUDENT_REGISTRATION_STORE.getApiResponse.data.token,
+                    );
+                    USER_STORE.setUserRegToken(null);
+                    STUDENT_REGISTRATION_STORE.reset();
+                  }}
+                />
+              ) : (
+                <>
+                  <SafeAreaView style={styles.container}>
+                    <Text style={styles.header}>Registration</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.subtitle}>{subtitle}</Text>
+                    <ScrollView
+                      ref={scrollview}
+                      horizontal
+                      pagingEnabled
+                      showsHorizontalScrollIndicator={false}
+                      style={{width: WIDTH, marginTop: verticalScale(20)}}
+                      scrollEnabled={false}>
+                      <Name scrollViewRef={scrollview} callback={changeText} />
+                      <DOB scrollViewRef={scrollview} callback={changeText} />
+                      <Documents
+                        scrollViewRef={scrollview}
+                        callback={changeText}
+                      />
+                      <ProfilePic
+                        scrollViewRef={scrollview}
+                        callback={changeText}
+                      />
+                      <ResetPassword
+                        scrollViewRef={scrollview}
+                        callback={changeText}
+                        handleAPICALL={handleAPICALL}
+                      />
+                    </ScrollView>
+                  </SafeAreaView>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </>
   );
 });
 

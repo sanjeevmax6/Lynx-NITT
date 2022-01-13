@@ -48,7 +48,6 @@ const DropDownModal = observer(({modalType, data}) => {
                   style={{elevation: 0, margin: 10, padding: 0, color: 'red'}}
                   placeholder={'SEARCH'}
                   onChangeText={onChangeSearch}
-                  autoFocus={true}
                   value={searchQuery}
                   iconColor={colors.BLACK}
                 />
