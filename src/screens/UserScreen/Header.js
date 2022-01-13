@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,9 @@ import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  LayoutAnimation,
+  Platform,
+  UIManager,
 } from 'react-native';
 
 import * as colors from '../../utils/colors';
@@ -15,11 +18,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ModalContent from './ModalContent';
 import ImageColors from 'react-native-image-colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {NUMBER_OF_LINES} from '../../utils/UI_CONSTANTS';
 
 const Header = ({name, followers, url, description, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [coverColor, setCoverColor] = useState('');
   const [coverIconColor, setCoverIconColor] = useState(colors.Tertiary);
+  const [showMoreText, setShowMoreText] = useState(true);
+  const [moreText, setMoreText] = useState('more');
+  const [numberOfLines, setNumberOfLines] = useState(NUMBER_OF_LINES);
+  const [showingMore, setShowingMore] = useState(false);
+
+  const onShowMorePressed = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setMoreText(showingMore ? 'more' : 'less');
+    setNumberOfLines(showingMore ? NUMBER_OF_LINES : 100);
+    setShowingMore(!showingMore);
+  };
 
   const getColors = async () => {
     const result = await ImageColors.getColors(url, {
@@ -43,6 +58,16 @@ const Header = ({name, followers, url, description, navigation}) => {
     setCoverColor(res.cover);
     setCoverIconColor(res.icon);
   });
+
+  const onTextLayout = useCallback(e => {
+    setShowMoreText(e.nativeEvent.lines.length > NUMBER_OF_LINES);
+  });
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }, []);
 
   return coverColor === colors.Tertiary ? (
     <SafeAreaView>
@@ -100,9 +125,20 @@ const Header = ({name, followers, url, description, navigation}) => {
           marginHorizontal: scale(HorizontalPadding),
         }}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={{...styles.text, paddingTop: verticalScale(6)}}>
-          {description}
-        </Text>
+        <View style={{flexDirection: 'column'}}>
+          <Text
+            style={{...styles.text, paddingTop: verticalScale(6)}}
+            onTextLayout={onTextLayout}
+            numberOfLines={numberOfLines}>
+            {description}
+          </Text>
+          {showMoreText && (
+            <TouchableOpacity onPress={onShowMorePressed}>
+              <Text style={styles.moreText}>{moreText}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
         <Text style={styles.followers}>{followers} followers</Text>
       </View>
     </View>
@@ -115,6 +151,12 @@ const styles = ScaledSheet.create({
   text: {
     fontSize: '14@s',
     color: colors.BLACK,
+  },
+  moreText: {
+    fontSize: '14@s',
+    color: colors.Blue,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
   imageView: {
     width: '120@s',

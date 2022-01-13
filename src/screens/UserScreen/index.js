@@ -77,6 +77,7 @@ const UserScreen = observer(({navigation}) => {
             url={API_GET_IMAGE + CLUB_USER_STORE.getProfilePic}
             followers={CLUB_USER_STORE.getFollowerCount}
             description={CLUB_USER_STORE.getDescription}
+            navigation={navigation}
           />
           <Body data={listData} functions={functions} />
         </>
