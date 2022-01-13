@@ -21,7 +21,24 @@ class EditProfileStore {
     loading: false,
     success: false,
   };
-
+  reset = () => {
+    this.state.firstName = '';
+    this.state.lastName = '';
+    this.state.department = '';
+    this.state.address = '';
+    this.state.aadharNo = '';
+    this.state.profileImg = '';
+    this.state.passportImg = {};
+    this.state.dob = '';
+    this.state.mobile = '';
+    this.state.pic = '';
+    this.state.image = {};
+    this.state.datePicker = false;
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.loading = false;
+    this.state.success = false;
+  };
   setSuccess = val => {
     this.state.success = val;
   };
@@ -146,6 +163,7 @@ class EditProfileStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setFirstName: action,
       getFirstName: computed,

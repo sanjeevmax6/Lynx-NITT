@@ -5,6 +5,9 @@ class BottomNavStore {
     tabVisibility: true,
   };
 
+  reset = () => {
+    this.state.tabVisibility = true;
+  };
   setTabVisibility = visibility => {
     this.state.tabVisibility = visibility;
   };
@@ -16,6 +19,7 @@ class BottomNavStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setTabVisibility: action,
       getTabVisibility: computed,

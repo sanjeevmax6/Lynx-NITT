@@ -13,6 +13,19 @@ class clubDescriptionStore {
     clubID: '',
     isFollowingClub: false,
   };
+  reset = () => {
+    this.state.error = true;
+    this.state.errorText = '';
+    this.state.loading = true;
+    this.state.success = false;
+    this.state.data = '';
+    this.state.liveEvents = '';
+    this.state.upcomingEvents = '';
+    this.state.pastEvents = '';
+    this.state.clubID = '';
+    this.state.isFollowingClub = false;
+  };
+
   setIsFollowingClub = val => {
     this.state.isFollowingClub = val;
   };
@@ -105,6 +118,7 @@ class clubDescriptionStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setIncrementFollower: action,
 

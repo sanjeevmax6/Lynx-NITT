@@ -5,6 +5,9 @@ class AuthStore {
     splashLoading: true,
   };
 
+  reset = () => {
+    this.state.splashLoading = true;
+  };
   setSplashLoading = loading => {
     this.state.splashLoading = loading;
   };
@@ -16,6 +19,7 @@ class AuthStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setSplashLoading: action,
       getSplashLoading: computed,

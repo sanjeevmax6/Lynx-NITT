@@ -17,7 +17,19 @@ class calendarNoticeStore {
     showEndDatePicker: false,
     multiDay: false,
   };
-
+  reset = () => {
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.loading = false;
+    this.state.success = false;
+    this.state.title = '';
+    this.state.description = '';
+    this.state.startDate = new Date(new Date().getTime() + 86400000);
+    this.state.endDate = new Date(new Date().getTime() + 2 * 86400000);
+    this.state.showStartDatePicker = false;
+    this.state.showEndDatePicker = false;
+    this.state.multiDay = false;
+  };
   setError = val => {
     this.state.error = val;
   };
@@ -109,6 +121,7 @@ class calendarNoticeStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setError: action,
       getError: computed,

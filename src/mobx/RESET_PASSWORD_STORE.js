@@ -13,6 +13,17 @@ class RESET_DATA {
     clubsTokenFetched: false,
   };
 
+  reset = () => {
+    this.state.isStudent = true;
+    this.state.username = '';
+    this.state.error = '';
+    this.state.errorText = '';
+    this.state.password = '';
+    this.state.studentToken = '';
+    this.state.tokenFetched = false;
+    this.state.clubsToken = '';
+    this.state.clubsTokenFetched = false;
+  };
   setIsStudent = val => {
     this.state.isStudent = val;
   };
@@ -88,6 +99,7 @@ class RESET_DATA {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setIsStudent: action,
       getIsStudent: computed,

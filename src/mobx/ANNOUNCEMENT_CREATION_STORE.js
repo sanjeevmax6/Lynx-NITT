@@ -19,6 +19,20 @@ class Announcement {
     subjectLength: maxSubjectLength,
     announcementLength: maxAnnouncementLength,
   };
+  reset = () => {
+    this.state.loading = false;
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.success = false;
+    this.state.title = '';
+    this.state.description = '';
+    this.state.link = ''; //current input
+    this.state.links = []; //Array of Links
+    this.state.files = [];
+
+    this.state.subjectLength = maxSubjectLength;
+    this.state.announcementLength = maxAnnouncementLength;
+  };
   setSuccess = val => {
     this.state.success = val;
   };
@@ -92,6 +106,7 @@ class Announcement {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setTitle: action,
       getTitle: computed,

@@ -5,6 +5,10 @@ class API {
     baseUrl: '',
   };
 
+  reset = () => {
+    this.state.baseUrl = '';
+  };
+
   setBaseUrl = val => {
     this.state.baseUrl = val;
   };
@@ -16,6 +20,7 @@ class API {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setBaseUrl: action,
       getBaseUrl: computed,

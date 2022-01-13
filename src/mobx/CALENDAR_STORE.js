@@ -13,6 +13,17 @@ class calendarStore {
     selectedDate: moment(new Date().toLocaleString()).format('DD-MM-YYYY'),
   };
 
+  reset = () => {
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.loading = false;
+    this.state.eventData = {};
+    this.state.adminEventData = {};
+    this.state.success = false;
+    this.state.selectedDate = moment(new Date().toLocaleString()).format(
+      'DD-MM-YYYY',
+    );
+  };
   setError = val => {
     this.state.error = val;
   };
@@ -72,6 +83,7 @@ class calendarStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setError: action,
       getError: computed,

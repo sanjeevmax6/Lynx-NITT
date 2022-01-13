@@ -12,6 +12,16 @@ class eventDescriptionStore {
     wasStudentInterested: false,
   };
 
+  reset = () => {
+    this.state.error = true;
+    this.state.errorText = '';
+    this.state.loading = true;
+    this.state.success = false;
+    this.state.data = '';
+    this.state.eventID = '';
+    this.state.isFollowingClub = false;
+    this.state.wasStudentInterested = false;
+  };
   setWasStudentInterested = val => {
     this.state.wasStudentInterested = val;
   };
@@ -89,6 +99,7 @@ class eventDescriptionStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setIncrementFollower: action,
       setDecrementFollower: action,

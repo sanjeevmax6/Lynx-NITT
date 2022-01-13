@@ -41,6 +41,10 @@ async function loadCache() {
     const userToken = await AsyncStorage.getItem(USER_TOKEN);
     const userType = await AsyncStorage.getItem(USER_TYPE);
 
+    if (userType === null) {
+      userType = '';
+    }
+
     if (userType != STUDENT) {
       const userClubId = await AsyncStorage.getItem(CLUB_USER_ID);
       USER_STORE.setClubId(userClubId);

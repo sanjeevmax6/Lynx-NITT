@@ -7,6 +7,11 @@ class loginStore {
     loading: false,
   };
 
+  reset = () => {
+    this.state.error = false;
+    this.state.errorText = '';
+    this.state.loading = false;
+  };
   setError = val => {
     this.state.error = val;
   };
@@ -34,6 +39,7 @@ class loginStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setError: action,
       getError: computed,

@@ -20,6 +20,21 @@ class ClubUserStore {
     refresh: false,
   };
 
+  reset = () => {
+    this.state.name = '';
+    this.state.email = '';
+    this.state.description = '';
+    this.state.isAdmin = false;
+    this.state.profilePic = '';
+    this.state.followerCount = '';
+    this.state.upcomingEvents = [];
+    this.state.liveEvents = [];
+    this.state.pastEvents = [];
+    this.state.isError = false;
+    this.state.errorText = '';
+    this.state.isLoading = false;
+    this.state.refresh = false;
+  };
   /*
     GETTERS
   */
@@ -117,6 +132,7 @@ class ClubUserStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
       // setters
       setName: action,
       setEmail: action,

@@ -70,6 +70,7 @@ class activityStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
 
       setError: action,
       getError: computed,

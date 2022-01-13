@@ -54,7 +54,10 @@ const DropDownModal = observer(({modalType, data}) => {
               )}
               <FlatList
                 data={data.filter(item => {
-                  if (item.name.search(searchQuery.toUpperCase()) != -1)
+                  if (
+                    item.name.toUpperCase().search(searchQuery.toUpperCase()) !=
+                    -1
+                  )
                     return true;
                   else return false;
                 })}

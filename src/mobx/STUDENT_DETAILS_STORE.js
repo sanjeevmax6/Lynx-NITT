@@ -26,6 +26,23 @@ class StudentDetailStore {
     refresh: false,
   };
 
+  reset = () => {
+    this.state.rollNumber = '';
+    this.state.firstName = '';
+    this.state.lastName = '';
+    this.state.department = '';
+    this.state.dob = '';
+    this.state.mobileNo = '';
+    this.state.aadhar = '';
+    this.state.address = '';
+    this.state.profilePic = '';
+    this.state.interestList = [];
+    this.state.clubsFollowingList = [];
+    this.state.isLoading = false;
+    this.state.isError = false;
+    this.state.errorText = '';
+    this.state.refresh = false;
+  };
   /*
     ^^^^^ SETTERS ^^^^^
   */
@@ -89,7 +106,7 @@ class StudentDetailStore {
     this.state.isLoading = isLoading;
   };
   setRefresh = val => {
-    this.state.val = val;
+    this.state.refresh = val;
   };
 
   /*
@@ -157,6 +174,7 @@ class StudentDetailStore {
   constructor() {
     makeObservable(this, {
       state: observable,
+      reset: action,
       // all setters
       setIsError: action,
       setErrorText: action,
@@ -174,6 +192,7 @@ class StudentDetailStore {
       setAddress: action,
       setProfilePic: action,
       setRefresh: action,
+
       // all getters
       isLoading: computed,
       isError: computed,
