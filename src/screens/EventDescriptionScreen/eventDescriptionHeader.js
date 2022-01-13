@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IconButton} from 'react-native-paper';
 
 import {USER_STORE} from '../../mobx/USER_STORE';
-import {STUDENT} from '../../utils/USER_TYPE';
+import {CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {observer} from 'mobx-react';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
@@ -15,7 +15,18 @@ import {toggleInterestedApi} from '../../apis/toggleInterested';
 const EventDescriptionHeader = observer(({navigation}) => {
   const [Api, setApi] = useState(false);
   console.log(EVENT_DESCRIPTION_STORE.getData.club.id);
-  let isAuthorized = true;
+
+  const isAuthorized = () => {
+    if (
+      USER_STORE.getUserType === CLUB &&
+      EVENT_DESCRIPTION_STORE.getData &&
+      USER_STORE.getClubId === EVENT_DESCRIPTION_STORE.getData.club.id
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -65,7 +76,7 @@ const EventDescriptionHeader = observer(({navigation}) => {
         />
       ) : (
         <>
-          {isAuthorized ? (
+          {isAuthorized() ? (
             <>
               <IconButton
                 onPress={() => {
@@ -74,7 +85,10 @@ const EventDescriptionHeader = observer(({navigation}) => {
                 disabled={false}
                 icon={'border-color'}
                 color={colors.Tertiary}
-                style={{...styles.button, elevation: 0}}
+                style={{
+                  ...styles.button,
+                  elevation: 0,
+                }}
               />
             </>
           ) : (

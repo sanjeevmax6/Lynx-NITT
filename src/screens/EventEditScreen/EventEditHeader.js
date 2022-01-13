@@ -6,6 +6,7 @@ import * as color from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
+import {EditEventApi} from './EditEventApi';
 
 const EventEditHeader = ({navigation}) => {
   const conditionChecksPass = () => {
@@ -82,12 +83,10 @@ const EventEditHeader = ({navigation}) => {
               Alert.alert('', conditionChecker.reason, [
                 {
                   text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
                 },
               ]);
             else {
-              // call api here
-              console.log('Call API here');
+              EditEventApi();
               //toggleTab(true); To be enabled after implementing save
             }
           }}

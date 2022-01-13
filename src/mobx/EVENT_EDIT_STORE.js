@@ -14,6 +14,7 @@ class EventEditStore {
     editEndEvent: new Date(),
     showStartPicker: false,
     showEndPicker: false,
+    eventid: '',
 
     // photos
     photos: [],
@@ -21,6 +22,7 @@ class EventEditStore {
     charLeftDesc: EVENT_DESC_MAX_SIZE,
 
     // loader and error state variables
+    success: false,
     isError: false,
     errorText: '',
     isLoading: false,
@@ -64,6 +66,9 @@ class EventEditStore {
   get getShowEndPicker() {
     return this.state.showEndPicker;
   }
+  get getEventId() {
+    return this.state.eventid;
+  }
 
   // FOR OTHERS
   get getPhotos() {
@@ -77,6 +82,10 @@ class EventEditStore {
   }
 
   // FOR ERROR AND LOADERS
+  get getIsSuccess() {
+    return this.state.success;
+  }
+
   get getIsError() {
     return this.state.isError;
   }
@@ -153,6 +162,9 @@ class EventEditStore {
   setEditTags = tags => {
     this.state.editTags = tags;
   };
+  setEventId = id => {
+    this.state.eventid = id;
+  };
 
   // OTHERS
   setPhotos = photos => {
@@ -174,6 +186,10 @@ class EventEditStore {
   };
 
   // FOR ERROR AND LOADERS
+  setSuccess = isSuccess => {
+    this.state.success = isSuccess;
+  };
+
   setIsError = isError => {
     this.state.isError = isError;
   };
@@ -204,9 +220,11 @@ class EventEditStore {
     this.state.editEndEvent = new Date();
     this.state.showStartPicker = false;
     this.state.showEndPicker = false;
+    this.state.eventid = '';
     this.state.photos = [];
     this.state.charLeftTitle = EVENT_TITLE_MAX_SIZE;
     this.state.charLeftDesc = EVENT_DESC_MAX_SIZE;
+    this.state.success = false;
     this.state.isError = false;
     this.state.errorText = '';
     this.state.isLoading = false;
@@ -253,6 +271,8 @@ class EventEditStore {
       clearData: action,
       setData: action,
       setIsViewingImg: action,
+      setSuccess: action,
+      setEventId: action,
       // getters
       getEditTitle: computed,
       getEditDesc: computed,
@@ -273,6 +293,8 @@ class EventEditStore {
       getShowStartPicker: computed,
       getShowEndPicker: computed,
       getIsViewingImg: computed,
+      getIsSuccess: computed,
+      getEventId: computed,
     });
   }
 }

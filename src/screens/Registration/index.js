@@ -162,6 +162,7 @@ const Registration = observer(({navigation}) => {
                       horizontal
                       pagingEnabled
                       showsHorizontalScrollIndicator={false}
+                      keyboardShouldPersistTaps="always"
                       style={{width: WIDTH, marginTop: verticalScale(20)}}
                       scrollEnabled={false}>
                       <Name scrollViewRef={scrollview} callback={changeText} />

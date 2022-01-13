@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ACTIVITY_STORE} from '../../mobx/ACITIVITY_STORE';
 import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
+import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
@@ -18,4 +19,5 @@ export const LogOutHandler = () => {
   CLUB_REGISTER_STORE.reset();
   ACTIVITY_STORE.reset();
   STUDENT_REGISTRATION_STORE.reset();
+  EVENT_EDIT_STORE.clearData();
 };
