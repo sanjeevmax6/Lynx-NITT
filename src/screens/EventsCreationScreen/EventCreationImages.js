@@ -12,14 +12,18 @@ import {
   eventCreation_DateTitle,
   eventCreation_tags_linksTitle,
 } from '../../utils/stringConstants';
+import {observer} from 'mobx-react';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
 
 const win = Dimensions.get('window');
 
-const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
+const EventCreationImages = observer(({scrollViewRef, callback}) => {
+  const [isLoading, setLoading] = useState(false);
+
   //handling scroll
   const scroll = () => {
-    if (imageStates.profilePicUri.length < 2) {
-      setImgEr(true);
+    if (EVENT_CREATION_STORE.getImages.length < 2) {
+      EVENT_CREATION_STORE.setImageError(true);
       return;
     }
     if (scrollViewRef.current !== null) {
@@ -41,24 +45,27 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
   };
   //
 
-  const [isLoading, setLoading] = useState(false);
-  const [imgEr, setImgEr] = useState(false);
   const selectImage = async () => {
     try {
       const image = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-      imageStates.setProfilePicUri(prevList => [...prevList, image.uri]);
-      imageStates.setProfilePicSelected(false);
+      EVENT_CREATION_STORE.addImage(image);
+      EVENT_CREATION_STORE.setProfilePictureSelected(false);
+      console.log(EVENT_CREATION_STORE.getImages.length);
+      //EVENT_CREATION_STORE.setLoading(false);
+      console.log(image);
       setLoading(true);
       await Image.getSize(
         image.uri,
         () => {
+          //EVENT_CREATION_STORE.setLoading(false);
           setLoading(false);
-          imageStates.setProfilePicSelected(true);
-          setImgEr(false);
+          EVENT_CREATION_STORE.setProfilePictureSelected(true);
+          EVENT_CREATION_STORE.setImageError(false);
         },
         err => {
+          setLoading(false);
           console.log(err);
         },
       );
@@ -68,22 +75,14 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
     }
   };
   const deleteImage = index => {
-    imageStates.setProfilePicUri(prevList => {
-      let arr = [...prevList];
-      arr.splice(index, 1);
-      return arr;
-    });
+    EVENT_CREATION_STORE.removeImage(index);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.choosePicture}>
-        {imageStates.profilePicUri.length > 1 ? (
-          <Images
-            images={imageStates.profilePicUri}
-            selectImage={selectImage}
-            deleteImage={deleteImage}
-          />
+        {EVENT_CREATION_STORE.getImages.length > 1 ? (
+          <Images selectImage={selectImage} deleteImage={deleteImage} />
         ) : isLoading ? (
           <ActivityIndicator />
         ) : (
@@ -96,7 +95,7 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
           </Button>
         )}
       </View>
-      {imgEr && (
+      {EVENT_CREATION_STORE.getImageError && (
         <View style={styles.error}>
           <Error text="Please upload cover photo" />
         </View>
@@ -120,7 +119,7 @@ const EventsCreationImages = ({imageStates, scrollViewRef, callback}) => {
       </Button>
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {
@@ -157,4 +156,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default EventsCreationImages;
+export default EventCreationImages;

@@ -14,8 +14,11 @@ import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
+
+import {observer} from 'mobx-react';
 const WIDTH = Dimensions.get('window').width;
-const EventsCreationScreenHeader = ({navigation, isValid}) => {
+const EventCreationScreenHeader = observer(({navigation, isValid}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
@@ -29,6 +32,7 @@ const EventsCreationScreenHeader = ({navigation, isValid}) => {
               {
                 text: 'DISCARD',
                 onPress: () => {
+                  EVENT_CREATION_STORE.clearData();
                   toggleTab(true);
                   navigation.goBack();
                 },
@@ -50,7 +54,7 @@ const EventsCreationScreenHeader = ({navigation, isValid}) => {
       <View style={{marginLeft: scale(5), width: HeaderHeight / 1.6}}></View>
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   header: {
@@ -83,4 +87,4 @@ const styles = StyleSheet.create({
   twoButtonRight: {},
 });
 
-export default EventsCreationScreenHeader;
+export default EventCreationScreenHeader;

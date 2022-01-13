@@ -1,12 +1,5 @@
-import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Dimensions,
-  SafeAreaView,
-  Keyboard,
-} from 'react-native';
+import React from 'react';
+import {View, Dimensions, SafeAreaView, Keyboard, FlatList} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import EventCreationTagItem from './EventCreationTagItem';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -20,27 +13,17 @@ import {
 import LinkItem from './LinkItem';
 import Error from '../../components/Error';
 import {eventCreation_ImageTitle} from '../../utils/stringConstants';
+import {observer} from 'mobx-react';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
+import textInputStyles from './textInputStyles';
+import {addEvent} from './EventCreationAPI';
 
 const WIDTH = Dimensions.get('window').width;
 
-const EventsCreationTag = ({
-  tagStates,
-  scrollViewRef,
-  callback,
-  navigation,
-  handleAPICALL,
-}) => {
+const EventCreationTag = observer(({scrollViewRef, callback}) => {
   //handling scroll
   const createEvent = () => {
-    if (tagStates.tags.length == 0) {
-      setTagEr(true);
-      return;
-    }
-    if (tagStates.links.length == 0) {
-      setLinkEr(true);
-      return;
-    }
-    handleAPICALL();
+    addEvent();
   };
 
   const back = () => {
@@ -53,53 +36,17 @@ const EventsCreationTag = ({
       Keyboard.dismiss();
     }
   };
-  //
-
-  const [tag, setTag] = useState('');
-  const [tagEr, setTagEr] = useState(false);
-  const [linkEr, setLinkEr] = useState(false);
-  const addTag = () => {
-    if (tag !== '') {
-      tagStates.setTags(prevList => {
-        setTag('');
-        console.log(tagStates.tags);
-        return [...prevList, tag];
-      });
-    }
-    setTagEr(false);
-  };
-
-  const removeTag = delTag => {
-    tagStates.setTags(prevList => {
-      return prevList.filter(item => item != delTag);
-    });
-  };
-  const addLink = () => {
-    if (tagStates.link !== '') {
-      tagStates.setLinks(prevList => {
-        return [tagStates.link, ...prevList];
-      });
-      tagStates.setLink('');
-    }
-    setLinkEr(false);
-  };
-
-  const removeLink = link => {
-    tagStates.setLinks(prevList => {
-      return prevList.filter(item => item != link);
-    });
-  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
           label="Add Tags"
-          style={styles.textInputStyle}
+          style={textInputStyles.textInputStyle}
           placeholder="Add Tags"
           multiline={true}
-          value={tag}
+          value={EVENT_CREATION_STORE.getTag}
           theme={{
             colors: {
               primary: color.BLACK,
@@ -107,75 +54,69 @@ const EventsCreationTag = ({
           }}
           selectionColor={color.WHITE}
           onChangeText={nTag => {
-            setTag(nTag);
+            EVENT_CREATION_STORE.setTag(nTag);
           }}
           left={<TextInput.Icon name={'tag'} color={color.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
               color={color.BLACK}
-              onPress={() => addTag()}
+              onPress={() => EVENT_CREATION_STORE.addTag()}
             />
           }
         />
-        {tagStates.tags.length > 0 && (
+        {EVENT_CREATION_STORE.getTags.length > 0 && (
           <View
             style={{
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
-            {tagStates.tags.map((item, index) => {
+            {EVENT_CREATION_STORE.getTags.map((item, index) => {
               return (
                 <View key={index}>
-                  <EventCreationTagItem item={item} removeTag={removeTag} />
+                  <EventCreationTagItem item={item} index={index} />
                 </View>
               );
             })}
           </View>
         )}
-        {tagEr && <Error text={'Please add a Tag'} />}
       </View>
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            borderTopRightRadius: moderateScale(9),
-            borderTopLeftRadius: moderateScale(9),
-            borderBottomLeftRadius: moderateScale(9),
-            borderBottomRightRadius: moderateScale(9),
-          }}
+          style={textInputStyles.textInputStyle}
           label="Event Links"
           placeholder="Event Links"
-          value={tagStates.link}
+          value={EVENT_CREATION_STORE.getLink}
           theme={{
             colors: {
               primary: color.BLACK,
             },
           }}
           selectionColor={color.WHITE}
-          onChangeText={nLinks => tagStates.setLink(nLinks)}
+          onChangeText={nLinks => EVENT_CREATION_STORE.setLink(nLinks)}
           left={<TextInput.Icon name={'link'} color={color.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
               color={color.BLACK}
-              onPress={() => addLink()}
+              onPress={() => EVENT_CREATION_STORE.addLink()}
             />
           }
         />
-        {tagStates.links.length > 0 && (
+        {EVENT_CREATION_STORE.getLinks.length > 0 && (
           <View style={styles.viewScale}>
             <FlatList
-              data={tagStates.links}
-              renderItem={({item}) => (
-                <LinkItem item={item} deleteItem={removeLink} />
+              data={EVENT_CREATION_STORE.getLinks}
+              renderItem={props => (
+                <LinkItem index={props.index} item={props.item} />
               )}
             />
           </View>
         )}
-        {linkEr && <Error text={'Please add a Link'} />}
-        {tagStates.errorText != null && <Error text={tagStates.errorText} />}
+        {EVENT_CREATION_STORE.errorText != null && (
+          <Error text={EVENT_CREATION_STORE.errorText} />
+        )}
       </View>
 
       {/* Navigation Buttons */}
@@ -183,8 +124,7 @@ const EventsCreationTag = ({
         style={styles.next}
         mode="contained"
         labelStyle={{color: color.regNext}}
-        onPress={createEvent}
-      >
+        onPress={createEvent}>
         Create Event
       </Button>
       <Button
@@ -197,7 +137,7 @@ const EventsCreationTag = ({
       </Button>
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {
@@ -205,7 +145,6 @@ const styles = ScaledSheet.create({
     width: WIDTH,
     paddingHorizontal: scale(HorizontalPadding),
   },
-  tagContainer: {},
   textInputStyle: {
     backgroundColor: color.GRAY_LIGHT,
     borderTopRightRadius: moderateScale(9),
@@ -235,4 +174,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default EventsCreationTag;
+export default EventCreationTag;

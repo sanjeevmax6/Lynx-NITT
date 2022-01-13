@@ -1,12 +1,12 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {moderateScale, scale} from 'react-native-size-matters';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as color from '../../utils/colors';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
-const LinkItem = ({item, deleteItem}) => {
+const LinkItem = ({item, index}) => {
   return (
     <View style={styles.linkItem}>
       <Text style={styles.linkItemText} numberOfLines={1}>
@@ -14,7 +14,7 @@ const LinkItem = ({item, deleteItem}) => {
       </Text>
       <TouchableOpacity
         style={styles.deleteItem}
-        onPress={() => deleteItem(item)}>
+        onPress={() => EVENT_CREATION_STORE.removeLink(index)}>
         <MaterialCommunityIcons
           name="trash-can"
           color={color.Tertiary}
@@ -34,9 +34,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: moderateScale(10),
+    paddingHorizontal: scale(HorizontalPadding),
   },
   linkItemText: {
+    flex: 1,
     padding: moderateScale(10),
+    paddingLeft: moderateScale(5),
     fontSize: scale(14),
     color: color.FontColor,
     fontWeight: '500',
@@ -44,10 +47,9 @@ const styles = StyleSheet.create({
   },
   deleteItem: {
     padding: moderateScale(5),
-    borderRadius: 20,
-    right: scale(20),
+    borderRadius: moderateScale(20),
+    right: scale(5),
     elevation: 1,
-    position: 'absolute',
     backgroundColor: color.CreationScreen_DeleteItemBg,
   },
 });

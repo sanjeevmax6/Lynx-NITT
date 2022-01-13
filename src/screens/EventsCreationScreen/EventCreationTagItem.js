@@ -3,9 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import {Chip} from 'react-native-paper';
 import * as color from '../../utils/colors';
 import {verticalScale, scale} from 'react-native-size-matters';
-import Icon from 'react-native-fontawesome';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
 
-const EventCreationTagItem = ({item, removeTag}) => {
+const EventCreationTagItem = ({item, index}) => {
   return (
     <View style={styles.container}>
       <Chip
@@ -19,7 +19,7 @@ const EventCreationTagItem = ({item, removeTag}) => {
         }}
         ellipsizeMode="tail"
         numberOfLines={1}
-        onClose={() => removeTag(item)}>
+        onClose={() => EVENT_CREATION_STORE.removeTag(index)}>
         {item}
       </Chip>
     </View>

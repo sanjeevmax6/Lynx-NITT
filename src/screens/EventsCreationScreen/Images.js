@@ -1,17 +1,17 @@
 import React, {useState, useRef} from 'react';
 import {Text, View, ScrollView, Image, Dimensions} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
+import {observer} from 'mobx-react';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-const Images = ({images, selectImage, deleteImage}) => {
+const Images = observer(({selectImage, deleteImage}) => {
   const scrollview = useRef(null);
   const [imgActive, setimgActive] = useState(0);
-
   const onchange = nativeEvent => {
     if (nativeEvent) {
       const slide = Math.floor(
@@ -46,7 +46,7 @@ const Images = ({images, selectImage, deleteImage}) => {
           pagingEnabled
           horizontal
           style={styles.wrap}>
-          {images.map((e, index) => (
+          {EVENT_CREATION_STORE.getImages.map((e, index) => (
             <View key={index} style={styles.container}>
               {e ? (
                 <View style={{flexDirection: 'row'}}>
@@ -54,7 +54,7 @@ const Images = ({images, selectImage, deleteImage}) => {
                     key={index}
                     resizeMode="contain"
                     style={styles.wrap}
-                    source={{uri: e}}
+                    source={{uri: e.uri}}
                   />
                   <View style={styles.wrapCloseButton}>
                     <IconButton
@@ -69,7 +69,7 @@ const Images = ({images, selectImage, deleteImage}) => {
                     />
                   </View>
                 </View>
-              ) : images.length < 11 ? (
+              ) : EVENT_CREATION_STORE.getImages.length < 11 ? (
                 <Button
                   key={index}
                   icon="plus"
@@ -92,11 +92,11 @@ const Images = ({images, selectImage, deleteImage}) => {
           ))}
         </ScrollView>
       </View>
-      {images.length > 1 ? (
+      {EVENT_CREATION_STORE.getImages.length > 0 ? (
         <View style={styles.wrapDot}>
-          {images.map((e, index) => (
+          {EVENT_CREATION_STORE.getImages.map((e, index) => (
             <Text
-              key={e}
+              key={index}
               style={imgActive == index ? styles.dotActive : styles.dot}>
               ●
             </Text>
@@ -107,7 +107,7 @@ const Images = ({images, selectImage, deleteImage}) => {
       )}
     </View>
   );
-};
+});
 
 export default Images;
 

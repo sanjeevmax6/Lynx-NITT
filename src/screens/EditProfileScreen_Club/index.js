@@ -8,6 +8,10 @@ import EditClubLinks from './EditClubLinks';
 import EditDescription from './EditDescription';
 import EditProfilePicture from './EditProfilePicture';
 import ScreenHeader from './ScreenHeader';
+import LoaderPage from '../../components/LoadingScreen';
+import ErrorScreen from '../../components/ErrorScreen';
+import SuccessScreen from '../../components/SuccessScreen';
+import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 
 const EditClubProfileScreen = ({navigation}) => {
   const [profilePic, setProfilePic] = useState('');
@@ -40,19 +44,55 @@ const EditClubProfileScreen = ({navigation}) => {
   }, []);
   return (
     <>
-      <ScreenHeader
-        navigation={navigation}
-        isValid={true}
-        handleAPICALL={handleAPICALL}
-      />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <EditProfilePicture PhotoStates={PhotoStates} />
-        <EditDescription inputStates={inputStates} />
-        <EditClubLinks linksStates={linksStates} />
-        <View style={{height: verticalScale(20)}} />
-      </ScrollView>
+
+      {EDIT_CLUB_PROFILE_STORE.getLoading ? (
+        <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
+      ) : (
+        <>
+          {EDIT_CLUB_PROFILE_STORE.getError ? (
+            <ErrorScreen
+              errorMessage={EDIT_CLUB_PROFILE_STORE.getErrorText}
+              fn={() => {
+                if (EDIT_CLUB_PROFILE_STORE.getErrorText === NO_NETWORK) {
+                  handleApiCALL();
+                } else {
+                  EDIT_CLUB_PROFILE_STORE.setErrorText('');
+                  EDIT_CLUB_PROFILE_STORE.setError(false);
+                }
+              }}
+            />
+          ) : (
+            <>
+              {EDIT_CLUB_PROFILE_STORE.getSuccess ? (
+                <SuccessScreen
+                  fn={() => {
+                    EDIT_CLUB_PROFILE_STORE.setSuccess(false);
+                    navigation.pop();
+                  }}
+                />
+              ) : (
+                <>
+                <ScreenHeader
+                  navigation={navigation}
+                  isValid={true}
+                  handleAPICALL={handleAPICALL}
+                />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <EditProfilePicture PhotoStates={PhotoStates}/>
+                  <EditDescription inputStates={inputStates}/>
+                  <EditClubLinks linksStates={linksStates}/>
+                  <View style={{height: verticalScale(200)}} />
+                </ScrollView>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+
     </>
   );
 };
 
 export default EditClubProfileScreen;
+

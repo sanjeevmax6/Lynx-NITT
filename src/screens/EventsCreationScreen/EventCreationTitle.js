@@ -7,21 +7,16 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from '../../components/Error';
 import {eventCreation_DescriptionTitle} from '../../utils/stringConstants';
+import {observer} from 'mobx-react';
+import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
+import textInputStyles from './textInputStyles';
 
 const WIDTH = Dimensions.get('window').width;
 
-const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
+const EventCreationTitle = observer(({scrollViewRef, callback}) => {
   //Handling scroll
-  const [titleEr, setTitleEr] = useState(0);
   const scroll = () => {
-    setTitleEr(0);
-    if (!titleStates.title) {
-      setTitleEr(1);
-      return;
-    }
-
-    if (titleLength < 0) {
-      setTitleEr(2);
+    if (EVENT_CREATION_STORE.getTitleError) {
       return;
     }
 
@@ -34,29 +29,16 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
     }
   };
 
-  //Character Count
-  const maxTitleLength = 150;
-  const [titleLength, setTitleLength] = useState(maxTitleLength);
-  const onChangeTitleLength = text => {
-    setTitleLength(maxTitleLength - text.length);
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.viewScale}>
         <TextInput
           underlineColor="transparent"
           label="Event Title"
-          style={{
-            backgroundColor: color.GRAY_LIGHT,
-            borderTopRightRadius: moderateScale(9),
-            borderTopLeftRadius: moderateScale(9),
-            borderBottomLeftRadius: moderateScale(9),
-            borderBottomRightRadius: moderateScale(9),
-          }}
+          style={textInputStyles.textInputStyle}
           placeholder="Event Title (max 150)"
           multiline={true}
-          value={titleStates.title}
+          value={EVENT_CREATION_STORE.getTitle}
           theme={{
             colors: {
               primary: color.BLACK,
@@ -64,21 +46,27 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
           }}
           selectionColor={color.WHITE}
           onChangeText={nTitle => {
-            titleStates.setTitle(nTitle);
-            onChangeTitleLength(nTitle);
+            EVENT_CREATION_STORE.setTitle(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={color.Accent} />}
           right={
             <TextInput.Affix
-              text={'/' + titleLength}
+              text={'/' + EVENT_CREATION_STORE.getCharLeftTitle}
               textStyle={{
-                color: titleLength < 0 ? color.Tertiary : color.GRAY_DARK,
+                color:
+                  EVENT_CREATION_STORE.getTitle.length < 0
+                    ? color.Tertiary
+                    : color.GRAY_DARK,
               }}
             />
           }
         />
-        {titleEr == 1 && <Error text="Please fill in the Title" />}
-        {titleEr == 2 && <Error text="Exceeds Word Limit" />}
+        {EVENT_CREATION_STORE.getTitleError == 1 && (
+          <Error text="Please fill in the Title" />
+        )}
+        {EVENT_CREATION_STORE.getTitleError == 2 && (
+          <Error text="Exceeds Word Limit" />
+        )}
       </View>
 
       {/* Navigation Buttons */}
@@ -91,7 +79,7 @@ const EventCreationInputs = ({titleStates, scrollViewRef, callback}) => {
       </Button>
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -116,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventCreationInputs;
+export default EventCreationTitle;
