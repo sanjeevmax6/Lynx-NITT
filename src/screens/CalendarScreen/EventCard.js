@@ -11,6 +11,7 @@ import {
 import * as color from '../../utils/colors';
 import moment from 'moment';
 import {NO_IMAGE_URL, API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 
 const EventCard = props => {
   const eventData = props.data;
@@ -29,10 +30,7 @@ const EventCard = props => {
           {eventData.Title}
         </Text>
         <Text style={styles.time}>
-          From :{' '}
-          {moment(new Date(eventData.startDate).toLocaleString()).format(
-            'hh:mm A',
-          )}
+          From : {getFormattedTime(eventData.startDate)}
         </Text>
       </View>
       <Avatar.Image

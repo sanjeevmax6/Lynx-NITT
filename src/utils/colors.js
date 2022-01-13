@@ -40,12 +40,21 @@ export const cardstrip = Accent;
 export const EventCard_imgbck = Primary;
 //Calendar Page
 export const CalenderScreen_backgroundColor = WHITE;
-export const CalenderScreen_textHeaderColor = FontColor;
-export const CalenderScreen_textDefaultColor = FontColor;
-export const CalenderScreen_selectedTextColor = FontColor;
-export const CalenderScreen_mainColor = Tertiary;
-export const CalenderScreen_textSecondaryColor = FontColor;
-export const CalenderScreen_borderColor = Contrast;
+//export const CalenderScreen_textHeaderColor = FontColor;
+//export const CalenderScreen_textDefaultColor = FontColor;
+export const CalenderScreen_selectedTextColor = WHITE;
+export const CalenderScreen_selectedBackgroundColor = GRAY_MEDIUM;
+export const CalenderScreen_arrowColor = Lightsteelblue;
+export const CalenderScreen_todayTextColor = Blue;
+export const CalendarScreen_dayHeaderTextColor = BLACK;
+export const CalendarScreen_satSunHeaderTextColor = Tertiary;
+//export const CalenderScreen_mainColor = Tertiary;
+//export const CalenderScreen_textSecondaryColor = FontColor;
+//export const CalenderScreen_borderColor = Contrast;
+export const CalendarScreen_CalendarEventMarking = Tertiary;
+export const CalendarScreen_CalendarNoticeMarking = '#30D5C8';
+export const CalendarScreen_CalendarExcessMarking = '#d52f8f';
+
 //Admin Notice Card
 export const AdminNoticeCardContainer = '#30D5C8';
 export const AdminNoticeCard_CalendarIcon = Contrast;
