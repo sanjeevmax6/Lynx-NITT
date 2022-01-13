@@ -75,9 +75,10 @@ export const createAnnouncement = () => {
             }
           })
           .catch(error => {
-            console.log('failed');
             if (error.response) {
-              ANNOUNCEMENT_CREATION_STORE.setErrorText(UNEXPECTED_ERROR);
+              ANNOUNCEMENT_CREATION_STORE.setErrorText(
+                error.response.data.message,
+              );
             } else if (error.request) {
               ANNOUNCEMENT_CREATION_STORE.setErrorText(SERVER_ERROR);
             }

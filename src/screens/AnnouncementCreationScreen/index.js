@@ -14,7 +14,11 @@ import DocumentPicker from 'react-native-document-picker';
 import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {
+  HorizontalPadding,
+  MAX_ANNOUNCEMENT_FILE_COUNT,
+  MAX_ANNOUNCEMENT_FILE_SIZE,
+} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {clearData, createAnnouncement} from './createAnnouncementApi';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
@@ -25,10 +29,13 @@ import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
 import CustomAlert from '../../components/customAlert';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+import {useToast} from 'react-native-toast-notifications';
+import {validFileSize} from '../../utils/helperFunction/FormValidation';
 
 const AnnouncementCreationScreen = observer(({navigation}) => {
   const maxSubjectLength = 150;
   const maxAnnouncementLength = 300;
+  const toast = useToast();
 
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
@@ -41,6 +48,29 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
         type: [DocumentPicker.types.allFiles],
       });
 
+      if (
+        ANNOUNCEMENT_CREATION_STORE.getFiles.length + files.length >
+        MAX_ANNOUNCEMENT_FILE_COUNT
+      ) {
+        toast.show('Maximum file count is ' + MAX_ANNOUNCEMENT_FILE_COUNT, {
+          type: 'warning',
+        });
+        return;
+      }
+      let i;
+      for (i = 0; i < files.length; i++) {
+        if (!validFileSize(files[i].size, MAX_ANNOUNCEMENT_FILE_SIZE)) {
+          toast.show(
+            'Maximum allowed file size is ' +
+              MAX_ANNOUNCEMENT_FILE_SIZE +
+              ' MB',
+            {
+              type: 'warning',
+            },
+          );
+          return;
+        }
+      }
       console.log(files);
       ANNOUNCEMENT_CREATION_STORE.setFiles([
         ...ANNOUNCEMENT_CREATION_STORE.getFiles,

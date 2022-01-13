@@ -9,6 +9,8 @@ import {IconButton} from 'react-native-paper';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {STUDENT} from '../../utils/USER_TYPE';
 
 const EventsCard = ({
   date,
@@ -99,27 +101,32 @@ const EventsCard = ({
               flexDirection: 'row',
               marginTop: verticalScale(0),
             }}>
-            <IconButton
-              onPress={() => {
-                setApiCall(true);
-                toggleInterestedApi(
-                  eventId,
-                  () => {
-                    setApiCall(false);
-                    setInterest(!interest);
-                  },
-                  () => {
-                    showToast();
-                    setApiCall(false);
-                    //failure
-                  },
-                );
-              }}
-              color={colors.EventCard_Bookmark}
-              style={styles.icon}
-              icon={interest ? 'bookmark' : 'bookmark-outline'}
-              disabled={ApiCall}
-            />
+            {USER_STORE.getUserType === STUDENT ? (
+              <IconButton
+                onPress={() => {
+                  setApiCall(true);
+                  toggleInterestedApi(
+                    eventId,
+                    () => {
+                      setApiCall(false);
+                      setInterest(!interest);
+                    },
+                    () => {
+                      showToast();
+                      setApiCall(false);
+                      //failure
+                    },
+                  );
+                }}
+                color={colors.EventCard_Bookmark}
+                style={styles.icon}
+                icon={interest ? 'bookmark' : 'bookmark-outline'}
+                disabled={ApiCall}
+              />
+            ) : (
+              <></>
+            )}
+
             <IconButton
               onPress={() => {
                 console.log('sharing');

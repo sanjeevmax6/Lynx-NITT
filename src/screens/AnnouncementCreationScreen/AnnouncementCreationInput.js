@@ -6,14 +6,25 @@ import LinkItem from './LinkItem';
 import * as color from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
+import {useToast} from 'react-native-toast-notifications';
 
 const maxSubjectLength = 150;
 const maxAnnouncementLength = 300;
 import {observer} from 'mobx-react';
+import {isValidLink} from '../../utils/helperFunction/FormValidation';
 
 const AnnouncementCreationInputs = observer(() => {
-  const addLink = () => {
+  const toast = useToast();
+  const addLink = async () => {
     if (ANNOUNCEMENT_CREATION_STORE.getLink.trim() !== '') {
+      const res = await isValidLink(ANNOUNCEMENT_CREATION_STORE.getLink.trim());
+      if (!res) {
+        toast.show('Not a valid link', {
+          type: 'danger',
+        });
+        return;
+      }
+
       ANNOUNCEMENT_CREATION_STORE.setLinks([
         ANNOUNCEMENT_CREATION_STORE.getLink.trim(),
         ...ANNOUNCEMENT_CREATION_STORE.getLinks,

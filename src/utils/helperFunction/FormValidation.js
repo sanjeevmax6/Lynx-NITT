@@ -1,3 +1,5 @@
+import {Linking} from 'react-native';
+
 export const containOnlyNumbers = value => {
   var numbers = /^[0-9]+$/;
   if (value.match(numbers)) {
@@ -18,4 +20,15 @@ export const isStudentNameValid = name => {
     return true;
   }
   return false;
+};
+
+export const isValidLink = async link => {
+  const res = await Linking.canOpenURL(link);
+  console.log(res);
+  return res;
+};
+
+export const validFileSize = (size, limit) => {
+  if (size > limit * 1000000) return false;
+  return true;
 };

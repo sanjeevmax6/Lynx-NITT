@@ -6,7 +6,11 @@ class feedsStore {
     errorText: '',
     loading: true,
     success: false,
-    data: {},
+    data: {
+      message: '',
+      upcomingEvents: [],
+      liveEvents: [],
+    },
     refreshing: false,
   };
 

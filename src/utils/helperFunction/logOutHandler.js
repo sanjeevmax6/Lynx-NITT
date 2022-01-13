@@ -31,8 +31,8 @@ export const LogOutHandler = () => {
   //reset stores
   ACTIVITY_STORE.reset();
   ANNOUNCEMENT_CREATION_STORE.reset();
-  API_STORE.reset();
-  AUTH_NAV_STORE.reset();
+  //API_STORE.reset();
+  // AUTH_NAV_STORE.reset();
   BOTTOM_NAV_STORE.reset();
   CALENDAR_NOTICE_STORE.reset();
   CALENDAR_STORE.reset();

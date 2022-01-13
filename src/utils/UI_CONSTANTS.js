@@ -13,3 +13,9 @@ export const FEEDBACK_MAX_LENGTH = 250;
 export const NUMBER_OF_LINES = 2;
 
 export const FONT = 'SourceSansPro-Regular';
+
+//file count
+export const MAX_ANNOUNCEMENT_FILE_COUNT = 5;
+
+//file sizes in MB
+export const MAX_ANNOUNCEMENT_FILE_SIZE = 3;
