@@ -37,7 +37,7 @@ const ClubSearchResult = ({searchQuery, setScreen, navigation}) => {
 
   if (isFocused) {
     BOTTOM_NAV_STORE.setTabVisibility(true);
-    setScreen('CLUB');
+    setScreen('clubs');
     if (searchQuery != '') {
       if (searchQuery != API) {
         setAPI(searchQuery);
@@ -71,10 +71,29 @@ const ClubSearchResult = ({searchQuery, setScreen, navigation}) => {
         <>
           <ActivityIndicator
             animating={true}
-            size={'large'}
+            size={'small'}
             color={colors.Tertiary}
             style={{margin: scale(10)}}
           />
+          {searchQuery ? (
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: scale(14),
+                paddingVertical: verticalScale(6),
+              }}>
+              Searching for{' '}
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: scale(14),
+                  paddingVertical: verticalScale(6),
+                }}>
+                "{searchQuery}"...
+              </Text>
+            </Text>
+          ) : null}
         </>
       ) : (
         <>

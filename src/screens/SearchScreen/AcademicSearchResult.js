@@ -35,7 +35,7 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
   const isFocused = useIsFocused();
 
   if (isFocused) {
-    setScreen('NOTICE');
+    setScreen('circulars');
     BOTTOM_NAV_STORE.setTabVisibility(true);
     if (searchQuery != '') {
       if (searchQuery != API) {
@@ -71,10 +71,29 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
         <>
           <ActivityIndicator
             animating={true}
-            size={'large'}
+            size={'small'}
             color={colors.Tertiary}
             style={{margin: scale(10)}}
           />
+          {searchQuery ? (
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: scale(14),
+                paddingVertical: verticalScale(6),
+              }}>
+              Searching for{' '}
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: scale(14),
+                  paddingVertical: verticalScale(6),
+                }}>
+                "{searchQuery}"...
+              </Text>
+            </Text>
+          ) : null}
         </>
       ) : (
         <>

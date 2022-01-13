@@ -14,7 +14,7 @@ import AcadSearchResult from './AcademicSearchResult';
 
 const SearchScreen = ({route, navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [Screen, setScreen] = useState('CLUB');
+  const [Screen, setScreen] = useState('clubs');
 
   if (route.params != undefined) {
     if (route.params.params.searchText != '') {
@@ -40,7 +40,7 @@ const SearchScreen = ({route, navigation}) => {
       <View style={{flex: 1}}>
         <Searchbar
           style={{elevation: 0, margin: 0, padding: 0, color: 'red'}}
-          placeholder={'SEARCH ' + Screen}
+          placeholder={'Search ' + Screen}
           onChangeText={onChangeSearch}
           autoFocus={true}
           value={searchQuery}
@@ -99,7 +99,7 @@ const SearchScreen = ({route, navigation}) => {
             )}
           />
           <Tab.Screen
-            name="Notice"
+            name="Circulars"
             children={() => (
               <AcadSearchResult
                 searchQuery={searchQuery}
