@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Dimensions, Image} from 'react-native';
+import {Dimensions, Image, BackHandler} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
