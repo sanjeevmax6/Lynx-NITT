@@ -83,8 +83,8 @@ const styles = ScaledSheet.create({
   emptyArray: {
     color: colors.BLACK,
     fontWeight: 'bold',
-    fontSize: '18@s',
-    padding: '10@vs',
+    fontSize: '16@s',
+    padding: '15@vs',
     textAlign: 'center',
     backgroundColor: colors.WHITE,
     paddingHorizontal: scale(HorizontalPadding),

@@ -33,13 +33,13 @@ const renderTopLayout = (data, navigation) => (
     ) : (
       <Text
         style={{
-          fontSize: scale(18),
+          fontSize: scale(16),
           paddingTop: verticalScale(6),
           fontWeight: '500',
           color: colors.BLACK,
           marginHorizontal: scale(HorizontalPadding),
         }}>
-        Events
+        Live/Upcoming Events
       </Text>
     )}
   </View>
@@ -52,14 +52,17 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
   }
 
   useEffect(() => {
+    CLUB_DESCRIPTION_STORE.setLoading(true);
+    BOTTOM_NAV_STORE.setTabVisibility(false);
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
+        // CLUB_DESCRIPTION_STORE.setLoading(true);
         navigation.pop();
         return true;
       },
     );
-    CLUB_DESCRIPTION_STORE.setID(route.params.data.ClubId);
+    CLUB_DESCRIPTION_STORE.setID(route.params.ClubId);
     BOTTOM_NAV_STORE.setTabVisibility(false);
     clubDescriptionAPI();
     return () => backHandler.remove();

@@ -66,6 +66,7 @@ const EventEditDateTime = observer(() => {
         isVisible={EVENT_EDIT_STORE.getShowStartPicker}
         date={EVENT_EDIT_STORE.getEditStartEvent}
         mode="datetime"
+        minimumDate={moment().toDate()}
         onConfirm={onChangeStartEvent}
         onCancel={() => EVENT_EDIT_STORE.setShowStartPicker(false)}
       />
@@ -74,6 +75,7 @@ const EventEditDateTime = observer(() => {
         isVisible={EVENT_EDIT_STORE.getShowEndPicker}
         date={EVENT_EDIT_STORE.getEditEndEvent}
         mode="datetime"
+        minimumDate={moment().toDate()}
         onConfirm={onChangeEndEvent}
         onCancel={() => EVENT_EDIT_STORE.setShowEndPicker(false)}
       />

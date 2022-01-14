@@ -46,7 +46,7 @@ const DropDownModal = observer(({modalType, data}) => {
               {modalType != MODAL_TYPE_GENDER && (
                 <Searchbar
                   style={{elevation: 0, margin: 10, padding: 0, color: 'red'}}
-                  placeholder={'SEARCH'}
+                  placeholder={'Search'}
                   onChangeText={onChangeSearch}
                   value={searchQuery}
                   iconColor={colors.BLACK}

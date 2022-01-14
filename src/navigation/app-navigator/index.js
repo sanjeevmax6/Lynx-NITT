@@ -25,76 +25,74 @@ export function navigateApp(name, params) {
 }
 const AppNavigator = observer(() => {
   return (
-    <NavigationContainer independent={true} ref={navigationRef}>
-      <HomeTab.Navigator
-        initialRouteName="Feed"
-        activeColor={color.iconActiveColor}
-        inactiveColor={color.iconInActiveColor}
-        labeled={false}
-        sceneAnimationEnabled={true}
-        barStyle={{
-          backgroundColor: color.BottomNav,
-          display: BOTTOM_NAV_STORE.getTabVisibility ? null : 'none',
+    <HomeTab.Navigator
+      initialRouteName="Feed"
+      activeColor={color.iconActiveColor}
+      inactiveColor={color.iconInActiveColor}
+      labeled={false}
+      sceneAnimationEnabled={true}
+      barStyle={{
+        backgroundColor: color.BottomNav,
+        display: BOTTOM_NAV_STORE.getTabVisibility ? null : 'none',
+      }}
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <HomeTab.Screen
+        name="Feed"
+        component={FeedNavigator}
+        options={{
+          tabBarLabel: 'Feeds',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
         }}
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <HomeTab.Screen
-          name="Feed"
-          component={FeedNavigator}
-          options={{
-            tabBarLabel: 'Feeds',
-            tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
-          }}
-        />
-        <HomeTab.Screen
-          name="Search"
-          component={SearchNavigator}
-          options={{
-            tabBarLabel: 'Search',
-            tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="magnify" color={color} size={26} />
-            ),
-          }}
-        />
-        <HomeTab.Screen
-          name="Calendar"
-          component={CalendarNavigator}
-          options={{
-            tabBarLabel: 'Calendar',
-            tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons
-                name="calendar-range"
-                color={color}
-                size={26}
-              />
-            ),
-          }}
-        />
-        <HomeTab.Screen
-          name="ActivityNavigator"
-          component={ActivityNavigator}
-          options={{
-            tabBarLabel: 'Activity',
-            tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="bell" color={color} size={26} />
-            ),
-          }}
-        />
-        <HomeTab.Screen
-          name="User"
-          component={UserNavigator}
-          options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="account" color={color} size={26} />
-            ),
-          }}
-        />
-      </HomeTab.Navigator>
-    </NavigationContainer>
+      />
+      <HomeTab.Screen
+        name="Search"
+        component={SearchNavigator}
+        options={{
+          tabBarLabel: 'Search',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={26} />
+          ),
+        }}
+      />
+      <HomeTab.Screen
+        name="Calendar"
+        component={CalendarNavigator}
+        options={{
+          tabBarLabel: 'Calendar',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="calendar-range"
+              color={color}
+              size={26}
+            />
+          ),
+        }}
+      />
+      <HomeTab.Screen
+        name="ActivityNavigator"
+        component={ActivityNavigator}
+        options={{
+          tabBarLabel: 'Activity',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <HomeTab.Screen
+        name="User"
+        component={UserNavigator}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </HomeTab.Navigator>
   );
 });
 

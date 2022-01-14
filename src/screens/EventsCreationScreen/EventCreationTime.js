@@ -112,6 +112,7 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
         isVisible={EVENT_CREATION_STORE.getShowStartPicker}
         date={EVENT_CREATION_STORE.getStartEvent}
         mode="datetime"
+        minimumDate={moment().toDate()}
         onConfirm={onChangeStartDate}
         onCancel={() => EVENT_CREATION_STORE.setShowStartPicker(false)}
       />
@@ -120,6 +121,7 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
         isVisible={EVENT_CREATION_STORE.getShowEndPicker}
         date={EVENT_CREATION_STORE.getEndEvent}
         mode="datetime"
+        minimumDate={moment().toDate()}
         onConfirm={onChangeEndDate}
         onCancel={() => EVENT_CREATION_STORE.setShowEndPicker(false)}
       />

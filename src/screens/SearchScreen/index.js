@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {View, SafeAreaView, PixelRatio} from 'react-native';
 import {Searchbar, DefaultTheme, configureFonts} from 'react-native-paper';
 import {scale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 const Tab = createMaterialTopTabNavigator();
@@ -13,6 +14,7 @@ import EventSearchResult from './EventSearchResult';
 import AcadSearchResult from './AcademicSearchResult';
 
 const SearchScreen = ({route, navigation}) => {
+  const searchRef = useRef();
   const [searchQuery, setSearchQuery] = useState('');
   const [Screen, setScreen] = useState('clubs');
 
@@ -34,11 +36,16 @@ const SearchScreen = ({route, navigation}) => {
       accent: color.Tertiary,
     },
   };
+  // if (searchRef.current) {
+  //   if (searchRef.current.isFocused()) BOTTOM_NAV_STORE.setTabVisibility(false);
+  //   else BOTTOM_NAV_STORE.setTabVisibility(true);
+  // }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <Searchbar
+          ref={searchRef}
           style={{elevation: 0, margin: 0, padding: 0, color: 'red'}}
           placeholder={'Search ' + Screen}
           onChangeText={onChangeSearch}

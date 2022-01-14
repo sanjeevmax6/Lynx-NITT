@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Text, View, Image, Share} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -124,8 +124,25 @@ const EventsCard = ({
             )}
 
             <IconButton
-              onPress={() => {
-                console.log('sharing');
+              onPress={async () => {
+                try {
+                  const result = await Share.share({
+                    message: `https://nittapp.spider.nitt.edu/event/${eventId}`,
+                    url: `https://nittapp.spider.nitt.edu/event/${eventId}`,
+                    title: `${name} by ${organizer}`,
+                  });
+                  if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                      // shared with activity type of result.activityType
+                    } else {
+                      // shared
+                    }
+                  } else if (result.action === Share.dismissedAction) {
+                    // dismissed
+                  }
+                } catch (error) {
+                  alert(error.message);
+                }
               }}
               color={colors.EventCard_ShareIcon}
               style={{...styles.icon, marginLeft: scale(2)}}

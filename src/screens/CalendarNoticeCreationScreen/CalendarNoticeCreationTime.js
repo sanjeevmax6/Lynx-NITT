@@ -208,6 +208,7 @@ const CalendarNoticeCreationTime = observer(
                 isVisible={CALENDAR_NOTICE_STORE.getShowStartDatePicker}
                 date={CALENDAR_NOTICE_STORE.getStartDate}
                 mode="date"
+                minimumDate={moment().toDate()}
                 onConfirm={onChangeStartDate}
                 onCancel={() =>
                   CALENDAR_NOTICE_STORE.setShowStartDatePicker(false)
@@ -221,6 +222,7 @@ const CalendarNoticeCreationTime = observer(
                 isVisible={CALENDAR_NOTICE_STORE.getShowEndDatePicker}
                 date={CALENDAR_NOTICE_STORE.getEndDate}
                 mode="date"
+                minimumDate={moment().toDate()}
                 onConfirm={onChangeEndDate}
                 onCancel={() =>
                   CALENDAR_NOTICE_STORE.setShowEndDatePicker(false)

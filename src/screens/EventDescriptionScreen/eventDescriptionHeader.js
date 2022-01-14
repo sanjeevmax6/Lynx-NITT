@@ -32,6 +32,7 @@ const EventDescriptionHeader = observer(({navigation}) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
+          // EVENT_DESCRIPTION_STORE.setLoading(true);
           navigation.goBack();
         }}>
         {Platform.OS === 'ios' ? (

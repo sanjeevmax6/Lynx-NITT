@@ -56,7 +56,7 @@ const EventCard = ({
         <View style={styles.eventInfo}>
           <Text
             style={{
-              fontSize: scale(18),
+              fontSize: scale(14),
               fontWeight: 'bold',
             }}
             numberOfLines={1}>
@@ -64,7 +64,7 @@ const EventCard = ({
           </Text>
           <Text
             style={{
-              fontSize: scale(14),
+              fontSize: scale(12),
             }}
             numberOfLines={1}>
             {description}

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {ActivityIndicator, Linking} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import AppNavigator from './app-navigator';
-
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
@@ -13,12 +13,44 @@ import ClubRegistration from '../screens/ClubRegistration';
 import {AUTH_NAV_STORE} from '../mobx/AUTH_NAV_STORE';
 import {observer} from 'mobx-react';
 import {USER_STORE} from '../mobx/USER_STORE';
+import CLUB_DESCRIPTION_STORE from '../mobx/CLUB_DESCRIPTION_STORE';
+import EVENT_DESCRIPTION_STORE from '../mobx/EVENT_DESCRIPTION_STORE';
 
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      linking={{
+        prefixes: ['https://nittapp.spider.nitt.edu', 'nitt-app://'],
+        config: {
+          screens: {
+            Home: {
+              initialRouteName: 'Feed',
+              screens: {
+                Feed: {
+                  initialRouteName: 'Feeds',
+                  screens: {
+                    EventDescriptionScreen: 'event/:eventId',
+                    ClubDescription: 'club/:ClubId',
+                  },
+                },
+              },
+            },
+          },
+        },
+        async getInitialURL() {
+          // Check if app was opened from a deep link
+          const url = await Linking.getInitialURL();
+
+          console.log('URL: ' + url);
+          if (url != null) {
+            // CLUB_DESCRIPTION_STORE.setLoading(true);
+            // EVENT_DESCRIPTION_STORE.setLoading(true);
+            return url;
+          }
+        },
+      }}>
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -45,11 +77,13 @@ const Navigator = observer(() => {
             initialParams={{token: USER_STORE.getUserToken}}
           />
         ) : (
-          <RootStack.Screen
-            name="Home"
-            component={AppNavigator}
-            initialParams={{token: USER_STORE.getUserToken}}
-          />
+          <>
+            <RootStack.Screen
+              name="Home"
+              component={AppNavigator}
+              initialParams={{token: USER_STORE.getUserToken}}
+            />
+          </>
         )}
       </RootStack.Navigator>
     </NavigationContainer>

@@ -32,15 +32,17 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     BOTTOM_NAV_STORE.setTabVisibility(false);
   }
   useEffect(() => {
+    EVENT_DESCRIPTION_STORE.setLoading(true);
+    BOTTOM_NAV_STORE.setTabVisibility(false);
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        BOTTOM_NAV_STORE.setTabVisibility(true);
+        // BOTTOM_NAV_STORE.setTabVisibility(true);
+        // EVENT_DESCRIPTION_STORE.setLoading(true);
         navigation.pop();
         return true;
       },
     );
-
     console.log('Doing API  EVENT BY ID');
     console.log('eventId: ', route.params.eventId);
     EVENT_DESCRIPTION_STORE.setID(route.params.eventId);

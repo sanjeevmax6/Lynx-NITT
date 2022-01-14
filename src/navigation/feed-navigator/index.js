@@ -8,8 +8,16 @@ import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import * as color from '../../utils/colors';
 import Header from '../../components/Header';
-
+import {createNavigationContainerRef} from '@react-navigation/native';
 const FeedStack = createNativeStackNavigator();
+const navigationRef = createNavigationContainerRef();
+
+export function navigateApp(name, params) {
+  if (navigationRef.isReady()) {
+    console.log('Navigated to: ' + name);
+    navigationRef.navigate(name, params);
+  }
+}
 
 function FeedNavigator() {
   return (

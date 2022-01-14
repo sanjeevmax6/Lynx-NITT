@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Pressable,
 } from 'react-native';
 import {observer} from 'mobx-react';
 import * as colors from '../../utils/colors';
@@ -70,6 +71,7 @@ const Header = observer(
         setCoverColor(res.cover);
       });
     }, [url]);
+    console.log(CLUB_DESCRIPTION_STORE.getID);
     console.log(CLUB_DESCRIPTION_STORE.getData.links);
     return coverColor === colors.Tertiary ? (
       <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
@@ -80,7 +82,7 @@ const Header = observer(
             backgroundColor: coverColor,
             height: verticalScale(81),
           }}></View>
-        <TouchableOpacity
+        <Pressable
           activeOpacity={0.8}
           onPress={() => {
             navigation.navigate('ImageScreen', {imgUrl: API_GET_IMAGE + url});
@@ -93,7 +95,7 @@ const Header = observer(
               style={styles.image}
             />
           </View>
-        </TouchableOpacity>
+        </Pressable>
         <View
           style={{
             paddingTop: verticalScale(12),

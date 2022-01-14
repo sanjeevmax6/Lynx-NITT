@@ -23,7 +23,7 @@ const ClubSearchCard = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.push('ClubDescription', {data: {ClubId: id}});
+        navigation.navigate('ClubDescription', {ClubId: id}, {initial: false});
       }}>
       <View style={styles.container}>
         <View style={styles.center}>

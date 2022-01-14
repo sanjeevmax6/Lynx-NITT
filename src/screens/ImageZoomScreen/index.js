@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Dimensions, Image} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {ScaledSheet} from 'react-native-size-matters';
@@ -12,6 +12,17 @@ const ImageScreen = ({route, navigation}) => {
   if (isFocused) {
     BOTTOM_NAV_STORE.setTabVisibility(false);
   }
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        navigation.pop();
+        return true;
+      },
+    );
+    return () => backHandler.remove();
+  }, []);
+
   const {imgUrl} = route.params;
   return (
     <ImageZoom

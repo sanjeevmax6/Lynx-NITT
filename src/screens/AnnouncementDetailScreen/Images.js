@@ -1,11 +1,17 @@
 import React from 'react';
-import {View, Image, Dimensions, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Image,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Pressable,
+} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 const HEIGHT = Dimensions.get('window').height;
 const Images = ({url, navigation}) => {
   return (
     <View style={styles.images}>
-      <TouchableWithoutFeedback
+      <Pressable
         onPress={() => {
           navigation.navigate('ImageScreen', {imgUrl: url});
         }}>
@@ -16,7 +22,7 @@ const Images = ({url, navigation}) => {
           style={styles.image}
           resizeMode="contain"
         />
-      </TouchableWithoutFeedback>
+      </Pressable>
     </View>
   );
 };
