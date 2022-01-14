@@ -11,6 +11,7 @@ import {CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {observer} from 'mobx-react';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
+import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
 
 const EventDescriptionHeader = observer(({navigation}) => {
   const [Api, setApi] = useState(false);
@@ -56,6 +57,11 @@ const EventDescriptionHeader = observer(({navigation}) => {
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
+                FEEDS_STORE.setInterested(
+                  !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
+                  EVENT_DESCRIPTION_STORE.getID,
+                );
+
                 EVENT_DESCRIPTION_STORE.setWasStudentInterested(
                   !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
                 );

@@ -10,6 +10,7 @@ class feedsStore {
       message: '',
       upcomingEvents: [],
       liveEvents: [],
+      suggestedEvents: [],
     },
     refreshing: false,
   };
@@ -78,6 +79,35 @@ class feedsStore {
   get getSuccess() {
     return this.state.success;
   }
+
+  setInterested = (val, eventId) => {
+    let le = this.state.data.liveEvents.find(val => {
+      return val.EventId === eventId;
+    });
+
+    if (le) {
+      le.isInterested = val;
+      return;
+    }
+
+    let ue = this.state.data.upcomingEvents.find(val => {
+      return val.EventId === eventId;
+    });
+
+    if (ue) {
+      ue.isInterested = val;
+      return;
+    }
+
+    let se = this.state.data.suggestedEvents.find(val => {
+      return val.EventId === eventId;
+    });
+
+    if (se) {
+      se.isInterested = val;
+      return;
+    }
+  };
 
   constructor() {
     makeObservable(this, {
