@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {Text, View, ScrollView, SafeAreaView, BackHandler} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  BackHandler,
+  Share,
+} from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import Images from './Images';
@@ -21,6 +28,7 @@ import moment from 'moment';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {isLive} from '../../utils/helperFunction/isLive';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {IconButton} from 'react-native-paper';
 import EventStatusTag from './EventStatusTag';
 import EventDescriptionHeader from './eventDescriptionHeader';
 import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
@@ -76,6 +84,10 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                 images={EVENT_DESCRIPTION_STORE.getData.photos}
                 navigation={navigation}
               />
+              <EventStatusTag
+                startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
+                endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
+              />
               <View
                 style={{
                   paddingTop: verticalScale(27),
@@ -95,11 +107,32 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                   <Text style={styles.eventName}>
                     {EVENT_DESCRIPTION_STORE.getData.Title}
                   </Text>
-                  <EventStatusTag
-                    startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
-                    endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
+                  <IconButton
+                    onPress={async () => {
+                      try {
+                        const result = await Share.share({
+                          message: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getID}`,
+                          url: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getID}`,
+                          title: `${EVENT_DESCRIPTION_STORE.getData.Title} by ${EVENT_DESCRIPTION_STORE.getData.club.name}`,
+                        });
+                        if (result.action === Share.sharedAction) {
+                          if (result.activityType) {
+                            // shared with activity type of result.activityType
+                          } else {
+                            // shared
+                          }
+                        } else if (result.action === Share.dismissedAction) {
+                          // dismissed
+                        }
+                      } catch (error) {
+                        alert(error.message);
+                      }
+                    }}
+                    icon={'share-variant'}
+                    color={colors.EventCard_ShareIcon}
                   />
                 </View>
+
                 <Tags
                   tags={EVENT_DESCRIPTION_STORE.getData.tags}
                   navigation={navigation}
@@ -136,7 +169,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                   navigation={navigation}
                   clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
                 />
-                <View style={{height: verticalScale(50)}} />
+                <View style={{height: verticalScale(100)}} />
               </View>
             </ScrollView>
           </>

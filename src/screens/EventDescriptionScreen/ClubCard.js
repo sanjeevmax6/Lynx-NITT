@@ -24,7 +24,12 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
   };
   const [ApiCall, setApiCall] = useState(false);
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <Pressable
         onPress={() => {
           navigation.push('ClubDescription', {ClubId: clubID});
@@ -46,44 +51,42 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
         <Text style={styles.followers}>
           {EVENT_DESCRIPTION_STORE.getData.club.followers} FOLLOWERS
         </Text>
-        {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
-          <Button
-            mode="outlined"
-            disabled={ApiCall}
-            loading={ApiCall}
-            onPress={() => {
-              setApiCall(true);
-
-              toggleFollowApi(
-                clubID,
-                () => {
-                  //success callback
-                  if (EVENT_DESCRIPTION_STORE.getIsFollowingClub) {
-                    EVENT_DESCRIPTION_STORE.setDecrementFollower();
-                  } else {
-                    EVENT_DESCRIPTION_STORE.setIncrementFollower();
-                  }
-                  EVENT_DESCRIPTION_STORE.setIsFollowingClub(
-                    !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
-                  );
-                  setApiCall(false);
-                },
-                () => {
-                  //failure callback
-                  showToast();
-                  setApiCall(false);
-                },
-              );
-            }}
-            color={colors.EventDescriptionScreen_Follow}
-            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-            style={{alignSelf: 'baseline'}}>
-            {EVENT_DESCRIPTION_STORE.getIsFollowingClub
-              ? 'Following'
-              : 'Follow'}
-          </Button>
-        ) : null}
       </View>
+      {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
+        <Button
+          mode="outlined"
+          disabled={ApiCall}
+          loading={ApiCall}
+          onPress={() => {
+            setApiCall(true);
+
+            toggleFollowApi(
+              clubID,
+              () => {
+                //success callback
+                if (EVENT_DESCRIPTION_STORE.getIsFollowingClub) {
+                  EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                } else {
+                  EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                }
+                EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                  !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
+                );
+                setApiCall(false);
+              },
+              () => {
+                //failure callback
+                showToast();
+                setApiCall(false);
+              },
+            );
+          }}
+          color={colors.EventDescriptionScreen_Follow}
+          labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+          style={{alignSelf: 'center'}}>
+          {EVENT_DESCRIPTION_STORE.getIsFollowingClub ? 'Following' : 'Follow'}
+        </Button>
+      ) : null}
     </View>
   );
 });
@@ -112,7 +115,7 @@ const styles = ScaledSheet.create({
     margin: '5@s',
     marginRight: 0,
     justifyContent: 'center',
-    //backgroundColor: 'red',
+    marginRight: '5@s',
   },
   followers: {
     color: colors.Tertiary,

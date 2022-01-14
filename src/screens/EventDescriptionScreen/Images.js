@@ -5,7 +5,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 
 import {ScaledSheet} from 'react-native-size-matters';
@@ -41,7 +41,7 @@ const Images = ({images, navigation}) => {
           style={styles.wrap}>
           {images.length === 0 ? (
             <>
-              <TouchableWithoutFeedback
+              <TouchableOpacity
                 onPress={() => {
                   navigation.push('ImageScreen', {imgUrl: NO_IMAGE_URL});
                 }}>
@@ -52,13 +52,14 @@ const Images = ({images, navigation}) => {
                     uri: NO_IMAGE_URL,
                   }}
                 />
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             </>
           ) : (
             <></>
           )}
           {images.map((e, index) => (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
+              style={styles.wrap}
               onPress={() => {
                 navigation.push('ImageScreen', {imgUrl: API_GET_IMAGE + e});
               }}
@@ -68,7 +69,7 @@ const Images = ({images, navigation}) => {
                 src={API_GET_IMAGE + e}
                 style={styles.wrap}
               />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           ))}
         </ScrollView>
         {images.length > 1 ? (
