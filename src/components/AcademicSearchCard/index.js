@@ -11,7 +11,7 @@ const AcademicSearchCard = ({title, desc, url, name}) => {
     <View style={styles.card}>
       <Image source={{uri: API_GET_IMAGE + url}} style={styles.poster} />
       <View style={{flex: 1, marginLeft: scale(HorizontalPadding)}}>
-        <Text>
+        <Text numberOfLines={3}>
           <Text numberOfLines={1} style={styles.notifier}>
             {name}
           </Text>
@@ -27,7 +27,6 @@ const AcademicSearchCard = ({title, desc, url, name}) => {
           </Text>
           <Text>{'\n'}</Text>
           <Text
-            numberOfLines={2}
             style={{
               flexShrink: 1,
               marginRight: scale(HorizontalPadding),

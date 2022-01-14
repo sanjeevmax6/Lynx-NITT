@@ -11,6 +11,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {isLive} from '../../utils/helperFunction/isLive';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
   const footer = () => {
@@ -69,13 +70,21 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       {Loading ? (
         <>
-          <ActivityIndicator
-            animating={true}
-            size={'small'}
-            color={colors.Tertiary}
-            style={{margin: scale(10)}}
-          />
-          {searchQuery ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginHorizontal: scale(HorizontalPadding),
+              marginVertical: verticalScale(HorizontalPadding),
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator
+              animating={true}
+              size={'small'}
+              color={colors.Tertiary}
+              style={{margin: scale(10)}}
+            />
+
             <Text
               style={{
                 textAlign: 'center',
@@ -89,25 +98,43 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
                   textAlign: 'center',
                   fontSize: scale(14),
                   paddingVertical: verticalScale(6),
+                  color: colors.GRAY_DARK,
                 }}>
                 "{searchQuery}"...
               </Text>
             </Text>
-          ) : null}
+          </View>
         </>
       ) : (
         <>
           {Error ? (
             <>
-              <Text
+              <View
                 style={{
-                  textAlign: 'center',
-                  fontSize: scale(14),
-                  fontWeight: 'bold',
-                  paddingVertical: verticalScale(6),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginHorizontal: scale(HorizontalPadding),
+                  marginVertical: verticalScale(HorizontalPadding + 5),
+                  justifyContent: 'center',
                 }}>
-                {ErrorText}
-              </Text>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: scale(14),
+                    paddingVertical: verticalScale(6),
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      fontSize: scale(14),
+                      paddingVertical: verticalScale(9),
+                      color: colors.GRAY_DARK,
+                    }}>
+                    {ErrorText}
+                  </Text>
+                </Text>
+              </View>
             </>
           ) : (
             <>

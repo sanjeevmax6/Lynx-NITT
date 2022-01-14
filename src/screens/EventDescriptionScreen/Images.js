@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import {ScaledSheet} from 'react-native-size-matters';
+import ImageView from '../../components/ImageView';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
 
@@ -62,11 +63,10 @@ const Images = ({images, navigation}) => {
                 navigation.push('ImageScreen', {imgUrl: API_GET_IMAGE + e});
               }}
               key={index}>
-              <Image
+              <ImageView
                 key={index}
-                resizeMode="contain"
+                src={API_GET_IMAGE + e}
                 style={styles.wrap}
-                source={{uri: API_GET_IMAGE + e}}
               />
             </TouchableWithoutFeedback>
           ))}

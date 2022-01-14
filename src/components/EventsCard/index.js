@@ -11,6 +11,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {STUDENT} from '../../utils/USER_TYPE';
+import ImageView from '../ImageView';
 
 const EventsCard = ({
   date,
@@ -75,12 +76,7 @@ const EventsCard = ({
           backgroundColor: colors.Accent,
           ...styles.image,
         }}>
-        <Image
-          source={{
-            uri: eventImage ? API_GET_IMAGE + eventImage : NO_IMAGE_URL,
-          }}
-          style={styles.image}
-        />
+        <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
       </View>
       <View style={styles.cardDetails}>
         <Text numberOfLines={2} style={styles.title}>
