@@ -64,7 +64,7 @@ const Username = ({forward, navigation}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={user => {
           RESET_STORE.setUsername(user);
         }}

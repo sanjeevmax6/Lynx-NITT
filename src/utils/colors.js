@@ -66,7 +66,6 @@ export const EventCard_ShareIcon = Tertiary;
 export const EventCard_Title = FontColor;
 export const EventCard_Date = FontColor;
 export const EventCard_IsLive = '#f34928';
-
 export const LIVE = EventCard_IsLive;
 export const CLOSED = '#feb706';
 export const UPCOMING = 'green';
@@ -121,3 +120,6 @@ export const regNext = Primary;
 export const successColor = UPCOMING;
 export const dangerColor = '#540b0e';
 export const warningColor = '#e09f3e';
+
+//Text Input Selection Color
+export const TEXT_INPUT_SELECTION_COLOR = WHITE;

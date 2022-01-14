@@ -7,7 +7,7 @@ import {
   ScaledSheet,
 } from 'react-native-size-matters';
 import moment from 'moment';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {Button, TextInput} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -67,12 +67,12 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
           style={textInputStyles.textInputStyle}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           left={
-            <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
+            <TextInput.Icon name="calendar" size={25} color={colors.BLACK} />
           }>
           Event start:{' '}
           {moment(EVENT_CREATION_STORE.getStartEvent).format(DATE_FORMAT)}
@@ -89,11 +89,11 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
           style={textInputStyles.textInputStyle}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
           left={
-            <TextInput.Icon name="calendar" size={25} color={color.BLACK} />
+            <TextInput.Icon name="calendar" size={25} color={colors.BLACK} />
           }>
           Event end:{' '}
           {moment(EVENT_CREATION_STORE.getEndEvent).format(DATE_FORMAT)}
@@ -131,14 +131,14 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
         style={styles.next}
         mode="contained"
         onPress={scroll}
-        labelStyle={{color: color.regNext}}>
+        labelStyle={{color: colors.regNext}}>
         Next
       </Button>
       <Button
         style={styles.back}
         mode="outline"
         onPress={back}
-        labelStyle={{color: color.regAttach}}
+        labelStyle={{color: colors.regAttach}}
         icon="chevron-left">
         Back
       </Button>
@@ -160,11 +160,11 @@ const styles = ScaledSheet.create({
   buttonTextTheme: {
     fontSize: scale(14),
     marginLeft: scale(10),
-    color: color.WHITE,
+    color: colors.WHITE,
   },
   switchView: {
     paddingVertical: verticalScale(8),
-    backgroundColor: color.Tertiary,
+    backgroundColor: colors.Tertiary,
     borderRadius: moderateScale(9),
     flexDirection: 'row',
     justifyContent: 'center',
@@ -182,7 +182,7 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     bottom: '20@vs',
     right: '20@vs',
-    backgroundColor: color.regAttach,
+    backgroundColor: colors.regAttach,
   },
 });
 

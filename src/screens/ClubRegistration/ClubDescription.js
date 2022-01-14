@@ -62,7 +62,7 @@ const ClubDescription = observer(({forwardAction}) => {
             primary: colors.BLACK,
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={text => {
           EDIT_CLUB_PROFILE_STORE.setClubDescription(text);
         }}

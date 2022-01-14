@@ -2,7 +2,7 @@ import React from 'react';
 import {TextInput, Button} from 'react-native-paper';
 import {View, StyleSheet, Dimensions, Keyboard} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from '../../components/Error';
@@ -55,24 +55,24 @@ const EventCreationDesc = observer(
             multiline={true}
             theme={{
               colors: {
-                primary: color.BLACK,
+                primary: colors.BLACK,
               },
             }}
-            selectionColor={color.WHITE}
+            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
             placeholder="Event Description (max 300)"
             value={EVENT_CREATION_STORE.getDesc}
             onChangeText={nDesc => {
               EVENT_CREATION_STORE.setDesc(nDesc);
             }}
-            left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
+            left={<TextInput.Icon name={'text-subject'} color={colors.BLACK} />}
             right={
               <TextInput.Affix
                 text={'/' + EVENT_CREATION_STORE.getCharLeftDesc}
                 textStyle={{
                   color:
                     EVENT_CREATION_STORE.getDesc.length < 0
-                      ? color.Tertiary
-                      : color.GRAY_DARK,
+                      ? colors.Tertiary
+                      : colors.GRAY_DARK,
                 }}
               />
             }
@@ -90,14 +90,14 @@ const EventCreationDesc = observer(
           style={styles.next}
           mode="contained"
           onPress={scroll}
-          labelStyle={{color: color.regNext}}>
+          labelStyle={{color: colors.regNext}}>
           Next
         </Button>
         <Button
           style={styles.back}
           mode="outline"
           onPress={back}
-          labelStyle={{color: color.regAttach}}
+          labelStyle={{color: colors.regAttach}}
           icon="chevron-left">
           Back
         </Button>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(20),
     right: verticalScale(20),
-    backgroundColor: color.regAttach,
+    backgroundColor: colors.regAttach,
   },
   back: {
     position: 'absolute',

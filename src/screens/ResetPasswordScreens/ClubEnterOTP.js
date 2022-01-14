@@ -128,7 +128,7 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={otp => {
           setOTP(parseInt(otp));
           console.log(5);

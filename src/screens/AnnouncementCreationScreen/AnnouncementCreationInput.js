@@ -3,7 +3,7 @@ import {TextInput} from 'react-native-paper';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
 import {useToast} from 'react-native-toast-notifications';
@@ -46,7 +46,7 @@ const AnnouncementCreationInputs = observer(() => {
           underlineColor="transparent"
           label="Announcement Title"
           style={{
-            backgroundColor: color.GRAY_LIGHT,
+            backgroundColor: colors.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             borderTopLeftRadius: moderateScale(12),
           }}
@@ -55,14 +55,14 @@ const AnnouncementCreationInputs = observer(() => {
           multiline={true}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nTitle => {
             ANNOUNCEMENT_CREATION_STORE.setTitle(nTitle);
           }}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={colors.BLACK} />}
         />
         <Text
           style={[
@@ -82,7 +82,7 @@ const AnnouncementCreationInputs = observer(() => {
         <TextInput
           underlineColor="transparent"
           style={{
-            backgroundColor: color.GRAY_LIGHT,
+            backgroundColor: colors.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             // borderTopLeftRadius: moderateScale(9),
           }}
@@ -92,14 +92,14 @@ const AnnouncementCreationInputs = observer(() => {
           multiline={true}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nDesc => {
             ANNOUNCEMENT_CREATION_STORE.setDescription(nDesc);
           }}
-          left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'text-subject'} color={colors.BLACK} />}
         />
         <Text
           style={[
@@ -121,7 +121,7 @@ const AnnouncementCreationInputs = observer(() => {
         <TextInput
           underlineColor="transparent"
           style={{
-            backgroundColor: color.GRAY_LIGHT,
+            backgroundColor: colors.GRAY_LIGHT,
             marginHorizontal: HorizontalPadding,
             borderBottomRightRadius: moderateScale(12),
           }}
@@ -130,17 +130,17 @@ const AnnouncementCreationInputs = observer(() => {
           value={ANNOUNCEMENT_CREATION_STORE.getLink}
           theme={{
             colors: {
-              primary: color.BLACK,
-              underlineColor: color.WHITE,
+              primary: colors.BLACK,
+              underlineColor: colors.WHITE,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nLinks => ANNOUNCEMENT_CREATION_STORE.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'link'} color={colors.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.BLACK}
+              color={colors.BLACK}
               onPress={() => addLink()}
             />
           }

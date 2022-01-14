@@ -2,7 +2,7 @@ import React from 'react';
 import {View, FlatList, Dimensions} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import TagItem from './TagItem';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import styles from './styles';
 import {observer} from 'mobx-react';
@@ -23,16 +23,16 @@ const EventEditTags = observer(() => {
           value={EVENT_EDIT_STORE.getEditTag}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nTag => EVENT_EDIT_STORE.setEditTag(nTag)}
-          left={<TextInput.Icon name={'tag'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'tag'} color={colors.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.BLACK}
+              color={colors.BLACK}
               onPress={() => EVENT_EDIT_STORE.addTag()}
             />
           }

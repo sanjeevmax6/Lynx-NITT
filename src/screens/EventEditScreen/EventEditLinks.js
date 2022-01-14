@@ -2,7 +2,7 @@ import React from 'react';
 import {View, FlatList} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import LinkItem from './LinkItem';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import styles from './styles';
 import {observer} from 'mobx-react';
@@ -18,18 +18,18 @@ const EventEditLinks = observer(() => {
           placeholder="Event Links"
           style={styles.textInputStyles}
           value={EVENT_EDIT_STORE.getEditLink}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
           onChangeText={nLink => EVENT_EDIT_STORE.setEditLink(nLink)}
-          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'link'} color={colors.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.BLACK}
+              color={colors.BLACK}
               onPress={() => EVENT_EDIT_STORE.addLink()}
             />
           }

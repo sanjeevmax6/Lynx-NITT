@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput} from 'react-native-paper';
 import {View} from 'react-native';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import Error from '../../components/Error';
 import {
@@ -24,22 +24,22 @@ const EventEditInput = observer(() => {
           multiline={true}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           placeholder={`Event Title (max ${EVENT_TITLE_MAX_SIZE})`}
           value={EVENT_EDIT_STORE.getEditTitle}
           onChangeText={nTitle => EVENT_EDIT_STORE.setEditTitle(nTitle)}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.Accent} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={colors.Accent} />}
           right={
             <TextInput.Affix
               text={'/' + EVENT_EDIT_STORE.getCharLeftTitle}
               textStyle={{
                 color:
                   EVENT_EDIT_STORE.getCharLeftTitle < 0
-                    ? color.Tertiary
-                    : color.GRAY_DARK,
+                    ? colors.Tertiary
+                    : colors.GRAY_DARK,
               }}
             />
           }
@@ -62,21 +62,21 @@ const EventEditInput = observer(() => {
           value={EVENT_EDIT_STORE.getEditDesc}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nDesc => EVENT_EDIT_STORE.setEditDesc(nDesc)}
           multiline={true}
-          left={<TextInput.Icon name={'text-subject'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'text-subject'} color={colors.BLACK} />}
           right={
             <TextInput.Affix
               text={'/' + EVENT_EDIT_STORE.getCharLeftDesc}
               textStyle={{
                 color:
                   EVENT_EDIT_STORE.getCharLeftDesc < 0
-                    ? color.Tertiary
-                    : color.GRAY_DARK,
+                    ? colors.Tertiary
+                    : colors.GRAY_DARK,
               }}
             />
           }

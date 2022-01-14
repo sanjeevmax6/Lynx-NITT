@@ -68,7 +68,7 @@ const Documents = observer(({scrollViewRef, callback}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         keyboardType="numeric"
         value={STUDENT_REGISTRATION_STORE.getAadhar}
         maxLength={12}

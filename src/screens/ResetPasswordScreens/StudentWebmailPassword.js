@@ -87,7 +87,7 @@ const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={pass => {
           setPass(pass);
         }}

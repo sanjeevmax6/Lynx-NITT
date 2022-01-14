@@ -103,7 +103,7 @@ const Name = observer(({scrollViewRef, callback}) => {
               },
             }}
             value={STUDENT_REGISTRATION_STORE.getFirstName}
-            selectionColor={colors.WHITE}
+            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
             outlineColor={er ? colors.Tertiary : null}
             style={styles.input}
             onChangeText={fname => {
@@ -121,7 +121,7 @@ const Name = observer(({scrollViewRef, callback}) => {
               },
             }}
             value={STUDENT_REGISTRATION_STORE.getLastName}
-            selectionColor={colors.WHITE}
+            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
             outlineColor={er ? colors.Tertiary : null}
             style={{...styles.input, marginTop: verticalScale(5)}}
             onChangeText={val => {
@@ -146,7 +146,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                   primary: er ? colors.Tertiary : 'black',
                 },
               }}
-              selectionColor={colors.WHITE}
+              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
               outlineColor={er ? colors.Tertiary : null}>
               {STUDENT_REGISTRATION_STORE.getDepartment}
             </TextInput>
@@ -167,7 +167,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                     primary: er ? colors.Tertiary : 'black',
                   },
                 }}
-                selectionColor={colors.WHITE}
+                selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
                 outlineColor={er ? colors.Tertiary : null}>
                 +{''}
                 {STUDENT_REGISTRATION_STORE.getCountryCode}
@@ -211,7 +211,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                   primary: er ? colors.Tertiary : 'black',
                 },
               }}
-              selectionColor={colors.WHITE}
+              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
               outlineColor={er ? colors.Tertiary : null}>
               {STUDENT_REGISTRATION_STORE.getGender}
             </TextInput>
@@ -232,7 +232,7 @@ const Name = observer(({scrollViewRef, callback}) => {
                   primary: er ? colors.Tertiary : 'black',
                 },
               }}
-              selectionColor={colors.WHITE}
+              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
               outlineColor={er ? colors.Tertiary : null}>
               {STUDENT_REGISTRATION_STORE.getNationality}
             </TextInput>

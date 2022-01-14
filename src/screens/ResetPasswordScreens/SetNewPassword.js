@@ -96,7 +96,7 @@ const SetNewPassword = ({forwardAction, backwardAction, buttonHome}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={pass => {
           setNewPass(pass);
         }}
@@ -111,7 +111,7 @@ const SetNewPassword = ({forwardAction, backwardAction, buttonHome}) => {
             primary: 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         onChangeText={pass => {
           setNewConfirmPass(pass);
         }}

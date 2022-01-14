@@ -1,21 +1,13 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, Dimensions, TouchableOpacity} from 'react-native';
-import {Colors, TextInput} from 'react-native-paper';
-import {
-  scale,
-  verticalScale,
-  ScaledSheet,
-  moderateScale,
-} from 'react-native-size-matters';
+import {SafeAreaView, Dimensions, TouchableOpacity} from 'react-native';
+import {TextInput} from 'react-native-paper';
+import {verticalScale, ScaledSheet} from 'react-native-size-matters';
 import NextButton from './nextButton';
 import BackButton from './backButton';
-
 import * as colors from '../../utils/colors';
 import Error from '../../components/Error';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {observer} from 'mobx-react';
 
 const WIDTH = Dimensions.get('window').width;
@@ -84,7 +76,7 @@ const Name = observer(({scrollViewRef, callback}) => {
               primary: dateEr ? colors.Tertiary : 'black',
             },
           }}
-          selectionColor={colors.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           outlineColor={dateEr ? colors.Tertiary : null}
           left={
             <TextInput.Icon name="calendar" size={25} color={colors.BLACK} />

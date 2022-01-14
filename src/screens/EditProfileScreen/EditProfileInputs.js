@@ -45,7 +45,7 @@ const TEXT_INPUT = ({
           primary: colors.BLACK,
         },
       }}
-      selectionColor={colors.WHITE}
+      selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
       onChangeText={text => {
         onTextChange(text);
       }}
@@ -136,7 +136,7 @@ const EditProfileInputs = observer(() => {
                 primary: 'black',
               },
             }}
-            selectionColor={colors.WHITE}
+            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
             left={
               <TextInput.Icon name="calendar" size={25} color={colors.Accent} />
             }>

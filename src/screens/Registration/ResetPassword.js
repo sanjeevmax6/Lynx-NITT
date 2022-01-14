@@ -59,7 +59,7 @@ const ResetPassword = ({
             primary: passEr || cpassEr ? colors.Tertiary : 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         outlineColor={passEr ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
         right={
@@ -85,7 +85,7 @@ const ResetPassword = ({
             primary: cpassEr ? colors.Tertiary : 'black',
           },
         }}
-        selectionColor={colors.WHITE}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         outlineColor={cpassEr ? colors.Tertiary : null}
         style={{...styles.input, marginTop: verticalScale(5)}}
         onChangeText={password =>

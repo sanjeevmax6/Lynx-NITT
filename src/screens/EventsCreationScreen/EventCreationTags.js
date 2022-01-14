@@ -3,7 +3,7 @@ import {View, Dimensions, SafeAreaView, Keyboard, FlatList} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import EventCreationTagItem from './EventCreationTagItem';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {
   verticalScale,
   scale,
@@ -49,18 +49,18 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
           value={EVENT_CREATION_STORE.getTag}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nTag => {
             EVENT_CREATION_STORE.setTag(nTag);
           }}
-          left={<TextInput.Icon name={'tag'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'tag'} color={colors.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.BLACK}
+              color={colors.BLACK}
               onPress={() => EVENT_CREATION_STORE.addTag()}
             />
           }
@@ -90,16 +90,16 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
           value={EVENT_CREATION_STORE.getLink}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nLinks => EVENT_CREATION_STORE.setLink(nLinks)}
-          left={<TextInput.Icon name={'link'} color={color.BLACK} />}
+          left={<TextInput.Icon name={'link'} color={colors.BLACK} />}
           right={
             <TextInput.Icon
               name={'plus'}
-              color={color.BLACK}
+              color={colors.BLACK}
               onPress={() => EVENT_CREATION_STORE.addLink()}
             />
           }
@@ -123,7 +123,7 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
       <Button
         style={styles.next}
         mode="contained"
-        labelStyle={{color: color.regNext}}
+        labelStyle={{color: colors.regNext}}
         onPress={createEvent}>
         Create Event
       </Button>
@@ -131,7 +131,7 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
         style={styles.back}
         mode="outline"
         onPress={back}
-        labelStyle={{color: color.regAttach}}
+        labelStyle={{color: colors.regAttach}}
         icon="chevron-left">
         Back
       </Button>
@@ -146,7 +146,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: scale(HorizontalPadding),
   },
   textInputStyle: {
-    backgroundColor: color.GRAY_LIGHT,
+    backgroundColor: colors.GRAY_LIGHT,
     borderTopRightRadius: moderateScale(9),
     borderTopLeftRadius: moderateScale(9),
     borderBottomLeftRadius: moderateScale(9),
@@ -162,7 +162,7 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     bottom: '20@vs',
     right: '20@vs',
-    backgroundColor: color.regAttach,
+    backgroundColor: colors.regAttach,
   },
   back: {
     position: 'absolute',

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {TextInput, Button} from 'react-native-paper';
 import {View, StyleSheet, Dimensions, Keyboard} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import * as color from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from '../../components/Error';
@@ -41,22 +41,22 @@ const EventCreationTitle = observer(({scrollViewRef, callback}) => {
           value={EVENT_CREATION_STORE.getTitle}
           theme={{
             colors: {
-              primary: color.BLACK,
+              primary: colors.BLACK,
             },
           }}
-          selectionColor={color.WHITE}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={nTitle => {
             EVENT_CREATION_STORE.setTitle(nTitle);
           }}
-          left={<TextInput.Icon name={'lead-pencil'} color={color.Accent} />}
+          left={<TextInput.Icon name={'lead-pencil'} color={colors.Accent} />}
           right={
             <TextInput.Affix
               text={'/' + EVENT_CREATION_STORE.getCharLeftTitle}
               textStyle={{
                 color:
                   EVENT_CREATION_STORE.getTitle.length < 0
-                    ? color.Tertiary
-                    : color.GRAY_DARK,
+                    ? colors.Tertiary
+                    : colors.GRAY_DARK,
               }}
             />
           }
@@ -74,7 +74,7 @@ const EventCreationTitle = observer(({scrollViewRef, callback}) => {
         style={styles.next}
         mode="contained"
         onPress={scroll}
-        labelStyle={{color: color.regNext}}>
+        labelStyle={{color: colors.regNext}}>
         Next
       </Button>
     </SafeAreaView>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(20),
     right: verticalScale(20),
-    backgroundColor: color.regAttach,
+    backgroundColor: colors.regAttach,
   },
 });
 

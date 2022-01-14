@@ -41,7 +41,7 @@ const FeedBackScreen = observer(({navigation}) => {
               primary: colors.BLACK,
             },
           }}
-          selectionColor={colors.GRAY_DARK}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
           onChangeText={text => {
             FEEDBACK_STORE.setFeedback(text);
           }}
