@@ -231,7 +231,7 @@ const FeedScreen = observer(({navigation}) => {
                       name={item.Title}
                       desc={item.Description}
                       eventImage={item.poster}
-                      organizer={'NA'}
+                      organizer={FEEDS_STORE.getData.clubName}
                       isLive={item.isLive}
                       wasInterested={false}
                       eventId={item.EventId}

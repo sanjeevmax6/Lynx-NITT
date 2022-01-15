@@ -21,6 +21,7 @@ import {ACCENT_ACTIVITY_SCREEN} from '../../utils/LOADING_TYPES';
 import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
 
 import ActivityAPI from './ActivityAPI';
+import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 const ActivityScreen = observer(({navigation}) => {
   const onRefresh = React.useCallback(() => {
@@ -141,7 +142,11 @@ const ActivityScreen = observer(({navigation}) => {
                     date={item.createdAt}
                     title={item.title}
                     desc={item.body}
-                    imageUrl={item.imageUrl}
+                    imageUrl={
+                      item.type === 'event'
+                        ? item.imageUrl
+                        : API_GET_IMAGE + item.sender_id.profilePic
+                    }
                     type={item.type}
                     sender={item.sender_id.name}
                     navigation={navigation}
