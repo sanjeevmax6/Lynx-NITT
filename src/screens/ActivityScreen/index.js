@@ -22,8 +22,14 @@ import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
 
 import ActivityAPI from './ActivityAPI';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {useIsFocused} from '@react-navigation/native';
 
 const ActivityScreen = observer(({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
+  }
   const onRefresh = React.useCallback(() => {
     ACTIVITY_STORE.setRefreshing(true);
     ACTIVITY_STORE.setError(false);

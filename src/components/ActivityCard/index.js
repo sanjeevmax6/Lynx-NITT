@@ -51,7 +51,7 @@ const ActivityCard = ({
       });
     } else {
       navigation.push('AnnouncementDetail', {
-        eventId: id.event_id,
+        circularId: id.circular_id,
       });
     }
   };
