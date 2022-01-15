@@ -15,6 +15,7 @@ const TEXT_INPUT = ({
   onTextChange,
   showCharCount,
   charCount,
+  value,
   maxLength = 1000,
   keyboardType = 'default',
   multiline = false,
@@ -23,6 +24,7 @@ const TEXT_INPUT = ({
     <TextInput
       underlineColor="transparent"
       label={label}
+      value={value}
       maxLength={maxLength}
       style={{
         backgroundColor: colors.GRAY_LIGHT,
@@ -67,6 +69,7 @@ const EditDescription = observer(() => {
         label={'Club Description'}
         placeholder={'Club Description'}
         icon={'information'}
+        value={EDIT_CLUB_PROFILE_STORE.getClubDescription}
         multiline={true}
         onTextChange={text => {
           EDIT_CLUB_PROFILE_STORE.setClubDescription(text);

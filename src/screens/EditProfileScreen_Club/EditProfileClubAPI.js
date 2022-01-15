@@ -1,7 +1,12 @@
 import {API_EDIT_PROFILE_CLUB} from '../../utils/API_CONSTANTS';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
-import { EDIT_CLUB_PROFILE_STORE } from '../../mobx/EDIT_CLUB_PROFILE';
+import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
+import {
+  NO_NETWORK,
+  SERVER_ERROR,
+  UNEXPECTED_ERROR,
+} from '../../utils/ERROR_MESSAGES';
 export const EditProfileClubAPI = formData => {
   const axios = require('axios');
   NetInfo.fetch().then(state => {
@@ -16,23 +21,29 @@ export const EditProfileClubAPI = formData => {
           {headers: {token: USER_STORE.getUserToken}},
         )
         .then(response => {
-          console.log(JSON.stringify(response));
-          EDIT_CLUB_PROFILE_STORE.setLoading(false);
+          if (response.status === 200) {
+            EDIT_CLUB_PROFILE_STORE.setLoading(false);
+            EDIT_CLUB_PROFILE_STORE.setSuccess(true);
+          } else {
+            EDIT_CLUB_PROFILE_STORE.setLoading(false);
+            EDIT_CLUB_PROFILE_STORE.setError(true);
+            EDIT_CLUB_PROFILE_STORE.setError(UNEXPECTED_ERROR);
+          }
         })
         .catch(error => {
+          EDIT_CLUB_PROFILE_STORE.setLoading(false);
+          EDIT_CLUB_PROFILE_STORE.setError(true);
           if (error.response) {
             console.log(error.response.data.message);
-            EDIT_CLUB_PROFILE_STORE.setLoading(false);
-            EDIT_CLUB_PROFILE_STORE.setErrorText(
-              error.response.data.message,
-            );
+            EDIT_CLUB_PROFILE_STORE.setErrorText(error.response.data.message);
           } else if (error.request) {
-            EDIT_CLUB_PROFILE_STORE.setErrorText('Server Error');
+            console.log(error.request);
+            EDIT_CLUB_PROFILE_STORE.setErrorText(SERVER_ERROR);
           }
           console.log(error);
         });
     } else {
-      EDIT_CLUB_PROFILE_STORE.setErrorText('No Internet Connection');
+      EDIT_CLUB_PROFILE_STORE.setErrorText(NO_NETWORK);
     }
   });
 };

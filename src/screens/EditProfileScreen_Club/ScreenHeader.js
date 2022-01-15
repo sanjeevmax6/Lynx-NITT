@@ -6,8 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import CustomAlert from '../../components/customAlert';
+import {observer} from 'mobx-react';
+import {CHECK_VALUES_ENTERED} from '../../utils/ERROR_MESSAGES';
 
-const ScreenHeader = ({navigation, isValid, handleAPICALL}) => {
+const ScreenHeader = observer(({navigation, isValid, handleAPICALL}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
@@ -61,21 +63,30 @@ const ScreenHeader = ({navigation, isValid, handleAPICALL}) => {
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {
-            handleAPICALL();
-            navigation.goBack();
-            console.log('Create pressed');
             if (!isValid) {
-              setModalTitle('Max Length Reached');
-              setModalMessage('The text entered exceeds the maximum length');
+              setModalTitle('Verification');
+              setModalMessage('Please fill the Club Description');
               setModalButtons([
                 {
-                  text: 'CLOSE',
+                  text: 'KEEP EDITING',
                   func: () => console.log('OK Pressed'),
                 },
               ]);
               setModalVisible(true);
             } else {
-              //toggleTab(true); To be enabled after implementing save
+              setModalTitle('Update Profile?');
+              setModalMessage('Are you sure you want to update your details?');
+              setModalButtons([
+                {
+                  text: 'KEEP EDITING',
+                  func: () => console.log('OK Pressed'),
+                },
+                {
+                  text: 'YES',
+                  func: () => handleAPICALL(),
+                },
+              ]);
+              setModalVisible(true);
             }
           }}
           style={styles.button}>
@@ -89,7 +100,7 @@ const ScreenHeader = ({navigation, isValid, handleAPICALL}) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   header: {

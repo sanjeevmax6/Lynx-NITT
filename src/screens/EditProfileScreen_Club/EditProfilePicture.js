@@ -9,6 +9,7 @@ import {Avatar} from 'react-native-paper';
 
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
+import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -18,8 +19,8 @@ const EditProfilePicture = observer(() => {
       const image = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
-
       EDIT_CLUB_PROFILE_STORE.setClubImage(image.uri);
+      EDIT_CLUB_PROFILE_STORE.setImage(image);
     } catch (err) {
       if (DocumentPicker.isCancel()) console.log(err);
       else throw err;
@@ -31,7 +32,9 @@ const EditProfilePicture = observer(() => {
       <View style={styles.imageView}>
         <Image
           source={{
-            uri: EDIT_CLUB_PROFILE_STORE.getClubImage,
+            uri: EDIT_CLUB_PROFILE_STORE.getClubImage
+              ? EDIT_CLUB_PROFILE_STORE.getClubImage
+              : NO_IMAGE_URL,
           }}
           style={styles.image}
         />

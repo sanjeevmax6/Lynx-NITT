@@ -18,6 +18,9 @@ class ClubUserStore {
     errorText: '',
     isLoading: false,
     refresh: false,
+
+    // all details
+    clubDetail: {},
   };
 
   reset = () => {
@@ -34,6 +37,7 @@ class ClubUserStore {
     this.state.errorText = '';
     this.state.isLoading = false;
     this.state.refresh = false;
+    this.state.clubDetail = {};
   };
   /*
     GETTERS
@@ -76,6 +80,10 @@ class ClubUserStore {
   }
   get getRefresh() {
     return this.state.refresh;
+  }
+
+  get getClubDetail() {
+    return this.state.clubDetail;
   }
 
   /*
@@ -129,6 +137,10 @@ class ClubUserStore {
     this.state.followerCount = clubDetails.followers_count;
   };
 
+  setClubInfo = val => {
+    this.state.clubDetail = val;
+  };
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -148,6 +160,7 @@ class ClubUserStore {
       setIsLoading: action,
       setClubDetails: action,
       setRefresh: action,
+      setClubInfo: action,
       // getters
       getName: computed,
       getEmail: computed,
@@ -162,6 +175,7 @@ class ClubUserStore {
       getErrorText: computed,
       getIsLoading: computed,
       getRefresh: computed,
+      getClubDetail: computed,
     });
   }
 }

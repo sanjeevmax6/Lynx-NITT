@@ -55,6 +55,7 @@ export const getClubDetails = async (refreshing = false) => {
       CLUB_USER_STORE.setErrorText(false);
 
       CLUB_USER_STORE.setClubDetails(clubDetailsResponse.data.details);
+      CLUB_USER_STORE.setClubInfo(clubDetailsResponse.data.details);
       CLUB_USER_STORE.setUpcomingEvents(eventsResponse.data.upcomingEvents);
       CLUB_USER_STORE.setLiveEvents(eventsResponse.data.liveEvents);
       CLUB_USER_STORE.setPastEvents(pastEventsResponse.data.pastEvents);

@@ -3,6 +3,7 @@ import {action, makeObservable, observable, computed} from 'mobx';
 class ClubProfile {
   state = {
     clubImage: 'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg',
+    image: {},
     clubDescription: '',
     instagramLink: '',
     websiteLink: '',
@@ -12,12 +13,14 @@ class ClubProfile {
     mediumLink: '',
     error: false,
     errorText: '',
+    success: false,
     loading: false,
   };
 
   reset = () => {
     this.state.clubImage =
       'https://imagizer.imageshack.com/img922/5549/DWQolC.jpg';
+    this.state.image = {};
     this.state.clubDescription = '';
     this.state.instagramLink = '';
     this.state.websiteLink = '';
@@ -28,6 +31,7 @@ class ClubProfile {
     this.state.error = false;
     this.state.errorText = '';
     this.state.loading = false;
+    this.state.success = false;
   };
 
   setClubDescription = val => {
@@ -44,6 +48,14 @@ class ClubProfile {
 
   get getClubImage() {
     return this.state.clubImage;
+  }
+
+  setImage = img => {
+    this.state.image = img;
+  };
+
+  get getImage() {
+    return this.state.image;
   }
 
   setInstagramLink = val => {
@@ -118,6 +130,14 @@ class ClubProfile {
     return this.state.loading;
   }
 
+  setSuccess = val => {
+    this.state.success = val;
+  };
+
+  get getSuccess() {
+    return this.state.success;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -146,6 +166,9 @@ class ClubProfile {
       setClubImage: action,
       getClubImage: computed,
 
+      setImage: action,
+      getImage: computed,
+
       setError: action,
       getError: computed,
 
@@ -154,6 +177,9 @@ class ClubProfile {
 
       setLoading: action,
       getLoading: computed,
+
+      setSuccess: action,
+      getSuccess: computed,
     });
   }
 }

@@ -15,6 +15,7 @@ const TEXT_INPUT = ({
   onTextChange,
   showCharCount = false,
   charCount,
+  value,
   maxLength = 1000,
   keyboardType = 'default',
   multiline = false,
@@ -23,6 +24,7 @@ const TEXT_INPUT = ({
     <TextInput
       underlineColor="transparent"
       label={label}
+      value={value}
       maxLength={maxLength}
       style={{
         backgroundColor: colors.GRAY_LIGHT,
@@ -66,6 +68,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'Website Link'}
         label={'Website Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getWebsiteLink}
         icon={'google-chrome'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setWebsiteLink(val);
@@ -74,6 +77,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'Instagram Link'}
         label={'Instagram Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getInstagramLink}
         icon={'instagram'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setInstagramLink(val);
@@ -82,6 +86,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'Facebook Link'}
         label={'Facebook Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getFacebookLink}
         icon={'facebook'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setFacebookLink(val);
@@ -90,6 +95,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'Youtube Link'}
         label={'Youtube Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getYoutubeLink}
         icon={'youtube'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setYoutubeLink(val);
@@ -98,6 +104,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'LinkedIn Link'}
         label={'LinkedIn Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getLinkedInLink}
         icon={'linkedin'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setLinkedInLink(val);
@@ -106,6 +113,7 @@ const EditClubLinks = observer(() => {
       <TEXT_INPUT
         placeholder={'Medium Link'}
         label={'Medium Link'}
+        value={EDIT_CLUB_PROFILE_STORE.getMediumLink}
         icon={'alpha-m-box'}
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setMediumLink(val);

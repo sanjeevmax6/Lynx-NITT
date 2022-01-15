@@ -17,6 +17,7 @@ const UserScreen = observer(({navigation}) => {
   React.useEffect(() => {
     getClubDetails();
   }, []);
+
   const onDeleteClick = (eventId, eventName) => {
     setModalTitle('Confirmation');
     setModalMessage(`${eventName} will be deleted!`);

@@ -28,6 +28,7 @@ import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import {observer} from 'mobx-react';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 import CustomAlert from '../../components/customAlert';
+import {CLUB_USER_STORE} from '../../mobx/CLUB_USER_STORE';
 
 const PopulateData = () => {
   console.log('Pop');
@@ -144,6 +145,7 @@ const EditProfileScreen = observer(({navigation}) => {
                 <SuccessScreen
                   fn={() => {
                     STUDENT_EDIT_PROFILE_STORE.setSuccess(false);
+                    CLUB_USER_STORE.setRefresh(true);
                     navigation.pop();
                   }}
                 />
