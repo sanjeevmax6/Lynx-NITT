@@ -11,7 +11,7 @@ import ImageView from '../../components/ImageView';
 const ListItem = ({clubItem, goToClub}) => {
   const [Follow, setFollow] = useState(true);
   const [ApiCall, setApiCall] = useState(false);
-  const imageUrl = API_GET_IMAGE + clubItem.profilePic;
+  const imageUrl = API_GET_IMAGE + clubItem.clubId.profilePic;
   return (
     <TouchableOpacity
       style={listItemStyles.container}
@@ -21,7 +21,7 @@ const ListItem = ({clubItem, goToClub}) => {
           <ImageView src={imageUrl} style={listItemStyles.imageStyle} />
         </View>
         <Text numberOfLines={2} style={listItemStyles.textStyle}>
-          {clubItem.name}
+          {clubItem.clubId.name}
         </Text>
       </View>
       <View style={listItemStyles.buttonStyles}>

@@ -7,9 +7,7 @@ import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  LayoutAnimation,
   Platform,
-  UIManager,
   Pressable,
 } from 'react-native';
 
@@ -32,7 +30,6 @@ const Header = ({name, followers, url, description, navigation}) => {
   const [showingMore, setShowingMore] = useState(false);
 
   const onShowMorePressed = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setMoreText(showingMore ? 'more' : 'less');
     setNumberOfLines(showingMore ? NUMBER_OF_LINES : 100);
     setShowingMore(!showingMore);
@@ -64,12 +61,6 @@ const Header = ({name, followers, url, description, navigation}) => {
   const onTextLayout = useCallback(e => {
     setShowMoreText(e.nativeEvent.lines.length > NUMBER_OF_LINES);
   });
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-  }, []);
 
   return coverColor === colors.Tertiary ? (
     <SafeAreaView>

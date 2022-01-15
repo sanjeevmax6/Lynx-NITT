@@ -42,7 +42,7 @@ const StudentUserScreen = observer(({navigation}) => {
   };
 
   const goToClub = club => {
-    navigation.push('ClubDescription', {ClubId: club._id});
+    navigation.push('ClubDescription', {ClubId: club.clubId._id});
   };
 
   const goToEvent = event => {
