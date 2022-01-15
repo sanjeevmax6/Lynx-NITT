@@ -65,6 +65,8 @@ const LoaderPage = ({
         <>
           {LoadingAccent === ACCENT_ACTIVITY_SCREEN ? (
             <>
+              <View style={{height: verticalScale(HeaderHeight)}} />
+
               {[...Array(repeat)].map((e, i) => (
                 <ActivityLoader key={i} />
               ))}

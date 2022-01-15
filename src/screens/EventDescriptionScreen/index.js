@@ -8,7 +8,6 @@ import {
   Share,
   Alert,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import Images from './Images';
 import About from './About';
@@ -25,10 +24,7 @@ import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
-import moment from 'moment';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
-import {isLive} from '../../utils/helperFunction/isLive';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IconButton} from 'react-native-paper';
 import EventStatusTag from './EventStatusTag';
 import EventDescriptionHeader from './eventDescriptionHeader';
@@ -46,9 +42,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        // BOTTOM_NAV_STORE.setTabVisibility(true);
-        // EVENT_DESCRIPTION_STORE.setLoading(true);
-        navigation.pop();
+        navigation.popToTop();
         return true;
       },
     );
@@ -72,9 +66,8 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
           <ErrorScreen
             errorMessage={EVENT_DESCRIPTION_STORE.getErrorText}
             fn={() => {
-              EVENT_DESCRIPTION_STORE.setErrorText('');
-              EVENT_DESCRIPTION_STORE.setError(false);
-              // eventDescriptionAPI();
+              EVENT_DESCRIPTION_STORE.reset();
+              eventDescriptionAPI();
             }}
           />
         ) : (

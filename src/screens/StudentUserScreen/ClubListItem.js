@@ -7,11 +7,20 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
 import ImageView from '../../components/ImageView';
+import {useToast} from 'react-native-toast-notifications';
+import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 
 const ListItem = ({clubItem, goToClub}) => {
   const [Follow, setFollow] = useState(true);
   const [ApiCall, setApiCall] = useState(false);
   const imageUrl = API_GET_IMAGE + clubItem.clubId.profilePic;
+
+  const toast = useToast();
+
+  const showToast = () => {
+    toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+  };
+
   return (
     <TouchableOpacity
       style={listItemStyles.container}
@@ -34,12 +43,13 @@ const ListItem = ({clubItem, goToClub}) => {
           onPress={() => {
             setApiCall(true);
             toggleFollowApi(
-              clubItem._id,
+              clubItem.clubId._id,
               () => {
                 setApiCall(false);
                 setFollow(!Follow);
               },
               () => {
+                showToast();
                 setApiCall(false);
               },
             );

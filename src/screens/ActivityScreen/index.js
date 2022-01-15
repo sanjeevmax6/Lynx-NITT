@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   FlatList,
   Animated,
-  Platform,
   RefreshControl,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
@@ -16,12 +15,11 @@ import ActivityCard from '../../components/ActivityCard';
 import ErrorScreen from '../../components/ErrorScreen';
 import LoaderPage from '../../components/LoadingScreen';
 import {ACTIVITY_STORE} from '../../mobx/ACITIVITY_STORE';
-import {USER_STORE} from '../../mobx/USER_STORE';
 
 import * as colors from '../../utils/colors';
-import {ACCENT_EVENT_SCREEN} from '../../utils/LOADING_TYPES';
+import {ACCENT_ACTIVITY_SCREEN} from '../../utils/LOADING_TYPES';
 import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
-import {STUDENT} from '../../utils/USER_TYPE';
+
 import ActivityAPI from './ActivityAPI';
 
 const ActivityScreen = observer(({navigation}) => {
@@ -42,6 +40,7 @@ const ActivityScreen = observer(({navigation}) => {
   const scrollY = new Animated.Value(0);
 
   const diffClamp = Animated.diffClamp(scrollY, 0, verticalScale(HeaderHeight));
+
   const interpolateY = diffClamp.interpolate({
     inputRange: [0, verticalScale(HeaderHeight)],
     outputRange: [0, verticalScale(-1 * HeaderHeight)],
@@ -49,7 +48,7 @@ const ActivityScreen = observer(({navigation}) => {
   return (
     <View style={{flex: 1}}>
       {ACTIVITY_STORE.getLoading ? (
-        <LoaderPage LoadingAccent={ACCENT_EVENT_SCREEN} />
+        <LoaderPage LoadingAccent={ACCENT_ACTIVITY_SCREEN} />
       ) : ACTIVITY_STORE.getError ? (
         <ErrorScreen
           errorMessage={ACTIVITY_STORE.getErrorText}
@@ -71,39 +70,45 @@ const ActivityScreen = observer(({navigation}) => {
                 },
               ],
             }}>
-            <View
-              style={{
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                right: 0,
-                height: verticalScale(HeaderHeight),
-                backgroundColor: colors.EventScreen_headerBackground,
-                // borderBottomLeftRadius: scale(10),
-                // borderBottomRightRadius: scale(10),
-                elevation: 5,
-                zIndex: 100, //for IOS
-                alignContent: 'center',
-                justifyContent: 'center',
-                shadowColor: colors.GRAY_DARK,
-              }}>
-              <Text
+            <SafeAreaView>
+              <View
                 style={{
-                  fontSize: verticalScale(18),
-                  paddingLeft: scale(HorizontalPadding),
-                  color: 'white',
-                  fontWeight: 'bold',
-                  color: colors.HeaderText,
+                  left: 0,
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  right: 0,
+                  height: verticalScale(HeaderHeight),
+                  backgroundColor: colors.EventScreen_headerBackground,
+                  // borderBottomLeftRadius: scale(10),
+                  // borderBottomRightRadius: scale(10),
+                  elevation: 5,
+                  zIndex: 100, //for IOS
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                  shadowColor: colors.GRAY_DARK,
                 }}>
-                ACTIVITIES
-              </Text>
-            </View>
+                <Text
+                  style={{
+                    fontSize: verticalScale(18),
+                    paddingLeft: scale(HorizontalPadding),
+                    color: 'white',
+                    fontWeight: 'bold',
+                    color: colors.HeaderText,
+                  }}>
+                  ACTIVITIES
+                </Text>
+              </View>
+            </SafeAreaView>
           </Animated.View>
           <FlatList
             data={ACTIVITY_STORE.getData}
+            onScroll={e => {
+              scrollY.setValue(e.nativeEvent.contentOffset.y);
+            }}
             showsVerticalScrollIndicator={false}
+            style={{height: '100%'}}
             showsHorizontalScrollIndicator={false}
             refreshControl={
               <RefreshControl
@@ -127,9 +132,6 @@ const ActivityScreen = observer(({navigation}) => {
             ListHeaderComponent={
               <View style={{height: verticalScale(HeaderHeight)}}></View>
             }
-            onScroll={e => {
-              scrollY.setValue(e.nativeEvent.contentOffset.y);
-            }}
             bounces={false}
             bouncesZoom={false}
             renderItem={({item}) => {
@@ -141,8 +143,9 @@ const ActivityScreen = observer(({navigation}) => {
                     desc={item.body}
                     imageUrl={item.imageUrl}
                     type={item.type}
-                    sender={item.sender_id}
+                    sender={item.sender_id.name}
                     navigation={navigation}
+                    id={item}
                   />
                   <Divider style={{height: verticalScale(1)}} />
                 </View>

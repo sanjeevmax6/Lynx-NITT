@@ -34,7 +34,8 @@ const EventDescriptionHeader = observer(({navigation}) => {
         style={styles.button}
         onPress={() => {
           // EVENT_DESCRIPTION_STORE.setLoading(true);
-          navigation.goBack();
+          navigation.popToTop();
+          EVENT_DESCRIPTION_STORE.reset();
         }}>
         {Platform.OS === 'ios' ? (
           <Icon

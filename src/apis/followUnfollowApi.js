@@ -11,24 +11,16 @@ async function API_CALL(clubId, successCallback, failureCallBack) {
     if (USER_STORE.getUserType === STUDENT) {
       console.log(1);
 
-      const [responseFollow, responseSubscribe] = await axios.all([
+      const [responseFollow] = await axios.all([
         axios.put(
           API_STORE.getBaseUrl + API_FOLLOW_TOGGLE + clubId,
           {},
           {headers: {token: USER_STORE.getUserToken}},
         ),
-        axios.put(
-          API_STORE.getBaseUrl + API_SUBSCRIBE_TOGGLE + clubId,
-          {},
-          {headers: {token: USER_STORE.getUserToken}},
-        ),
       ]);
-      console.log(
-        responseFollow.data.message + '\n' + responseSubscribe.data.message,
-      );
+      console.log(responseFollow.data.message);
 
-      if (responseFollow.status == 200 && responseSubscribe.status == 200)
-        successCallback();
+      if (responseFollow.status == 200) successCallback();
       else {
         failureCallBack();
         showToast();

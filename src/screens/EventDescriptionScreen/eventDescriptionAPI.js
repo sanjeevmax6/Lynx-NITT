@@ -14,9 +14,8 @@ import {API_STORE} from '../../mobx/API_STORE';
 async function API_CALL() {
   try {
     const response = await axios.get(
-      API_EVENT_BY_ID + '/' + EVENT_DESCRIPTION_STORE.getID,
-      // Token from Mobx
-      {headers: {token: USER_STORE.getUserToken}, timeout: 5000},
+      API_EVENT_BY_ID + EVENT_DESCRIPTION_STORE.getID,
+      {timeout: 5000},
     );
     if (USER_STORE.getUserType === STUDENT) {
       // checking if the student follows the club that made the event

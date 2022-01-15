@@ -122,4 +122,4 @@ export const dangerColor = '#540b0e';
 export const warningColor = '#e09f3e';
 
 //Text Input Selection Color
-export const TEXT_INPUT_SELECTION_COLOR = WHITE;
+export const TEXT_INPUT_SELECTION_COLOR = GRAY_DARK;

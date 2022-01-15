@@ -16,7 +16,7 @@ export const API_ADMIN_EVENT_LIST = API_BASE_URL + 'api/calendar/admin/events';
 export const API_ADD_CALENDAR_NOTICE =
   API_BASE_URL + 'api/admin/event/add-events';
 
-export const API_EVENT_BY_ID = API_BASE_URL + '/api/eventById';
+export const API_EVENT_BY_ID = API_BASE_URL + '/api/eventById/';
 
 export const API_GET_IMAGE = API_BASE_URL + '/api/image?photo=';
 

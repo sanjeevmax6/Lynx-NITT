@@ -1,10 +1,19 @@
-import React from 'react';
-import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {Button, Chip} from 'react-native-paper';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as color from '../../utils/colors';
 import moment from 'moment';
+import ImageView from '../ImageView';
+import {getFormatedDate} from 'react-native-modern-datepicker';
+import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 
 const ActivityCard = ({
   date,
@@ -14,8 +23,8 @@ const ActivityCard = ({
   type,
   sender,
   navigation,
+  id,
 }) => {
-  const dateString = moment(date).format('DD/MM/YYYY | H:mm');
   const getTimeGap = d => {
     let date = new Date(d);
     var today = new Date();
@@ -24,83 +33,94 @@ const ActivityCard = ({
       Difference_In_Time / (1000 * 3600 * 24),
     );
     if (Math.floor(Difference_In_Days / 365) >= 1) {
-      return Math.floor(Difference_In_Days / 365) + ' Yr';
+      return Math.floor(Difference_In_Days / 365) + 'yr';
     }
     if (Math.floor(Difference_In_Days / 30) >= 1) {
-      return Math.floor(Difference_In_Days / 30) + ' Mo';
+      return Math.floor(Difference_In_Days / 30) + 'mo';
     }
     if (Math.floor(Difference_In_Days / 7) >= 1) {
-      return Math.floor(Difference_In_Days / 7) + ' W';
+      return Math.floor(Difference_In_Days / 7) + 'w';
     }
-    return Difference_In_Days + ' D';
+    return Difference_In_Days + 'd';
   };
 
+  const navigationHandler = () => {
+    if (type === 'event') {
+      navigation.push('EventDescriptionScreen', {
+        eventId: id.event_id,
+      });
+    } else {
+      navigation.push('AnnouncementDetail', {
+        eventId: id.event_id,
+      });
+    }
+  };
   return (
-    <View style={{paddingVertical: 6}}>
-      <TouchableWithoutFeedback
+    <View style={{paddingVertical: verticalScale(6)}}>
+      <TouchableOpacity
+        disabled={type === 'event'}
         onPress={() => {
           if (type === 'circular') {
-            // navigation.navigate('AnnouncementDetail', {
-            //   data: {
-            //     // organizer: notifier,
-            //     // url: imageUrl,
-            //     // links: 'awkjvbav',
-            //     // description: notification,
-            //     // time: getTimeGap(date),
-            //     // organizerUrl: organizerUrl,
-            //     // organizerFollower: organizerFollower,
-            //   },
-            // });
-          } else if (type === 'event') {
-            // navigation.navigate('EventDescriptionScreen', {
-            //   // data: {
-            //   //   eventId:
-            //   // },
-            // });
+            navigationHandler();
           }
         }}>
         <View style={styles.cardLayout}>
-          <Image
-            style={styles.poster}
-            source={{
-              uri: 'https://nittapp-spidertesting.cloudns.nz/v1.5//api/image?photo=0590bd55-6248-4346-b051-2ef573785840.jpg',
-            }}
-          />
+          <View style={{...styles.poster, elevation: 1}}>
+            <ImageView style={styles.poster} src={imageUrl} />
+          </View>
           <View style={styles.eventInfo}>
             <Text numberOfLines={3}>
-              <Text style={styles.notifier}>{sender.name}</Text>
-              <Text style={styles.notifier}>: </Text>
+              <Text style={styles.notifier}>{sender}:</Text>
+              <Text style={styles.title}> {title}</Text>
               <Text
                 style={{
-                  fontSize: scale(14),
+                  fontSize: scale(12),
+                  //fontWeight: 'bold',
+                  paddingRight: 10,
                 }}>
-                {title}
                 {'\n'}
                 {desc}
               </Text>
             </Text>
             <View
               style={{
+                //backgroundColor: 'red',
                 flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: verticalScale(2),
+                //alignItems: 'flex-end',
               }}>
-              <Text style={styles.date}>{type.toUpperCase()}</Text>
+              <Text style={{fontSize: scale(12)}}>
+                {getFormatedDate(date)} | {getFormattedTime(date)}
+              </Text>
               <Text
                 style={{
+                  textAlign: 'right',
+                  flex: 1,
                   fontSize: scale(12),
-                  fontWeight: '500',
+                  fontWeight: '300',
                 }}>
-                {dateString}
-              </Text>
-              <Text style={{fontSize: scale(12), marginRight: scale(2)}}>
                 {getTimeGap(date)}
               </Text>
             </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+        {type === 'event' ? (
+          <View style={styles.button}>
+            <Button
+              mode="outlined"
+              color={color.Tertiary}
+              style={styles.btn}
+              onPress={() => {
+                navigationHandler();
+              }}
+              contentStyle={{padding: 0}}
+              labelStyle={{fontSize: 12, padding: 0, fontWeight: 'bold'}}>
+              View event
+            </Button>
+          </View>
+        ) : (
+          <View></View>
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -109,24 +129,13 @@ const styles = ScaledSheet.create({
   cardLayout: {
     flexDirection: 'row',
     paddingHorizontal: scale(HorizontalPadding),
+    //marginTop: '10@vs',
   },
   poster: {
     height: '60@s',
     width: '60@s',
     borderRadius: '30@s',
     alignSelf: 'center',
-  },
-  date: {
-    fontSize: scale(10),
-    color: color.Tertiary,
-    borderColor: 'black',
-    borderWidth: scale(1),
-    borderRadius: 10,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontWeight: 'bold',
-    paddingVertical: verticalScale(2),
-    paddingHorizontal: scale(5),
   },
   eventInfo: {
     marginLeft: '9@s',
@@ -139,6 +148,7 @@ const styles = ScaledSheet.create({
   },
   button: {
     marginLeft: '79@s',
+    //backgroundColor: 'red',
   },
   btn: {
     alignSelf: 'baseline',
@@ -146,8 +156,12 @@ const styles = ScaledSheet.create({
   notifier: {
     color: color.Tertiary,
     fontSize: scale(14),
-    fontWeight: 'bold',
-    lineHeight: 20,
+    fontWeight: '500',
+  },
+  title: {
+    color: color.BLACK,
+    fontSize: scale(14),
+    fontWeight: '400',
   },
 });
 export default ActivityCard;

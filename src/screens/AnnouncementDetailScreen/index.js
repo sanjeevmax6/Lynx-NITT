@@ -9,23 +9,23 @@ import Header from './header';
 import {ScaledSheet, verticalScale, scale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {HorizontalPadding, HeaderHeight} from '../../utils/UI_CONSTANTS';
+import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const AnnouncementDetailScreen = ({route, navigation}) => {
-  const {data} = route.params;
   return (
     <SafeAreaView>
-      <Images url={data.url} navigation={navigation} />
+      <Images url={NO_IMAGE_URL} navigation={navigation} />
       <Divider style={styles.divider} />
       <ClubAnnounce
-        organizer={data.organizer}
-        url={data.organizerUrl}
-        time={data.time}
-        followers={data.organizerFollower}
+        organizer={'fghj'}
+        url={'na'}
+        time={'2022-01-13T17:40:06.253Z'}
+        followers={152}
       />
       <Divider style={styles.divider} />
-      <Announcement description={data.description} />
+      <Announcement description={'NA'} />
       <Divider style={styles.divider} />
-      <Attachments links={data.links} />
+      <Attachments links={[]} />
     </SafeAreaView>
   );
 };
