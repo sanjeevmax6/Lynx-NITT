@@ -5,17 +5,12 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
 import {ADMIN, CLUB} from '../../utils/USER_TYPE';
-import {
-  CLUB_REGISTERED,
-  CLUB_USER_ID,
-  USER_TOKEN,
-  USER_TYPE,
-} from '../../utils/STORAGE_KEYS';
+import {CLUB_USER_ID, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 
 export const clubLogin = (email, password) => {
   const axios = require('axios');
   //using netinfo to check if online
-  const reg_token = '123abc';
+  const reg_token = USER_STORE.getFirebaseToken;
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
       LOGIN_STORE.setLoading(true);

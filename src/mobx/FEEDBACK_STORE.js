@@ -36,6 +36,38 @@ class FEEDBACK {
     return this.state.feedback;
   }
 
+  setSuccess = val => {
+    this.state.success = val;
+  };
+
+  get getSuccess() {
+    return this.state.success;
+  }
+
+  setLoading = val => {
+    this.state.loading = val;
+  };
+
+  get getLoading() {
+    return this.state.loading;
+  }
+
+  setErrorText = val => {
+    this.state.errorText = val;
+  };
+
+  get getErrorText() {
+    return this.state.errorText;
+  }
+
+  setError = val => {
+    this.state.error = val;
+  };
+
+  get getError() {
+    return this.state.error;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -45,6 +77,18 @@ class FEEDBACK {
 
       setType: action,
       getType: computed,
+
+      setError: action,
+      getError: computed,
+
+      setErrorText: action,
+      getErrorText: computed,
+
+      setLoading: action,
+      getLoading: computed,
+
+      setSuccess: action,
+      getSuccess: computed,
 
       reset: action,
     });

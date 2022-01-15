@@ -13,7 +13,8 @@ export const studentLogin = (rollNo, password, dispatch) => {
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
       LOGIN_STORE.setLoading(true);
-      const reg_token = '123abc';
+      const reg_token = USER_STORE.getFirebaseToken;
+      console.log('reg: ', reg_token);
       axios
         .post(API_STUDENT_LOGIN, {
           rollNo,

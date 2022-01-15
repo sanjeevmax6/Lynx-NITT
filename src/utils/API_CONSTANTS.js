@@ -100,3 +100,5 @@ export const API_GET_CLUB_DETAILS = '/api/getclub/';
 export const API_GET_DELETE_CLUB_EVENTS = '/api/events/delete-events/';
 
 export const API_GET_CIRCULAR_BY_ID = '/api/circularById/';
+
+export const API_FEEDBACK = '/api/feedback/submit';
