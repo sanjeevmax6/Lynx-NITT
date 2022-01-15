@@ -51,7 +51,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
         return true;
       },
     );
-    console.log('Doing API  EVENT BY ID');
+    console.log('Doing API EVENT BY ID');
     console.log('eventId: ', route.params.eventId);
     EVENT_DESCRIPTION_STORE.setID(route.params.eventId);
     BOTTOM_NAV_STORE.setTabVisibility(false);

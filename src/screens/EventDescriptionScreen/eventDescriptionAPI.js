@@ -38,6 +38,7 @@ async function API_CALL() {
       );
       EVENT_DESCRIPTION_STORE.setIsFollowingClub(isFollowing.data.isFollowing);
     }
+    console.log(response.data.events);
     EVENT_DESCRIPTION_STORE.setData(response.data.events);
     EVENT_DESCRIPTION_STORE.setSuccess(true);
     EVENT_DESCRIPTION_STORE.setLoading(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import {EditEventApi} from './EditEventApi';
+import CustomAlert from '../../components/customAlert';
 
 const EventEditHeader = ({navigation}) => {
   const conditionChecksPass = () => {
@@ -40,30 +41,41 @@ const EventEditHeader = ({navigation}) => {
         reason: '',
       };
   };
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
     <View style={styles.header}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       <View style={styles.twoButtonLeft}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert(
-              '',
-              'Are you sure you want to discard this announcement?',
-              [
-                {
-                  text: 'DISCARD',
-                  onPress: () => {
-                    EVENT_EDIT_STORE.clearData();
-                    navigation.pop();
-                  },
-                  style: 'cancel',
+            setModalTitle('Confirmation');
+            setModalMessage('Are you sure you want to discard this event?');
+            setModalButtons([
+              {
+                text: 'DISCARD',
+                func: () => {
+                  EVENT_EDIT_STORE.clearData();
+                  navigation.pop();
                 },
-                {
-                  text: 'KEEP EDITING',
-                  onPress: () => console.log('OK Pressed'),
-                },
-              ],
-            );
+              },
+              {
+                text: 'KEEP EDITING',
+                func: () => console.log('OK Pressed'),
+              },
+            ]);
+            setModalVisible(true);
           }}
           style={styles.button}>
           <Icon
@@ -79,13 +91,17 @@ const EventEditHeader = ({navigation}) => {
         <TouchableOpacity
           onPress={() => {
             const conditionChecker = conditionChecksPass();
-            if (!conditionChecker.passed)
-              Alert.alert('', conditionChecker.reason, [
+            if (!conditionChecker.passed) {
+              setModalTitle('Verification');
+              setModalMessage(conditionChecker.reason);
+              setModalButtons([
                 {
                   text: 'KEEP EDITING',
+                  func: () => console.log('OK Pressed'),
                 },
               ]);
-            else {
+              setModalVisible(true);
+            } else {
               EditEventApi();
               //toggleTab(true); To be enabled after implementing save
             }

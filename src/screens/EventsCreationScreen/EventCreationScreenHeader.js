@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,31 +15,49 @@ import {HeaderHeight} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
-
 import {observer} from 'mobx-react';
+import CustomAlert from '../../components/customAlert';
+
 const WIDTH = Dimensions.get('window').width;
 const EventCreationScreenHeader = observer(({navigation, isValid}) => {
   function toggleTab(tabShow) {
     BOTTOM_NAV_STORE.setTabVisibility(tabShow);
   }
-
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
   return (
     <SafeAreaView style={styles.header}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       <View style={styles.twoButtonLeft}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('', 'Are you sure you want to discard this event?', [
+            setModalTitle('Confirmation');
+            setModalMessage('Are you sure you want to discard this event?');
+            setModalButtons([
               {
                 text: 'DISCARD',
-                onPress: () => {
+                func: () => {
                   EVENT_CREATION_STORE.clearData();
                   toggleTab(true);
                   navigation.goBack();
                 },
-                style: 'cancel',
               },
-              {text: 'KEEP EDITING', onPress: () => console.log('OK Pressed')},
+              {
+                text: 'KEEP EDITING',
+                func: () => console.log('OK Pressed'),
+              },
             ]);
+            setModalVisible(true);
           }}
           style={styles.button}>
           <Icon

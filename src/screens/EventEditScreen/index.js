@@ -20,6 +20,7 @@ import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import CustomAlert from '../../components/customAlert';
 
 const EventEditScreen = observer(({navigation}) => {
   React.useEffect(() => {
@@ -31,17 +32,22 @@ const EventEditScreen = observer(({navigation}) => {
   }, []);
 
   const onBackPress = () => {
-    Alert.alert('', 'Are you sure you want to discard this announcement?', [
+    setModalTitle('Confirmation');
+    setModalMessage('Are you sure you want to discard this event?');
+    setModalButtons([
       {
         text: 'DISCARD',
-        onPress: () => {
+        func: () => {
           EVENT_EDIT_STORE.clearData();
           navigation.pop();
         },
-        style: 'cancel',
       },
-      {text: 'KEEP EDITING'},
+      {
+        text: 'KEEP EDITING',
+        func: () => console.log('OK Pressed'),
+      },
     ]);
+    setModalVisible(true);
     return true;
   };
 
@@ -49,6 +55,11 @@ const EventEditScreen = observer(({navigation}) => {
     EVENT_EDIT_STORE.setData(EVENT_DESCRIPTION_STORE.getData);
     EVENT_EDIT_STORE.setEventId(EVENT_DESCRIPTION_STORE.getID);
   }, []);
+
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
     <>
@@ -82,6 +93,15 @@ const EventEditScreen = observer(({navigation}) => {
               ) : (
                 <>
                   <SafeAreaView style={styles.container}>
+                    <CustomAlert
+                      title={modalTitle}
+                      message={modalMessage}
+                      startDate={''}
+                      endDate={''}
+                      modalVisible={modalVisible}
+                      setModalVisible={setModalVisible}
+                      buttons={modalButtons}
+                    />
                     <EventEditHeader navigation={navigation} />
                     <ScrollView>
                       <EventEditImages navigation={navigation} />

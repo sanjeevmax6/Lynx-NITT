@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Alert} from 'react-native';
 import * as colors from '../../utils/colors';
 import {getClubDetails} from './apiCalls';
@@ -11,31 +11,31 @@ import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_STUDENT_USER_LOADER} from '../../utils/LOADING_TYPES';
 import Body from './Body';
 import {deleteEvent} from '../../apis/deleteEvent';
+import CustomAlert from '../../components/customAlert';
 
 const UserScreen = observer(({navigation}) => {
   React.useEffect(() => {
     getClubDetails();
   }, []);
   const onDeleteClick = (eventId, eventName) => {
-    Alert.alert(
-      'Caution!!',
-      `${eventName} will be deleted!`,
-      [
-        {
-          text: 'CANCEL',
+    setModalTitle('Confirmation');
+    setModalMessage(`${eventName} will be deleted!`);
+    setModalButtons([
+      {
+        text: 'CANCEL',
+        func: () => {},
+      },
+      {
+        text: 'DELETE',
+        func: () => {
+          console.log(`Deleting event ${eventName}`);
+          deleteEvent(eventId, onRefresh, reason => {
+            console.log(`Error in deletion: ${reason}`);
+          });
         },
-        {
-          text: 'DELETE',
-          onPress: () => {
-            console.log(`Deleting event ${eventName}`);
-            deleteEvent(eventId, onRefresh, reason => {
-              console.log(`Error in deletion: ${reason}`);
-            });
-          },
-        },
-      ],
-      {cancelable: false},
-    );
+      },
+    ]);
+    setModalVisible(true);
   };
 
   const onEventClick = eventId => {
@@ -58,9 +58,22 @@ const UserScreen = observer(({navigation}) => {
     liveEvents: CLUB_USER_STORE.getLiveEvents,
     pastEvents: CLUB_USER_STORE.getPastEvents,
   };
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
 
   return (
     <View style={{backgroundColor: colors.WHITE, flex: 1}}>
+      <CustomAlert
+        title={modalTitle}
+        message={modalMessage}
+        startDate={''}
+        endDate={''}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttons={modalButtons}
+      />
       {CLUB_USER_STORE.getIsError ? (
         <ErrorScreen
           errorMessage={CLUB_USER_STORE.getErrorText}

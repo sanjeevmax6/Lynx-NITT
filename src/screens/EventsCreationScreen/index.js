@@ -30,6 +30,7 @@ import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import CustomAlert from '../../components/customAlert';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -54,19 +55,24 @@ const EventCreationScreen = observer(({navigation}) => {
     React.useCallback(() => {
       const onBackPress = () => {
         if (page == 0) {
-          Alert.alert('', 'Are you sure you want to discard this event?', [
+          setModalTitle('Confirmation');
+          setModalMessage('Are you sure you want to discard this event?');
+          setModalButtons([
             {
               text: 'DISCARD',
-              onPress: () => {
+              func: () => {
                 EVENT_CREATION_STORE.clearData();
                 navigation.goBack();
                 console.log('CALLED');
                 toggleTab(true);
               },
-              style: 'cancel',
             },
-            {text: 'KEEP EDITING', onPress: () => console.log('OK Pressed')},
+            {
+              text: 'KEEP EDITING',
+              func: () => console.log('OK Pressed'),
+            },
           ]);
+          setModalVisible(true);
         }
 
         setPage(page - 1);
@@ -96,6 +102,11 @@ const EventCreationScreen = observer(({navigation}) => {
     return () => {};
   }, []);
 
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtons, setModalButtons] = useState({});
+
   return (
     <>
       {EVENT_CREATION_STORE.getLoading ? (
@@ -118,6 +129,15 @@ const EventCreationScreen = observer(({navigation}) => {
         />
       ) : (
         <SafeAreaView style={styles.container}>
+          <CustomAlert
+            title={modalTitle}
+            message={modalMessage}
+            startDate={''}
+            endDate={''}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            buttons={modalButtons}
+          />
           <EventCreationScreenHeader navigation={navigation} />
           <Text style={styles.title}>{pageTitle}</Text>
           <ScrollView
