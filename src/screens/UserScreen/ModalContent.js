@@ -58,7 +58,7 @@ const ModalContent = ({ModalVisible, navigation}) => {
       <TouchableOpacity
         onPress={() => {
           {
-            navigation.navigate('Settings');
+            navigation.navigate('Settings', {navigation});
             ModalVisible(false);
           }
         }}>

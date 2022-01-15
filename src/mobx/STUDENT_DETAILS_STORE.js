@@ -108,6 +108,11 @@ class StudentDetailStore {
   setRefresh = val => {
     this.state.refresh = val;
   };
+  toggleClubSubscription = clubId => {
+    this.state.clubsFollowingList.forEach(item => {
+      if (item.clubId._id == clubId) item.isSubscribed = !item.isSubscribed;
+    });
+  };
 
   /*
     ^^^^^ GETTERS ^^^^^
@@ -192,6 +197,7 @@ class StudentDetailStore {
       setAddress: action,
       setProfilePic: action,
       setRefresh: action,
+      toggleClubSubscription: action,
 
       // all getters
       isLoading: computed,
