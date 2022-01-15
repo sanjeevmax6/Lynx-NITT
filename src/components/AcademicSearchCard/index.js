@@ -1,15 +1,16 @@
 import React from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import ImageView from '../ImageView';
 
 const AcademicSearchCard = ({title, desc, url, name}) => {
   console.log(url);
   return (
     <View style={styles.card}>
-      <Image source={{uri: API_GET_IMAGE + url}} style={styles.poster} />
+      <ImageView src={API_GET_IMAGE + url} style={styles.poster} />
       <View style={{flex: 1, marginLeft: scale(HorizontalPadding)}}>
         <Text numberOfLines={3}>
           <Text numberOfLines={1} style={styles.notifier}>

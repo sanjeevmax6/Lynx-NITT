@@ -7,6 +7,7 @@ import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {isLive} from '../../utils/helperFunction/isLive';
 import {isComplete} from '../../utils/helperFunction/isComplete';
+import ImageView from '../ImageView';
 
 const EventSearchCard = ({
   date,
@@ -107,12 +108,7 @@ const EventSearchCard = ({
           backgroundColor: colors.Accent,
           ...styles.image,
         }}>
-        <Image
-          source={{
-            uri: API_GET_IMAGE + eventImage,
-          }}
-          style={styles.image}
-        />
+        <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
       </View>
       <View style={styles.cardDetails}>
         <Text numberOfLines={2} style={styles.title}>

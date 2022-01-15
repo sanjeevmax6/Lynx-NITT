@@ -6,6 +6,7 @@ import * as colors from '../../utils/colors';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 
 import {toggleFollowApi} from '../../apis/followUnfollowApi';
+import ImageView from '../../components/ImageView';
 
 const ListItem = ({clubItem, goToClub}) => {
   const [Follow, setFollow] = useState(true);
@@ -17,7 +18,7 @@ const ListItem = ({clubItem, goToClub}) => {
       onPress={() => goToClub(clubItem)}>
       <View style={listItemStyles.viewStyle}>
         <View style={{...listItemStyles.imageStyle, elevation: 1}}>
-          <Image source={{uri: imageUrl}} style={listItemStyles.imageStyle} />
+          <ImageView src={imageUrl} style={listItemStyles.imageStyle} />
         </View>
         <Text numberOfLines={2} style={listItemStyles.textStyle}>
           {clubItem.name}

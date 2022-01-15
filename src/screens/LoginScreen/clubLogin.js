@@ -15,6 +15,7 @@ import {
 export const clubLogin = (email, password) => {
   const axios = require('axios');
   //using netinfo to check if online
+  const reg_token = '123abc';
   NetInfo.fetch().then(state => {
     if (state.isConnected == true) {
       LOGIN_STORE.setLoading(true);
@@ -23,6 +24,7 @@ export const clubLogin = (email, password) => {
         .post(API_CLUB_LOGIN, {
           email,
           password,
+          reg_token,
         })
         .then(response => {
           if (response.status == 200) {

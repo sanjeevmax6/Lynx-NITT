@@ -5,6 +5,7 @@ import {listItemStyles} from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Tertiary} from '../../utils/colors';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import ImageView from '../../components/ImageView';
 
 const ListItem = ({eventItem, goToEvent}) => {
   const imageUrl = API_GET_IMAGE + eventItem.poster;
@@ -14,7 +15,7 @@ const ListItem = ({eventItem, goToEvent}) => {
       onPress={() => goToEvent(eventItem)}>
       <View style={listItemStyles.viewStyle}>
         <View style={{...listItemStyles.imageStyle, elevation: 1}}>
-          <Image source={{uri: imageUrl}} style={listItemStyles.imageStyle} />
+          <ImageView src={imageUrl} style={listItemStyles.imageStyle} />
         </View>
         <View style={{flex: 1}}>
           <Text style={listItemStyles.textStyle}>{eventItem.title}</Text>

@@ -8,7 +8,7 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {isLive} from '../../utils/helperFunction/isLive';
 import LiveEventComponent from './LiveEventComponent';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
-
+import ImageView from '../../components/ImageView';
 const DATE_FORMAT = 'DD/MM/YYYY';
 const TIME_FORMAT = 'hh:mm A';
 
@@ -22,10 +22,7 @@ const RecentEventCard = ({eventItem, functions}) => {
       onPress={() => {
         functions.onEventClick(eventItem.EventId);
       }}>
-      <Image
-        style={styles.poster}
-        source={{uri: API_GET_IMAGE + eventItem.poster}}
-      />
+      <ImageView style={styles.poster} src={API_GET_IMAGE + eventItem.poster} />
       <View style={styles.eventInfo}>
         <Text
           style={{

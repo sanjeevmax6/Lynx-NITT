@@ -30,6 +30,7 @@ import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
+import ImageView from '../../components/ImageView';
 
 const Header = observer(
   ({name, followers, url, email, description, navigation}) => {
@@ -88,10 +89,8 @@ const Header = observer(
             navigation.navigate('ImageScreen', {imgUrl: API_GET_IMAGE + url});
           }}>
           <View style={styles.imageView}>
-            <Image
-              source={{
-                uri: url ? API_GET_IMAGE + url : NO_IMAGE_URL,
-              }}
+            <ImageView
+              src={url ? API_GET_IMAGE + url : NO_IMAGE_URL}
               style={styles.image}
             />
           </View>

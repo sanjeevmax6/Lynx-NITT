@@ -12,6 +12,7 @@ import * as color from '../../utils/colors';
 
 import {HorizontalPadding, ICON_SIZE} from '../../utils/UI_CONSTANTS';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
+import ImageView from '../ImageView';
 
 const ClubSearchCard = ({
   clubIconUrl,
@@ -27,14 +28,13 @@ const ClubSearchCard = ({
       }}>
       <View style={styles.container}>
         <View style={styles.center}>
-          <Image
+          <ImageView
             style={styles.clubIcon}
-            resizeMode="cover"
             PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
-            source={{
-              uri:
-                clubIconUrl === '' ? NO_IMAGE_URL : API_GET_IMAGE + clubIconUrl,
-            }}
+            src={
+              clubIconUrl === '' ? NO_IMAGE_URL : API_GET_IMAGE + clubIconUrl
+            }
+            resizeMode="cover"
           />
         </View>
         <View style={styles.item}>

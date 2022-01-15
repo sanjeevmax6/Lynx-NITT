@@ -6,6 +6,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
 import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
+import ImageView from '../../components/ImageView';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -47,11 +48,11 @@ const EventEditImages = observer(() => {
             <></>
           )}
           {EVENT_EDIT_STORE.getPhotos.map((e, index) => (
-            <Image
+            <ImageView
               key={index}
-              resizeMode="contain"
               style={styles.wrap}
-              source={{uri: API_GET_IMAGE + e}}
+              src={API_GET_IMAGE + e}
+              resizeMode="contain"
             />
           ))}
         </ScrollView>

@@ -4,6 +4,7 @@ import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
+import ImageView from '../ImageView';
 
 const cardDimensions = 123;
 const SuggestedEventCard = ({
@@ -32,7 +33,7 @@ const SuggestedEventCard = ({
         <></>
       )}
 
-      <Image source={{uri: API_GET_IMAGE + eventImage}} style={styles.image} />
+      <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
       <Text numberOfLines={1} style={styles.title}>
         {eventName}
       </Text>

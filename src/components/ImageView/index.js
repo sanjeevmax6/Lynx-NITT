@@ -13,6 +13,9 @@ export class ImageView extends Component {
   loadFallBack() {
     this.setState({...this.state, image: NO_IMAGE_URL});
   }
+  componentWillUpdate(nextProps, nextStates) {
+    nextStates.image = nextProps.src;
+  }
   render() {
     return (
       <Image

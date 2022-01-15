@@ -14,6 +14,7 @@ import {WHITE} from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ModalContent from '../UserScreen/ModalContent';
 import * as color from '../../utils/colors';
+import ImageView from '../../components/ImageView';
 
 const StudentUserHeader = ({studentDetails, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,9 +44,9 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
       </TouchableOpacity>
       <View style={styles.userStyle}>
         <View>
-          <Image
+          <ImageView
             style={styles.imageStyle}
-            source={{uri: studentDetails.coverPhotoUri}}
+            src={studentDetails.coverPhotoUri}
           />
         </View>
         <View style={styles.detailsBorder}>

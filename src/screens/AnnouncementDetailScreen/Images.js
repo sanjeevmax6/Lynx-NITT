@@ -7,6 +7,8 @@ import {
   Pressable,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
+import ImageView from '../../components/ImageView';
+
 const HEIGHT = Dimensions.get('window').height;
 const Images = ({url, navigation}) => {
   return (
@@ -15,13 +17,7 @@ const Images = ({url, navigation}) => {
         onPress={() => {
           navigation.navigate('ImageScreen', {imgUrl: url});
         }}>
-        <Image
-          source={{
-            uri: url,
-          }}
-          style={styles.image}
-          resizeMode="contain"
-        />
+        <ImageView src={url} style={styles.image} resizeMode="contain" />
       </Pressable>
     </View>
   );

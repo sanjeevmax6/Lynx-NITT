@@ -68,6 +68,7 @@ const Images = ({images, navigation}) => {
                 key={index}
                 src={API_GET_IMAGE + e}
                 style={styles.wrap}
+                resizeMode="contain"
               />
             </TouchableOpacity>
           ))}

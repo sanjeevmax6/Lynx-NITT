@@ -7,7 +7,7 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-
+import ImageView from '../../components/ImageView';
 const EventCard = ({
   isLive,
   name,
@@ -52,7 +52,7 @@ const EventCard = ({
         ) : (
           <></>
         )}
-        <Image style={styles.poster} source={{uri: API_GET_IMAGE + url}} />
+        <ImageView style={styles.poster} src={API_GET_IMAGE + url} />
         <View style={styles.eventInfo}>
           <Text
             style={{

@@ -20,6 +20,7 @@ import ModalContent from './ModalContent';
 import ImageColors from 'react-native-image-colors';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {NUMBER_OF_LINES} from '../../utils/UI_CONSTANTS';
+import ImageView from '../../components/ImageView';
 
 const Header = ({name, followers, url, description, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -113,8 +114,8 @@ const Header = ({name, followers, url, description, navigation}) => {
         </Pressable>
       </View>
       <View style={styles.imageView}>
-        <Image
-          source={{uri: url || '../../assests/images/spider.png'}}
+        <ImageView
+          src={url || '../../assests/images/spider.png'}
           style={styles.image}
         />
       </View>

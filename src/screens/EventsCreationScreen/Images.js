@@ -5,6 +5,7 @@ import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {observer} from 'mobx-react';
 import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
+import ImageView from '../../components/ImageView';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -50,11 +51,11 @@ const Images = observer(({selectImage, deleteImage}) => {
             <View key={index} style={styles.container}>
               {e ? (
                 <View style={{flexDirection: 'row'}}>
-                  <Image
+                  <ImageView
                     key={index}
                     resizeMode="contain"
                     style={styles.wrap}
-                    source={{uri: e.uri}}
+                    src={e.uri}
                   />
                   <View style={styles.wrapCloseButton}>
                     <IconButton

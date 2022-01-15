@@ -4,6 +4,7 @@ import {Avatar, Title} from 'react-native-paper';
 import {moderateScale, scale, ScaledSheet} from 'react-native-size-matters';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
+import ImageView from '../../components/ImageView';
 
 const ClubAnnounce = ({
   organizer,
@@ -14,7 +15,7 @@ const ClubAnnounce = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.poster} source={{uri: url}} />
+      <ImageView style={styles.poster} src={url} />
       <View style={styles.info}>
         <Text style={styles.title}>{organizer}</Text>
         <Text style={styles.followers}>{followers} followers</Text>

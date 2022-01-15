@@ -13,6 +13,7 @@ import {verticalScale, scale} from 'react-native-size-matters';
 import {FONT} from '../utils/UI_CONSTANTS';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as colors from '../utils/colors';
+import ImageView from './ImageView';
 
 const CustomAlert = props => {
   const [androidDefaults, setAndroidDefaults] = useState({
@@ -180,14 +181,14 @@ const CustomAlert = props => {
         {Platform.OS === 'ios' ? null : (
           <View style={[styles.androidAlertBox, androidDefaults.container]}>
             {props.image ? (
-              <Image
+              <ImageView
                 style={{
                   height: scale(60),
                   width: scale(60),
                   marginVertical: verticalScale(10),
                   alignSelf: 'center',
                 }}
-                source={props.image}></Image>
+                src={props.image}></ImageView>
             ) : null}
             {props.title ? (
               <Text style={[styles.androidTitle, androidDefaults.title]}>
