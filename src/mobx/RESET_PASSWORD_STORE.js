@@ -4,25 +4,27 @@ class RESET_DATA {
   state = {
     isStudent: true,
     username: '',
-    error: '',
+    error: true,
     errorText: '',
     password: '',
     studentToken: '',
     tokenFetched: false,
     clubsToken: '',
     clubsTokenFetched: false,
+    passResetSuccess: false,
   };
 
   reset = () => {
     this.state.isStudent = true;
     this.state.username = '';
-    this.state.error = '';
+    this.state.error = true;
     this.state.errorText = '';
     this.state.password = '';
     this.state.studentToken = '';
     this.state.tokenFetched = false;
     this.state.clubsToken = '';
     this.state.clubsTokenFetched = false;
+    this.state.passResetSuccess = false;
   };
   setIsStudent = val => {
     this.state.isStudent = val;
@@ -96,6 +98,14 @@ class RESET_DATA {
     return this.state.clubsTokenFetched;
   }
 
+  setPasswordResetSuccess = val => {
+    this.state.passResetSuccess = val;
+  };
+
+  get getPasswordResetSuccess() {
+    return this.state.passResetSuccess;
+  }
+
   constructor() {
     makeObservable(this, {
       state: observable,
@@ -127,6 +137,9 @@ class RESET_DATA {
 
       setClubsTokenFetched: action,
       getClubsTokenFetched: computed,
+
+      setPasswordResetSuccess: action,
+      getPasswordResetSuccess: computed,
     });
   }
 }

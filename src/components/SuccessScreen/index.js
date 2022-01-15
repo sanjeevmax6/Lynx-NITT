@@ -16,9 +16,14 @@ const SuccessScreen = ({
   showIconInButton = true,
   icon = 'keyboard-arrow-right',
   fn = () => {},
+  isResetPass = false,
 }) => {
   const backPress = () => {
-    fn();
+    if (isResetPass) {
+      fn.pop();
+    } else {
+      fn();
+    }
   };
 
   const [STATE, setSTATE] = useState(1);

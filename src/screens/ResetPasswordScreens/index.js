@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {BackHandler} from 'react-native';
+import {BackHandler, View} from 'react-native';
 import {
   moderateScale,
   ScaledSheet,
@@ -14,7 +14,7 @@ import ClubEnterOTP from './ClubEnterOTP';
 
 import {observer} from 'mobx-react';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
-// import {SuccessPage} from './Sucess';
+import SuccessScreen from '../../components/SuccessScreen/index';
 
 const ResetPasswordScreen = observer(({navigation}) => {
   const ref = useRef(PagerView);
@@ -52,36 +52,33 @@ const ResetPasswordScreen = observer(({navigation}) => {
       onPageSelected={event => {
         setPage(event.nativeEvent.position);
       }}>
-      <Username key={1} forward={buttonForwardAction} navigation={navigation} />
+      <View style={{flex: 1}} key={1}>
+        <Username forward={buttonForwardAction} navigation={navigation} />
+      </View>
       {RESET_STORE.getIsStudent ? (
         <>
-          <StudentWebmailPassword
-            key={2}
-            forwardAction={buttonForwardAction}
-            backwardAction={buttonBackwardAction}
-            buttonHome={buttonHomeAction}
-          />
-          <SetNewPassword
-            key={3}
-            forwardAction={buttonForwardAction}
-            backwardAction={buttonBackwardAction}
-            buttonHome={buttonHomeAction}
-          />
-          {/* <SuccessPage key={4} buttonHome={buttonHomeAction} /> */}
+          <View style={{flex: 1}} key={2}>
+            <StudentWebmailPassword
+              forwardAction={buttonForwardAction}
+              backwardAction={buttonBackwardAction}
+              buttonHome={buttonHomeAction}
+            />
+          </View>
+          <View key={3} style={{flex: 1}}>
+            <SetNewPassword navigation={navigation} />
+          </View>
         </>
       ) : (
         <>
-          <ClubEnterOTP
-            key={2}
-            forwardAction={buttonForwardAction}
-            backwardAction={buttonBackwardAction}
-          />
-          <SetNewPassword
-            key={3}
-            forwardAction={buttonForwardAction}
-            backwardAction={buttonBackwardAction}
-          />
-          {/* <SuccessPage key={4} buttonHome={buttonHomeAction} /> */}
+          <View key={2} style={{flex: 1}}>
+            <ClubEnterOTP
+              forwardAction={buttonForwardAction}
+              backwardAction={buttonBackwardAction}
+            />
+          </View>
+          <View key={3} style={{flex: 1}}>
+            <SetNewPassword navigation={navigation} />
+          </View>
         </>
       )}
     </PagerView>

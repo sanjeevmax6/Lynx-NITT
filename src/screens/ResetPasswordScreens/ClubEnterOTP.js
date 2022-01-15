@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import {
   moderateScale,
   scale,
@@ -15,6 +15,8 @@ import {
   API_RESET_PASSWORD_VALIDATE_OTP_CLUBS,
 } from '../../utils/API_CONSTANTS';
 import NetInfo from '@react-native-community/netinfo';
+import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+import ErrorScreen from '../../components/ErrorScreen';
 
 const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   const [OTP, setOTP] = useState(0);
@@ -24,10 +26,24 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   const [resendButton, sendResendButton] = useState(false);
   const [errorOTP, setErrorOTP] = useState(false);
   const axios = require('axios');
+  const [Internet, setInternet] = useState(true);
 
   useEffect(() => {
+    // NetInfo.fetch().then(state => {
+    //   if (state.isConnected == true) {
+    //     setInternet(true);
+    //   } else {
+    //     setInternet(false);
+    //   }
+    // });
     sendClubOTP();
-    sleepTimer();
+    const sleepTimer = setTimeout(function () {
+      sendResendButton(true);
+    }, 30000);
+
+    return () => {
+      clearTimeout(sleepTimer);
+    };
   }, []);
 
   const sleepTimer = () => {
@@ -39,6 +55,7 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   const sendClubOTP = () => {
     NetInfo.fetch().then(state => {
       if (state.isConnected == true) {
+        setInternet(true);
         if (RESET_STORE.getUsername != '') {
           userEmail = RESET_STORE.getUsername;
           console.log('Processing');
@@ -60,8 +77,9 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
             });
         }
       } else {
-        RESET_STORE.setErrorText(NO_NETWORK);
-        RESET_STORE.setError(true);
+        // RESET_STORE.setErrorText(NO_NETWORK);
+        // RESET_STORE.setError(true);
+        setInternet(false);
       }
     });
   };
@@ -69,6 +87,7 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   const validateOtp = () => {
     NetInfo.fetch().then(state => {
       if (state.isConnected == true) {
+        setInternet(true);
         console.log('Processing');
         console.log('OTP type', typeof OTP);
         userEmail = RESET_STORE.getUsername;
@@ -89,7 +108,6 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
             console.log(response.data);
             if (response.data.message === 'Success') {
               RESET_STORE.setClubsToken(response.data.token);
-              RESET_STORE.setClubsTokenFetched(true);
               forwardAction();
             }
           })
@@ -98,8 +116,9 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
             setErrorOTP(true);
           });
       } else {
-        RESET_STORE.setErrorText(NO_NETWORK);
-        RESET_STORE.setError(true);
+        // RESET_STORE.setErrorText(NO_NETWORK);
+        // RESET_STORE.setError(true);
+        setInternet(false);
       }
     });
   };
@@ -109,96 +128,123 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   };
 
   return (
-    <View
-      style={{
-        paddingHorizontal: moderateScale(20),
-        backgroundColor: 'white',
-        flex: 1,
-        paddingTop: verticalScale(25),
-      }}>
-      <Text style={styles.title}>Verify Email</Text>
-      <Text style={{...styles.title, fontSize: scale(14)}}>Enter your OTP</Text>
-      <TextInput
-        label="OTP"
-        placeholder="Enter your OTP"
-        mode="outlined"
-        style={{backgroundColor: 'white', paddingTop: verticalScale(9)}}
-        theme={{
-          colors: {
-            primary: 'black',
-          },
-        }}
-        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-        onChangeText={otp => {
-          setOTP(parseInt(otp));
-          console.log(5);
-        }}
-      />
-      <HelperText type="error" visible={hasErrors()}>
-        Invalid OTP
-      </HelperText>
-      <View style={styles.loginBtnView}>
-        <Button
-          icon={'chevron-left'}
-          color={colors.Accent}
-          onPress={() => {
-            backwardAction();
-          }}>
-          Back
-        </Button>
-        <TouchableOpacity
-          style={{
-            backgroundColor: colors.Tertiary,
-            borderRadius: verticalScale(22),
-          }}
-          onPress={() => {
-            validateOtp();
-            // if (RESET_STORE.getClubsTokenFetched) {
-            // }
-          }}>
-          <Icon
-            name="chevron-right"
-            size={verticalScale(44)}
-            color={colors.WHITE}
-          />
-        </TouchableOpacity>
-      </View>
-      <View>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: scale(14),
-
-            marginTop: verticalScale(6),
-          }}>
-          <Text>The resend button will appear in</Text>
-
-          <Text
+    <>
+      {!Internet ? (
+        <>
+          <View
             style={{
-              color: 'darkgreen',
-              fontWeight: 'bold',
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
             }}>
-            {' '}
-            {'30 seconds'}
-          </Text>
-        </Text>
-      </View>
-      {/* {resendButton && ( */}
-      <View style={styles.otpButton}>
-        <Button
-          mode="contained"
-          loading={!resendButton}
-          disabled={!resendButton}
-          onPress={() => {
-            sendClubOTP();
-            sendResendButton(false);
-            sleepTimer();
-          }}>
-          <Text style={styles.otpText}>Send OTP</Text>
-        </Button>
-      </View>
-      {/* )} */}
-    </View>
+            <ErrorScreen
+              errorMessage={NO_NETWORK}
+              fn={() => {
+                NetInfo.fetch().then(state => {
+                  if (state.isConnected == true) {
+                    // RESET_STORE.setErrorText('');
+                    // RESET_STORE.setError(false);
+                    setInternet(true);
+                  }
+                });
+              }}
+            />
+          </View>
+        </>
+      ) : (
+        <>
+          <View
+            style={{
+              paddingHorizontal: moderateScale(20),
+              backgroundColor: 'white',
+              flex: 1,
+              paddingTop: verticalScale(25),
+            }}>
+            <Text style={styles.title}>Verify Email</Text>
+            <Text style={{...styles.title, fontSize: scale(14)}}>
+              Enter your OTP
+            </Text>
+            <TextInput
+              label="OTP"
+              placeholder="Enter your OTP"
+              mode="outlined"
+              style={{backgroundColor: 'white', paddingTop: verticalScale(9)}}
+              theme={{
+                colors: {
+                  primary: 'black',
+                },
+              }}
+              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+              onChangeText={otp => {
+                setOTP(parseInt(otp));
+                console.log(5);
+              }}
+            />
+            <HelperText type="error" visible={hasErrors()}>
+              Invalid OTP
+            </HelperText>
+            <View style={styles.loginBtnView}>
+              <Button
+                icon={'chevron-left'}
+                color={colors.Accent}
+                onPress={() => {
+                  backwardAction();
+                }}>
+                Back
+              </Button>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: colors.Tertiary,
+                  borderRadius: verticalScale(22),
+                }}
+                onPress={() => {
+                  validateOtp();
+                }}>
+                <Icon
+                  name="chevron-right"
+                  size={verticalScale(44)}
+                  color={colors.WHITE}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: scale(14),
+
+                  marginTop: verticalScale(6),
+                }}>
+                <Text>The resend button will be available in</Text>
+
+                <Text
+                  style={{
+                    color: 'darkgreen',
+                    fontWeight: 'bold',
+                  }}>
+                  {' '}
+                  {'30 seconds'}
+                </Text>
+              </Text>
+            </View>
+            {/* {resendButton && ( */}
+            <View style={styles.otpButton}>
+              <Button
+                mode="contained"
+                loading={!resendButton}
+                disabled={!resendButton}
+                onPress={() => {
+                  sendClubOTP();
+                  sendResendButton(false);
+                  sleepTimer();
+                }}>
+                <Text style={styles.otpText}>Send OTP</Text>
+              </Button>
+            </View>
+            {/* )} */}
+          </View>
+        </>
+      )}
+    </>
   );
 };
 

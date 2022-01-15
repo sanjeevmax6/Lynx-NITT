@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
   moderateScale,
@@ -7,13 +7,26 @@ import {
   verticalScale,
 } from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import {TextInput} from 'react-native-paper';
+import {HelperText, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
 
 const Username = ({forward, navigation}) => {
+  const [error, setError] = useState('');
+
+  const hasErrors = () => {
+    if (error == '') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const forwardAction = () => {
-    if (RESET_STORE.getUsername === '') return;
+    if (RESET_STORE.getUsername === '') {
+      setError('Please fill the field');
+      return;
+    }
     if (
       RESET_STORE.getUsername != '' &&
       RESET_STORE.getUsername.match(/^[0-9]+$/) == null
@@ -30,6 +43,7 @@ const Username = ({forward, navigation}) => {
           .includes('@')
       ) {
         console.log('error');
+        setError('Not a valid Username');
         return;
       }
       let email = RESET_STORE.getUsername.trim();
@@ -69,6 +83,9 @@ const Username = ({forward, navigation}) => {
           RESET_STORE.setUsername(user);
         }}
       />
+      <HelperText type="error" visible={hasErrors()}>
+        {error}
+      </HelperText>
       <TouchableOpacity
         onPress={() => {
           navigation.pop();

@@ -38,7 +38,10 @@ const ErrorScreen = ({
   setTimeout(toggler, 50);
 
   const getLottie = () => {
-    if (errorMessage === NO_NETWORK) return noNetLottie;
+    if (errorMessage === NO_NETWORK) {
+      console.log('Error Message', errorMessage);
+      return noNetLottie;
+    }
     if (lottieFileName === 'maintenanceLottie') return maintenanceLottie;
     return errorLottie;
   };
