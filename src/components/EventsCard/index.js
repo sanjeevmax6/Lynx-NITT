@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Image, Share} from 'react-native';
+import {Text, View, Image, Share, Alert} from 'react-native';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -25,6 +25,7 @@ const EventsCard = observer(
     isLive = false,
     wasInterested = false,
     eventId,
+    urlId,
   }) => {
     const [interest, setInterest] = useState(false);
     const toast = useToast();
@@ -129,8 +130,8 @@ const EventsCard = observer(
                 onPress={async () => {
                   try {
                     const result = await Share.share({
-                      message: `https://nittapp.spider.nitt.edu/event/${eventId}`,
-                      url: `https://nittapp.spider.nitt.edu/event/${eventId}`,
+                      message: `https://nittapp.spider.nitt.edu/event/${urlId}`,
+                      url: `https://nittapp.spider.nitt.edu/event/${urlId}`,
                       title: `${name} by ${organizer}`,
                     });
                     if (result.action === Share.sharedAction) {
@@ -143,7 +144,7 @@ const EventsCard = observer(
                       // dismissed
                     }
                   } catch (error) {
-                    alert(error.message);
+                    Alert.alert(error.message);
                   }
                 }}
                 color={colors.EventCard_ShareIcon}

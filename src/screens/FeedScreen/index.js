@@ -222,6 +222,7 @@ const FeedScreen = observer(({navigation}) => {
                       isLive={item.isLive}
                       wasInterested={item.isInterested}
                       eventId={item.EventId}
+                      urlId={item.urlId}
                     />
                   ) : (
                     <EventsCard
@@ -234,6 +235,7 @@ const FeedScreen = observer(({navigation}) => {
                       isLive={item.isLive}
                       wasInterested={false}
                       eventId={item.EventId}
+                      urlId={item.urlId}
                     />
                   )}
                 </TouchableOpacity>

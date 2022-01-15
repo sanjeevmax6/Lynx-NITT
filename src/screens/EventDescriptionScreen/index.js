@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   BackHandler,
   Share,
+  Alert,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
@@ -52,7 +53,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
       },
     );
     console.log('Doing API EVENT BY ID');
-    console.log('eventId: ', route.params.eventId);
+    console.log('eventId:', route.params.eventId);
     EVENT_DESCRIPTION_STORE.setID(route.params.eventId);
     BOTTOM_NAV_STORE.setTabVisibility(false);
     eventDescriptionAPI();
@@ -111,8 +112,8 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     onPress={async () => {
                       try {
                         const result = await Share.share({
-                          message: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getID}`,
-                          url: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getID}`,
+                          message: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getData.urlId}`,
+                          url: `https://nittapp.spider.nitt.edu/event/${EVENT_DESCRIPTION_STORE.getData.urlId}`,
                           title: `${EVENT_DESCRIPTION_STORE.getData.Title} by ${EVENT_DESCRIPTION_STORE.getData.club.name}`,
                         });
                         if (result.action === Share.sharedAction) {
@@ -125,7 +126,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                           // dismissed
                         }
                       } catch (error) {
-                        alert(error.message);
+                        Alert.alert(error.message);
                       }
                     }}
                     icon={'share-variant'}
