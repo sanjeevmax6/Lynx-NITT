@@ -4,18 +4,27 @@ import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import LinkItem from './LinkItem';
 import * as colors from '../../utils/colors';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {
+  ANNOUNCEMENT_MAX_LENGTH,
+  ANNOUNCEMENT_MAX_TITLE_LENGTH,
+  HorizontalPadding,
+  MAX_LINKS_ANNOUNCEMENT,
+} from '../../utils/UI_CONSTANTS';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE.js';
 import {useToast} from 'react-native-toast-notifications';
 
-const maxSubjectLength = 150;
-const maxAnnouncementLength = 300;
 import {observer} from 'mobx-react';
 import {isValidLink} from '../../utils/helperFunction/FormValidation';
 
 const AnnouncementCreationInputs = observer(() => {
   const toast = useToast();
   const addLink = async () => {
+    if (
+      ANNOUNCEMENT_CREATION_STORE.getLinks.length + 1 >
+      MAX_LINKS_ANNOUNCEMENT
+    ) {
+      toast.show('Maximum link count reached', {type: 'warning'});
+    }
     if (ANNOUNCEMENT_CREATION_STORE.getLink.trim() !== '') {
       const res = await isValidLink(ANNOUNCEMENT_CREATION_STORE.getLink.trim());
       if (!res) {
@@ -63,20 +72,24 @@ const AnnouncementCreationInputs = observer(() => {
             ANNOUNCEMENT_CREATION_STORE.setTitle(nTitle);
           }}
           left={<TextInput.Icon name={'lead-pencil'} color={colors.BLACK} />}
+          right={
+            <TextInput.Affix
+              text={
+                '/' +
+                (ANNOUNCEMENT_MAX_TITLE_LENGTH -
+                  ANNOUNCEMENT_CREATION_STORE.getTitle.length)
+              }
+              textStyle={{
+                color:
+                  ANNOUNCEMENT_MAX_TITLE_LENGTH -
+                    ANNOUNCEMENT_CREATION_STORE.getTitle.length <
+                  0
+                    ? colors.Tertiary
+                    : colors.GRAY_DARK,
+              }}
+            />
+          }
         />
-        <Text
-          style={[
-            styles.wordCount,
-            {
-              color:
-                maxSubjectLength - ANNOUNCEMENT_CREATION_STORE.getTitle.length <
-                0
-                  ? 'red'
-                  : 'black',
-            },
-          ]}>
-          {maxSubjectLength - ANNOUNCEMENT_CREATION_STORE.getTitle.length}
-        </Text>
       </View>
       <View style={styles.viewScale}>
         <TextInput
@@ -100,22 +113,24 @@ const AnnouncementCreationInputs = observer(() => {
             ANNOUNCEMENT_CREATION_STORE.setDescription(nDesc);
           }}
           left={<TextInput.Icon name={'text-subject'} color={colors.BLACK} />}
+          right={
+            <TextInput.Affix
+              text={
+                '/' +
+                (ANNOUNCEMENT_MAX_LENGTH -
+                  ANNOUNCEMENT_CREATION_STORE.getDescription.length)
+              }
+              textStyle={{
+                color:
+                  ANNOUNCEMENT_MAX_LENGTH -
+                    ANNOUNCEMENT_CREATION_STORE.getDescription.length <
+                  0
+                    ? colors.Tertiary
+                    : colors.GRAY_DARK,
+              }}
+            />
+          }
         />
-        <Text
-          style={[
-            styles.wordCount,
-            {
-              color:
-                maxAnnouncementLength -
-                  ANNOUNCEMENT_CREATION_STORE.getDescription.length <
-                0
-                  ? 'red'
-                  : 'black',
-            },
-          ]}>
-          {maxAnnouncementLength -
-            ANNOUNCEMENT_CREATION_STORE.getDescription.length}
-        </Text>
       </View>
       <View style={styles.viewScale}>
         <TextInput

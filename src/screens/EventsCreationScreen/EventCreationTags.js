@@ -2,7 +2,11 @@ import React from 'react';
 import {View, Dimensions, SafeAreaView, Keyboard, FlatList} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import EventCreationTagItem from './EventCreationTagItem';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {
+  HorizontalPadding,
+  MAX_EVENT_LINK_COUNT,
+  MAX_EVENT_TAG_COUNT,
+} from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
 import {
   verticalScale,
@@ -17,6 +21,8 @@ import {observer} from 'mobx-react';
 import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
 import textInputStyles from './textInputStyles';
 import {addEvent} from './EventCreationAPI';
+import {useToast} from 'react-native-toast-notifications';
+import {isValidLink} from '../../utils/helperFunction/FormValidation';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -25,6 +31,7 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
   const createEvent = () => {
     addEvent();
   };
+  const toast = useToast();
 
   const back = () => {
     callback(eventCreation_ImageTitle, 4);
@@ -61,7 +68,18 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
             <TextInput.Icon
               name={'plus'}
               color={colors.BLACK}
-              onPress={() => EVENT_CREATION_STORE.addTag()}
+              onPress={() => {
+                if (
+                  EVENT_CREATION_STORE.getTags.length + 1 >
+                  MAX_EVENT_TAG_COUNT
+                ) {
+                  toast.show(`Max tag count is ${MAX_EVENT_TAG_COUNT}`, {
+                    type: 'danger',
+                  });
+                  return;
+                }
+                EVENT_CREATION_STORE.addTag();
+              }}
             />
           }
         />
@@ -100,7 +118,26 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
             <TextInput.Icon
               name={'plus'}
               color={colors.BLACK}
-              onPress={() => EVENT_CREATION_STORE.addLink()}
+              onPress={async () => {
+                if (
+                  EVENT_CREATION_STORE.getTags.length + 1 >
+                  MAX_EVENT_LINK_COUNT
+                ) {
+                  toast.show('Maximum link count reached', {type: 'warning'});
+                  return;
+                }
+
+                const res = await isValidLink(
+                  EVENT_CREATION_STORE.getLink.trim(),
+                );
+                if (!res) {
+                  toast.show('Not a valid link', {
+                    type: 'danger',
+                  });
+                  return;
+                }
+                EVENT_CREATION_STORE.addLink();
+              }}
             />
           }
         />

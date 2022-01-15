@@ -7,18 +7,25 @@ import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Images from './Images';
 import Error from '../../components/Error';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {
+  HorizontalPadding,
+  MAX_EVENT_IMAGE_SIZE,
+  MAX_IMAGES_IN_EVENT,
+} from '../../utils/UI_CONSTANTS';
 import {
   eventCreation_DateTitle,
   eventCreation_tags_linksTitle,
 } from '../../utils/stringConstants';
 import {observer} from 'mobx-react';
 import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
+import {validFileSize} from '../../utils/helperFunction/FormValidation';
+import {useToast} from 'react-native-toast-notifications';
 
 const win = Dimensions.get('window');
 
 const EventCreationImages = observer(({scrollViewRef, callback}) => {
   const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
 
   //handling scroll
   const scroll = () => {
@@ -50,11 +57,25 @@ const EventCreationImages = observer(({scrollViewRef, callback}) => {
       const image = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images],
       });
+
+      if (!validFileSize(image.size, MAX_EVENT_IMAGE_SIZE)) {
+        toast.show(`Maximum allowed image size is ${MAX_EVENT_IMAGE_SIZE} MB`, {
+          type: 'warning',
+        });
+        return;
+      }
+
+      if (EVENT_CREATION_STORE.getImages.length > MAX_IMAGES_IN_EVENT) {
+        toast.show(`Maximum image count is ${MAX_IMAGES_IN_EVENT}`, {
+          type: 'danger',
+        });
+        return;
+      }
       EVENT_CREATION_STORE.addImage(image);
       EVENT_CREATION_STORE.setProfilePictureSelected(false);
       console.log(EVENT_CREATION_STORE.getImages.length);
       //EVENT_CREATION_STORE.setLoading(false);
-      console.log(image);
+
       setLoading(true);
       await Image.getSize(
         image.uri,

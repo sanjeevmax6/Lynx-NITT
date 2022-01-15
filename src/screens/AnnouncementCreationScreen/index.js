@@ -15,6 +15,8 @@ import FileItem from './FileItem';
 import AnnouncementCreationInputs from './AnnouncementCreationInput';
 import AnnouncementCreationScreenHeader from './AnnouncementCreationScreenHeader';
 import {
+  ANNOUNCEMENT_MAX_LENGTH,
+  ANNOUNCEMENT_MAX_TITLE_LENGTH,
   HorizontalPadding,
   MAX_ANNOUNCEMENT_FILE_COUNT,
   MAX_ANNOUNCEMENT_FILE_SIZE,
@@ -33,8 +35,6 @@ import {useToast} from 'react-native-toast-notifications';
 import {validFileSize} from '../../utils/helperFunction/FormValidation';
 
 const AnnouncementCreationScreen = observer(({navigation}) => {
-  const maxSubjectLength = 150;
-  const maxAnnouncementLength = 300;
   const toast = useToast();
 
   function toggleTab(tabShow) {
@@ -142,6 +142,7 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
                     createAnnouncement();
                     return;
                   }
+                  ANNOUNCEMENT_CREATION_STORE.setErrorText('');
                   ANNOUNCEMENT_CREATION_STORE.setError(false);
                 }}
               />
@@ -172,11 +173,12 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
                     <AnnouncementCreationScreenHeader
                       navigation={navigation}
                       validLength={
-                        maxAnnouncementLength -
-                          ANNOUNCEMENT_CREATION_STORE.getDescription.length >=
+                        ANNOUNCEMENT_MAX_LENGTH -
+                          ANNOUNCEMENT_CREATION_STORE.getDescription.trim()
+                            .length >=
                           0 &&
-                        maxSubjectLength -
-                          ANNOUNCEMENT_CREATION_STORE.getTitle.length >=
+                        ANNOUNCEMENT_MAX_TITLE_LENGTH -
+                          ANNOUNCEMENT_CREATION_STORE.getTitle.trim().length >=
                           0
                       }
                       createAnnouncement={createAnnouncement}
