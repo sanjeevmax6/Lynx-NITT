@@ -6,6 +6,7 @@ import {
   HorizontalPadding,
   MAX_EVENT_LINK_COUNT,
   MAX_EVENT_TAG_COUNT,
+  MAX_TAG_LENGTH,
 } from '../../utils/UI_CONSTANTS';
 import * as colors from '../../utils/colors';
 import {
@@ -69,6 +70,20 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
               name={'plus'}
               color={colors.BLACK}
               onPress={() => {
+                if (EVENT_CREATION_STORE.getTag.trim().length < 2) {
+                  toast.show(`Tag length too small`, {
+                    type: 'warning',
+                  });
+                  return;
+                }
+                if (
+                  EVENT_CREATION_STORE.getTag.trim().length > MAX_TAG_LENGTH
+                ) {
+                  toast.show(`Max tag length is ${MAX_TAG_LENGTH}`, {
+                    type: 'danger',
+                  });
+                  return;
+                }
                 if (
                   EVENT_CREATION_STORE.getTags.length + 1 >
                   MAX_EVENT_TAG_COUNT
@@ -120,7 +135,7 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
               color={colors.BLACK}
               onPress={async () => {
                 if (
-                  EVENT_CREATION_STORE.getTags.length + 1 >
+                  EVENT_CREATION_STORE.getLinks.length + 1 >
                   MAX_EVENT_LINK_COUNT
                 ) {
                   toast.show('Maximum link count reached', {type: 'warning'});

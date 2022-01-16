@@ -7,10 +7,14 @@ import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import styles from './styles';
 import {observer} from 'mobx-react';
 import {verticalScale} from 'react-native-size-matters';
+import {useToast} from 'react-native-toast-notifications';
+import {MAX_EVENT_TAG_COUNT, MAX_TAG_LENGTH} from '../../utils/UI_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
 
 const EventEditTags = observer(() => {
+  const toast = useToast();
+
   return (
     <View style={{width: WIDTH}}>
       <View style={styles.viewScale}>
@@ -33,7 +37,34 @@ const EventEditTags = observer(() => {
             <TextInput.Icon
               name={'plus'}
               color={colors.BLACK}
-              onPress={() => EVENT_EDIT_STORE.addTag()}
+              onPress={() => {
+                if (EVENT_EDIT_STORE.getEditTag.trim().length < 2) {
+                  toast.show(`Tag length too small`, {
+                    type: 'warning',
+                  });
+                  return;
+                }
+
+                if (
+                  EVENT_EDIT_STORE.getEditTag.trim().length > MAX_TAG_LENGTH
+                ) {
+                  toast.show(`Max tag length is ${MAX_TAG_LENGTH}`, {
+                    type: 'danger',
+                  });
+                  return;
+                }
+
+                if (
+                  EVENT_EDIT_STORE.getEditTags.length + 1 >
+                  MAX_EVENT_TAG_COUNT
+                ) {
+                  toast.show(`Max tag count is ${MAX_EVENT_TAG_COUNT}`, {
+                    type: 'danger',
+                  });
+                  return;
+                }
+                EVENT_EDIT_STORE.addTag();
+              }}
             />
           }
         />

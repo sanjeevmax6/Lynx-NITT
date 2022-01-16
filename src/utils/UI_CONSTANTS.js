@@ -12,6 +12,7 @@ export const ANNOUNCEMENT_MAX_TITLE_LENGTH = 100;
 export const ANNOUNCEMENT_MAX_LENGTH = 300;
 export const MAX_EVENT_TAG_COUNT = 5;
 export const MAX_EVENT_LINK_COUNT = 3;
+export const MAX_TAG_LENGTH = 20;
 
 // Club user page description line limit
 export const NUMBER_OF_LINES = 2;

@@ -7,8 +7,13 @@ import {EVENT_EDIT_STORE} from '../../mobx/EVENT_EDIT_STORE';
 import styles from './styles';
 import {observer} from 'mobx-react';
 import {verticalScale} from 'react-native-size-matters';
+import {useToast} from 'react-native-toast-notifications';
+import {MAX_EVENT_LINK_COUNT} from '../../utils/UI_CONSTANTS';
+import {isValidLink} from '../../utils/helperFunction/FormValidation';
 
 const EventEditLinks = observer(() => {
+  const toast = useToast();
+
   return (
     <View>
       <View style={styles.viewScale}>
@@ -30,7 +35,25 @@ const EventEditLinks = observer(() => {
             <TextInput.Icon
               name={'plus'}
               color={colors.BLACK}
-              onPress={() => EVENT_EDIT_STORE.addLink()}
+              onPress={async () => {
+                if (
+                  EVENT_EDIT_STORE.getEditLinks.length > MAX_EVENT_LINK_COUNT
+                ) {
+                  toast.show('Maximum link count reached', {type: 'warning'});
+                  return;
+                }
+
+                const res = await isValidLink(
+                  EVENT_EDIT_STORE.getEditLink.trim(),
+                );
+                if (!res) {
+                  toast.show('Not a valid link', {
+                    type: 'danger',
+                  });
+                  return;
+                }
+                EVENT_EDIT_STORE.addLink();
+              }}
             />
           }
         />

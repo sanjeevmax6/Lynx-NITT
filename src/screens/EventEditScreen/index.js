@@ -21,6 +21,7 @@ import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import CustomAlert from '../../components/customAlert';
+import {eventDescriptionAPI} from '../EventDescriptionScreen/eventDescriptionAPI';
 
 const EventEditScreen = observer(({navigation}) => {
   React.useEffect(() => {
@@ -85,6 +86,7 @@ const EventEditScreen = observer(({navigation}) => {
                 <>
                   <SuccessScreen
                     fn={() => {
+                      eventDescriptionAPI();
                       EVENT_EDIT_STORE.setSuccess(false);
                       navigation.pop();
                     }}

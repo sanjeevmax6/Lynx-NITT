@@ -42,7 +42,9 @@ const openLink = async url => {
         },
       });
     } else Linking.openURL(url);
-  } catch (error) {}
+  } catch (error) {
+    Linking.openURL(url);
+  }
 };
 
 const Links = ({links}) => {
