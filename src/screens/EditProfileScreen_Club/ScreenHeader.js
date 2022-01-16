@@ -8,6 +8,7 @@ import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 import CustomAlert from '../../components/customAlert';
 import {observer} from 'mobx-react';
 import {CHECK_VALUES_ENTERED} from '../../utils/ERROR_MESSAGES';
+import {checkClubLinks} from '../../utils/helperFunction/FormValidation';
 
 const ScreenHeader = observer(({navigation, isValid, handleAPICALL}) => {
   function toggleTab(tabShow) {
@@ -83,7 +84,10 @@ const ScreenHeader = observer(({navigation, isValid, handleAPICALL}) => {
                 },
                 {
                   text: 'YES',
-                  func: () => handleAPICALL(),
+                  func: async () => {
+                    const er = await checkClubLinks();
+                    if (!er) handleAPICALL();
+                  },
                 },
               ]);
               setModalVisible(true);

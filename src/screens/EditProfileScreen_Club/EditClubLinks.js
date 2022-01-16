@@ -7,60 +7,76 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 
 import {EDIT_CLUB_PROFILE_STORE} from '../../mobx/EDIT_CLUB_PROFILE';
 import {observer} from 'mobx-react';
-
-const TEXT_INPUT = ({
-  placeholder,
-  label,
-  icon,
-  onTextChange,
-  showCharCount = false,
-  charCount,
-  value,
-  maxLength = 1000,
-  keyboardType = 'default',
-  multiline = false,
-}) => {
-  return (
-    <TextInput
-      underlineColor="transparent"
-      label={label}
-      value={value}
-      maxLength={maxLength}
-      style={{
-        backgroundColor: colors.GRAY_LIGHT,
-        borderTopRightRadius: moderateScale(6),
-        borderTopLeftRadius: moderateScale(6),
-        marginHorizontal: scale(HorizontalPadding),
-        marginTop: verticalScale(3),
-      }}
-      placeholder={placeholder}
-      multiline={multiline}
-      keyboardType={keyboardType}
-      theme={{
-        colors: {
-          primary: colors.BLACK,
-        },
-      }}
-      selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-      onChangeText={text => {
-        onTextChange(text);
-      }}
-      left={<TextInput.Icon name={icon} color={colors.Accent} />}
-      right={
-        showCharCount ? (
-          <TextInput.Affix
-            text={'/' + charCount}
-            textStyle={{
-              color: charCount < 0 ? colors.Tertiary : colors.GRAY_DARK,
-            }}
-          />
-        ) : (
-          <></>
-        )
-      }
-    />
-  );
-};
+import {CLUB_REGISTER_STORE} from '../../mobx/CLUB_REGISTER_STORE';
+import Error from '../../components/Error';
+const TEXT_INPUT = observer(
+  ({
+    placeholder,
+    label,
+    icon,
+    onTextChange,
+    showCharCount = false,
+    charCount,
+    value,
+    maxLength = 1000,
+    keyboardType = 'default',
+    multiline = false,
+    index,
+  }) => {
+    return (
+      <View>
+        <TextInput
+          underlineColor="transparent"
+          label={label}
+          value={value}
+          maxLength={maxLength}
+          style={{
+            backgroundColor: colors.GRAY_LIGHT,
+            borderTopRightRadius: moderateScale(6),
+            borderTopLeftRadius: moderateScale(6),
+            marginHorizontal: scale(HorizontalPadding),
+            marginTop: verticalScale(3),
+          }}
+          placeholder={placeholder}
+          multiline={multiline}
+          keyboardType={keyboardType}
+          theme={{
+            colors: {
+              primary: colors.BLACK,
+            },
+          }}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+          onChangeText={text => {
+            onTextChange(text);
+          }}
+          left={<TextInput.Icon name={icon} color={colors.Accent} />}
+          right={
+            showCharCount ? (
+              <TextInput.Affix
+                text={'/' + charCount}
+                textStyle={{
+                  color: charCount < 0 ? colors.Tertiary : colors.GRAY_DARK,
+                }}
+              />
+            ) : (
+              <></>
+            )
+          }
+        />
+        {CLUB_REGISTER_STORE.getLinkError[index] === true && (
+          <View
+            style={{
+              width: '90%',
+              marginHorizontal: scale(HorizontalPadding),
+              marginBottom: scale(10),
+            }}>
+            <Error text={'Enter a valid ' + placeholder} />
+          </View>
+        )}
+      </View>
+    );
+  },
+);
 
 const EditClubLinks = observer(() => {
   return (
@@ -73,6 +89,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setWebsiteLink(val);
         }}
+        index={0}
       />
       <TEXT_INPUT
         placeholder={'Instagram Link'}
@@ -82,6 +99,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setInstagramLink(val);
         }}
+        index={1}
       />
       <TEXT_INPUT
         placeholder={'Facebook Link'}
@@ -91,6 +109,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setFacebookLink(val);
         }}
+        index={2}
       />
       <TEXT_INPUT
         placeholder={'Youtube Link'}
@@ -100,6 +119,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setYoutubeLink(val);
         }}
+        index={3}
       />
       <TEXT_INPUT
         placeholder={'LinkedIn Link'}
@@ -109,6 +129,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setLinkedInLink(val);
         }}
+        index={4}
       />
       <TEXT_INPUT
         placeholder={'Medium Link'}
@@ -118,6 +139,7 @@ const EditClubLinks = observer(() => {
         onTextChange={val => {
           EDIT_CLUB_PROFILE_STORE.setMediumLink(val);
         }}
+        index={5}
       />
     </View>
   );
