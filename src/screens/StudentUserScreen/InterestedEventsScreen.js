@@ -23,6 +23,7 @@ const InterestedEventsScreen = observer(({goToEvent}) => {
   return (
     <View style={listScreenStyles.container}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={STUDENT_DETAILS_STORE.getRefresh}

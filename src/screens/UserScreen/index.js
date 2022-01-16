@@ -12,8 +12,15 @@ import {ACCENT_STUDENT_USER_LOADER} from '../../utils/LOADING_TYPES';
 import Body from './Body';
 import {deleteEvent} from '../../apis/deleteEvent';
 import CustomAlert from '../../components/customAlert';
+import {useIsFocused} from '@react-navigation/native';
+import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
 const UserScreen = observer(({navigation}) => {
+  const isFocused = useIsFocused();
+  if (isFocused) {
+    BOTTOM_NAV_STORE.setTabVisibility(true);
+  }
+
   React.useEffect(() => {
     getClubDetails();
   }, []);

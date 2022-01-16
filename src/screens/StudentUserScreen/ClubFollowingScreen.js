@@ -23,6 +23,7 @@ const ClubFollowingScreen = observer(({navigation, goToClub}) => {
   return (
     <View style={listScreenStyles.container}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={STUDENT_DETAILS_STORE.getRefresh}

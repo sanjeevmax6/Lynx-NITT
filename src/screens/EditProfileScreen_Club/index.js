@@ -127,7 +127,7 @@ const EditClubProfileScreen = observer(({navigation}) => {
                     <EditProfilePicture />
                     <EditDescription />
                     <EditClubLinks />
-                    <View style={{height: verticalScale(200)}} />
+                    <View style={{height: verticalScale(20)}} />
                   </ScrollView>
                 </>
               )}

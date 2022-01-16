@@ -14,6 +14,7 @@ const PastEventsComponent = observer(({functions}) => {
   return (
     <View style={{flex: 1}}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={CLUB_USER_STORE.getRefresh}
