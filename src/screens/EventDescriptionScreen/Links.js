@@ -67,7 +67,7 @@ const Links = ({links}) => {
               <Text
                 numberOfLines={1}
                 style={{...styles.url, textAlign: 'center'}}
-                ellipsizeMode="head">
+                ellipsizeMode="tail">
                 {item}
               </Text>
             </TouchableOpacity>

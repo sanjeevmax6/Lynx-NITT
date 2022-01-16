@@ -11,7 +11,6 @@ import * as colors from '../../utils/colors';
 
 const SuccessScreen = ({
   showButton = true,
-
   buttonText = 'NEXT',
   showIconInButton = true,
   icon = 'keyboard-arrow-right',

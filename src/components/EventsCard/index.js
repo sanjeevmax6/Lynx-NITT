@@ -112,7 +112,10 @@ const EventsCard = observer(
                       eventId,
                       () => {
                         if (!interest) {
-                          showToast('Event added to your collection!', true);
+                          showToast(
+                            'You will receive notifications and updates from this event!',
+                            true,
+                          );
                         }
                         setApiCall(false);
                         setInterest(!interest);

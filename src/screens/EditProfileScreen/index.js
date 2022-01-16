@@ -91,6 +91,7 @@ const EditProfileScreen = observer(({navigation}) => {
   }
 
   useEffect(() => {
+    STUDENT_EDIT_PROFILE_STORE.setSuccess(false);
     PopulateData();
     toggleTab(false);
     const backPress = BackHandler.addEventListener('backPress', onBackPress);
@@ -147,6 +148,9 @@ const EditProfileScreen = observer(({navigation}) => {
             <>
               {STUDENT_EDIT_PROFILE_STORE.getSuccess ? (
                 <SuccessScreen
+                  buttonText="BACK"
+                  showIconInButton={false}
+                  text="Profile Details Updated Successfully"
                   fn={() => {
                     STUDENT_EDIT_PROFILE_STORE.setSuccess(false);
                     CLUB_USER_STORE.setRefresh(true);

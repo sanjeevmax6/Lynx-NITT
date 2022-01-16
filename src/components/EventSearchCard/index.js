@@ -141,7 +141,7 @@ const EventSearchCard = ({
                   color: colors.EventDescriptionScreen_TagText,
                   fontWeight: '300',
                 }}
-                ellipsizeMode="head"
+                ellipsizeMode="tail"
                 numberOfLines={1}>
                 {val.toLowerCase()}
               </Chip>

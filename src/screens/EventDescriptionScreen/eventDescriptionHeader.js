@@ -89,7 +89,10 @@ const EventDescriptionHeader = observer(({navigation, fromProfile}) => {
                   }
                 }
                 if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
-                  showToast('Event added to your collection!', true);
+                  showToast(
+                    'You will receive notifications and updates from this event!',
+                    true,
+                  );
                 }
                 FEEDS_STORE.setInterested(
                   !EVENT_DESCRIPTION_STORE.getWasStudentInterested,

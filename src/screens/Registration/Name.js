@@ -213,7 +213,7 @@ const Name = observer(({scrollViewRef, callback}) => {
               }}
               selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
               outlineColor={er ? colors.Tertiary : null}>
-              {STUDENT_REGISTRATION_STORE.getGender}
+              {STUDENT_REGISTRATION_STORE.getGender.toUpperCase()}
             </TextInput>
           </TouchableOpacity>
 
@@ -234,7 +234,7 @@ const Name = observer(({scrollViewRef, callback}) => {
               }}
               selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
               outlineColor={er ? colors.Tertiary : null}>
-              {STUDENT_REGISTRATION_STORE.getNationality}
+              {STUDENT_REGISTRATION_STORE.getNationality.toUpperCase()}
             </TextInput>
           </TouchableOpacity>
           {er && <Error text={erMsg} />}

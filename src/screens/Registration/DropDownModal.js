@@ -20,6 +20,7 @@ import {
   MODAL_TYPE_CODE,
   MODAL_TYPE_GENDER,
   MODAL_TYPE_NATIONALITY,
+  MODAL_TYPE_DEPARTMENT,
 } from '../../utils/MODAL_DATABASE';
 import {Divider, Searchbar} from 'react-native-paper';
 
@@ -96,7 +97,11 @@ const DropDownModal = observer(({modalType, data}) => {
                           marginVertical: verticalScale(6),
                         }}>
                         <View style={{width: '80%'}}>
-                          <Text>{item.name}</Text>
+                          <Text>
+                            {modalType === MODAL_TYPE_DEPARTMENT
+                              ? item.name
+                              : item.name.toUpperCase()}
+                          </Text>
                         </View>
                         {modalType === MODAL_TYPE_CODE && (
                           <View style={{width: '20%'}}>
