@@ -102,3 +102,7 @@ export const API_GET_DELETE_CLUB_EVENTS = '/api/events/delete-events/';
 export const API_GET_CIRCULAR_BY_ID = '/api/circularById/';
 
 export const API_FEEDBACK = '/api/feedback/submit';
+
+export const API_LOGOUT_STUDENT = '/api/student/logout';
+
+export const API_LOGOUT_CLUB = '/api/club/logout';
