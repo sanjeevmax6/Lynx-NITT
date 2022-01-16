@@ -1,7 +1,14 @@
 import React, {useState, useRef} from 'react';
-import {Text, View, ScrollView, Image, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Dimensions,
+  Pressable,
+} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
-import {scale, ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import {observer} from 'mobx-react';
 import {EVENT_CREATION_STORE} from '../../mobx/EVENT_CREATION_STORE';
@@ -50,18 +57,29 @@ const Images = observer(({selectImage, deleteImage}) => {
           {EVENT_CREATION_STORE.getImages.map((e, index) => (
             <View key={index} style={styles.container}>
               {e ? (
-                <View style={{flexDirection: 'row'}}>
-                  <ImageView
-                    key={index}
-                    resizeMode="contain"
-                    style={styles.wrap}
-                    src={e.uri}
-                  />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                  }}>
+                  <Pressable
+                    onLongPress={() => {
+                      deleteImage(index);
+                      goBack(index);
+                    }}>
+                    <ImageView
+                      key={index}
+                      resizeMode="contain"
+                      style={styles.wrap}
+                      src={e.uri}
+                    />
+                  </Pressable>
                   <View style={styles.wrapCloseButton}>
                     <IconButton
                       icon="close"
-                      style={{backgroundColor: colors.Accent}}
-                      color="#ffff"
+                      style={{
+                        backgroundColor: colors.Secondary,
+                      }}
+                      color={colors.Tertiary}
                       size={scale(20)}
                       onPress={() => {
                         deleteImage(index);

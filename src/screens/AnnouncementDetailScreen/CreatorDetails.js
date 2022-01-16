@@ -32,6 +32,7 @@ const CreatorDetails = observer(({navigation}) => {
             API_GET_IMAGE + ANNOUNCEMENT_DETAILS_STORE.getData.club.profilePic
           }
           style={styles.image}
+          resizeMode={'cover'}
         />
       </TouchableOpacity>
       <View style={{marginHorizontal: scale(10)}}>
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     height: scale(70),
     width: scale(70),
     borderRadius: scale(35),
+    elevation: 0,
   },
 
   time: {

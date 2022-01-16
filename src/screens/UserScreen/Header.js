@@ -52,10 +52,17 @@ const Header = ({name, followers, url, description, navigation}) => {
         return {cover: colors.Primary, icon: colors.Secondary};
     }
   };
-
+  const invertHex = color => {
+    return (
+      '#' +
+      (
+        '000000' + (0xffffff ^ parseInt(color.substring(1), 16)).toString(16)
+      ).slice(-6)
+    );
+  };
   getColors().then(res => {
     setCoverColor(res.cover);
-    setCoverIconColor(res.icon);
+    setCoverIconColor(invertHex(res.cover));
   });
 
   const onTextLayout = useCallback(e => {
@@ -106,8 +113,9 @@ const Header = ({name, followers, url, description, navigation}) => {
       </View>
       <View style={styles.imageView}>
         <ImageView
-          src={url || '../../assests/images/spider.png'}
+          src={url || '../../assests/images/nitt_logo.png'}
           style={styles.image}
+          resizeMode={'cover'}
         />
       </View>
       <View

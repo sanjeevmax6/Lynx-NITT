@@ -152,6 +152,8 @@ const AnnouncementCreationScreen = observer(({navigation}) => {
               {ANNOUNCEMENT_CREATION_STORE.getSuccess ? (
                 <>
                   <SuccessScreen
+                    buttonText={'BACK'}
+                    showIconInButton={false}
                     fn={() => {
                       ANNOUNCEMENT_CREATION_STORE.setSuccess(false);
                       navigation.pop();

@@ -110,7 +110,11 @@ const EventSearchCard = ({
           backgroundColor: colors.Accent,
           ...styles.image,
         }}>
-        <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
+        <ImageView
+          src={API_GET_IMAGE + eventImage}
+          style={styles.image}
+          resizeMode={'center'}
+        />
       </View>
       <View style={styles.cardDetails}>
         <Text numberOfLines={2} style={styles.title}>
@@ -171,6 +175,8 @@ const styles = ScaledSheet.create({
     marginRight: '5@s',
     height: '90@s',
     borderRadius: '8@s',
+    elevation: 0,
+    backgroundColor: 'white',
   },
   cardDetails: {
     flexGrow: 1,

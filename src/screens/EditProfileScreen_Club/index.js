@@ -108,6 +108,8 @@ const EditClubProfileScreen = observer(({navigation}) => {
             <>
               {EDIT_CLUB_PROFILE_STORE.getSuccess ? (
                 <SuccessScreen
+                  buttonText={'BACK'}
+                  showIconInButton={false}
                   fn={() => {
                     EDIT_CLUB_PROFILE_STORE.setSuccess(false);
                     navigation.pop();

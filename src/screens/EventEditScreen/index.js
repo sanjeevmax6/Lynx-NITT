@@ -85,6 +85,8 @@ const EventEditScreen = observer(({navigation}) => {
               {EVENT_EDIT_STORE.getIsSuccess ? (
                 <>
                   <SuccessScreen
+                    buttonText={'BACK'}
+                    showIconInButton={false}
                     fn={() => {
                       eventDescriptionAPI();
                       EVENT_EDIT_STORE.setSuccess(false);

@@ -22,7 +22,11 @@ const RecentEventCard = ({eventItem, functions}) => {
       onPress={() => {
         functions.onEventClick(eventItem.EventId);
       }}>
-      <ImageView style={styles.poster} src={API_GET_IMAGE + eventItem.poster} />
+      <ImageView
+        style={styles.poster}
+        src={API_GET_IMAGE + eventItem.poster}
+        resizeMode={'center'}
+      />
       <View style={styles.eventInfo}>
         <Text
           style={{
@@ -64,6 +68,8 @@ const styles = ScaledSheet.create({
     height: '60@msr',
     width: '60@msr',
     borderRadius: '2@sr',
+    elevation: 0,
+    backgroundColor: 'white',
   },
   eventInfo: {
     marginLeft: '10@s',

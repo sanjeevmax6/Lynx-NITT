@@ -20,7 +20,7 @@ const EventEditLinks = observer(() => {
         <TextInput
           underlineColor="transparent"
           label="Event Links"
-          placeholder="Event Links"
+          placeholder={`Event Links (max ${MAX_EVENT_LINK_COUNT})`}
           style={styles.textInputStyles}
           value={EVENT_EDIT_STORE.getEditLink}
           selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}

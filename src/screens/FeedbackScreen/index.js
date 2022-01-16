@@ -39,6 +39,8 @@ const FeedBackScreen = observer(({navigation}) => {
             <>
               {FEEDBACK_STORE.getSuccess ? (
                 <SuccessScreen
+                  buttonText={'BACK'}
+                  showIconInButton={false}
                   fn={() => {
                     navigation.goBack();
                     FEEDBACK_STORE.reset();

@@ -20,6 +20,7 @@ const AnnouncementsCard = ({imageUrl, title, senderName}) => {
             style={styles.clubIcon}
             PlaceholderContent={<ActivityIndicator color={color.Secondary} />}
             src={imageUrl}
+            resizeMode={'center'}
           />
         </View>
         <View style={styles.item}>

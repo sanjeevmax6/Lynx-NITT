@@ -111,10 +111,9 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-
                     paddingBottom: verticalScale(10),
                   }}>
-                  <Text style={styles.eventName}>
+                  <Text style={styles.eventName} numberOfLines={5}>
                     {EVENT_DESCRIPTION_STORE.getData.Title}
                   </Text>
                   <IconButton
@@ -142,13 +141,23 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     color={colors.EventCard_ShareIcon}
                   />
                 </View>
-
-                <Tags
-                  tags={EVENT_DESCRIPTION_STORE.getData.tags}
+                <ClubCard
+                  name={EVENT_DESCRIPTION_STORE.getData.club.name}
+                  imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
                   navigation={navigation}
+                  clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
                 />
-                <View style={{marginHorizontal: scale(3)}}></View>
+                {EVENT_DESCRIPTION_STORE.getData.tags.length > 0 ? (
+                  <>
+                    <Text style={styles.headings}>Tags</Text>
+                    <Tags
+                      tags={EVENT_DESCRIPTION_STORE.getData.tags}
+                      navigation={navigation}
+                    />
+                  </>
+                ) : null}
 
+                <Text style={styles.headings}>About</Text>
                 <About
                   about={EVENT_DESCRIPTION_STORE.getData.Description}
                   startDate={getFormattedDate(
@@ -167,18 +176,12 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
 
                 {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
                   <>
+                    <Text style={styles.headings}>Event Links</Text>
                     <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
                   </>
                 ) : (
                   <></>
                 )}
-
-                <ClubCard
-                  name={EVENT_DESCRIPTION_STORE.getData.club.name}
-                  imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
-                  navigation={navigation}
-                  clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
-                />
                 <View style={{height: verticalScale(100)}} />
               </View>
             </ScrollView>
@@ -192,17 +195,25 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
 export default EventDescriptionScreen;
 const styles = ScaledSheet.create({
   eventName: {
-    fontSize: '18@s',
+    fontSize: '24@s',
     paddingTop: '0@vs',
-
     fontWeight: 'bold',
     backgroundColor: colors.WHITE,
     marginTop: verticalScale(0),
+    maxWidth: '90%',
     color: colors.EventDescriptionScreen_Title,
   },
   divider: {
     // marginTop: '10@vs',
     height: '0.5@vs',
     backgroundColor: colors.GRAY_LIGHT,
+  },
+  headings: {
+    fontSize: '20@s',
+    paddingTop: '0@vs',
+    fontWeight: 'bold',
+    backgroundColor: colors.WHITE,
+    marginVertical: verticalScale(10),
+    color: colors.BLACK,
   },
 });

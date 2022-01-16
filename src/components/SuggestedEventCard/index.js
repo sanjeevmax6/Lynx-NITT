@@ -33,7 +33,11 @@ const SuggestedEventCard = ({
         <></>
       )}
 
-      <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
+      <ImageView
+        src={API_GET_IMAGE + eventImage}
+        style={styles.image}
+        resizeMode={'center'}
+      />
       <Text numberOfLines={1} style={styles.title}>
         {eventName}
       </Text>
@@ -58,8 +62,10 @@ const styles = ScaledSheet.create({
   },
   image: {
     width: scale(cardDimensions),
-    backgroundColor: colors.Tertiary,
+    backgroundColor: 'white',
     height: scale(cardDimensions),
+    elevation: 0,
+    backgroundColor: 'white',
     borderRadius: '8@s',
   },
   title: {

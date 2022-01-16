@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(2),
     marginBottom: verticalScale(3),
     flex: 1,
+    backgroundColor: 'white',
   },
   center: {
     height: scale(60),
@@ -77,8 +78,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: scale(60),
     height: scale(60),
-    backgroundColor: color.GRAY_LIGHT,
+    backgroundColor: color.WHITE,
     borderRadius: scale(120),
+    elevation: 0,
   },
 
   headerText: {

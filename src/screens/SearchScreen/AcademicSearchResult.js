@@ -21,7 +21,7 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
     return (
       <View
         style={{
-          height: verticalScale(1),
+          height: verticalScale(0.5),
           backgroundColor: 'grey',
         }}
       />

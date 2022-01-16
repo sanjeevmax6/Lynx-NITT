@@ -89,11 +89,11 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
                   MAX_EVENT_TAG_COUNT
                 ) {
                   toast.show(`Max tag count is ${MAX_EVENT_TAG_COUNT}`, {
-                    type: 'danger',
+                    type: 'warning',
                   });
                   return;
-                }
-                EVENT_CREATION_STORE.addTag();
+                } else if (EVENT_CREATION_STORE.getTag.trim() !== '')
+                  EVENT_CREATION_STORE.addTag();
               }}
             />
           }

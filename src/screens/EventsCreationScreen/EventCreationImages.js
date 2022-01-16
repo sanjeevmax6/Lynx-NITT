@@ -67,7 +67,7 @@ const EventCreationImages = observer(({scrollViewRef, callback}) => {
 
       if (EVENT_CREATION_STORE.getImages.length > MAX_IMAGES_IN_EVENT) {
         toast.show(`Maximum image count is ${MAX_IMAGES_IN_EVENT}`, {
-          type: 'danger',
+          type: 'warning',
         });
         return;
       }

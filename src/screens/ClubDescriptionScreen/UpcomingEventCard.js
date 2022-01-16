@@ -52,7 +52,11 @@ const EventCard = ({
         ) : (
           <></>
         )}
-        <ImageView style={styles.poster} src={API_GET_IMAGE + url} />
+        <ImageView
+          style={styles.poster}
+          src={API_GET_IMAGE + url}
+          resizeMode={'center'}
+        />
         <View style={styles.eventInfo}>
           <Text
             style={{
@@ -89,6 +93,8 @@ const styles = ScaledSheet.create({
     height: '60@msr',
     width: '60@msr',
     borderRadius: '2@sr',
+    backgroundColor: 'white',
+    elevation: 0,
   },
   eventInfo: {
     marginLeft: '10@s',

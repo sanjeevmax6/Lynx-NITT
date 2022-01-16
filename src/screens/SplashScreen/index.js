@@ -127,10 +127,10 @@ const SplashScreen = () => {
       {State === 0 ? (
         <>
           <LottieView
-            style={{height: '108%', backgroundColor: 'white'}}
+            style={{backgroundColor: 'white'}}
             source={splashLottie}
-            speed={1.5}
-            resizeMode="cover"
+            speed={1}
+            resizeMode="center"
             autoPlay
             width={500}
             loop={false}
@@ -148,18 +148,15 @@ const SplashScreen = () => {
             <Animatable.Image
               source={logo}
               style={styles.image}
-              delay={1000}
+              delay={800}
               animation="fadeIn"></Animatable.Image>
-            <Animatable.Text
-              style={styles.text}
-              delay={1000}
-              animation="fadeIn">
-              NIT-T APP
+            <Animatable.Text style={styles.text} delay={800} animation="fadeIn">
+              NITT APP
             </Animatable.Text>
             <Animatable.Image
               source={spiderLogo}
               style={styles.spider}
-              delay={1200}
+              delay={1000}
               animation="fadeIn"
             />
           </View>

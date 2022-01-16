@@ -83,7 +83,11 @@ const EventsCard = observer(
             backgroundColor: colors.Accent,
             ...styles.image,
           }}>
-          <ImageView src={API_GET_IMAGE + eventImage} style={styles.image} />
+          <ImageView
+            src={API_GET_IMAGE + eventImage}
+            style={styles.image}
+            resizeMode={'center'}
+          />
         </View>
         <View style={styles.cardDetails}>
           <Text numberOfLines={2} style={styles.title}>
@@ -187,6 +191,8 @@ const styles = ScaledSheet.create({
     marginRight: '5@s',
     height: '100@s',
     borderRadius: '8@s',
+    backgroundColor: 'white',
+    elevation: 0,
   },
   cardDetails: {
     flexGrow: 1,

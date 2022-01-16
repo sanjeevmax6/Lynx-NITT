@@ -39,7 +39,11 @@ const ListItem = observer(({clubItem, goToClub}) => {
       onPress={() => goToClub(clubItem)}>
       <View style={listItemStyles.viewStyle}>
         <View style={{...listItemStyles.imageStyle, elevation: 1}}>
-          <ImageView src={imageUrl} style={listItemStyles.imageStyle} />
+          <ImageView
+            src={imageUrl}
+            style={listItemStyles.imageStyle}
+            resizeMode={'cover'}
+          />
         </View>
         <Text numberOfLines={2} style={listItemStyles.textStyle}>
           {clubItem.clubId.name}

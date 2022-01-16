@@ -119,6 +119,8 @@ const CalendarNoticeCreationTime = observer(
           <LoaderPage />
         ) : CALENDAR_NOTICE_STORE.getSuccess ? (
           <SuccessScreen
+            buttonText={'BACK'}
+            showIconInButton={false}
             fn={() => {
               navigation.goBack();
             }}

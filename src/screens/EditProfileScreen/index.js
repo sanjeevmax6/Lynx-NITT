@@ -182,7 +182,7 @@ const EditProfileScreen = observer(({navigation}) => {
                       style={{flex: 1}}>
                       <StudentPhoto />
                       <EditProfileInputs />
-                      <View style={{height: verticalScale(350)}} />
+                      {/* <View style={{height: verticalScale(350)}} /> */}
                     </ScrollView>
                   </SafeAreaView>
                 </>

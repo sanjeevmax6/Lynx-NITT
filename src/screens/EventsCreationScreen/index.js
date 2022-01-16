@@ -122,6 +122,8 @@ const EventCreationScreen = observer(({navigation}) => {
         />
       ) : EVENT_CREATION_STORE.getSuccess ? (
         <SuccessScreen
+          buttonText={'BACK'}
+          showIconInButton={false}
           fn={() => {
             EVENT_CREATION_STORE.setSuccess(false);
             navigation.pop();
@@ -216,6 +218,7 @@ const styles = ScaledSheet.create({
     color: color.FontColor,
     fontWeight: '500',
     marginTop: '10@vs',
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: '12@s',

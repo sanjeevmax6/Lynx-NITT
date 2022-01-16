@@ -92,6 +92,7 @@ const ClubDescriptionHeader = observer(
             <ImageView
               src={url ? API_GET_IMAGE + url : NO_IMAGE_URL}
               style={styles.image}
+              resizeMode={'cover'}
             />
           </View>
         </Pressable>

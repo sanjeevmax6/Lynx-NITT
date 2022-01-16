@@ -11,7 +11,11 @@ const AcademicSearchCard = ({title, desc, url, name, time}) => {
   console.log(url);
   return (
     <View style={styles.card}>
-      <ImageView src={API_GET_IMAGE + url} style={styles.poster} />
+      <ImageView
+        src={API_GET_IMAGE + url}
+        style={styles.poster}
+        resizeMode={'center'}
+      />
       <View style={{flex: 1, marginLeft: scale(HorizontalPadding)}}>
         <Text numberOfLines={3}>
           <Text numberOfLines={1} style={styles.notifier}>
@@ -42,6 +46,7 @@ const AcademicSearchCard = ({title, desc, url, name, time}) => {
           style={{
             fontSize: scale(12),
             textAlign: 'right',
+            marginRight: scale(2),
             color: colors.GRAY_DARK,
           }}>
           {getFormattedDate(time)}
@@ -57,11 +62,14 @@ const styles = ScaledSheet.create({
   card: {
     marginTop: '5@msr',
     marginBottom: '5@msr',
+    paddingVertical: '2@msr',
+    paddingHorizontal: '1@msr',
     display: 'flex',
     flexDirection: 'column',
     flexDirection: 'row',
     marginHorizontal: scale(HorizontalPadding),
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   cardDetails: {
     margin: '5@s',
@@ -80,7 +88,8 @@ const styles = ScaledSheet.create({
     width: '60@s',
     borderRadius: '30@s',
     alignSelf: 'center',
-    backgroundColor: colors.GRAY_MEDIUM,
+    elevation: 0,
+    backgroundColor: 'white',
   },
   notifier: {
     color: colors.Tertiary,

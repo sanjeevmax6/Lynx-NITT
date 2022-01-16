@@ -28,11 +28,11 @@ const CustomAlert = props => {
       color:
         (props.android && props.android.title && props.android.title.color) ||
         colors.BLACK,
-      fontFamily:
-        (props.android &&
-          props.android.title &&
-          props.android.title.fontFamily) ||
-        FONT,
+      // fontFamily:
+      //   (props.android &&
+      //     props.android.title &&
+      //     props.android.title.fontFamily) ||
+      //   FONT,
       fontSize:
         (props.android &&
           props.android.title &&
@@ -50,11 +50,11 @@ const CustomAlert = props => {
           props.android.message &&
           props.android.message.color) ||
         colors.BLACK,
-      fontFamily:
-        (props.android &&
-          props.android.message &&
-          props.android.message.fontFamily) ||
-        FONT,
+      // fontFamily:
+      //   (props.android &&
+      //     props.android.message &&
+      //     props.android.message.fontFamily) ||
+      //   FONT,
       fontSize:
         (props.android &&
           props.android.message &&
@@ -69,7 +69,7 @@ const CustomAlert = props => {
     },
     button: {
       color: colors.Tertiary,
-      fontFamily: FONT,
+      // fontFamily: FONT,
       fontSize: scale(16 - 2),
       fontWeight: '500',
       textTransform: 'uppercase',
