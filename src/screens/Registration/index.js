@@ -169,10 +169,10 @@ const Registration = observer(({navigation}) => {
                       scrollEnabled={false}>
                       <Name scrollViewRef={scrollview} callback={changeText} />
                       <DOB scrollViewRef={scrollview} callback={changeText} />
-                      <Documents
+                      {/* <Documents
                         scrollViewRef={scrollview}
                         callback={changeText}
-                      />
+                      /> */}
                       <ProfilePic
                         scrollViewRef={scrollview}
                         callback={changeText}

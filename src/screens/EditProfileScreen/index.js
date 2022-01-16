@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  Alert,
   BackHandler,
   ScrollView,
 } from 'react-native';
@@ -37,7 +36,11 @@ const PopulateData = () => {
   STUDENT_EDIT_PROFILE_STORE.setDOB(new Date(STUDENT_DETAILS_STORE.getDob));
   STUDENT_EDIT_PROFILE_STORE.setAddress(STUDENT_DETAILS_STORE.getAddress);
   STUDENT_EDIT_PROFILE_STORE.setMobile(STUDENT_DETAILS_STORE.getMobileNo);
-  STUDENT_EDIT_PROFILE_STORE.setAadhar(STUDENT_DETAILS_STORE.getAadhar);
+
+  STUDENT_EDIT_PROFILE_STORE.setAadhar(0);
+  STUDENT_EDIT_PROFILE_STORE.setCountryCode(
+    STUDENT_DETAILS_STORE.getCountryCode,
+  );
   if (STUDENT_DETAILS_STORE.getProfilePic === '') {
     STUDENT_EDIT_PROFILE_STORE.setPic(STUDENT_DETAILS_STORE.getProfilePic);
   } else {
@@ -55,9 +58,10 @@ const handleApiCall = () => {
   formData.append('last_name', STUDENT_EDIT_PROFILE_STORE.getLastName);
   formData.append('department', STUDENT_EDIT_PROFILE_STORE.getDepartment);
   formData.append('address', STUDENT_EDIT_PROFILE_STORE.getAddress);
-  formData.append('aadhar_no', STUDENT_EDIT_PROFILE_STORE.getAadhar);
+  // formData.append('aadhar_no', STUDENT_EDIT_PROFILE_STORE.getAadhar);
 
   formData.append('mobile_no', STUDENT_EDIT_PROFILE_STORE.getMobile);
+  formData.append('countryCode', STUDENT_EDIT_PROFILE_STORE.getCountryCode);
   formData.append('dob', STUDENT_EDIT_PROFILE_STORE.getDOB.toString());
   if (
     STUDENT_EDIT_PROFILE_STORE.getPic ===
@@ -169,13 +173,13 @@ const EditProfileScreen = observer(({navigation}) => {
                       }
                       handleApiCall={handleApiCall}
                     />
-                    <>
-                      <ScrollView>
-                        <StudentPhoto />
-                        <EditProfileInputs />
-                        <View style={{height: verticalScale(20)}} />
-                      </ScrollView>
-                    </>
+                    <ScrollView
+                      showsVerticalScrollIndicator={false}
+                      style={{flex: 1}}>
+                      <StudentPhoto />
+                      <EditProfileInputs />
+                      <View style={{height: verticalScale(350)}} />
+                    </ScrollView>
                   </SafeAreaView>
                 </>
               )}

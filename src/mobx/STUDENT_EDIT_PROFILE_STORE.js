@@ -13,6 +13,7 @@ class EditProfileStore {
     mobile: '',
     pic: '', //for existing image
     image: {}, //if user uploads a new image
+    countryCode: '',
 
     datePicker: false,
 
@@ -38,6 +39,7 @@ class EditProfileStore {
     this.state.errorText = '';
     this.state.loading = false;
     this.state.success = false;
+    this.state.countryCode = '';
   };
   setSuccess = val => {
     this.state.success = val;
@@ -159,6 +161,13 @@ class EditProfileStore {
   get getLoading() {
     return this.state.loading;
   }
+  setCountryCode = val => {
+    this.state.countryCode = val;
+  };
+
+  get getCountryCode() {
+    return this.state.countryCode;
+  }
 
   constructor() {
     makeObservable(this, {
@@ -212,6 +221,9 @@ class EditProfileStore {
 
       setSuccess: action,
       getSuccess: computed,
+
+      setCountryCode: action,
+      getCountryCode: computed,
     });
   }
 }

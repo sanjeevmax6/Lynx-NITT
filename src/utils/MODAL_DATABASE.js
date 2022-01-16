@@ -514,13 +514,10 @@ export const Gender = [
     name: 'Female',
   },
   {
-    name: 'Other',
-  },
-  {
     name: 'prefer not to say',
   },
   {
-    name: 'other',
+    name: 'others',
   },
 ];
 
