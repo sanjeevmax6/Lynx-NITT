@@ -150,6 +150,7 @@ const TagSearchResult = ({searchQuery, setScreen, navigation}) => {
                         date={item.startDate}
                         startTime={item.startDate}
                         endTime={item.endDate}
+                        tags={item.tags}
                       />
                     </TouchableOpacity>
                   )}

@@ -8,6 +8,7 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {isLive} from '../../utils/helperFunction/isLive';
 import {isComplete} from '../../utils/helperFunction/isComplete';
 import ImageView from '../ImageView';
+import {Chip} from 'react-native-paper';
 
 const EventSearchCard = ({
   date,
@@ -17,6 +18,7 @@ const EventSearchCard = ({
   desc,
   eventImage,
   organizer,
+  tags = [],
 }) => {
   const d = new Date(date);
   return (
@@ -125,6 +127,27 @@ const EventSearchCard = ({
             {organizer}
           </Text>
         </View>
+        <View style={{marginTop: verticalScale(3), flexDirection: 'row'}}>
+          {tags.map((val, index) => {
+            return (
+              <Chip
+                key={index}
+                style={{
+                  backgroundColor: colors.EventDescriptionScreen_TagBackGround,
+                  marginRight: scale(3),
+                }}
+                textStyle={{
+                  fontSize: scale(9),
+                  color: colors.EventDescriptionScreen_TagText,
+                  fontWeight: '300',
+                }}
+                ellipsizeMode="head"
+                numberOfLines={1}>
+                {val.toLowerCase()}
+              </Chip>
+            );
+          })}
+        </View>
       </View>
     </View>
   );
@@ -141,6 +164,7 @@ const styles = ScaledSheet.create({
     backgroundColor: colors.EventCard_Back,
     borderRadius: '8@s',
     elevation: 1,
+    alignItems: 'center',
   },
   image: {
     width: '90@s',
