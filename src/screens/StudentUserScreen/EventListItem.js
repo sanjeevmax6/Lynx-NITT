@@ -33,8 +33,7 @@ const ListItem = ({eventItem, goToEvent}) => {
       <View style={listItemStyles.buttonStyles}>
         <TouchableOpacity onPress={() => console.log('Unlist')}>
           <Icon
-            name="bookmark"
-            zz
+            name="star"
             size={moderateScale(20)}
             style={{marginEnd: scale(10)}}
             color={Tertiary}

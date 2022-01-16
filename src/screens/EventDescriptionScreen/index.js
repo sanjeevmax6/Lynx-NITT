@@ -31,6 +31,7 @@ import EventStatusTag from './EventStatusTag';
 import EventDescriptionHeader from './eventDescriptionHeader';
 import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
 import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
+import {useToast} from 'react-native-toast-notifications';
 
 const EventDescriptionScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -58,6 +59,12 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     eventDescriptionAPI();
     return () => backHandler.remove();
   }, []);
+  const toast = useToast();
+
+  const showToast = msg => {
+    toast.show(msg, {type: 'warning'});
+  };
+
   return (
     <View
       style={{
@@ -125,7 +132,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                           // dismissed
                         }
                       } catch (error) {
-                        Alert.alert(error.message);
+                        showToast(error.message);
                       }
                     }}
                     icon={'share-variant'}

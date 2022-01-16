@@ -30,8 +30,12 @@ const EventsCard = observer(
     const [interest, setInterest] = useState(false);
     const toast = useToast();
 
-    const showToast = () => {
-      toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+    const showToast = (msg = '', success = false) => {
+      if (msg === '') toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+      else {
+        if (!success) toast.show(msg, {type: 'warning'});
+        else toast.show(msg, {type: 'success', placement: 'top'});
+      }
     };
 
     useEffect(() => {
@@ -107,6 +111,9 @@ const EventsCard = observer(
                     toggleInterestedApi(
                       eventId,
                       () => {
+                        if (!interest) {
+                          showToast('Event added to your collection!', true);
+                        }
                         setApiCall(false);
                         setInterest(!interest);
                       },
@@ -119,7 +126,7 @@ const EventsCard = observer(
                   }}
                   color={colors.EventCard_Bookmark}
                   style={styles.icon}
-                  icon={interest ? 'bookmark' : 'bookmark-outline'}
+                  icon={interest ? 'star' : 'star-outline'}
                   disabled={ApiCall}
                 />
               ) : (
@@ -144,7 +151,7 @@ const EventsCard = observer(
                       // dismissed
                     }
                   } catch (error) {
-                    Alert.alert(error.message);
+                    showToast(error.message);
                   }
                 }}
                 color={colors.EventCard_ShareIcon}

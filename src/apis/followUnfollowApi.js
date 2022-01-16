@@ -23,7 +23,6 @@ async function API_CALL(clubId, successCallback, failureCallBack) {
       if (responseFollow.status == 200) successCallback();
       else {
         failureCallBack();
-        showToast();
       }
     }
   } catch (error) {

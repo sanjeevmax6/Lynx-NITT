@@ -41,11 +41,8 @@ const openLink = async url => {
           'my-custom-header': 'my custom header value',
         },
       });
-      //Alert.alert(JSON.stringify(result));
     } else Linking.openURL(url);
-  } catch (error) {
-    Alert.alert(error.message);
-  }
+  } catch (error) {}
 };
 
 const Links = ({links}) => {

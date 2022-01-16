@@ -5,7 +5,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IconButton} from 'react-native-paper';
-
+import {useToast} from 'react-native-toast-notifications';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
@@ -27,7 +27,15 @@ const EventDescriptionHeader = observer(({navigation}) => {
     }
     return false;
   };
+  const toast = useToast();
 
+  const showToast = (msg = '', success = false) => {
+    if (msg === '') toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+    else {
+      if (!success) toast.show(msg, {type: 'warning'});
+      else toast.show(msg, {type: 'success', placement: 'top'});
+    }
+  };
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -63,6 +71,9 @@ const EventDescriptionHeader = observer(({navigation}) => {
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
+                if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+                  showToast('Event added to your collection!', true);
+                }
                 FEEDS_STORE.setInterested(
                   !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
                   EVENT_DESCRIPTION_STORE.getID,
@@ -81,8 +92,8 @@ const EventDescriptionHeader = observer(({navigation}) => {
           disabled={Api}
           icon={
             EVENT_DESCRIPTION_STORE.getWasStudentInterested
-              ? 'bookmark'
-              : 'bookmark-outline'
+              ? 'star'
+              : 'star-outline'
           }
           color={colors.Tertiary}
           style={{...styles.button, elevation: 0}}
