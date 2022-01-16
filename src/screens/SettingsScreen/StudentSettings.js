@@ -13,12 +13,18 @@ const StudentSettings = observer(({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.textStyle}>Manage Notifications</Text>
-      <FlatList
-        data={STUDENT_DETAILS_STORE.getClubs}
-        renderItem={({item}) => (
-          <ClubFollowItem clubItem={item} goToClub={goToClub} />
-        )}
-      />
+      {STUDENT_DETAILS_STORE.getClubs.length !== 0 ? (
+        <FlatList
+          data={STUDENT_DETAILS_STORE.getClubs}
+          renderItem={({item}) => (
+            <ClubFollowItem clubItem={item} goToClub={goToClub} />
+          )}
+        />
+      ) : (
+        <Text style={styles.errorStyle}>
+          You haven't followed any clubs yet
+        </Text>
+      )}
     </View>
   );
 });
@@ -32,7 +38,13 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(16),
     marginTop: verticalScale(15),
     marginBottom: verticalScale(4),
-    fontWeight: '500',
+    fontWeight: 'bold',
+  },
+  errorStyle: {
+    fontSize: moderateScale(16),
+    marginHorizontal: scale(16),
+    marginTop: verticalScale(10),
+    alignSelf: 'center',
   },
 });
 

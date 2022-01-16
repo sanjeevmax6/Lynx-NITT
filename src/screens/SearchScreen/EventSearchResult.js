@@ -140,6 +140,7 @@ const EventSearchResult = ({searchQuery, setScreen, navigation}) => {
                       onPress={() => {
                         navigation.push('EventDescriptionScreen', {
                           eventId: item.id,
+                          app: true,
                         });
                       }}>
                       <EventSearchCard

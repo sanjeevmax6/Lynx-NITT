@@ -61,6 +61,7 @@ const ActivityCard = ({
     if (type === 'event') {
       navigation.push('EventDescriptionScreen', {
         eventId: id.event_id,
+        app: true,
       });
     } else {
       navigation.push('AnnouncementDetail', {

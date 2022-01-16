@@ -71,6 +71,7 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
   const goToEvent = eventId => {
     navigation.push('EventDescriptionScreen', {
       eventId: eventId,
+      app: true,
     });
   };
 

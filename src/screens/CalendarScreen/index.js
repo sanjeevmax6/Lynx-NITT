@@ -132,6 +132,7 @@ const CalendarScreen = observer(({navigation}) => {
         onPress={() => {
           navigation.push('EventDescriptionScreen', {
             eventId: item.EventId,
+            app: true,
           });
         }}>
         <EventCard data={item} />

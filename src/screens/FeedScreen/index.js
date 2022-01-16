@@ -98,6 +98,7 @@ const FeedScreen = observer(({navigation}) => {
                     onPress={() => {
                       navigation.push('EventDescriptionScreen', {
                         eventId: item.EventId,
+                        app: true,
                       });
                     }}>
                     <SuggestedEventCard
@@ -207,6 +208,7 @@ const FeedScreen = observer(({navigation}) => {
                   onPress={() => {
                     navigation.push('EventDescriptionScreen', {
                       eventId: item.EventId,
+                      app: true,
                     });
                   }}>
                   {USER_STORE.getUserType === STUDENT ? (

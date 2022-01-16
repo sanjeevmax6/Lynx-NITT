@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Platform, Text} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
@@ -51,6 +51,11 @@ const EventDescriptionHeader = observer(({navigation}) => {
           />
         )}
       </TouchableOpacity>
+      <View style={styles.textView}>
+        <Text numberOfLines={1} style={styles.headerText}>
+          {EVENT_DESCRIPTION_STORE.getData.Title}
+        </Text>
+      </View>
       {USER_STORE.getUserType === STUDENT ? (
         <IconButton
           onPress={() => {

@@ -39,7 +39,7 @@ const NoEventScreen = ({errorMessage}) => {
         loop={false}
       />
       <Animatable.Text
-        delay={1000}
+        delay={800}
         animation="fadeIn"
         style={{
           textAlign: 'center',

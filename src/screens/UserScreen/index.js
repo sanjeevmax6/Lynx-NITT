@@ -40,7 +40,10 @@ const UserScreen = observer(({navigation}) => {
   };
 
   const onEventClick = eventId => {
-    navigation.navigate('EventDescriptionScreen', {eventId});
+    navigation.navigate('EventDescriptionScreen', {
+      eventId: eventId,
+      app: true,
+    });
   };
 
   const onRefresh = () => {

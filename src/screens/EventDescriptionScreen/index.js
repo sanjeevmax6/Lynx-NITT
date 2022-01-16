@@ -42,6 +42,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
+        EVENT_DESCRIPTION_STORE.reset();
         navigation.popToTop();
         return true;
       },
@@ -64,10 +65,11 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
           <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
         ) : EVENT_DESCRIPTION_STORE.getError ? (
           <ErrorScreen
+            buttonText="GO BACK"
             errorMessage={EVENT_DESCRIPTION_STORE.getErrorText}
             fn={() => {
               EVENT_DESCRIPTION_STORE.reset();
-              eventDescriptionAPI();
+              navigation.popToTop();
             }}
           />
         ) : (
