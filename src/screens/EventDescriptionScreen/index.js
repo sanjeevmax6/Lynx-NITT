@@ -25,6 +25,7 @@ import ErrorScreen from '../../components/ErrorScreen';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {DEEP_LINKING_STORE} from '../../mobx/DEEP_LINKING_STORE';
 import {IconButton} from 'react-native-paper';
 import EventStatusTag from './EventStatusTag';
 import EventDescriptionHeader from './eventDescriptionHeader';
@@ -37,6 +38,9 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     BOTTOM_NAV_STORE.setTabVisibility(false);
   }
   useEffect(() => {
+    if (route.params.app !== true) {
+      DEEP_LINKING_STORE.setAllow(true);
+    }
     EVENT_DESCRIPTION_STORE.setLoading(true);
     BOTTOM_NAV_STORE.setTabVisibility(false);
     const backHandler = BackHandler.addEventListener(

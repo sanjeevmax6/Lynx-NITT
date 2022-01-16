@@ -13,44 +13,46 @@ import ClubRegistration from '../screens/ClubRegistration';
 import {AUTH_NAV_STORE} from '../mobx/AUTH_NAV_STORE';
 import {observer} from 'mobx-react';
 import {USER_STORE} from '../mobx/USER_STORE';
-import CLUB_DESCRIPTION_STORE from '../mobx/CLUB_DESCRIPTION_STORE';
-import EVENT_DESCRIPTION_STORE from '../mobx/EVENT_DESCRIPTION_STORE';
+import {DEEP_LINKING_STORE} from '../mobx/DEEP_LINKING_STORE';
 
 const RootStack = createNativeStackNavigator();
 
 const Navigator = observer(() => {
   return (
     <NavigationContainer
-      linking={{
-        prefixes: ['https://nittapp.spider.nitt.edu', 'nitt-app://'],
-        config: {
-          screens: {
-            Home: {
-              initialRouteName: 'Feed',
-              screens: {
-                Feed: {
-                  initialRouteName: 'Feeds',
-                  screens: {
-                    EventDescriptionScreen: 'event/:eventId',
-                    ClubDescription: 'club/:ClubId',
+      linking={
+        DEEP_LINKING_STORE.getAllow === true
+          ? {
+              prefixes: ['https://nittapp.spider.nitt.edu', 'nitt-app://'],
+              config: {
+                screens: {
+                  Home: {
+                    initialRouteName: 'Feed',
+                    screens: {
+                      Feed: {
+                        initialRouteName: 'Feeds',
+                        screens: {
+                          EventDescriptionScreen: 'event/:eventId',
+                          ClubDescription: 'club/:ClubId',
+                        },
+                      },
+                    },
                   },
                 },
               },
-            },
-          },
-        },
-        async getInitialURL() {
-          // Check if app was opened from a deep link
-          const url = await Linking.getInitialURL();
+              async getInitialURL() {
+                // Check if app was opened from a deep link
+                const url = await Linking.getInitialURL();
 
-          console.log('URL: ' + url);
-          if (url != null) {
-            // CLUB_DESCRIPTION_STORE.setLoading(true);
-            // EVENT_DESCRIPTION_STORE.setLoading(true);
-            return url;
-          }
-        },
-      }}>
+                console.log('URL: ' + url);
+                if (url != null) {
+                  DEEP_LINKING_STORE.setAllow(false);
+                  return url;
+                }
+              },
+            }
+          : null
+      }>
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,
