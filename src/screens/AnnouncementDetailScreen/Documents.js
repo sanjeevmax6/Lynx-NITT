@@ -34,12 +34,7 @@ const DisplayDocument = ({data}) => {
           />
           <Text
             numberOfLines={1}
-            style={{
-              fontSize: scale(12),
-              fontWeight: '500',
-              marginTop: verticalScale(0),
-              paddingBottom: verticalScale(3),
-            }}>
+            style={{...styles.documentName, marginTop: 0}}>
             {data.originalname}
           </Text>
         </TouchableOpacity>
@@ -63,17 +58,10 @@ const DisplayDocument = ({data}) => {
                   }}
                   resizeMode="contain"
                   source={{
-                    uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png',
+                    uri: 'https://imagizer.imageshack.com/img924/8466/roc9oy.png',
                   }}
                 />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: scale(12),
-                    fontWeight: '500',
-                    marginTop: verticalScale(-6),
-                    paddingBottom: verticalScale(3),
-                  }}>
+                <Text numberOfLines={1} style={styles.documentName}>
                   {data.originalname}
                 </Text>
               </TouchableOpacity>
@@ -96,17 +84,10 @@ const DisplayDocument = ({data}) => {
                   }}
                   resizeMode="contain"
                   source={{
-                    uri: 'https://cdn-icons-png.flaticon.com/512/270/270006.png',
+                    uri: 'https://imagizer.imageshack.com/img922/9100/T8XvCz.png',
                   }}
                 />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: scale(12),
-                    fontWeight: '500',
-                    marginTop: verticalScale(-6),
-                    paddingBottom: verticalScale(3),
-                  }}>
+                <Text numberOfLines={1} style={styles.documentName}>
                   {data.originalname}
                 </Text>
               </TouchableOpacity>
@@ -141,4 +122,11 @@ const Documents = ({docs}) => {
 
 export default Documents;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  documentName: {
+    fontSize: scale(11),
+    fontWeight: '300',
+    marginTop: verticalScale(-6),
+    paddingBottom: verticalScale(3),
+  },
+});

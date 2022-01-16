@@ -40,7 +40,7 @@ const AnnouncementDetailScreen = observer(({route, navigation}) => {
             <ScrollView
               style={{marginHorizontal: scale(HorizontalPadding)}}
               showsVerticalScrollIndicator={false}>
-              <CreatorDetails />
+              <CreatorDetails navigation={navigation} />
               <AnnouncementDetail />
             </ScrollView>
           )}

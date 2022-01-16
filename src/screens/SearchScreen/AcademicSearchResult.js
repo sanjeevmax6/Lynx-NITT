@@ -149,13 +149,16 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
                     <TouchableOpacity
                       activeOpacity={0.7}
                       onPress={() => {
-                        console.log('Academic');
+                        navigation.push('AnnouncementDetail', {
+                          circularId: item._id,
+                        });
                       }}>
                       <AcademicSearchCard
                         title={item.title}
                         name={item.club.name}
                         desc={item.description}
                         url={item.club.profilePic}
+                        time={item.createdAt}
                       />
                       <Separator />
                     </TouchableOpacity>

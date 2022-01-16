@@ -3,10 +3,11 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
+import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import ImageView from '../ImageView';
 
-const AcademicSearchCard = ({title, desc, url, name}) => {
+const AcademicSearchCard = ({title, desc, url, name, time}) => {
   console.log(url);
   return (
     <View style={styles.card}>
@@ -32,9 +33,18 @@ const AcademicSearchCard = ({title, desc, url, name}) => {
               flexShrink: 1,
               marginRight: scale(HorizontalPadding),
               fontSize: scale(12),
+              fontWeight: '300',
             }}>
             {desc}
           </Text>
+        </Text>
+        <Text
+          style={{
+            fontSize: scale(12),
+            textAlign: 'right',
+            color: colors.GRAY_DARK,
+          }}>
+          {getFormattedDate(time)}
         </Text>
       </View>
     </View>

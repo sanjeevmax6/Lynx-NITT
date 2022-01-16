@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 import ImageView from '../../components/ImageView';
 import {ANNOUNCEMENT_DETAILS_STORE} from '../../mobx/ANNOUNCEMENT_DETAILS_STORE';
@@ -7,9 +7,9 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {observer} from 'mobx-react';
 import {getFormatedDate} from 'react-native-modern-datepicker';
 import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
-import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
+import {API_GET_IMAGE, NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
-const CreatorDetails = observer(() => {
+const CreatorDetails = observer(({navigation}) => {
   return (
     <View
       style={{
@@ -18,10 +18,27 @@ const CreatorDetails = observer(() => {
         paddingTop: verticalScale(HorizontalPadding),
         alignItems: 'center',
       }}>
-      <ImageView src={NO_IMAGE_URL} style={styles.image} />
+      <TouchableOpacity
+        style={{...styles.image, elevation: 1}}
+        onPress={() => {
+          navigation.navigate(
+            'ClubDescription',
+            {ClubId: ANNOUNCEMENT_DETAILS_STORE.getData.club._id},
+            {initial: false},
+          );
+        }}>
+        <ImageView
+          src={
+            API_GET_IMAGE + ANNOUNCEMENT_DETAILS_STORE.getData.club.profilePic
+          }
+          style={styles.image}
+        />
+      </TouchableOpacity>
       <View style={{marginHorizontal: scale(10)}}>
-        <Text>{'NA'}</Text>
-        <Text>{'NA'} Followers</Text>
+        <Text numberOfLines={3} style={styles.clubName}>
+          {ANNOUNCEMENT_DETAILS_STORE.getData.club.name}
+        </Text>
+
         <Text style={styles.time}>
           {getFormatedDate(ANNOUNCEMENT_DETAILS_STORE.getData.createdAt)} |{' '}
           {getFormattedTime(ANNOUNCEMENT_DETAILS_STORE.getData.createdAt)}
@@ -35,13 +52,18 @@ export default CreatorDetails;
 
 const styles = StyleSheet.create({
   image: {
-    height: scale(60),
-    width: scale(60),
-    borderRadius: scale(30),
+    height: scale(70),
+    width: scale(70),
+    borderRadius: scale(35),
   },
 
   time: {
     fontSize: scale(14),
     fontWeight: '500',
+  },
+  clubName: {
+    fontSize: scale(16),
+    fontWeight: 'bold',
+    paddingBottom: verticalScale(6),
   },
 });

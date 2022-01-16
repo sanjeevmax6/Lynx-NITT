@@ -66,6 +66,8 @@ function ActivityNavigator() {
         name="ClubDescription"
         component={ClubDescriptionScreen}
         options={{
+          animation: 'slide_from_right',
+
           headerShown: true,
           header: props => <Header props={props} />,
         }}

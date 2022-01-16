@@ -8,6 +8,7 @@ import ImageZoomScreen from '../../screens/ImageZoomScreen';
 import ClubDescriptionScreen from '../../screens/ClubDescriptionScreen';
 import * as color from '../../utils/colors';
 import SearchScreen from '../../screens/SearchScreen';
+import AnnouncementDetailScreen from '../../screens/AnnouncementDetailScreen';
 
 const CalendarStack = createNativeStackNavigator();
 import Header from '../../components/Header';
@@ -58,6 +59,15 @@ function SearchNavigator() {
         options={{
           headerShown: true,
           animation: 'slide_from_right',
+          header: props => <Header props={props} />,
+        }}
+      />
+      <CalendarStack.Screen
+        name="AnnouncementDetail"
+        component={AnnouncementDetailScreen}
+        options={{
+          animation: 'slide_from_right',
+          headerShown: true,
           header: props => <Header props={props} />,
         }}
       />

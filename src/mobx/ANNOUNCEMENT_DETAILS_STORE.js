@@ -3,7 +3,7 @@ import {action, makeObservable, observable, computed} from 'mobx';
 class Announcement {
   state = {
     id: '',
-    data: {links: [], documents: []},
+    data: {links: [], documents: [], club: {}},
 
     loading: false,
     error: false,
