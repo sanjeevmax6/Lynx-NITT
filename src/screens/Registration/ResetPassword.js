@@ -39,7 +39,11 @@ const ResetPassword = ({
   };
 
   const back = () => {
-    callback('Profile Picture', 'Upload your profile photo', 3);
+    callback(
+      'Profile Picture',
+      'Upload your profile photo. This picture will be used by NIT Trichy for official purposes.',
+      3,
+    );
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 3,

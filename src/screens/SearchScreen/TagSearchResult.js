@@ -25,7 +25,7 @@ const TagSearchResult = ({searchQuery, setScreen, navigation}) => {
   const isFocused = useIsFocused();
 
   if (isFocused) {
-    setScreen('tags');
+    setScreen('events by tag');
     BOTTOM_NAV_STORE.setTabVisibility(true);
     if (searchQuery != '') {
       if (searchQuery != API) {

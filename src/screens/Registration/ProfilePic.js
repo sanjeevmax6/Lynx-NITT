@@ -36,7 +36,7 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
         animated: true,
       });
     }
-    callback('Reset Password', 'Enter your new password', 4);
+    callback('Reset Password', 'Enter your new password.', 4);
   };
 
   const back = () => {

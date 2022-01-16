@@ -12,7 +12,7 @@ const StudentSettings = observer(({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>MANAGE CLUB NOTIFICATIONS</Text>
+      <Text style={styles.textStyle}>Manage Notifications</Text>
       <FlatList
         data={STUDENT_DETAILS_STORE.getClubs}
         renderItem={({item}) => (

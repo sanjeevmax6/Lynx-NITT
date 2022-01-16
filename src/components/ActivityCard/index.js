@@ -28,10 +28,7 @@ const ActivityCard = ({
   const getTimeGap = d => {
     let date = new Date(d);
     var today = new Date();
-    var Difference_In_Time = Math.abs(today.getTime() - date.getTime());
-    var Difference_In_Days = Math.floor(
-      Difference_In_Time / (1000 * 3600 * 24),
-    );
+    var Difference_In_Days = Math.abs(today.getDate() - date.getDate());
     if (Math.floor(Difference_In_Days / 365) >= 1) {
       return Math.floor(Difference_In_Days / 365) + 'yr';
     }
@@ -41,7 +38,23 @@ const ActivityCard = ({
     if (Math.floor(Difference_In_Days / 7) >= 1) {
       return Math.floor(Difference_In_Days / 7) + 'w';
     }
-    return Difference_In_Days + 'd';
+    if (Difference_In_Days === 0) return 'Today';
+    else if (Difference_In_Days === 1) return 'Yesterday';
+    else {
+      const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ];
+      var showDate = new Date(
+        today.getTime() - Difference_In_Days * (24 * 60 * 60 * 1000),
+      );
+      return days[showDate.getDay()];
+    }
   };
 
   const navigationHandler = () => {
@@ -88,14 +101,14 @@ const ActivityCard = ({
                 flexDirection: 'row',
                 //alignItems: 'flex-end',
               }}>
-              <Text style={{fontSize: scale(12)}}>
+              <Text style={{fontSize: scale(12.5)}}>
                 {getFormatedDate(date)} | {getFormattedTime(date)}
               </Text>
               <Text
                 style={{
                   textAlign: 'right',
                   flex: 1,
-                  fontSize: scale(12),
+                  fontSize: scale(12.5),
                   fontWeight: '300',
                 }}>
                 {getTimeGap(date)}

@@ -158,7 +158,7 @@ const ActivityScreen = observer(({navigation}) => {
                     navigation={navigation}
                     id={item}
                   />
-                  <Divider style={{height: verticalScale(1)}} />
+                  <Divider style={{height: verticalScale(1.5)}} />
                 </View>
               );
             }}

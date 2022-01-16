@@ -51,7 +51,7 @@ const ClubLogo = observer(({forwardAction, backwardAction}) => {
         alignItems: 'center',
         backgroundColor: colors.Secondary,
       }}>
-      <Text style={styles.title}>Upload your Club Profile Picture!</Text>
+      <Text style={styles.title}>Upload your Club's Profile Picture!</Text>
       <View style={styles.imageView}>
         <Image
           source={{

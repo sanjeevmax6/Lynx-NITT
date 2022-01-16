@@ -45,7 +45,12 @@ const DropDownModal = observer(({modalType, data}) => {
             <View style={styles.modalView}>
               {modalType != MODAL_TYPE_GENDER && (
                 <Searchbar
-                  style={{elevation: 0, margin: 10, padding: 0, color: 'red'}}
+                  style={{
+                    elevation: 0,
+                    margin: scale(10),
+                    padding: 0,
+                    color: 'red',
+                  }}
                   placeholder={'Search'}
                   onChangeText={onChangeSearch}
                   value={searchQuery}
@@ -128,11 +133,11 @@ const styles = StyleSheet.create({
   modalView: {
     marginVertical: scale(12),
     marginHorizontal: scale(8),
-    height: (2.3 * Dimensions.get('window').height) / 3,
+    height: Dimensions.get('window').height / 1.8,
     backgroundColor: colors.WHITE,
     opacity: 0.99,
     borderRadius: scale(20),
-    padding: scale(20),
+    padding: scale(15),
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -164,14 +169,14 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     borderRadius: scale(10),
-    padding: scale(10),
+    padding: scale(8),
     elevation: 2,
     backgroundColor: colors.EventDescriptionScreen_Button,
     marginTop: verticalScale(6),
   },
   textStyle: {
     color: 'white',
-    fontSize: scale(15),
+    fontSize: scale(14),
     paddingHorizontal: scale(18),
     textAlign: 'center',
   },
