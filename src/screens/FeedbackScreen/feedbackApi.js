@@ -8,7 +8,8 @@ import {API_STORE} from '../../mobx/API_STORE';
 import {FEEDBACK_STORE} from '../../mobx/FEEDBACK_STORE';
 
 import axios from 'axios';
-import {STUDENT} from '../../utils/USER_TYPE';
+import {CLUB, STUDENT} from '../../utils/USER_TYPE';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
 export const feedsAPI = () => {
   FEEDBACK_STORE.setLoading(true);
@@ -18,7 +19,10 @@ export const feedsAPI = () => {
       axios
         .post(API_STORE.getBaseUrl + API_FEEDBACK, {
           userType: USER_STORE.getUserType === STUDENT ? 'student' : 'club',
-          userId: '61c5fc98678015748a32bf6f',
+          userId:
+            USER_STORE.getUserType === CLUB
+              ? USER_STORE.getClubId
+              : STUDENT_DETAILS_STORE.getStudentId,
           detail: FEEDBACK_STORE.getFeedback,
           feedbackType: FEEDBACK_STORE.getType,
         })

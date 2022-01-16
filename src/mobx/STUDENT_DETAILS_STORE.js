@@ -18,6 +18,7 @@ class StudentDetailStore {
     profilePic: '',
     interestList: [],
     clubsFollowingList: [],
+    studentId: '',
 
     // loading and error values
     isLoading: false,
@@ -42,6 +43,7 @@ class StudentDetailStore {
     this.state.isError = false;
     this.state.errorText = '';
     this.state.refresh = false;
+    this.state.studentId = '';
   };
   /*
     ^^^^^ SETTERS ^^^^^
@@ -58,6 +60,7 @@ class StudentDetailStore {
     this.state.aadhar = details.aadhar;
     this.state.address = details.address;
     this.state.profilePic = details.profile_pic;
+    this.state.studentId = details.id;
   };
   setRollNumber = rno => {
     this.state.rollNumber = rno;
@@ -172,6 +175,10 @@ class StudentDetailStore {
     return this.state.refresh;
   }
 
+  get getStudentId() {
+    return this.state.studentId;
+  }
+
   /*
     ^^^^^ CONSTRUCTOR ^^^^^
   */
@@ -216,6 +223,7 @@ class StudentDetailStore {
       getAddress: computed,
       getProfilePic: computed,
       getRefresh: computed,
+      getStudentId: computed,
     });
   }
 }
