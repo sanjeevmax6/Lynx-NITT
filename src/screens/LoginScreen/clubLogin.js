@@ -1,5 +1,6 @@
 import {API_CLUB_LOGIN} from '../../utils/API_CONSTANTS';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import EncryptedStorage from 'react-native-encrypted-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {LOGIN_STORE} from '../../mobx/LOGIN_STORE';
@@ -21,18 +22,21 @@ export const clubLogin = (email, password) => {
           password,
           reg_token,
         })
-        .then(response => {
+        .then(async response => {
           if (response.status == 200) {
             //Differentiate club and admin based on backend
 
             if (response.data.isAdmin) {
-              AsyncStorage.setItem(USER_TYPE, ADMIN);
+              await EncryptedStorage.setItem(USER_TYPE, ADMIN);
+
               USER_STORE.setUserType(ADMIN);
             } else {
               USER_STORE.setUserType(CLUB);
-              AsyncStorage.setItem(USER_TYPE, CLUB);
+
+              await EncryptedStorage.setItem(USER_TYPE, CLUB);
             }
-            AsyncStorage.setItem(CLUB_USER_ID, response.data.clubId);
+
+            await EncryptedStorage.setItem(CLUB_USER_ID, response.data.clubId);
 
             USER_STORE.setClubId(response.data.clubId);
             USER_STORE.setRedirectUpdate(response.data.redirectUpdate);
@@ -40,7 +44,8 @@ export const clubLogin = (email, password) => {
             USER_STORE.setUserToken(response.data.token);
             //console.log('Redirect Update' + USER_STORE.getRedirectUpdate);
             if (response.data.redirectUpdate === false)
-              AsyncStorage.setItem(USER_TOKEN, response.data.token); //user token stored locally
+              //user token stored locally
+              await EncryptedStorage.setItem(USER_TOKEN, response.data.token);
           }
           LOGIN_STORE.setLoading(false);
         })

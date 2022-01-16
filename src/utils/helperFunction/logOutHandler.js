@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {ACTIVITY_STORE} from '../../mobx/ACITIVITY_STORE';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE';
@@ -25,6 +24,7 @@ import {API_LOGOUT_CLUB, API_LOGOUT_STUDENT} from '../API_CONSTANTS';
 import {CLUB_USER_ID, USER_TOKEN, USER_TYPE} from '../STORAGE_KEYS';
 import {STUDENT} from '../USER_TYPE';
 import NetInfo from '@react-native-community/netinfo';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const LogOutHandler = () => {
   if (USER_STORE.getUserType === STUDENT) {
@@ -43,11 +43,11 @@ export const LogOutHandler = () => {
           {reg_token: USER_STORE.getFirebaseToken},
           {headers: {token: USER_STORE.getUserToken}},
         )
-        .then(response => {
+        .then(async response => {
           if (response.status === 200) {
-            AsyncStorage.removeItem(USER_TYPE);
-            AsyncStorage.removeItem(USER_TOKEN);
-            AsyncStorage.removeItem(CLUB_USER_ID);
+            await EncryptedStorage.removeItem(CLUB_USER_ID);
+            await EncryptedStorage.removeItem(USER_TOKEN);
+            await EncryptedStorage.removeItem(USER_TYPE);
             console.log('LOGOUT');
 
             // //reset stores

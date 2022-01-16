@@ -4,10 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {USER_STORE} from '../../mobx/USER_STORE';
-import {CLUB_USER_ID, USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
-import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
+
 import {LogOutHandler} from '../../utils/helperFunction/logOutHandler';
 import CustomAlert from '../../components/customAlert';
 

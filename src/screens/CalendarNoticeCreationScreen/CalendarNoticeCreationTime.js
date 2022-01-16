@@ -214,7 +214,6 @@ const CalendarNoticeCreationTime = observer(
                   CALENDAR_NOTICE_STORE.setShowStartDatePicker(false)
                 }
                 //Notice can be created only for start dates from next day
-                minimumDate={new Date(new Date().getTime() + 86400000)}
               />
             )}
             {CALENDAR_NOTICE_STORE.getShowEndDatePicker && (
@@ -228,7 +227,6 @@ const CalendarNoticeCreationTime = observer(
                   CALENDAR_NOTICE_STORE.setShowEndDatePicker(false)
                 }
                 //Notice can be created only for end dates from 2 days after
-                minimumDate={new Date(new Date().getTime() + 2 * 86400000)}
               />
             )}
             {CALENDAR_NOTICE_STORE.getError ? (

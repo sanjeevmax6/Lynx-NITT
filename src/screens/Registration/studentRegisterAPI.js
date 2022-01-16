@@ -1,5 +1,5 @@
 import {API_STUDENT_REGISTER} from '../../utils/API_CONSTANTS';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import NetInfo from '@react-native-community/netinfo';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {API_STORE} from '../../mobx/API_STORE';

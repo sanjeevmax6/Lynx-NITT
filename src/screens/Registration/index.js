@@ -26,7 +26,8 @@ import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import EncryptedStorage from 'react-native-encrypted-storage';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {USER_TOKEN, USER_TYPE} from '../../utils/STORAGE_KEYS';
 import {STUDENT} from '../../utils/USER_TYPE';
@@ -138,13 +139,16 @@ const Registration = observer(({navigation}) => {
             <>
               {STUDENT_REGISTRATION_STORE.getApiSuccess ? (
                 <SuccessScreen
-                  fn={() => {
+                  fn={async () => {
                     USER_STORE.setUserType(STUDENT);
-                    AsyncStorage.setItem(
+                    await EncryptedStorage.setItem(
                       USER_TOKEN,
                       STUDENT_REGISTRATION_STORE.getApiResponse.data.token,
                     );
-                    AsyncStorage.setItem(USER_TYPE, STUDENT); //stored items should be string
+
+                    await EncryptedStorage.setItem(USER_TYPE, STUDENT);
+
+                    //stored items should be string
 
                     USER_STORE.setUserToken(
                       STUDENT_REGISTRATION_STORE.getApiResponse.data.token,

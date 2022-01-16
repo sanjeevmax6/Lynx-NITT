@@ -10,7 +10,8 @@ import LoaderPage from '../../components/LoadingScreen';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import ErrorScreen from '../../components/ErrorScreen';
 import SuccessScreen from '../../components/SuccessScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import EncryptedStorage from 'react-native-encrypted-storage';
 import {USER_TOKEN} from '../../utils/STORAGE_KEYS';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
@@ -55,10 +56,13 @@ const ClubRegistration = observer(() => {
             <>
               {CLUB_REGISTER_STORE.getSuccess ? (
                 <SuccessScreen
-                  fn={() => {
+                  fn={async () => {
                     USER_STORE.setRedirectUpdate(false);
-                    AsyncStorage.setItem(USER_TOKEN, USER_STORE.getUserToken); //user token stored locally
 
+                    await EncryptedStorage.setItem(
+                      USER_TOKEN,
+                      USER_STORE.getUserToken,
+                    );
                     EDIT_CLUB_PROFILE_STORE.reset();
                   }}
                 />

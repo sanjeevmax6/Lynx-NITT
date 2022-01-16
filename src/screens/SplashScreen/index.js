@@ -12,7 +12,6 @@ import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import ErrorScreen from '../../components/ErrorScreen';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
@@ -33,20 +32,21 @@ import {
 
 const logo = require('../../res/images/nitt_logo.png');
 const spiderLogo = require('../../res/images/spiderLogo.png');
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 import DeviceInfo from 'react-native-device-info';
 
 async function loadCache() {
   try {
-    const userToken = await AsyncStorage.getItem(USER_TOKEN);
-    const userType = await AsyncStorage.getItem(USER_TYPE);
+    const userToken = await EncryptedStorage.getItem(USER_TOKEN);
+    const userType = await EncryptedStorage.getItem(USER_TYPE);
 
     if (userType === null) {
       userType = '';
     }
 
     if (userType != STUDENT) {
-      const userClubId = await AsyncStorage.getItem(CLUB_USER_ID);
+      const userClubId = await EncryptedStorage.getItem(CLUB_USER_ID);
       USER_STORE.setClubId(userClubId);
     }
 
