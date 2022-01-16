@@ -96,6 +96,7 @@ const Name = observer(({scrollViewRef, callback}) => {
         }}
         value={STUDENT_REGISTRATION_STORE.getAddress}
         multiline={true}
+        selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
         outlineColor={addEr ? colors.Tertiary : null}
         style={{...styles.inputAd, marginTop: verticalScale(5)}}
         onChangeText={add => {

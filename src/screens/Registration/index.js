@@ -76,10 +76,12 @@ const Registration = observer(({navigation}) => {
 
     formData.append('reg_token', reg_token);
     formData.append(
+      'countryCode',
+      '+' + STUDENT_REGISTRATION_STORE.getCountryCode,
+    );
+    formData.append(
       'mobile_no',
-      '+' +
-        STUDENT_REGISTRATION_STORE.getCountryCode +
-        STUDENT_REGISTRATION_STORE.getMobileNumber.trim(),
+      STUDENT_REGISTRATION_STORE.getMobileNumber.trim(),
     );
     formData.append('gender', STUDENT_REGISTRATION_STORE.getGender.trim());
     formData.append(
