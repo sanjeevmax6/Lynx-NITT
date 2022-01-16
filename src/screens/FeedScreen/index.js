@@ -41,7 +41,7 @@ const FeedScreen = observer(({navigation}) => {
     FEEDS_STORE.setRefreshing(true);
     FEEDS_STORE.setError(false);
     FEEDS_STORE.setErrorText('');
-    FEEDS_STORE.setLoading(false);
+    FEEDS_STORE.setLoading(true);
     FEEDS_STORE.setSuccess(false);
 
     feedsAPI(true);

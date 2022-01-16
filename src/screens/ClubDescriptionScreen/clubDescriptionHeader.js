@@ -32,7 +32,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import ImageView from '../../components/ImageView';
 
-const Header = observer(
+const ClubDescriptionHeader = observer(
   ({name, followers, url, email, description, navigation}) => {
     const [coverColor, setCoverColor] = useState('');
     const [ApiCall, setApiCall] = useState(false);
@@ -282,7 +282,7 @@ const Header = observer(
   },
 );
 
-export default Header;
+export default ClubDescriptionHeader;
 
 const styles = ScaledSheet.create({
   text: {

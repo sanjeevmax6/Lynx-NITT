@@ -85,7 +85,10 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
           />
         ) : (
           <>
-            <EventDescriptionHeader navigation={navigation} />
+            <EventDescriptionHeader
+              navigation={navigation}
+              fromProfile={route.params.fromProfile}
+            />
             <ScrollView showsVerticalScrollIndicator={false}>
               <Images
                 images={EVENT_DESCRIPTION_STORE.getData.photos}

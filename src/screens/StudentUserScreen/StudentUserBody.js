@@ -6,8 +6,9 @@ import InterestedEventsScreen from './InterestedEventsScreen';
 import ClubFollowingScreen from './ClubFollowingScreen';
 import {scale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
-const Body = ({navigation, clubFollowing, interestedEvents, functionCalls}) => {
+const Body = ({navigation, functionCalls}) => {
   return (
     <View style={styles.container}>
       <Tab.Navigator
@@ -30,22 +31,18 @@ const Body = ({navigation, clubFollowing, interestedEvents, functionCalls}) => {
           tabBarInactiveTintColor: color.tabBarInactiveTintColor,
         }}>
         <Tab.Screen
-          name={`Following (${clubFollowing.length})`}
+          name={`Following (${STUDENT_DETAILS_STORE.getClubs.length})`}
           children={() => (
             <ClubFollowingScreen
               navigation={navigation}
-              clubFollowing={clubFollowing}
               goToClub={functionCalls.goToClub}
             />
           )}
         />
         <Tab.Screen
-          name={`Interested (${interestedEvents.length})`}
+          name={`Interested (${STUDENT_DETAILS_STORE.getInterests.length})`}
           children={() => (
-            <InterestedEventsScreen
-              interestedEvents={interestedEvents}
-              goToEvent={functionCalls.goToEvent}
-            />
+            <InterestedEventsScreen goToEvent={functionCalls.goToEvent} />
           )}
         />
       </Tab.Navigator>

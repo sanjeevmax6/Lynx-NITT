@@ -4,11 +4,13 @@ import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {listItemStyles} from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Tertiary} from '../../utils/colors';
+import * as colors from '../../utils/colors';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import ImageView from '../../components/ImageView';
 
 const ListItem = ({eventItem, goToEvent}) => {
   const imageUrl = API_GET_IMAGE + eventItem.poster;
+
   return (
     <TouchableOpacity
       style={listItemStyles.container}
@@ -29,16 +31,6 @@ const ListItem = ({eventItem, goToEvent}) => {
             {eventItem.clubName}
           </Text>
         </View>
-      </View>
-      <View style={listItemStyles.buttonStyles}>
-        <TouchableOpacity onPress={() => console.log('Unlist')}>
-          <Icon
-            name="star"
-            size={moderateScale(20)}
-            style={{marginEnd: scale(10)}}
-            color={Tertiary}
-          />
-        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

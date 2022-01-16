@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useS, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Header from './StudentUserHeader';
 import Body from './StudentUserBody';
@@ -20,6 +20,7 @@ const StudentUserScreen = observer(({navigation}) => {
   if (isFocused) {
     BOTTOM_NAV_STORE.setTabVisibility(true);
   }
+
   const studentUsername =
     STUDENT_DETAILS_STORE.getFirstName +
     ' ' +
@@ -28,7 +29,6 @@ const StudentUserScreen = observer(({navigation}) => {
   const studentDept = STUDENT_DETAILS_STORE.getDepartment;
   const coverPhotoUri = API_GET_IMAGE + STUDENT_DETAILS_STORE.getProfilePic;
   const interests = STUDENT_DETAILS_STORE.getInterests;
-  const clubs = STUDENT_DETAILS_STORE.getClubs;
 
   React.useEffect(() => {
     getAllStudentDetails();
@@ -49,6 +49,7 @@ const StudentUserScreen = observer(({navigation}) => {
     navigation.push('EventDescriptionScreen', {
       eventId: event._id,
       app: true,
+      fromProfile: true,
     });
     //navigation.push('EventDescription', {data: {EventId: event._id}});
   };
@@ -72,12 +73,7 @@ const StudentUserScreen = observer(({navigation}) => {
       ) : (
         <>
           <Header studentDetails={studentDetails} navigation={navigation} />
-          <Body
-            navigation={navigation}
-            clubFollowing={clubs}
-            interestedEvents={interests}
-            functionCalls={functionCalls}
-          />
+          <Body navigation={navigation} functionCalls={functionCalls} />
         </>
       )}
     </View>

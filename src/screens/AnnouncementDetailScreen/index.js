@@ -17,6 +17,7 @@ import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 import ErrorScreen from '../../components/ErrorScreen';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import Header from '../../components/Header';
 
 const AnnouncementDetailScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -30,6 +31,14 @@ const AnnouncementDetailScreen = observer(({route, navigation}) => {
   }, []);
   return (
     <>
+      <Header
+        props={{navigation: navigation}}
+        title={
+          ANNOUNCEMENT_DETAILS_STORE.getLoading
+            ? ''
+            : ANNOUNCEMENT_DETAILS_STORE.getData.title
+        }
+      />
       {ANNOUNCEMENT_DETAILS_STORE.getLoading ? (
         <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
       ) : (

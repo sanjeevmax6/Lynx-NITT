@@ -12,8 +12,9 @@ import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {observer} from 'mobx-react';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
 import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
-const EventDescriptionHeader = observer(({navigation}) => {
+const EventDescriptionHeader = observer(({navigation, fromProfile}) => {
   const [Api, setApi] = useState(false);
   console.log(EVENT_DESCRIPTION_STORE.getData.club.id);
 
@@ -36,6 +37,14 @@ const EventDescriptionHeader = observer(({navigation}) => {
       else toast.show(msg, {type: 'success', placement: 'top'});
     }
   };
+  const removeEvent = (eventId, urlId) => {
+    const events = STUDENT_DETAILS_STORE.getInterests;
+    var index = events.map(item => item.eventId).indexOf(eventId);
+    if (index <= -1) index = events.map(item => item.urlId).indexOf(urlId);
+    events.splice(index, 1);
+    STUDENT_DETAILS_STORE.setInterests(events);
+  };
+
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -71,6 +80,14 @@ const EventDescriptionHeader = observer(({navigation}) => {
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
+                if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+                  if (fromProfile) {
+                    removeEvent(
+                      EVENT_DESCRIPTION_STORE.getID,
+                      EVENT_DESCRIPTION_STORE.getData.urlId,
+                    );
+                  }
+                }
                 if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
                   showToast('Event added to your collection!', true);
                 }

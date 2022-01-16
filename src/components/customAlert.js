@@ -22,12 +22,12 @@ const CustomAlert = props => {
         (props.android &&
           props.android.container &&
           props.android.container.backgroundColor) ||
-        '#f2f2f2',
+        colors.WHITE,
     },
     title: {
       color:
         (props.android && props.android.title && props.android.title.color) ||
-        '#000000',
+        colors.BLACK,
       fontFamily:
         (props.android &&
           props.android.title &&
@@ -49,7 +49,7 @@ const CustomAlert = props => {
         (props.android &&
           props.android.message &&
           props.android.message.color) ||
-        '#000000',
+        colors.BLACK,
       fontFamily:
         (props.android &&
           props.android.message &&
@@ -68,7 +68,7 @@ const CustomAlert = props => {
       paddingTop: props.title ? null : verticalScale(10),
     },
     button: {
-      color: '#ff512f',
+      color: colors.Tertiary,
       fontFamily: FONT,
       fontSize: scale(16 - 2),
       fontWeight: '500',

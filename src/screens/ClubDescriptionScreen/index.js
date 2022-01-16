@@ -5,7 +5,7 @@ import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventsView from './EventsView';
 import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {Divider} from 'react-native-paper';
-import Header from './Header';
+import ClubDescriptionHeader from './clubDescriptionHeader';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
 
@@ -13,12 +13,17 @@ import {CLUB_DESCRIPTION_STORE} from '../../mobx/CLUB_DESCRIPTION_STORE';
 import {clubDescriptionAPI} from './clubDescriptionAPI';
 import LoaderPage from '../../components/LoadingScreen';
 import ErrorScreen from '../../components/ErrorScreen';
+import Header from '../../components/Header';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 
 const renderTopLayout = (data, navigation) => (
   <View>
     <Header
+      props={{navigation: navigation}}
+      title={CLUB_DESCRIPTION_STORE.getLoading ? '' : data.name}
+    />
+    <ClubDescriptionHeader
       name={data.name}
       email={data.email}
       followers={data.followers_count}

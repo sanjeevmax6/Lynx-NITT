@@ -9,6 +9,7 @@ import {toggleFollowApi} from '../../apis/followUnfollowApi';
 import ImageView from '../../components/ImageView';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 
 const ListItem = ({clubItem, goToClub}) => {
   const [Follow, setFollow] = useState(true);
@@ -19,6 +20,13 @@ const ListItem = ({clubItem, goToClub}) => {
 
   const showToast = () => {
     toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
+  };
+
+  const removeClub = club => {
+    const clubs = STUDENT_DETAILS_STORE.getClubs;
+    const index = clubs.indexOf(club);
+    clubs.splice(index, 1);
+    STUDENT_DETAILS_STORE.setClubs(clubs);
   };
 
   return (
@@ -47,6 +55,7 @@ const ListItem = ({clubItem, goToClub}) => {
               () => {
                 setApiCall(false);
                 setFollow(!Follow);
+                removeClub(clubItem);
               },
               () => {
                 showToast();

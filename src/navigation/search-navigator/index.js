@@ -57,7 +57,7 @@ function SearchNavigator() {
         name="ClubDescription"
         component={ClubDescriptionScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}
@@ -67,7 +67,7 @@ function SearchNavigator() {
         component={AnnouncementDetailScreen}
         options={{
           animation: 'slide_from_right',
-          headerShown: true,
+          headerShown: false,
           header: props => <Header props={props} />,
         }}
       />

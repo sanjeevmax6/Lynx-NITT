@@ -52,7 +52,7 @@ function UserNavigator() {
         name="ClubDescription"
         component={ClubDescriptionScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           animation: 'slide_from_right',
           header: props => <Header props={props} />,
         }}

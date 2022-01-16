@@ -9,8 +9,10 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Image,
 } from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {TextInput, Card} from 'react-native-paper';
 import {
   verticalScale,
   moderateScale,
@@ -85,7 +87,7 @@ const LoginScreen = observer(({navigation}) => {
           ) : (
             <>
               <View style={styles.container}>
-                {Platform.OS === 'android' ? (
+                {/* {Platform.OS === 'android' ? (
                   <LottieView
                     style={{
                       marginTop: getHeight(180),
@@ -107,108 +109,136 @@ const LoginScreen = observer(({navigation}) => {
                     autoPlay
                     loop
                   />
-                )}
-                <View>
+                )} */}
+                <KeyboardAvoidingView>
                   <SafeAreaView>
-                    <ScrollView keyboardShouldPersistTaps="always">
-                      <View style={styles.headerTextContainer}>
-                        <Text style={styles.loginText}>Login</Text>
+                    <ScrollView
+                      keyboardShouldPersistTaps="always"
+                      contentContainerStyle={{
+                        flexGrow: 1,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <Image
+                          source={require('../../res/images/nitt_logo.png')}
+                          style={{
+                            width: scale(110),
+                            height: scale(110),
+                            alignSelf: 'center',
+                          }}
+                        />
+                        <Text style={styles.appName}>NITT One</Text>
                       </View>
-
-                      <View style={{marginBottom: verticalScale(55)}}>
-                        <View style={styles.textInput}>
-                          <TextInput
-                            label="Username"
-                            placeholder="Enter your username"
-                            mode="outlined"
-                            value={user}
-                            style={{backgroundColor: 'white'}}
-                            theme={{
-                              colors: {
-                                primary: 'black',
-                              },
-                            }}
-                            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-                            onChangeText={user => {
-                              setUser(user);
-                            }}
-                          />
+                      <Card
+                        style={{
+                          elevation: 5,
+                          marginVertical: verticalScale(5),
+                          marginHorizontal: scale(15),
+                          paddingHorizontal: scale(8),
+                        }}>
+                        <View style={styles.headerTextContainer}>
+                          <Text style={styles.loginText}>Login</Text>
                         </View>
-                        <View style={styles.textInput}>
-                          <TextInput
-                            autoCorrect={false}
-                            label="Password"
-                            placeholder="Enter your password"
-                            style={{backgroundColor: 'white'}}
-                            mode="outlined"
-                            autoComplete={'off'}
-                            autoCapitalize="none"
-                            secureTextEntry={passwordToggle}
-                            theme={{
-                              colors: {
-                                primary: 'black',
-                              },
-                            }}
-                            selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-                            right={
-                              <TextInput.Icon
-                                name={eyeIcon}
-                                onPress={() => {
-                                  setPasswordToggle(!passwordToggle);
-                                  setEyeIcon(
-                                    eyeIcon === 'eye' ? 'eye-off' : 'eye',
-                                  );
-                                }}
-                              />
-                            }
-                            value={password}
-                            onChangeText={password => setPassword(password)}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {
-                              navigation.push('Reset');
-                              RESET_STORE.setStudentToken('');
-                            }}>
-                            <Text
-                              style={{
-                                textAlign: 'center',
-                                fontSize: scale(14),
 
-                                marginTop: verticalScale(6),
+                        <View style={{marginBottom: verticalScale(55)}}>
+                          <View style={styles.textInput}>
+                            <TextInput
+                              label="Username"
+                              placeholder="Enter your username"
+                              mode="outlined"
+                              value={user}
+                              style={{backgroundColor: 'white'}}
+                              theme={{
+                                colors: {
+                                  primary: 'black',
+                                },
+                              }}
+                              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+                              onChangeText={user => {
+                                setUser(user);
+                              }}
+                            />
+                          </View>
+                          <View style={styles.textInput}>
+                            <TextInput
+                              autoCorrect={false}
+                              label="Password"
+                              placeholder="Enter your password"
+                              style={{backgroundColor: 'white'}}
+                              mode="outlined"
+                              autoComplete={'off'}
+                              autoCapitalize="none"
+                              secureTextEntry={passwordToggle}
+                              theme={{
+                                colors: {
+                                  primary: 'black',
+                                },
+                              }}
+                              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+                              right={
+                                <TextInput.Icon
+                                  name={eyeIcon}
+                                  onPress={() => {
+                                    setPasswordToggle(!passwordToggle);
+                                    setEyeIcon(
+                                      eyeIcon === 'eye' ? 'eye-off' : 'eye',
+                                    );
+                                  }}
+                                />
+                              }
+                              value={password}
+                              onChangeText={password => setPassword(password)}
+                            />
+                            <TouchableOpacity
+                              onPress={() => {
+                                navigation.push('Reset');
+                                RESET_STORE.setStudentToken('');
                               }}>
-                              <Text>Forgot Password?</Text>
-
                               <Text
                                 style={{
-                                  color: 'darkgreen',
-                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  fontSize: scale(14),
+
+                                  marginTop: verticalScale(6),
                                 }}>
-                                {' '}
-                                Reset
+                                <Text>Forgot Password?</Text>
+
+                                <Text
+                                  style={{
+                                    color: 'darkgreen',
+                                    fontWeight: 'bold',
+                                  }}>
+                                  {' '}
+                                  Reset
+                                </Text>
                               </Text>
-                            </Text>
-                          </TouchableOpacity>
+                            </TouchableOpacity>
+                          </View>
+                          <View style={styles.loginBtnView}>
+                            <TouchableOpacity
+                              style={{
+                                backgroundColor: colors.Tertiary,
+                                borderRadius: verticalScale(22),
+                              }}
+                              onPress={() => {
+                                onLogin(user);
+                              }}>
+                              <Icon
+                                name="chevron-right"
+                                size={verticalScale(44)}
+                                color={colors.WHITE}
+                              />
+                            </TouchableOpacity>
+                          </View>
                         </View>
-                        <View style={styles.loginBtnView}>
-                          <TouchableOpacity
-                            style={{
-                              backgroundColor: colors.Tertiary,
-                              borderRadius: verticalScale(22),
-                            }}
-                            onPress={() => {
-                              onLogin(user);
-                            }}>
-                            <Icon
-                              name="chevron-right"
-                              size={verticalScale(44)}
-                              color={colors.WHITE}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
+                      </Card>
                     </ScrollView>
                   </SafeAreaView>
-                </View>
+                </KeyboardAvoidingView>
               </View>
             </>
           )}
@@ -224,29 +254,33 @@ const styles = ScaledSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  headerTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: '20@vs',
-    justifyContent: 'space-between',
-  },
-  loginText: {
+  appName: {
     padding: '10@msr',
     fontSize: '25@s',
     fontWeight: 'bold',
     color: 'black',
-    marginLeft: '15@s',
-    alignContent: 'flex-start',
+    alignSelf: 'center',
+  },
+  headerTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'center',
+  },
+  loginText: {
+    padding: '10@msr',
+    fontSize: '20@s',
+    fontWeight: 'bold',
+    color: 'black',
+    alignSelf: 'center',
   },
   textInput: {
-    paddingHorizontal: moderateScale(20),
-    paddingVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(15),
+    paddingVertical: moderateScale(8),
   },
   loginBtnView: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-
     paddingHorizontal: moderateScale(20),
   },
 });
