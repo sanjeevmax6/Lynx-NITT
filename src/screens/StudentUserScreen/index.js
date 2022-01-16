@@ -73,6 +73,7 @@ const StudentUserScreen = observer(({navigation}) => {
         <>
           <Header studentDetails={studentDetails} navigation={navigation} />
           <Body
+            navigation={navigation}
             clubFollowing={clubs}
             interestedEvents={interests}
             functionCalls={functionCalls}

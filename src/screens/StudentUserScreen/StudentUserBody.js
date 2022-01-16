@@ -7,7 +7,7 @@ import ClubFollowingScreen from './ClubFollowingScreen';
 import {scale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 
-const Body = ({clubFollowing, interestedEvents, functionCalls}) => {
+const Body = ({navigation, clubFollowing, interestedEvents, functionCalls}) => {
   return (
     <View style={styles.container}>
       <Tab.Navigator
@@ -33,6 +33,7 @@ const Body = ({clubFollowing, interestedEvents, functionCalls}) => {
           name={`Following (${clubFollowing.length})`}
           children={() => (
             <ClubFollowingScreen
+              navigation={navigation}
               clubFollowing={clubFollowing}
               goToClub={functionCalls.goToClub}
             />

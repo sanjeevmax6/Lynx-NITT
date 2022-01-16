@@ -34,6 +34,7 @@ const ListItem = ({eventItem, goToEvent}) => {
         <TouchableOpacity onPress={() => console.log('Unlist')}>
           <Icon
             name="bookmark"
+            zz
             size={moderateScale(20)}
             style={{marginEnd: scale(10)}}
             color={Tertiary}

@@ -3,6 +3,7 @@ import React from 'react';
 import {View, FlatList, StyleSheet, Text} from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {NO_FOLLOWED_CLUBS} from '../../utils/ERROR_MESSAGES';
 import ClubFollowItem from './ClubFollowItem';
 
 const StudentSettings = observer(({navigation}) => {
@@ -13,18 +14,15 @@ const StudentSettings = observer(({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.textStyle}>Manage Notifications</Text>
-      {STUDENT_DETAILS_STORE.getClubs.length !== 0 ? (
-        <FlatList
-          data={STUDENT_DETAILS_STORE.getClubs}
-          renderItem={({item}) => (
-            <ClubFollowItem clubItem={item} goToClub={goToClub} />
-          )}
-        />
-      ) : (
-        <Text style={styles.errorStyle}>
-          You haven't followed any clubs yet
-        </Text>
-      )}
+      <FlatList
+        data={STUDENT_DETAILS_STORE.getClubs}
+        ListEmptyComponent={
+          <Text style={styles.errorStyle}>{NO_FOLLOWED_CLUBS}</Text>
+        }
+        renderItem={({item}) => (
+          <ClubFollowItem clubItem={item} goToClub={goToClub} />
+        )}
+      />
     </View>
   );
 });

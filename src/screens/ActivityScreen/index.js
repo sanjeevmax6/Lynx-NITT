@@ -133,7 +133,7 @@ const ActivityScreen = observer(({navigation}) => {
                   fontWeight: 'bold',
                   textAlign: 'center',
                 }}>
-                No notifications yet
+                There are no notifications for you yet
               </Text>
             }
             ListHeaderComponent={

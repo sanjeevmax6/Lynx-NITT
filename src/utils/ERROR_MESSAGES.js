@@ -11,3 +11,4 @@ export const USER_DETAILS_FETCH =
   'An error has occurred in gathering your details';
 
 export const TOAST_ERROR_MESSAGE = 'Failed to process your request!';
+export const NO_FOLLOWED_CLUBS = "You haven't followed any clubs yet.";
