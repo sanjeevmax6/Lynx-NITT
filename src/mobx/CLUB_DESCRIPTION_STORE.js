@@ -12,8 +12,10 @@ class clubDescriptionStore {
     pastEvents: '',
     clubID: '',
     isFollowingClub: false,
+    fromEventDescriptionScreen: false,
   };
   reset = () => {
+    this.state.fromEventDescriptionScreen = false;
     this.state.error = true;
     this.state.errorText = '';
     this.state.loading = true;
@@ -25,6 +27,13 @@ class clubDescriptionStore {
     this.state.clubID = '';
     this.state.isFollowingClub = false;
   };
+  setFromEventScreen = val => {
+    this.state.fromEventDescriptionScreen = val;
+  };
+
+  get getFromEventScreen() {
+    return this.state.fromEventDescriptionScreen;
+  }
 
   setIsFollowingClub = val => {
     this.state.isFollowingClub = val;
@@ -153,6 +162,9 @@ class clubDescriptionStore {
 
       setIsFollowingClub: action,
       getIsFollowingClub: computed,
+
+      setFromEventScreen: action,
+      getFromEventScreen: computed,
     });
   }
 }

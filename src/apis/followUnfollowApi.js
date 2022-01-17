@@ -27,7 +27,7 @@ async function API_CALL(clubId, successCallback, failureCallBack) {
     }
   } catch (error) {
     console.log(22);
-    console.log(error.response);
+    console.log(error.response.data.message);
 
     failureCallBack();
   }

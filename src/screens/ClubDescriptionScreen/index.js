@@ -68,6 +68,12 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
       },
     );
     CLUB_DESCRIPTION_STORE.setID(route.params.ClubId);
+
+    if (route.params.fromEventScreen === true) {
+      CLUB_DESCRIPTION_STORE.setFromEventScreen(route.params.fromEventScreen);
+    } else {
+      CLUB_DESCRIPTION_STORE.setFromEventScreen(false);
+    }
     BOTTOM_NAV_STORE.setTabVisibility(false);
     clubDescriptionAPI();
     return () => backHandler.remove();

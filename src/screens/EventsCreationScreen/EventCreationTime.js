@@ -50,6 +50,7 @@ const EventCreationTime = observer(({scrollViewRef, callback}) => {
   };
 
   const onChangeStartDate = newDate => {
+    console.log('Date: ', newDate);
     EVENT_CREATION_STORE.setStartEvent(newDate);
   };
 

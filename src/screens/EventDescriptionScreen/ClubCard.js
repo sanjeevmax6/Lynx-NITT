@@ -32,7 +32,10 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
       }}>
       <Pressable
         onPress={() => {
-          navigation.push('ClubDescription', {ClubId: clubID});
+          navigation.push('ClubDescription', {
+            ClubId: clubID,
+            fromEventScreen: true,
+          });
         }}>
         <Card.Cover
           source={{uri: API_GET_IMAGE + imgID.trim()}}
@@ -42,7 +45,10 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
       <View style={styles.cardDetails}>
         <Pressable
           onPress={() => {
-            navigation.push('ClubDescription', {ClubId: clubID});
+            navigation.push('ClubDescription', {
+              ClubId: clubID,
+              fromEventScreen: true,
+            });
           }}>
           <Text numberOfLines={2} style={styles.title}>
             {name}

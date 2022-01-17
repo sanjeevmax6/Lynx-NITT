@@ -73,7 +73,7 @@ const ClubDescriptionHeader = observer(
       });
     }, [url]);
     console.log(CLUB_DESCRIPTION_STORE.getID);
-    console.log(CLUB_DESCRIPTION_STORE.getData.links);
+
     return coverColor === colors.Tertiary ? (
       <LoaderPage LoadingAccent={ACCENT_LOTTIE} />
     ) : (
@@ -144,23 +144,35 @@ const ClubDescriptionHeader = observer(
                 CLUB_DESCRIPTION_STORE.getID,
                 () => {
                   setApiCall(false);
+                  console.log(
+                    'from event: ',
+                    CLUB_DESCRIPTION_STORE.getFromEventScreen,
+                  );
+
                   if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
                     CLUB_DESCRIPTION_STORE.setDecrementFollower();
-                    EVENT_DESCRIPTION_STORE.setDecrementFollower();
+
+                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                      EVENT_DESCRIPTION_STORE.setDecrementFollower();
                   } else {
                     CLUB_DESCRIPTION_STORE.setIncrementFollower();
-                    EVENT_DESCRIPTION_STORE.setIncrementFollower();
+
+                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                      EVENT_DESCRIPTION_STORE.setIncrementFollower();
                   }
 
                   CLUB_DESCRIPTION_STORE.setIsFollowingClub(
                     !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
                   );
-                  EVENT_DESCRIPTION_STORE.setIsFollowingClub(
-                    CLUB_DESCRIPTION_STORE.getIsFollowingClub,
-                  );
+
+                  if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                    EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                      CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                    );
                 },
                 () => {
                   showToast();
+
                   setApiCall(false);
                 },
               );
