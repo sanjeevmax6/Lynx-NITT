@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {DEEP_LINKING_STORE} from '../../mobx/DEEP_LINKING_STORE';
 import {ACTIVITY_STORE} from '../../mobx/ACITIVITY_STORE';
 import {ANNOUNCEMENT_CREATION_STORE} from '../../mobx/ANNOUNCEMENT_CREATION_STORE';
 import {API_STORE} from '../../mobx/API_STORE';
@@ -51,9 +52,9 @@ export const LogOutHandler = () => {
             console.log('LOGOUT');
 
             // //reset stores
+            DEEP_LINKING_STORE.reset();
             ACTIVITY_STORE.reset();
             ANNOUNCEMENT_CREATION_STORE.reset();
-
             CALENDAR_NOTICE_STORE.reset();
             CALENDAR_STORE.reset();
             CLUB_DESCRIPTION_STORE.reset();
