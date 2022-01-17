@@ -31,9 +31,11 @@ import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import ImageView from '../../components/ImageView';
+import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {FOLLOWING_CLUBS_PROFILE} from '../../utils/screenNames';
 
 const ClubDescriptionHeader = observer(
-  ({name, followers, url, email, description, navigation}) => {
+  ({name, followers, url, email, description, navigation, route}) => {
     const [coverColor, setCoverColor] = useState('');
     const [ApiCall, setApiCall] = useState(false);
     const toast = useToast();
@@ -70,6 +72,11 @@ const ClubDescriptionHeader = observer(
     useEffect(() => {
       getColors(url ? API_GET_IMAGE + url : NO_IMAGE_URL).then(res => {
         setCoverColor(res.cover);
+        if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
+          if (!CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+            route.params.func(true);
+          }
+        }
       });
     }, [url]);
     console.log(CLUB_DESCRIPTION_STORE.getID);
@@ -159,6 +166,13 @@ const ClubDescriptionHeader = observer(
 
                     if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
                       EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                  }
+                  if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
+                    if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                      route.params.func(true);
+                    } else {
+                      route.params.func(false);
+                    }
                   }
 
                   CLUB_DESCRIPTION_STORE.setIsFollowingClub(

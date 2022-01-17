@@ -17,7 +17,7 @@ import Header from '../../components/Header';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
 
-const renderTopLayout = (data, navigation) => (
+const renderTopLayout = (data, navigation, route) => (
   <View>
     <Header
       props={{navigation: navigation}}
@@ -30,6 +30,7 @@ const renderTopLayout = (data, navigation) => (
       url={data.profile_pic}
       description={data.description}
       navigation={navigation}
+      route={route}
     />
     <Divider style={styles.divider} />
     {CLUB_DESCRIPTION_STORE.getLiveEvents.length === 0 &&
@@ -106,6 +107,7 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
           topLayout={renderTopLayout(
             CLUB_DESCRIPTION_STORE.getData,
             navigation,
+            route,
           )}
           goToEvent={goToEvent}
         />

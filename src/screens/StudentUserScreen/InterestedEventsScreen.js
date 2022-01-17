@@ -17,7 +17,6 @@ const InterestedEventsScreen = observer(({goToEvent}) => {
   const onRefresh = () => {
     STUDENT_DETAILS_STORE.setRefresh(true);
     getAllStudentDetails(true);
-    console.log(STUDENT_DETAILS_STORE.getInterests);
   };
   const [click, setClick] = useState(false);
   return (
@@ -40,8 +39,8 @@ const InterestedEventsScreen = observer(({goToEvent}) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
-
               marginTop: verticalScale(10),
+              width: '100%',
             }}>
             <Text
               style={{

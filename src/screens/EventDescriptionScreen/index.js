@@ -85,10 +85,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
           />
         ) : (
           <>
-            <EventDescriptionHeader
-              navigation={navigation}
-              fromProfile={route.params.fromProfile}
-            />
+            <EventDescriptionHeader navigation={navigation} route={route} />
             <ScrollView showsVerticalScrollIndicator={false}>
               <Images
                 images={EVENT_DESCRIPTION_STORE.getData.photos}
@@ -146,6 +143,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                   imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
                   navigation={navigation}
                   clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
+                  route={route}
                 />
                 {EVENT_DESCRIPTION_STORE.getData.tags.length > 0 ? (
                   <>
@@ -153,6 +151,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     <Tags
                       tags={EVENT_DESCRIPTION_STORE.getData.tags}
                       navigation={navigation}
+                      route={route}
                     />
                   </>
                 ) : null}

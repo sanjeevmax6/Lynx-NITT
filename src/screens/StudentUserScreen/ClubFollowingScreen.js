@@ -35,7 +35,7 @@ const ClubFollowingScreen = observer(({navigation, goToClub}) => {
         ListHeaderComponent={headerFooterComponent}
         ListFooterComponent={headerFooterComponent}
         ListEmptyComponent={
-          <>
+          <View style={{width: '100%'}}>
             <Text
               style={{
                 fontSize: moderateScale(16),
@@ -61,7 +61,7 @@ const ClubFollowingScreen = observer(({navigation, goToClub}) => {
                 Explore Clubs
               </Button>
             </View>
-          </>
+          </View>
         }
         data={STUDENT_DETAILS_STORE.getClubs}
         renderItem={({item}) => (

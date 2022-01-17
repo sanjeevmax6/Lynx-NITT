@@ -13,10 +13,11 @@ import {toggleFollowApi} from '../../apis/followUnfollowApi';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import EventStatusTag from './EventStatusTag';
+import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
 
 const WIDTH = Dimensions.get('window').width;
 
-const ClubCard = observer(({name, imgID, navigation, clubID}) => {
+const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
   const toast = useToast();
 
   const showToast = () => {
@@ -32,10 +33,12 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
       }}>
       <Pressable
         onPress={() => {
-          navigation.push('ClubDescription', {
-            ClubId: clubID,
-            fromEventScreen: true,
-          });
+          route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
+            ? navigation.push('ClubDescription', {
+                ClubId: clubID,
+                fromEventScreen: true,
+              })
+            : null;
         }}>
         <Card.Cover
           source={{uri: API_GET_IMAGE + imgID.trim()}}
@@ -45,10 +48,12 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
       <View style={styles.cardDetails}>
         <Pressable
           onPress={() => {
-            navigation.push('ClubDescription', {
-              ClubId: clubID,
-              fromEventScreen: true,
-            });
+            route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
+              ? navigation.push('ClubDescription', {
+                  ClubId: clubID,
+                  fromEventScreen: true,
+                })
+              : null;
           }}>
           <Text numberOfLines={2} style={styles.title}>
             {name}
@@ -58,14 +63,14 @@ const ClubCard = observer(({name, imgID, navigation, clubID}) => {
           {EVENT_DESCRIPTION_STORE.getData.club.followers} FOLLOWERS
         </Text>
       </View>
-      {USER_STORE.getUserType === USER_TYPE.STUDENT ? (
+      {USER_STORE.getUserType === USER_TYPE.STUDENT &&
+      route.params.fromScreen !== INTERESTED_EVENTS_PROFILE ? (
         <Button
           mode="outlined"
           disabled={ApiCall}
           loading={ApiCall}
           onPress={() => {
             setApiCall(true);
-
             toggleFollowApi(
               clubID,
               () => {

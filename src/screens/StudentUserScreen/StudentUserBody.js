@@ -7,6 +7,7 @@ import ClubFollowingScreen from './ClubFollowingScreen';
 import {scale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {ActivityIndicator} from 'react-native-paper';
 
 const Body = ({navigation, functionCalls}) => {
   return (
@@ -23,7 +24,6 @@ const Body = ({navigation, functionCalls}) => {
             padding: 0,
             textTransform: 'none',
           },
-          lazy: true,
           tabBarStyle: {textTransform: 'none', width: 'auto'},
           tabBarPressColor: color.tabBarPressColor,
           tabBarIndicatorStyle: {backgroundColor: color.sliderColor},

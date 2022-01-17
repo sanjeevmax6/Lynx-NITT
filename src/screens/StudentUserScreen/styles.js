@@ -31,6 +31,7 @@ export const listItemStyles = StyleSheet.create({
   imageStyle: {
     borderRadius: moderateScale(9),
     justifyContent: 'center',
+    alignSelf: 'center',
     width: moderateScale(50),
     height: moderateScale(50),
     marginRight: scale(10),

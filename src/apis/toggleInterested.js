@@ -18,8 +18,7 @@ async function API_CALL(eventId, successCallback, failureCallBack) {
       successCallback();
     }
   } catch (error) {
-    console.log(error.response);
-
+    console.log(error);
     failureCallBack();
   }
 }

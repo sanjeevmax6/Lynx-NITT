@@ -16,11 +16,15 @@ const ListItem = ({eventItem, goToEvent}) => {
       style={listItemStyles.container}
       onPress={() => goToEvent(eventItem)}>
       <View style={listItemStyles.viewStyle}>
-        <View style={{...listItemStyles.imageStyle, elevation: 1}}>
-          <ImageView src={imageUrl} style={listItemStyles.imageStyle} />
-        </View>
+        <ImageView
+          src={imageUrl}
+          style={listItemStyles.imageStyle}
+          resizeMode={'center'}
+        />
         <View style={{flex: 1}}>
-          <Text style={listItemStyles.textStyle}>{eventItem.title}</Text>
+          <Text style={listItemStyles.textStyle} numberOfLines={2}>
+            {eventItem.title}
+          </Text>
           <Text
             style={{
               ...listItemStyles.textStyle,

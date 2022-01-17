@@ -20,15 +20,15 @@ async function API_CALL(clubId, successCallback, failureCallBack) {
       ]);
       console.log(responseFollow.data.message);
 
-      if (responseFollow.status == 200) successCallback();
-      else {
+      if (responseFollow.status == 200) {
+        successCallback();
+      } else {
         failureCallBack();
       }
     }
   } catch (error) {
-    console.log(22);
-    console.log(error.response.data.message);
-
+    console.log('catch error follow unfollow');
+    console.log(error);
     failureCallBack();
   }
 }

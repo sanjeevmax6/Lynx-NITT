@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity, Platform, Text} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -13,8 +13,9 @@ import {observer} from 'mobx-react';
 import {toggleInterestedApi} from '../../apis/toggleInterested';
 import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
 
-const EventDescriptionHeader = observer(({navigation, fromProfile}) => {
+const EventDescriptionHeader = observer(({navigation, route}) => {
   const [Api, setApi] = useState(false);
   console.log(EVENT_DESCRIPTION_STORE.getData.club.id);
 
@@ -45,6 +46,13 @@ const EventDescriptionHeader = observer(({navigation, fromProfile}) => {
     STUDENT_DETAILS_STORE.setInterests(events);
   };
 
+  useEffect(() => {
+    if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+      if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
+        route.params.func(true);
+      }
+    }
+  }, []);
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -81,14 +89,14 @@ const EventDescriptionHeader = observer(({navigation, fromProfile}) => {
               EVENT_DESCRIPTION_STORE.getID,
               () => {
                 if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
-                  if (fromProfile) {
-                    removeEvent(
-                      EVENT_DESCRIPTION_STORE.getID,
-                      EVENT_DESCRIPTION_STORE.getData.urlId,
-                    );
+                  if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
+                    route.params.func(true);
                   }
                 }
                 if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+                  if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
+                    route.params.func(false);
+                  }
                   showToast(
                     'You will receive notifications and updates from this event!',
                     true,

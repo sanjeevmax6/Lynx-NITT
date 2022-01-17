@@ -14,6 +14,10 @@ import {
 } from '../../utils/LOADING_TYPES';
 import {useIsFocused} from '@react-navigation/native';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {
+  FOLLOWING_CLUBS_PROFILE,
+  INTERESTED_EVENTS_PROFILE,
+} from '../../utils/screenNames';
 
 const StudentUserScreen = observer(({navigation}) => {
   const isFocused = useIsFocused();
@@ -42,14 +46,31 @@ const StudentUserScreen = observer(({navigation}) => {
   };
 
   const goToClub = club => {
-    navigation.push('ClubDescription', {ClubId: club.clubId._id});
+    navigation.push('ClubDescription', {
+      ClubId: club.clubId._id,
+      fromScreen: FOLLOWING_CLUBS_PROFILE,
+      func: remove => {
+        if (remove) {
+          STUDENT_DETAILS_STORE.removeFollowingClub(club);
+        } else {
+          STUDENT_DETAILS_STORE.addFollowingClub(club);
+        }
+      },
+    });
   };
 
   const goToEvent = event => {
     navigation.push('EventDescriptionScreen', {
       eventId: event._id,
       app: true,
-      fromProfile: true,
+      fromScreen: INTERESTED_EVENTS_PROFILE,
+      func: remove => {
+        if (remove) {
+          STUDENT_DETAILS_STORE.removeInterestedEvent(event);
+        } else {
+          STUDENT_DETAILS_STORE.addInterestedEvent(event);
+        }
+      },
     });
     //navigation.push('EventDescription', {data: {EventId: event._id}});
   };

@@ -119,6 +119,20 @@ class StudentDetailStore {
       if (item.clubId._id == clubId) item.isSubscribed = !item.isSubscribed;
     });
   };
+  addFollowingClub = club => {
+    this.state.clubsFollowingList.push(club);
+  };
+  removeFollowingClub = club => {
+    var index = this.state.clubsFollowingList.indexOf(club);
+    if (index !== -1) this.state.clubsFollowingList.splice(index, 1);
+  };
+  addInterestedEvent = event => {
+    this.state.interestList.push(event);
+  };
+  removeInterestedEvent = event => {
+    var index = this.state.interestList.indexOf(event);
+    if (index !== -1) this.state.interestList.splice(index, 1);
+  };
 
   /*
     ^^^^^ GETTERS ^^^^^
