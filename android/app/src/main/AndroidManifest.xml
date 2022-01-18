@@ -73,4 +73,10 @@
             </intent-filter>
         </service>
     </application>
+    <supports-screens 
+        android:smallScreens="true" 
+        android:largeScreens="true"
+        android:xlargeScreens="false"
+        android:normalScreens="true" 
+        android:anyDensity="true"/>
 </manifest>
