@@ -140,16 +140,9 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     color={colors.EventCard_ShareIcon}
                   />
                 </View>
-                <ClubCard
-                  name={EVENT_DESCRIPTION_STORE.getData.club.name}
-                  imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
-                  navigation={navigation}
-                  clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
-                  route={route}
-                />
+
                 {EVENT_DESCRIPTION_STORE.getData.tags.length > 0 ? (
                   <>
-                    <Text style={styles.headings}>Tags</Text>
                     <Tags
                       tags={EVENT_DESCRIPTION_STORE.getData.tags}
                       navigation={navigation}
@@ -158,7 +151,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                   </>
                 ) : null}
 
-                <Text style={styles.headings}>About</Text>
+                {/* <Text style={styles.headings}>About</Text> */}
                 <About
                   about={EVENT_DESCRIPTION_STORE.getData.Description}
                   startDate={getFormattedDate(
@@ -177,12 +170,19 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
 
                 {EVENT_DESCRIPTION_STORE.getData.links.length > 0 ? (
                   <>
-                    <Text style={styles.headings}>Event Links</Text>
+                    {/* <Text style={styles.headings}>Event Links</Text> */}
                     <Links links={EVENT_DESCRIPTION_STORE.getData.links} />
                   </>
                 ) : (
                   <></>
                 )}
+                <ClubCard
+                  name={EVENT_DESCRIPTION_STORE.getData.club.name}
+                  imgID={EVENT_DESCRIPTION_STORE.getData.club.profilePic}
+                  navigation={navigation}
+                  clubID={EVENT_DESCRIPTION_STORE.getData.club.id}
+                  route={route}
+                />
                 <View style={{height: verticalScale(100)}} />
               </View>
             </ScrollView>

@@ -8,7 +8,7 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {NO_NETWORK, SERVER_ERROR} from '../../utils/ERROR_MESSAGES';
 import {ACTIVITY_STORE} from '../../mobx/ACITIVITY_STORE';
 import {API_STORE} from '../../mobx/API_STORE';
-import {CLUB, STUDENT} from '../../utils/USER_TYPE';
+import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
 
 const ActivityAPI = refreshing => {
   ACTIVITY_STORE.setError(false);
@@ -20,7 +20,7 @@ const ActivityAPI = refreshing => {
         ACTIVITY_STORE.setLoading(true);
       }
       let url = API_STUDENT_ACTIVITY;
-      if (USER_STORE.getUserType === CLUB) {
+      if (USER_STORE.getUserType === CLUB || USER_STORE.getUserType === ADMIN) {
         url = API_CLUB_ACTIVITY;
       }
       axios

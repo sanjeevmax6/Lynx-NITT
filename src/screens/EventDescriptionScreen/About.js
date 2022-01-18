@@ -53,9 +53,10 @@ const About = ({about, startDate, endDate, startTime, endTime}) => {
           ...sharedStyles.fragment,
           backgroundColor: colors.WHITE,
           paddingTop: 0,
-          borderRadius: verticalScale(40),
+          borderRadius: verticalScale(20),
           borderColor: colors.GRAY_LIGHT,
           borderWidth: 1,
+          elevation: 1,
         }}>
         <View
           style={{

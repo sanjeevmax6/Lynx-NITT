@@ -25,7 +25,7 @@ const UI = ({text, color}) => {
       <Icon name="circle" color={color} size={scale(10)} />
       <Text
         style={{
-          fontSize: scale(14),
+          fontSize: scale(12),
           color: colors.GRAY_DARK,
           textTransform: 'uppercase',
         }}>

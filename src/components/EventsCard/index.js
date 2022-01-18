@@ -87,7 +87,7 @@ const EventsCard = observer(
           <ImageView
             src={API_GET_IMAGE + eventImage}
             style={styles.image}
-            resizeMode={'center'}
+            resizeMode={'contain'}
           />
         </View>
         <View style={styles.cardDetails}>

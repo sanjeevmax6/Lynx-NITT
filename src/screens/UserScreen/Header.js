@@ -38,7 +38,7 @@ const Header = ({name, followers, url, description, navigation}) => {
   const getColors = async () => {
     const result = await ImageColors.getColors(url, {
       fallback: colors.Primary,
-      cache: true,
+      cache: false,
       key: 'unique_key',
     });
     switch (result.platform) {

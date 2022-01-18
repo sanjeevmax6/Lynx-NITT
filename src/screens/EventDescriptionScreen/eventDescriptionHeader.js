@@ -125,7 +125,12 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
                 setApi(false);
               },
               () => {
-                showToast();
+
+                toast.show('Failed to process your request!', {
+                  type: 'danger',
+                });
+
+
                 setApi(false);
               },
             );
