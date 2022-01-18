@@ -1,5 +1,7 @@
 export const API_BASE_URL = 'https://nittapp-spidertesting.cloudns.nz/v1.5/';
 export const GET_BASE_URL = 'https://ankursinha03.github.io/nittAppUrl/';
+export const APP_PLAYSTORE_URL =
+  'https://play.google.com/store/apps/details?id=org.spider.nittapp';
 
 export const API_STUDENT_LOGIN = API_BASE_URL + '/auth/student/login';
 

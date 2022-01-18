@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, StatusBar, Platform} from 'react-native';
+import {StyleSheet, View, StatusBar, Platform, Linking} from 'react-native';
 import * as color from '../../utils/colors';
 import * as Animatable from 'react-native-animatable';
-
 import LottieView from 'lottie-react-native';
 import splashLottie from '../../res/lottieFiles/splash.json';
-
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import ErrorScreen from '../../components/ErrorScreen';
-
+import CustomAlert from '../../components/customAlert';
 import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
@@ -22,19 +19,19 @@ import {
   USER_TOKEN,
   USER_TYPE,
 } from '../../utils/STORAGE_KEYS';
-import {GET_BASE_URL} from '../../utils/API_CONSTANTS';
+import {GET_BASE_URL, APP_PLAYSTORE_URL} from '../../utils/API_CONSTANTS';
 import {API_STORE} from '../../mobx/API_STORE';
 import {
   MAINTENANCE,
   NO_NETWORK,
   UNEXPECTED_ERROR,
 } from '../../utils/ERROR_MESSAGES';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import DeviceInfo from 'react-native-device-info';
+import VersionCheck from 'react-native-version-check';
 
 const logo = require('../../res/images/nitt_logo.png');
 const spiderLogo = require('../../res/images/spiderLogo.png');
-import EncryptedStorage from 'react-native-encrypted-storage';
-
-import DeviceInfo from 'react-native-device-info';
 
 async function loadCache() {
   try {
@@ -63,6 +60,7 @@ const SplashScreen = () => {
   //1 error
   //2 maintain
   //3 no net
+  const [updateVisible, setUpdateVisible] = useState(false);
 
   const API_CALL = () => {
     NetInfo.fetch().then(state => {
@@ -92,7 +90,18 @@ const SplashScreen = () => {
     });
   };
 
+  const checkVersion = () => {
+    VersionCheck.needUpdate({
+      depth: 4,
+    }).then(res => {
+      if (res.isNeeded) {
+        setUpdateVisible(true);
+      }
+    });
+  };
+
   useEffect(() => {
+    checkVersion();
     API_CALL();
     loadCache();
     ID();
@@ -100,12 +109,23 @@ const SplashScreen = () => {
 
   setTimeout(() => {
     if (API === 200) {
-      BOTTOM_NAV_STORE.setTabVisibility(true);
-      AUTH_NAV_STORE.setSplashLoading(false);
-      return;
+      console.log('called out');
+      console.log(updateVisible);
+      if (!updateVisible) {
+        BOTTOM_NAV_STORE.setTabVisibility(true);
+        AUTH_NAV_STORE.setSplashLoading(false);
+        return;
+      }
     }
     setState(API);
   }, 2000);
+
+  setTimeout(() => {
+    if (!updateVisible && State === 200) {
+      BOTTOM_NAV_STORE.setTabVisibility(true);
+      AUTH_NAV_STORE.setSplashLoading(false);
+    }
+  }, 100);
 
   const ID = () => {
     try {
@@ -124,8 +144,37 @@ const SplashScreen = () => {
         hidden={false}
         barStyle="light-content"
       />
-      {State === 0 ? (
+      {State === 0 || State === 200 ? (
         <>
+          <CustomAlert
+            image={require('../../res/images/nitt_logo.png')}
+            title={''}
+            message={
+              'We have made some changes to improve the app performance. Please update your app to the latest version.'
+            }
+            startDate={''}
+            endDate={''}
+            modalVisible={State === 200 ? updateVisible : false}
+            setModalVisible={setUpdateVisible}
+            buttons={[
+              {
+                text: 'CANCEL',
+                func: () => {
+                  setUpdateVisible(false);
+                  BOTTOM_NAV_STORE.setTabVisibility(true);
+                  AUTH_NAV_STORE.setSplashLoading(false);
+                },
+              },
+              {
+                text: 'UPDATE',
+                func: () => {
+                  Linking.openURL(APP_PLAYSTORE_URL);
+                  BOTTOM_NAV_STORE.setTabVisibility(true);
+                  AUTH_NAV_STORE.setSplashLoading(false);
+                },
+              },
+            ]}
+          />
           <LottieView
             style={{backgroundColor: 'white'}}
             source={splashLottie}

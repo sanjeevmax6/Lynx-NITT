@@ -20,7 +20,11 @@ export class ImageView extends Component {
     return (
       <Image
         defaultSource={loadingImage}
-        source={{uri: this.state.image}}
+        source={
+          typeof this.state.image === 'string'
+            ? {uri: this.state.image}
+            : this.state.image
+        }
         style={this.state.style}
         resizeMode={this.props.resizeMode}
         onError={() => {
