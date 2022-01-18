@@ -84,6 +84,7 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
     navigation.push('EventDescriptionScreen', {
       eventId: eventId,
       app: true,
+      fromClubDescription: true,
     });
   };
 

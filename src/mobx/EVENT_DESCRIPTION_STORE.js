@@ -87,13 +87,21 @@ class eventDescriptionStore {
   }
 
   setIncrementFollower() {
-    this.state.data.club.followers = this.state.data.club.followers + 1;
-    console.log(this.state.data.club.followers);
+    try {
+      this.state.data.club.followers = this.state.data.club.followers + 1;
+      console.log(this.state.data.club.followers);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   setDecrementFollower() {
-    this.state.data.club.followers = this.state.data.club.followers - 1;
-    console.log(this.state.data.club.followers);
+    try {
+      this.state.data.club.followers = this.state.data.club.followers - 1;
+      console.log(this.state.data.club.followers);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   constructor() {

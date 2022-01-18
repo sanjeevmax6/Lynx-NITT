@@ -33,6 +33,7 @@ import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import ImageView from '../../components/ImageView';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {FOLLOWING_CLUBS_PROFILE} from '../../utils/screenNames';
+import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 
 const ClubDescriptionHeader = observer(
   ({name, followers, url, email, description, navigation, route}) => {
@@ -150,6 +151,7 @@ const ClubDescriptionHeader = observer(
               toggleFollowApi(
                 CLUB_DESCRIPTION_STORE.getID,
                 () => {
+                  getAllStudentDetails(true);
                   setApiCall(false);
                   console.log(
                     'from event: ',

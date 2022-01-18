@@ -27,15 +27,16 @@ const Tags = ({tags, navigation, route}) => {
                   marginTop: verticalScale(3),
                 }}
                 onPress={() => {
-                  route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
-                    ? navigation.navigate('Search', {
-                        screen: 'SearchScreen',
-                        params: {
-                          screen: 'Tags',
-                          params: {searchText: item},
-                        },
-                      })
-                    : null;
+                  // route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
+                  //   ?
+                  navigation.navigate('Search', {
+                    screen: 'SearchScreen',
+                    params: {
+                      screen: 'Tags',
+                      params: {searchText: item},
+                    },
+                  });
+                  // : null;
                 }}
                 textStyle={{
                   fontSize: scale(12),

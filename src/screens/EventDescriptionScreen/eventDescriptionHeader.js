@@ -14,6 +14,8 @@ import {toggleInterestedApi} from '../../apis/toggleInterested';
 import {FEEDS_STORE} from '../../mobx/FEEDS_STORE';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
+import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
+import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 
 const EventDescriptionHeader = observer(({navigation, route}) => {
   const [Api, setApi] = useState(false);
@@ -40,10 +42,12 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
   };
   const removeEvent = (eventId, urlId) => {
     const events = STUDENT_DETAILS_STORE.getInterests;
+    console.log(events);
     var index = events.map(item => item.eventId).indexOf(eventId);
     if (index <= -1) index = events.map(item => item.urlId).indexOf(urlId);
     events.splice(index, 1);
     STUDENT_DETAILS_STORE.setInterests(events);
+    console.log(STUDENT_DETAILS_STORE.getInterests);
   };
 
   useEffect(() => {
@@ -59,8 +63,9 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
         style={styles.button}
         onPress={() => {
           // EVENT_DESCRIPTION_STORE.setLoading(true);
-          navigation.popToTop();
           EVENT_DESCRIPTION_STORE.reset();
+          // navigation.popToTop();
+          navigation.pop();
         }}>
         {Platform.OS === 'ios' ? (
           <Icon
@@ -88,20 +93,27 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
-                if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
-                  if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
-                    route.params.func(true);
-                  }
-                }
-                if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
-                  if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
-                    route.params.func(false);
-                  }
-                  showToast(
-                    'You will receive notifications and updates from this event!',
-                    true,
-                  );
-                }
+                getAllStudentDetails(true);
+                // if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+                //   if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
+                //     route.params.func(true);
+                //   } else if (STUDENT_DETAILS_STORE) {
+                //     console.log('Student Detail Store defined');
+                //     removeEvent(
+                //       EVENT_DESCRIPTION_STORE.getID,
+                //       EVENT_DESCRIPTION_STORE.getData.urlId,
+                //     );
+                //   }
+                // }
+                // if (!EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
+                //   if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
+                //     route.params.func(false);
+                //   }
+                //   showToast(
+                //     'You will receive notifications and updates from this event!',
+                //     true,
+                //   );
+                // }
                 FEEDS_STORE.setInterested(
                   !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
                   EVENT_DESCRIPTION_STORE.getID,
@@ -113,6 +125,7 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
                 setApi(false);
               },
               () => {
+                showToast();
                 setApi(false);
               },
             );

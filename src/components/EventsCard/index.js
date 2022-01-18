@@ -13,6 +13,7 @@ import {USER_STORE} from '../../mobx/USER_STORE';
 import {STUDENT} from '../../utils/USER_TYPE';
 import ImageView from '../ImageView';
 import {observer} from 'mobx-react';
+import {getAllStudentDetails} from '../../screens/StudentUserScreen/apiCalls';
 
 const EventsCard = observer(
   ({
@@ -115,6 +116,7 @@ const EventsCard = observer(
                     toggleInterestedApi(
                       eventId,
                       () => {
+                        getAllStudentDetails(true);
                         if (!interest) {
                           showToast(
                             'You will receive notifications and updates from this event!',

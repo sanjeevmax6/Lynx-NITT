@@ -14,6 +14,8 @@ import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import EventStatusTag from './EventStatusTag';
 import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
+import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
+import {CLUB_DESCRIPTION_STORE} from '../../mobx/CLUB_DESCRIPTION_STORE';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -33,12 +35,15 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
       }}>
       <Pressable
         onPress={() => {
-          route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
-            ? navigation.push('ClubDescription', {
-                ClubId: clubID,
-                fromEventScreen: true,
-              })
-            : null;
+          if (!route.params.fromClubDescription) {
+            // route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
+            //   ?
+            navigation.push('ClubDescription', {
+              ClubId: clubID,
+              fromEventScreen: true,
+            });
+            // : null;
+          }
         }}>
         <Card.Cover
           source={{uri: API_GET_IMAGE + imgID.trim()}}
@@ -48,12 +53,15 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
       <View style={styles.cardDetails}>
         <Pressable
           onPress={() => {
-            route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
-              ? navigation.push('ClubDescription', {
-                  ClubId: clubID,
-                  fromEventScreen: true,
-                })
-              : null;
+            if (!route.params.fromClubDescription) {
+              // route.params.fromScreen !== INTERESTED_EVENTS_PROFILE
+              //   ?
+              navigation.push('ClubDescription', {
+                ClubId: clubID,
+                fromEventScreen: true,
+              });
+              // : null;
+            }
           }}>
           <Text numberOfLines={2} style={styles.title}>
             {name}
@@ -63,41 +71,53 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
           {EVENT_DESCRIPTION_STORE.getData.club.followers} FOLLOWERS
         </Text>
       </View>
-      {USER_STORE.getUserType === USER_TYPE.STUDENT &&
-      route.params.fromScreen !== INTERESTED_EVENTS_PROFILE ? (
-        <Button
-          mode="outlined"
-          disabled={ApiCall}
-          loading={ApiCall}
-          onPress={() => {
-            setApiCall(true);
-            toggleFollowApi(
-              clubID,
-              () => {
-                //success callback
-                if (EVENT_DESCRIPTION_STORE.getIsFollowingClub) {
-                  EVENT_DESCRIPTION_STORE.setDecrementFollower();
-                } else {
-                  EVENT_DESCRIPTION_STORE.setIncrementFollower();
-                }
-                EVENT_DESCRIPTION_STORE.setIsFollowingClub(
-                  !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
-                );
-                setApiCall(false);
-              },
-              () => {
-                //failure callback
-                showToast();
-                setApiCall(false);
-              },
-            );
-          }}
-          color={colors.EventDescriptionScreen_Follow}
-          labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-          style={{alignSelf: 'center'}}>
-          {EVENT_DESCRIPTION_STORE.getIsFollowingClub ? 'Following' : 'Follow'}
-        </Button>
-      ) : null}
+      {
+        USER_STORE.getUserType === USER_TYPE.STUDENT && (
+          // route.params.fromScreen !== INTERESTED_EVENTS_PROFILE ? (
+          <Button
+            mode="outlined"
+            disabled={ApiCall}
+            loading={ApiCall}
+            onPress={() => {
+              setApiCall(true);
+              toggleFollowApi(
+                clubID,
+                () => {
+                  //success callback
+                  getAllStudentDetails(true);
+                  if (EVENT_DESCRIPTION_STORE.getIsFollowingClub) {
+                    EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                    if (route.params.fromClubDescription) {
+                      CLUB_DESCRIPTION_STORE.setDecrementFollower();
+                    }
+                  } else {
+                    EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                    if (route.params.fromClubDescription) {
+                      CLUB_DESCRIPTION_STORE.setIncrementFollower();
+                    }
+                  }
+                  EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                    !EVENT_DESCRIPTION_STORE.getIsFollowingClub,
+                  );
+                  setApiCall(false);
+                },
+                () => {
+                  //failure callback
+                  showToast();
+                  setApiCall(false);
+                },
+              );
+            }}
+            color={colors.EventDescriptionScreen_Follow}
+            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+            style={{alignSelf: 'center'}}>
+            {EVENT_DESCRIPTION_STORE.getIsFollowingClub
+              ? 'Following'
+              : 'Follow'}
+          </Button>
+        )
+        // ) : null
+      }
     </View>
   );
 });

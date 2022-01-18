@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {PixelRatio, View, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 const Tab = createMaterialTopTabNavigator();
@@ -10,9 +10,15 @@ import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {ActivityIndicator} from 'react-native-paper';
 
 const Body = ({navigation, functionCalls}) => {
+  const [followCount, setFollowCount] = useState(
+    STUDENT_DETAILS_STORE.getInterests.length,
+  );
+
   return (
     <View style={styles.container}>
       <Tab.Navigator
+        backBehavior={'order'}
+        lazy={true}
         screenOptions={{
           tabBarLabelStyle: {
             fontSize: Math.floor(
@@ -31,11 +37,12 @@ const Body = ({navigation, functionCalls}) => {
           tabBarInactiveTintColor: color.tabBarInactiveTintColor,
         }}>
         <Tab.Screen
-          name={`Following (${STUDENT_DETAILS_STORE.getClubs.length})`}
+          name={`Following (${followCount})`}
           children={() => (
             <ClubFollowingScreen
               navigation={navigation}
               goToClub={functionCalls.goToClub}
+              setFollowCount={setFollowCount}
             />
           )}
         />

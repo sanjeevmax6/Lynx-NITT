@@ -48,7 +48,8 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
       'hardwareBackPress',
       () => {
         EVENT_DESCRIPTION_STORE.reset();
-        navigation.popToTop();
+        // navigation.popToTop();
+        navigation.pop();
         return true;
       },
     );
@@ -80,7 +81,8 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             errorMessage={EVENT_DESCRIPTION_STORE.getErrorText}
             fn={() => {
               EVENT_DESCRIPTION_STORE.reset();
-              navigation.popToTop();
+              // navigation.popToTop();
+              navigation.pop();
             }}
           />
         ) : (

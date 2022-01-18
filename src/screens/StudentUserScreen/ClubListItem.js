@@ -10,8 +10,9 @@ import ImageView from '../../components/ImageView';
 import {useToast} from 'react-native-toast-notifications';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
+import {getAllStudentDetails} from './apiCalls';
 
-const ListItem = ({clubItem, goToClub}) => {
+const ListItem = ({clubItem, goToClub, refreshFlat}) => {
   const [follow, setFollow] = useState(true);
   const [apiCall, setApiCall] = useState(false);
   const imageUrl = API_GET_IMAGE + clubItem.clubId.profilePic;
@@ -48,6 +49,8 @@ const ListItem = ({clubItem, goToClub}) => {
             toggleFollowApi(
               clubItem.clubId._id,
               () => {
+                // getAllStudentDetails(true);
+                refreshFlat(true);
                 setApiCall(false);
                 if (follow) {
                   STUDENT_DETAILS_STORE.removeFollowingClub(clubItem);

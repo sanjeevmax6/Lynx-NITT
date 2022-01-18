@@ -31,6 +31,7 @@ const InterestedEventsScreen = observer(({goToEvent}) => {
           />
         }
         style={listScreenStyles.listStyle}
+        keyExtractor={item => item._id}
         data={STUDENT_DETAILS_STORE.getInterests}
         ListHeaderComponent={headerFooterComponent}
         ListFooterComponent={headerFooterComponent}
