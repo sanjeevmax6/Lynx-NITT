@@ -63,8 +63,7 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
         style={styles.button}
         onPress={() => {
           // EVENT_DESCRIPTION_STORE.setLoading(true);
-          if (!route.params.fromEventDescription)
-            EVENT_DESCRIPTION_STORE.reset();
+          EVENT_DESCRIPTION_STORE.reset();
           // navigation.popToTop();
           navigation.pop();
         }}>

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, View, Text, BackHandler} from 'react-native';
+import {SafeAreaView, View, Text, BackHandler, ScrollView} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import EventsView from './EventsView';
@@ -20,14 +20,6 @@ import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 
 const renderTopLayout = (data, navigation, route) => (
   <View>
-    <Header
-      props={{navigation: navigation}}
-      title={CLUB_DESCRIPTION_STORE.getLoading ? '' : data.name}
-      func={() => {
-        if (route.params.fromEventDescription) navigation.popToTop();
-        else navigation.pop();
-      }}
-    />
     <ClubDescriptionHeader
       name={data.name}
       email={data.email}
@@ -113,16 +105,32 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
           }}
         />
       ) : (
-        <EventsView
-          liveEventArray={CLUB_DESCRIPTION_STORE.getLiveEvents}
-          upcomingEventArray={CLUB_DESCRIPTION_STORE.getUpcomingEvents}
-          topLayout={renderTopLayout(
-            CLUB_DESCRIPTION_STORE.getData,
-            navigation,
-            route,
-          )}
-          goToEvent={goToEvent}
-        />
+        <>
+          <Header
+            props={{navigation: navigation}}
+            title={
+              CLUB_DESCRIPTION_STORE.getLoading
+                ? ''
+                : CLUB_DESCRIPTION_STORE.getData.name
+            }
+            func={() => {
+              if (route.params.fromEventDescription) navigation.popToTop();
+              else navigation.pop();
+            }}
+          />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <EventsView
+              liveEventArray={CLUB_DESCRIPTION_STORE.getLiveEvents}
+              upcomingEventArray={CLUB_DESCRIPTION_STORE.getUpcomingEvents}
+              topLayout={renderTopLayout(
+                CLUB_DESCRIPTION_STORE.getData,
+                navigation,
+                route,
+              )}
+              goToEvent={goToEvent}
+            />
+          </ScrollView>
+        </>
       )}
     </SafeAreaView>
   );

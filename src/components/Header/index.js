@@ -40,7 +40,6 @@ const Header = ({props, title = '', func = ''}) => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-
     height: verticalScale(HeaderHeight),
     shadowColor: colors.BLACK,
     shadowOpacity: 0.26,

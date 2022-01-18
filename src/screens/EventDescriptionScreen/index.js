@@ -80,8 +80,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             buttonText="GO BACK"
             errorMessage={EVENT_DESCRIPTION_STORE.getErrorText}
             fn={() => {
-              if (!route.params.fromEventDescription)
-                EVENT_DESCRIPTION_STORE.reset();
+              EVENT_DESCRIPTION_STORE.reset();
               // navigation.popToTop();
               navigation.pop();
             }}
