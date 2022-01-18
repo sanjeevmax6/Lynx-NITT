@@ -40,7 +40,8 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
             //   ?
             navigation.push('ClubDescription', {
               ClubId: clubID,
-              fromEventScreen: true,
+              eventId: route.params.eventId,
+              fromEventDescription: true,
             });
             // : null;
           }
@@ -58,7 +59,8 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
               //   ?
               navigation.push('ClubDescription', {
                 ClubId: clubID,
-                fromEventScreen: true,
+                eventId: route.params.eventId,
+                fromEventDescription: true,
               });
               // : null;
             }

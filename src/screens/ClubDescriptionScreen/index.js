@@ -16,12 +16,17 @@ import ErrorScreen from '../../components/ErrorScreen';
 import Header from '../../components/Header';
 import {observer} from 'mobx-react';
 import {ACCENT_LOTTIE} from '../../utils/LOADING_TYPES';
+import {EVENT_DESCRIPTION_STORE} from '../../mobx/EVENT_DESCRIPTION_STORE';
 
 const renderTopLayout = (data, navigation, route) => (
   <View>
     <Header
       props={{navigation: navigation}}
       title={CLUB_DESCRIPTION_STORE.getLoading ? '' : data.name}
+      func={() => {
+        if (route.params.fromEventDescription) navigation.popToTop();
+        else navigation.pop();
+      }}
     />
     <ClubDescriptionHeader
       name={data.name}
@@ -64,14 +69,18 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
       'hardwareBackPress',
       () => {
         // CLUB_DESCRIPTION_STORE.setLoading(true);
-        navigation.pop();
+        if (route.params.fromEventDescription) navigation.popToTop();
+        else navigation.pop();
+
         return true;
       },
     );
     CLUB_DESCRIPTION_STORE.setID(route.params.ClubId);
 
-    if (route.params.fromEventScreen === true) {
-      CLUB_DESCRIPTION_STORE.setFromEventScreen(route.params.fromEventScreen);
+    if (route.params.fromEventDescription) {
+      CLUB_DESCRIPTION_STORE.setFromEventScreen(
+        route.params.fromEventDescription,
+      );
     } else {
       CLUB_DESCRIPTION_STORE.setFromEventScreen(false);
     }
@@ -81,6 +90,8 @@ const ClubDescriptionScreen = observer(({route, navigation}) => {
   }, []);
 
   const goToEvent = eventId => {
+    if (route.params.fromEventDescription)
+      EVENT_DESCRIPTION_STORE.setLoading(true);
     navigation.push('EventDescriptionScreen', {
       eventId: eventId,
       app: true,

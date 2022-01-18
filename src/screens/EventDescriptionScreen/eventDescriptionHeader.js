@@ -63,7 +63,8 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
         style={styles.button}
         onPress={() => {
           // EVENT_DESCRIPTION_STORE.setLoading(true);
-          EVENT_DESCRIPTION_STORE.reset();
+          if (!route.params.fromEventDescription)
+            EVENT_DESCRIPTION_STORE.reset();
           // navigation.popToTop();
           navigation.pop();
         }}>
@@ -125,11 +126,9 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
                 setApi(false);
               },
               () => {
-
                 toast.show('Failed to process your request!', {
                   type: 'danger',
                 });
-
 
                 setApi(false);
               },

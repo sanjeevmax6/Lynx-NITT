@@ -5,13 +5,14 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {HeaderHeight, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Header = ({props, title = ''}) => {
+const Header = ({props, title = '', func = ''}) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          props.navigation.goBack();
+          if (func === '') props.navigation.goBack();
+          else func();
         }}>
         {Platform.OS === 'ios' ? (
           <Icon

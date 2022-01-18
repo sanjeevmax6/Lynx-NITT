@@ -47,7 +47,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        EVENT_DESCRIPTION_STORE.reset();
+        if (!route.params.fromEventDescription) EVENT_DESCRIPTION_STORE.reset();
         // navigation.popToTop();
         navigation.pop();
         return true;
@@ -80,7 +80,8 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
             buttonText="GO BACK"
             errorMessage={EVENT_DESCRIPTION_STORE.getErrorText}
             fn={() => {
-              EVENT_DESCRIPTION_STORE.reset();
+              if (!route.params.fromEventDescription)
+                EVENT_DESCRIPTION_STORE.reset();
               // navigation.popToTop();
               navigation.pop();
             }}
