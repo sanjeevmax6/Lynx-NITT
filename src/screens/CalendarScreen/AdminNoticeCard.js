@@ -1,16 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Colors, Text, Avatar} from 'react-native-paper';
-import {
-  scale,
-  ScaledSheet,
-  verticalScale,
-  moderateScale,
-  ms,
-} from 'react-native-size-matters';
+import {scale, ScaledSheet, moderateScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const AdminNoticeCard = props => {
   const adminNoticeData = props.data;
@@ -23,7 +15,7 @@ const AdminNoticeCard = props => {
       <View
         style={{
           width: scale(6),
-          backgroundColor: colors.AdminNoticeCardContainer,
+          backgroundColor: colors.AdminNoticeCard_Bar,
           borderRadius: scale(5),
         }}
       />

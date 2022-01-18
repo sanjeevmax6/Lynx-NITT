@@ -1,13 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text, Button, Avatar} from 'react-native-paper';
-import {
-  scale,
-  ScaledSheet,
-  verticalScale,
-  moderateScale,
-  ms,
-} from 'react-native-size-matters';
+import {Text} from 'react-native-paper';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
 
 const NoEventCard = props => {
@@ -21,7 +15,7 @@ const NoEventCard = props => {
         }}
       />
       <View style={styles.eventinfo}>
-        <Text style={styles.eventName}>No Events</Text>
+        <Text style={styles.eventName}>No Notice/Event</Text>
       </View>
     </View>
   );

@@ -1,15 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Text, Button, Avatar} from 'react-native-paper';
-import {
-  scale,
-  ScaledSheet,
-  verticalScale,
-  moderateScale,
-  ms,
-} from 'react-native-size-matters';
+import {scale, ScaledSheet, moderateScale} from 'react-native-size-matters';
 import * as color from '../../utils/colors';
-import moment from 'moment';
 import {NO_IMAGE_URL, API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 
@@ -21,7 +14,7 @@ const EventCard = props => {
       <View
         style={{
           width: scale(6),
-          backgroundColor: color.cardContainer,
+          backgroundColor: color.EventCard_Bar,
           borderRadius: scale(5),
         }}
       />

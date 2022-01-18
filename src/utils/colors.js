@@ -39,24 +39,25 @@ export const cardborder = 'grey';
 export const cardstrip = Accent;
 export const EventCard_imgbck = Primary;
 //Calendar Page
-export const CalenderScreen_backgroundColor = WHITE;
-//export const CalenderScreen_textHeaderColor = FontColor;
-//export const CalenderScreen_textDefaultColor = FontColor;
+export const CalenderScreen_backgroundColor = '#394257';
+export const CalenderScreen_dayTextColor = WHITE;
 export const CalenderScreen_selectedTextColor = WHITE;
-export const CalenderScreen_selectedBackgroundColor = GRAY_MEDIUM;
-export const CalenderScreen_arrowColor = Lightsteelblue;
-export const CalenderScreen_todayTextColor = Blue;
-export const CalendarScreen_dayHeaderTextColor = BLACK;
-export const CalendarScreen_satSunHeaderTextColor = Tertiary;
-//export const CalenderScreen_mainColor = Tertiary;
-//export const CalenderScreen_textSecondaryColor = FontColor;
-//export const CalenderScreen_borderColor = Contrast;
-export const CalendarScreen_CalendarEventMarking = Tertiary;
-export const CalendarScreen_CalendarNoticeMarking = '#30D5C8';
-export const CalendarScreen_CalendarExcessMarking = '#d52f8f';
+export const CalenderScreen_selectedBackgroundColor = '#ffaf56';
+export const CalenderScreen_arrowColor = WHITE;
+export const CalenderScreen_todayTextColor = '#30D5C8';
+export const CalendarScreen_dayHeaderTextColor = '#F8A145';
+export const CalendarScreen_satSunHeaderTextColor = '#fdc029';
+export const CalendarScreen_monthColor = WHITE;
+//Week Number Colour and also Disabled Dates Colour
+export const CalenderScreen_weekNumberColour = '#adadad';
+export const CalenderScreen_borderColor = CalenderScreen_backgroundColor;
+export const CalendarScreen_CalendarEventMarking = '#bcb3b3';
+export const CalendarScreen_CalendarNoticeMarking = '#02807D';
+export const CalendarScreen_CalendarExcessMarking = '#DD904F';
+export const CalendarScreen_CalendarIcon = '#F8A145';
 
 //Admin Notice Card
-export const AdminNoticeCardContainer = '#30D5C8';
+export const AdminNoticeCard_Bar = '#02807D';
 export const AdminNoticeCard_CalendarIcon = Contrast;
 export const AdminNoticeCard_Back = Primary;
 //event card
@@ -69,6 +70,7 @@ export const EventCard_IsLive = '#f34928';
 export const LIVE = EventCard_IsLive;
 export const CLOSED = '#feb706';
 export const UPCOMING = 'green';
+export const EventCard_Bar = '#bcb3b3';
 //eventScreen
 export const EventScreen_headerBackground = StatusBar;
 export const EventScreen_headerText = FontColor;

@@ -14,6 +14,13 @@ const TopLayout = observer(() => {
   const maxHeight = verticalScale(400);
   const animation = useRef(new Animated.Value(maxHeight)).current;
   const [icon, setIcon] = useState('arrow-up-drop-circle');
+  const [calendarVisibilityText, setCalendarVisibilityText] =
+    useState('Close Calendar');
+  const [animatedViewBackgroundColor, setAnimatedViewBackgroundColor] =
+    useState(colors.CalenderScreen_backgroundColor);
+  const [animatedViewMarginTop, setAnimatedViewMarginTop] = useState(
+    2 * HorizontalPadding,
+  );
   const [b, setb] = useState(true);
   var height;
   var MarkedDates = {};
@@ -28,9 +35,7 @@ const TopLayout = observer(() => {
     new Date().setFullYear(new Date().getFullYear() + 1),
   ).toLocaleString();
   const [dateHeader, setDateHeader] = useState(
-    moment(CALENDAR_STORE.getSelectedDate, 'DD-MM-YYYY').format(
-      'dddd, Do MMMM, YYYY',
-    ),
+    moment(CALENDAR_STORE.getSelectedDate, 'DD-MM-YYYY').format('Do MMM YYYY'),
   );
 
   const onSelectedChange = day => {
@@ -44,7 +49,7 @@ const TopLayout = observer(() => {
     );
     setDateHeader(
       moment(CALENDAR_STORE.getSelectedDate, 'DD-MM-YYYY').format(
-        'dddd, Do MMMM, YYYY',
+        'Do MMM YYYY',
       ),
     );
   };
@@ -53,10 +58,16 @@ const TopLayout = observer(() => {
     height = 0;
     setb(false);
     setIcon('arrow-down-drop-circle');
+    setCalendarVisibilityText('Open Calendar');
+    setAnimatedViewBackgroundColor(colors.WHITE);
+    setAnimatedViewMarginTop(0);
     if (!expanded) {
       height = maxHeight;
       setb(true);
       setIcon('arrow-up-drop-circle');
+      setCalendarVisibilityText('Close Calendar');
+      setAnimatedViewBackgroundColor(colors.CalenderScreen_backgroundColor);
+      setAnimatedViewMarginTop(2 * HorizontalPadding);
     }
 
     Animated.spring(animation, {
@@ -90,8 +101,8 @@ const TopLayout = observer(() => {
           var noticeStartDate = moment(
             new Date(notices[j].startDate).toLocaleDateString(),
           ).format('YYYY-MM-DD');
-          //Limiting Maximum No.of Lines per day to 3 and if more than 3, adding a line to indicate more notices.
-          if (undefinedCheck(MarkedDates, noticeStartDate).length < 3) {
+          //Limiting Maximum No.of Lines per day to 2 and if more than 2, adding a different coloured line to indicate more notices.
+          if (undefinedCheck(MarkedDates, noticeStartDate).length < 2) {
             MarkedDates[noticeStartDate] = {
               ...MarkedDates[noticeStartDate],
               periods: [
@@ -103,7 +114,7 @@ const TopLayout = observer(() => {
                 },
               ],
             };
-          } else if (undefinedCheck(MarkedDates, noticeStartDate).length == 3) {
+          } else if (undefinedCheck(MarkedDates, noticeStartDate).length == 2) {
             MarkedDates[noticeStartDate] = {
               ...MarkedDates[noticeStartDate],
               periods: [
@@ -125,8 +136,8 @@ const TopLayout = observer(() => {
           var eventStartDate = moment(
             new Date(events[j].startDate).toLocaleDateString(),
           ).format('YYYY-MM-DD');
-          //Limiting Maximum No.of Lines per day to 3 and if more than 3, adding a line to indicate more events.
-          if (undefinedCheck(MarkedDates, eventStartDate).length < 3) {
+          //Limiting Maximum No.of Lines per day to 2 and if more than 2, adding a different line line to indicate more events.
+          if (undefinedCheck(MarkedDates, eventStartDate).length < 2) {
             MarkedDates[eventStartDate] = {
               ...MarkedDates[eventStartDate],
               periods: [
@@ -138,7 +149,7 @@ const TopLayout = observer(() => {
                 },
               ],
             };
-          } else if (undefinedCheck(MarkedDates, eventStartDate).length == 3) {
+          } else if (undefinedCheck(MarkedDates, eventStartDate).length == 2) {
             MarkedDates[eventStartDate] = {
               ...MarkedDates[eventStartDate],
               periods: [
@@ -159,16 +170,14 @@ const TopLayout = observer(() => {
 
   return (
     <View>
-      <TouchableOpacity style={styles.dateLayout} onPress={toggle}>
-        <Text style={styles.dateText}>{dateHeader}</Text>
-        <IconButton icon={icon} size={scale(16)} color={colors.Tertiary} />
-      </TouchableOpacity>
-      <Divider style={{height: 0.3}} />
       <Animated.View
         style={[
           {
             height: animation,
-            backgroundColor: colors.CalenderScreen_backgroundColor,
+            backgroundColor: animatedViewBackgroundColor,
+            marginHorizontal: scale(2 * HorizontalPadding),
+            marginTop: verticalScale(animatedViewMarginTop),
+            borderRadius: scale(40),
           },
         ]}>
         <View
@@ -182,10 +191,7 @@ const TopLayout = observer(() => {
           }}>
           {b && (
             <Calendar
-              style={{
-                marginTop: verticalScale(-1.5 * HorizontalPadding),
-                marginBottom: verticalScale(HorizontalPadding / 2),
-              }}
+              style={styles.calendar}
               current={selectedDate}
               minDate={minDate}
               maxDate={maxDate}
@@ -193,6 +199,7 @@ const TopLayout = observer(() => {
                 onSelectedChange(day);
               }}
               hideExtraDays={true}
+              disableAllTouchEventsForDisabledDays={true}
               firstDay={1}
               showWeekNumbers={true}
               enableSwipeMonths={true}
@@ -207,21 +214,30 @@ const TopLayout = observer(() => {
               }}
               theme={{
                 arrowColor: colors.CalenderScreen_arrowColor,
-
+                //The Dates
                 textDayFontFamily: FONT,
                 textDayFontSize: scale(14),
-
+                dayTextColor: colors.CalenderScreen_dayTextColor,
+                //The Day Names (Sunday,Monday...)
                 textSectionTitleColor: colors.CalendarScreen_dayHeaderTextColor,
                 textDayHeaderFontSize: scale(13),
-
+                textDayHeaderFontWeight: '300',
+                //Month on Header
                 textMonthFontFamily: FONT,
-                textMonthFontSize: scale(16),
+                textMonthFontSize: scale(17),
+                textMonthFontWeight: 'bold',
+                monthTextColor: colors.CalendarScreen_monthColor,
 
                 todayTextColor: colors.CalenderScreen_todayTextColor,
+                //Week Number Colour and also Disabled Dates Colour
+                textDisabledColor: '#adadad',
 
                 selectedDayBackgroundColor:
                   colors.CalenderScreen_selectedBackgroundColor,
                 selectedDayTextColor: colors.CalenderScreen_selectedTextColor,
+
+                calendarBackground: colors.CalenderScreen_backgroundColor,
+
                 'stylesheet.calendar.header': {
                   dayTextAtIndex5: {
                     color: colors.CalendarScreen_satSunHeaderTextColor,
@@ -242,24 +258,65 @@ const TopLayout = observer(() => {
           )}
         </View>
       </Animated.View>
-      <Divider
-        style={{height: 1, marginBottom: verticalScale(HorizontalPadding / 2)}}
-      />
+      <View style={styles.currentDayAndToggleContainer}>
+        <View style={styles.currentDayContainer}>
+          <IconButton
+            icon="calendar"
+            size={scale(16)}
+            color={colors.CalendarScreen_CalendarIcon}
+          />
+          <Text style={styles.currentDayText}>{dateHeader}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={toggle}
+          style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.calendarVisibilityText}>
+            {calendarVisibilityText}
+          </Text>
+          <IconButton
+            icon={icon}
+            size={scale(16)}
+            color={colors.CalendarScreen_CalendarIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 });
 
 const styles = ScaledSheet.create({
-  dateLayout: {
+  calendar: {
+    backgroundColor: colors.CalenderScreen_backgroundColor,
+    borderRadius: scale(40),
+    borderTopWidth: verticalScale(5),
+    borderBottomWidth: verticalScale(10),
+    borderLeftWidth: scale(15),
+    borderRightWidth: scale(20),
+    borderColor: colors.CalenderScreen_borderColor,
+  },
+  currentDayAndToggleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: scale(HorizontalPadding),
+    marginTop: scale(HorizontalPadding / 2),
+  },
+  currentDayContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.Primary,
-    paddingVertical: verticalScale(10),
+    marginRight: scale(HorizontalPadding),
   },
-  dateText: {
-    fontSize: '18@s',
-    marginLeft: '12@s',
+  currentDayText: {
     fontWeight: 'bold',
+    fontSize: scale(14),
+    alignItems: 'center',
+    fontFamily: FONT,
+  },
+  calendarVisibilityText: {
+    fontSize: scale(14),
+    marginLeft: scale(HorizontalPadding),
+    fontFamily: FONT,
   },
 });
 

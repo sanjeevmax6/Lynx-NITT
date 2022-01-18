@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Switch,
-  Dimensions,
-  BackHandler,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Switch, Dimensions} from 'react-native';
 import {
   scale,
   verticalScale,
@@ -210,12 +202,12 @@ const CalendarNoticeCreationTime = observer(
                 isVisible={CALENDAR_NOTICE_STORE.getShowStartDatePicker}
                 date={CALENDAR_NOTICE_STORE.getStartDate}
                 mode="date"
-                minimumDate={moment().toDate()}
+                //Notice can be created only for start dates from next day
+                minimumDate={new Date(new Date().getTime() + 86400000)}
                 onConfirm={onChangeStartDate}
                 onCancel={() =>
                   CALENDAR_NOTICE_STORE.setShowStartDatePicker(false)
                 }
-                //Notice can be created only for start dates from next day
               />
             )}
             {CALENDAR_NOTICE_STORE.getShowEndDatePicker && (
@@ -223,12 +215,12 @@ const CalendarNoticeCreationTime = observer(
                 isVisible={CALENDAR_NOTICE_STORE.getShowEndDatePicker}
                 date={CALENDAR_NOTICE_STORE.getEndDate}
                 mode="date"
-                minimumDate={moment().toDate()}
+                //Notice can be created only for end dates from 2 days after
+                minimumDate={new Date(new Date().getTime() + 2 * 86400000)}
                 onConfirm={onChangeEndDate}
                 onCancel={() =>
                   CALENDAR_NOTICE_STORE.setShowEndDatePicker(false)
                 }
-                //Notice can be created only for end dates from 2 days after
               />
             )}
             {CALENDAR_NOTICE_STORE.getError ? (
