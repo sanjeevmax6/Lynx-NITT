@@ -32,22 +32,18 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
     setpicEr(false);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 4,
+        x: WIDTH * 3,
         animated: true,
       });
     }
-    callback('Reset Password', 'Enter your new password.', 4);
+    callback('Reset Password', 'Enter your new password.', 3);
   };
 
   const back = () => {
-    callback(
-      'Documents',
-      'Enter Aadhar Number and Upload your passport\n(Optional)',
-      2,
-    );
+    callback('Basic Information', 'Enter your date of birth and address', 1);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 2,
+        x: WIDTH * 1,
         animated: true,
       });
     }

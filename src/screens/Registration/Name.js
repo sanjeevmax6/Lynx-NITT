@@ -76,7 +76,11 @@ const Name = observer(({scrollViewRef, callback}) => {
 
     setEr(false);
 
-    callback('Basic Information', 'Enter your date of birth and address', 1);
+    callback(
+      'Basic Information',
+      'Enter your date of birth and permanent address',
+      1,
+    );
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH,

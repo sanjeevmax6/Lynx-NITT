@@ -16,6 +16,7 @@ const SuccessScreen = ({
   icon = 'keyboard-arrow-right',
   fn = () => {},
   isResetPass = false,
+  automatic = false,
 }) => {
   const backPress = () => {
     if (isResetPass) {
@@ -32,7 +33,9 @@ const SuccessScreen = ({
   };
 
   setTimeout(toggler, 50);
-
+  if (automatic) {
+    setTimeout(fn, 2000);
+  }
   return (
     <View
       style={{
@@ -76,7 +79,7 @@ const SuccessScreen = ({
             onPress={backPress}>
             <Text
               style={{
-                fontSize: scale(18),
+                fontSize: scale(16),
                 color: 'white',
 
                 fontWeight: 'bold',

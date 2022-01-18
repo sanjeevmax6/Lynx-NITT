@@ -22,31 +22,39 @@ const ResetPassword = ({
 
   const [passEr, setpassEr] = useState(false);
   const [cpassEr, setcpassEr] = useState(false);
+  const [matchEr, setmatchEr] = useState(false);
 
   const register = () => {
     setpassEr(false);
     setcpassEr(false);
-    if (!STUDENT_REGISTRATION_STORE.getPassword) {
+    setmatchEr(false);
+    if (STUDENT_REGISTRATION_STORE.getPassword.trim() === '') {
       setpassEr(true);
       return;
     }
-    if (!STUDENT_REGISTRATION_STORE.getConfirmPassword) {
+    if (STUDENT_REGISTRATION_STORE.getConfirmPassword.trim() === '') {
       setcpassEr(true);
       return;
     }
-
+    if (
+      STUDENT_REGISTRATION_STORE.getConfirmPassword !==
+      STUDENT_REGISTRATION_STORE.getPassword
+    ) {
+      setmatchEr(true);
+      return;
+    }
     handleAPICALL();
   };
 
   const back = () => {
     callback(
       'Profile Picture',
-      'Upload your profile photo. This picture will be used by NIT Trichy for official purposes.',
-      3,
+      'Upload your profile photo. This photo will be used by NIT Trichy for official purposes.',
+      2,
     );
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
-        x: WIDTH * 3,
+        x: WIDTH * 2,
         animated: true,
       });
     }
@@ -97,6 +105,7 @@ const ResetPassword = ({
         }
       />
       {cpassEr && <Error text="Enter Confirm Password" />}
+      {matchEr && <Error text="Passwords do not match" />}
 
       <NextButton handler={register} label="Let's Go" />
       <BackButton handler={back} />

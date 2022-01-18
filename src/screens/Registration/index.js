@@ -37,7 +37,7 @@ const WIDTH = Dimensions.get('window').width;
 const Registration = observer(({navigation}) => {
   const scrollview = useRef(null);
   const [title, setTitle] = useState('Basic Information');
-  const [subtitle, setSubTitle] = useState('Enter your name and department');
+  const [subtitle, setSubTitle] = useState('Enter basic profile information');
   const [page, setPage] = useState(0);
 
   const changeText = (title, stitle, page) => {
@@ -139,6 +139,8 @@ const Registration = observer(({navigation}) => {
             <>
               {STUDENT_REGISTRATION_STORE.getApiSuccess ? (
                 <SuccessScreen
+                  showButton={false}
+                  automatic={true}
                   fn={async () => {
                     USER_STORE.setUserType(STUDENT);
                     await EncryptedStorage.setItem(

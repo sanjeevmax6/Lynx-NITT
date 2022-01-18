@@ -35,7 +35,7 @@ const Documents = observer(({scrollViewRef, callback}) => {
       }
       callback(
         'Profile Picture',
-        'Upload your profile photo. This picture will be used by NIT Trichy for official purposes.',
+        'Upload your profile photo. This photo will be used by NIT Trichy for official purposes.',
         3,
       );
     } else if (isAadharValid(STUDENT_REGISTRATION_STORE.getAadhar)) {
@@ -48,7 +48,7 @@ const Documents = observer(({scrollViewRef, callback}) => {
       }
       callback(
         'Profile Picture',
-        'Upload your profile photo. This picture will be used by NIT Trichy for official purposes.',
+        'Upload your profile photo. This photo will be used by NIT Trichy for official purposes.',
         3,
       );
     } else {

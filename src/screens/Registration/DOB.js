@@ -42,14 +42,14 @@ const Name = observer(({scrollViewRef, callback}) => {
       });
     }
     callback(
-      'Documents',
-      'Enter Aadhar Number and Upload your passport\n(Optional)',
+      'Profile Picture',
+      'Upload your profile photo. This photo will be used by NIT Trichy for official purposes.',
       2,
     );
   };
 
   const back = () => {
-    callback('Basic Information', 'Enter your name and department', 0);
+    callback('Basic Information', 'Enter basic profile information', 0);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: 0,
@@ -87,7 +87,7 @@ const Name = observer(({scrollViewRef, callback}) => {
 
       {dateEr && <Error text="Enter your date of birth" />}
       <TextInput
-        label="Address"
+        label="Full Address"
         mode="outlined"
         theme={{
           colors: {
@@ -103,7 +103,7 @@ const Name = observer(({scrollViewRef, callback}) => {
           STUDENT_REGISTRATION_STORE.setAddress(add);
         }}
       />
-      {addEr && <Error text="Enter your address" />}
+      {addEr && <Error text="Enter your full address" />}
       {datePicker && (
         <DateTimePickerModal
           isVisible={datePicker}
