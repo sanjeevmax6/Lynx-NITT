@@ -3,7 +3,7 @@ import {TextInput, Button} from 'react-native-paper';
 import {View, StyleSheet, Dimensions, Keyboard} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
-import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
+import {EVENT_DESC_MAX_SIZE, HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from '../../components/Error';
 import {
@@ -59,7 +59,7 @@ const EventCreationDesc = observer(
               },
             }}
             selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-            placeholder="Event Description (max 300)"
+            placeholder={'Event Description (max ' + EVENT_DESC_MAX_SIZE + ')'}
             value={EVENT_CREATION_STORE.getDesc}
             onChangeText={nDesc => {
               EVENT_CREATION_STORE.setDesc(nDesc);

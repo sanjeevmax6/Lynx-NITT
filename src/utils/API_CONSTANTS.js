@@ -1,4 +1,5 @@
-export const API_BASE_URL = 'https://nittapp-spidertesting.cloudns.nz/v1.5/';
+export const API_BASE_URL = 'https://nittapp.spider-nitt.org/';
+export const API_CDN_URL = 'https://d1bn8n4samjo70.cloudfront.net/';
 export const GET_BASE_URL = 'https://ankursinha03.github.io/nittAppUrl/';
 export const APP_PLAYSTORE_URL =
   'https://play.google.com/store/apps/details?id=org.spider.nittapp';
@@ -20,7 +21,7 @@ export const API_ADD_CALENDAR_NOTICE =
 
 export const API_EVENT_BY_ID = API_BASE_URL + '/api/eventById/';
 
-export const API_GET_IMAGE = API_BASE_URL + '/api/image?photo=';
+export const API_GET_IMAGE = API_CDN_URL;
 
 export const API_GET_STUDENT_DETAILS = API_BASE_URL + '/api/student/detail';
 

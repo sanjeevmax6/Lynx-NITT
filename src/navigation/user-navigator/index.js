@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Header from '../../components/Header';
-import PageHeader from '../../components/PageHeader';
 
 import UserScreen from '../../screens/UserScreen';
 import StudentUserScreen from '../../screens/StudentUserScreen';
@@ -44,7 +43,7 @@ function UserNavigator() {
         component={SettingsSceen}
         options={{
           headerShown: true,
-          header: props => <PageHeader title="SETTINGS" />,
+          header: props => <Header title="Settings" props={props} />,
           animation: 'slide_from_right',
         }}
       />

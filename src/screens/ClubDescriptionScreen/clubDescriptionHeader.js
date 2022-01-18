@@ -131,172 +131,190 @@ const ClubDescriptionHeader = observer(
           <Text
             style={{
               ...styles.text,
-              paddingTop: verticalScale(6),
-              paddingBottom: verticalScale(10),
+
+              fontSize: scale(14),
+              lineHeight: verticalScale(25),
+              fontWeight: '300',
             }}>
             {description}
           </Text>
-          <Button
-            disabled={ApiCall}
-            loading={ApiCall}
-            onPress={() => {
-              setApiCall(true);
-              toggleFollowApi(
-                CLUB_DESCRIPTION_STORE.getID,
-                () => {
-                  getAllStudentDetails(true);
-                  setApiCall(false);
-                  console.log(
-                    'from event: ',
-                    CLUB_DESCRIPTION_STORE.getFromEventScreen,
-                  );
-
-                  if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
-                    CLUB_DESCRIPTION_STORE.setDecrementFollower();
-
-                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
-                      EVENT_DESCRIPTION_STORE.setDecrementFollower();
-                  } else {
-                    CLUB_DESCRIPTION_STORE.setIncrementFollower();
-
-                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
-                      EVENT_DESCRIPTION_STORE.setIncrementFollower();
-                  }
-                  if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
-                    if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
-                      route.params.func(true);
-                    } else {
-                      route.params.func(false);
-                    }
-                  }
-
-                  CLUB_DESCRIPTION_STORE.setIsFollowingClub(
-                    !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
-                  );
-
-                  if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
-                    EVENT_DESCRIPTION_STORE.setIsFollowingClub(
-                      CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+          <View
+            style={{
+              paddingTop: verticalScale(10),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Button
+              disabled={ApiCall}
+              loading={ApiCall}
+              onPress={() => {
+                setApiCall(true);
+                toggleFollowApi(
+                  CLUB_DESCRIPTION_STORE.getID,
+                  () => {
+                    getAllStudentDetails(true);
+                    setApiCall(false);
+                    console.log(
+                      'from event: ',
+                      CLUB_DESCRIPTION_STORE.getFromEventScreen,
                     );
-                },
-                () => {
-                  showToast();
 
-                  setApiCall(false);
-                },
-              );
-            }}
-            mode="outlined"
-            color={colors.EventDescriptionScreen_Follow}
-            labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-            style={{alignSelf: 'baseline'}}>
-            {CLUB_DESCRIPTION_STORE.getIsFollowingClub ? 'Following' : 'Follow'}
-          </Button>
+                    if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                      CLUB_DESCRIPTION_STORE.setDecrementFollower();
 
-          <View style={styles.icons}>
-            {CLUB_DESCRIPTION_STORE.getData.links.website ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(CLUB_DESCRIPTION_STORE.getData.links.website.trim());
-                }}>
-                <Icon
-                  style={styles.icon}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  name="logo-chrome"
-                  size={moderateScale(ICON_SIZE_LARGE)}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
+                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                        EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                    } else {
+                      CLUB_DESCRIPTION_STORE.setIncrementFollower();
 
-            {CLUB_DESCRIPTION_STORE.getData.links.linkedin ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(
-                    CLUB_DESCRIPTION_STORE.getData.links.linkedin.trim(),
-                  );
-                }}>
-                <Icon
-                  style={styles.icon}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  name="logo-linkedin"
-                  size={moderateScale(ICON_SIZE_LARGE)}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
-            {CLUB_DESCRIPTION_STORE.getData.links.instagram ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(
-                    CLUB_DESCRIPTION_STORE.getData.links.instagram.trim(),
-                  );
-                }}>
-                <Icon
-                  style={styles.icon}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  name="logo-instagram"
-                  size={moderateScale(ICON_SIZE_LARGE)}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
-            {CLUB_DESCRIPTION_STORE.getData.links.facebook ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(
-                    CLUB_DESCRIPTION_STORE.getData.links.facebook.trim(),
-                  );
-                }}>
-                <Icon
-                  style={styles.icon}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  name="logo-facebook"
-                  size={moderateScale(ICON_SIZE_LARGE)}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
-            {CLUB_DESCRIPTION_STORE.getData.links.medium ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(CLUB_DESCRIPTION_STORE.getData.links.medium.trim());
-                }}>
-                <Entypo
-                  name="medium"
-                  size={moderateScale(ICON_SIZE_LARGE + 3)}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
-            {CLUB_DESCRIPTION_STORE.getData.links.youtube ? (
-              <TouchableOpacity
-                style={styles.iconTouch}
-                onPress={() => {
-                  openLink(CLUB_DESCRIPTION_STORE.getData.links.youtube.trim());
-                }}>
-                <Entypo
-                  name="youtube"
-                  size={moderateScale(ICON_SIZE_LARGE + 2)}
-                  color={colors.ClubDescriptionScreen_ICON}
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
+                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                        EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                    }
+                    if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
+                      if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                        route.params.func(true);
+                      } else {
+                        route.params.func(false);
+                      }
+                    }
+
+                    CLUB_DESCRIPTION_STORE.setIsFollowingClub(
+                      !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                    );
+
+                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                      EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                        CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                      );
+                  },
+                  () => {
+                    showToast();
+
+                    setApiCall(false);
+                  },
+                );
+              }}
+              mode="outlined"
+              color={colors.EventDescriptionScreen_Follow}
+              labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
+              style={{alignSelf: 'baseline'}}>
+              {CLUB_DESCRIPTION_STORE.getIsFollowingClub
+                ? 'Following'
+                : 'Follow'}
+            </Button>
+
+            <View style={styles.icons}>
+              {CLUB_DESCRIPTION_STORE.getData.links.website ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.website.trim(),
+                    );
+                  }}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    name="logo-chrome"
+                    size={moderateScale(ICON_SIZE_LARGE)}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+
+              {CLUB_DESCRIPTION_STORE.getData.links.linkedin ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.linkedin.trim(),
+                    );
+                  }}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    name="logo-linkedin"
+                    size={moderateScale(ICON_SIZE_LARGE)}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+              {CLUB_DESCRIPTION_STORE.getData.links.instagram ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.instagram.trim(),
+                    );
+                  }}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    name="logo-instagram"
+                    size={moderateScale(ICON_SIZE_LARGE)}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+              {CLUB_DESCRIPTION_STORE.getData.links.facebook ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.facebook.trim(),
+                    );
+                  }}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    name="logo-facebook"
+                    size={moderateScale(ICON_SIZE_LARGE)}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+              {CLUB_DESCRIPTION_STORE.getData.links.medium ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.medium.trim(),
+                    );
+                  }}>
+                  <Entypo
+                    name="medium"
+                    size={moderateScale(ICON_SIZE_LARGE + 3)}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+              {CLUB_DESCRIPTION_STORE.getData.links.youtube ? (
+                <TouchableOpacity
+                  style={styles.iconTouch}
+                  onPress={() => {
+                    openLink(
+                      CLUB_DESCRIPTION_STORE.getData.links.youtube.trim(),
+                    );
+                  }}>
+                  <Entypo
+                    name="youtube"
+                    size={moderateScale(ICON_SIZE_LARGE + 2)}
+                    color={colors.ClubDescriptionScreen_ICON}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+            </View>
           </View>
         </View>
       </View>
@@ -371,7 +389,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingRight: scale(15),
-    paddingTop: '10@vs',
+
     alignItems: 'center',
   },
 });

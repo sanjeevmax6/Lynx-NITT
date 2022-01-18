@@ -8,7 +8,6 @@ import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import ImageView from '../ImageView';
 
 const AcademicSearchCard = ({title, desc, url, name, time}) => {
-  console.log(url);
   return (
     <View style={styles.card}>
       <ImageView
@@ -60,14 +59,12 @@ export default AcademicSearchCard;
 
 const styles = ScaledSheet.create({
   card: {
-    marginTop: '5@msr',
-    marginBottom: '5@msr',
-    paddingVertical: '2@msr',
+    paddingVertical: '3@msr',
     paddingHorizontal: '1@msr',
     display: 'flex',
     flexDirection: 'column',
     flexDirection: 'row',
-    marginHorizontal: scale(HorizontalPadding),
+    paddingHorizontal: scale(HorizontalPadding),
     alignItems: 'center',
     backgroundColor: 'white',
   },

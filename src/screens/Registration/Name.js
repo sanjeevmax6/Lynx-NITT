@@ -96,7 +96,9 @@ const Name = observer(({scrollViewRef, callback}) => {
   return (
     <SafeAreaView>
       <DropDownModal modalType={modalType} data={data} />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: scale(20)}}>
           <TextInput
             label="First Name"
@@ -180,6 +182,7 @@ const Name = observer(({scrollViewRef, callback}) => {
             <TextInput
               label="Mobile Number"
               mode="outlined"
+              maxLength={15}
               keyboardType="phone-pad"
               theme={{
                 colors: {

@@ -130,6 +130,7 @@ const TagSearchResult = ({searchQuery, setScreen, navigation}) => {
               {API != '' ? (
                 <FlatList
                   data={Data}
+                  showsVerticalScrollIndicator={false}
                   onScroll={() => {
                     Keyboard.dismiss();
                   }}

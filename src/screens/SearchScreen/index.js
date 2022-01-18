@@ -52,6 +52,7 @@ const SearchScreen = ({route, navigation}) => {
           autoFocus={true}
           value={searchQuery}
           iconColor={color.BLACK}
+          autoCapitalize="none"
           theme={themeSearchBar}
         />
 

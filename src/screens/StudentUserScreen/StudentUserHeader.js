@@ -60,11 +60,11 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
               {studentDetails.studentUsername}
             </Text>
           </View>
-          <Divider style={styles.divider} />
+          {/* <Divider style={styles.divider} /> */}
           <View style={styles.textBorder}>
             <Text style={styles.textStyle}>{studentDetails.studentRno}</Text>
           </View>
-          <Divider style={styles.divider} />
+          {/* <Divider style={styles.divider} /> */}
           <View style={styles.textBorder}>
             <Text style={styles.textStyle}>{studentDetails.studentDept}</Text>
           </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginStart: scale(20),
   },
   textBorder: {
-    marginVertical: verticalScale(4),
+    marginVertical: verticalScale(1),
     marginStart: scale(8),
   },
   textStyle: {
@@ -114,8 +114,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   modalView: {
-    backgroundColor: color.WHITE,
-    height: verticalScale(250),
+    backgroundColor: 'white',
+    borderTopLeftRadius: scale(10),
+    borderTopRightRadius: scale(10),
     width: '100%',
     bottom: '0%',
     position: 'absolute',

@@ -131,7 +131,12 @@ const EventSearchCard = ({
             {organizer}
           </Text>
         </View>
-        <View style={{marginTop: verticalScale(3), flexDirection: 'row'}}>
+        <View
+          style={{
+            marginTop: verticalScale(3),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}>
           {tags.map((val, index) => {
             return (
               <Chip
@@ -139,9 +144,10 @@ const EventSearchCard = ({
                 style={{
                   backgroundColor: colors.EventDescriptionScreen_TagBackGround,
                   marginRight: scale(3),
+                  marginTop: verticalScale(3),
                 }}
                 textStyle={{
-                  fontSize: scale(9),
+                  fontSize: scale(10),
                   color: colors.EventDescriptionScreen_TagText,
                   fontWeight: '300',
                 }}
@@ -161,7 +167,7 @@ export default EventSearchCard;
 
 const styles = ScaledSheet.create({
   card: {
-    marginVertical: '3@vs',
+    marginVertical: '2@vs',
     display: 'flex',
     flexDirection: 'row',
     padding: scale(HorizontalPadding),

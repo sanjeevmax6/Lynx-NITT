@@ -508,10 +508,10 @@ export const DEPARTMENTS = [
 
 export const Gender = [
   {
-    name: 'Male',
+    name: 'male',
   },
   {
-    name: 'Female',
+    name: 'female',
   },
   {
     name: 'prefer not to say',

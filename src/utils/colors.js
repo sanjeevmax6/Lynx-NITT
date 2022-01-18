@@ -1,7 +1,7 @@
 export const Primary = '#FFFFFF';
 export const Secondary = '#f8faf9';
-export const Accent = '#0E154D';
-export const Tertiary = '#2f3f9f';
+export const Accent = '#1d2d44';
+export const Tertiary = '#3e5c76';
 export const Contrast = '#000000';
 
 export const WHITE = '#FFFFFF';
@@ -21,9 +21,9 @@ export const GRAY_MEDIUM = '#cacaca';
 export const GRAY_DARK = '#8a8a8a';
 
 //Bottom Nav
-export const BottomNav = Primary;
-export const iconActiveColor = Accent;
-export const iconInActiveColor = GRAY_MEDIUM;
+export const BottomNav = Accent;
+export const iconActiveColor = Primary;
+export const iconInActiveColor = GRAY_DARK;
 
 //Search Screen
 export const sliderColor = BLACK;
@@ -39,14 +39,14 @@ export const cardborder = 'grey';
 export const cardstrip = Accent;
 export const EventCard_imgbck = Primary;
 //Calendar Page
-export const CalenderScreen_backgroundColor = '#394257';
+export const CalenderScreen_backgroundColor = Accent;
 export const CalenderScreen_dayTextColor = WHITE;
 export const CalenderScreen_selectedTextColor = WHITE;
 export const CalenderScreen_selectedBackgroundColor = '#ffaf56';
 export const CalenderScreen_arrowColor = WHITE;
 export const CalenderScreen_todayTextColor = '#30D5C8';
-export const CalendarScreen_dayHeaderTextColor = '#F8A145';
-export const CalendarScreen_satSunHeaderTextColor = '#fdc029';
+export const CalendarScreen_dayHeaderTextColor = '#FFB057';
+export const CalendarScreen_satSunHeaderTextColor = '#FFB057';
 export const CalendarScreen_monthColor = WHITE;
 //Week Number Colour and also Disabled Dates Colour
 export const CalenderScreen_weekNumberColour = '#adadad';
@@ -54,7 +54,7 @@ export const CalenderScreen_borderColor = CalenderScreen_backgroundColor;
 export const CalendarScreen_CalendarEventMarking = '#bcb3b3';
 export const CalendarScreen_CalendarNoticeMarking = '#02807D';
 export const CalendarScreen_CalendarExcessMarking = '#DD904F';
-export const CalendarScreen_CalendarIcon = '#F8A145';
+export const CalendarScreen_CalendarIcon = '#FFB057';
 
 //Admin Notice Card
 export const AdminNoticeCard_Bar = '#02807D';
@@ -87,7 +87,7 @@ export const EventDescriptionScreen_Follow = Accent;
 export const EventDescriptionScreen_Button = Accent;
 export const EventDescriptionScreen_ModalView = 'rgba(63,80,180,0.99)';
 
-export const EventDescriptionScreen_TagBackGround = '#DFE7FD';
+export const EventDescriptionScreen_TagBackGround = '#f0ddbc75';
 export const EventDescriptionScreen_TagText = Accent;
 
 //clubDescription

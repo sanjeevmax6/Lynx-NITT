@@ -128,7 +128,7 @@ const ActivityScreen = observer(({navigation}) => {
             ListEmptyComponent={
               <Text
                 style={{
-                  marginTop: verticalScale(10),
+                  marginTop: '75%',
                   fontSize: scale(16),
                   fontWeight: 'bold',
                   textAlign: 'center',

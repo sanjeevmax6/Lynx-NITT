@@ -201,7 +201,7 @@ const TopLayout = observer(() => {
               hideExtraDays={true}
               disableAllTouchEventsForDisabledDays={true}
               firstDay={1}
-              showWeekNumbers={true}
+              showWeekNumbers={false}
               enableSwipeMonths={true}
               markingType="multi-period"
               markedDates={{
@@ -217,6 +217,7 @@ const TopLayout = observer(() => {
                 //The Dates
                 textDayFontFamily: FONT,
                 textDayFontSize: scale(14),
+
                 dayTextColor: colors.CalenderScreen_dayTextColor,
                 //The Day Names (Sunday,Monday...)
                 textSectionTitleColor: colors.CalendarScreen_dayHeaderTextColor,
@@ -267,7 +268,7 @@ const TopLayout = observer(() => {
           />
           <Text style={styles.currentDayText}>{dateHeader}</Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={toggle}
           style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.calendarVisibilityText}>
@@ -278,7 +279,7 @@ const TopLayout = observer(() => {
             size={scale(16)}
             color={colors.CalendarScreen_CalendarIcon}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
@@ -300,12 +301,15 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: scale(HorizontalPadding),
-    marginTop: scale(HorizontalPadding / 2),
+    marginTop: scale(0),
   },
   currentDayContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: scale(HorizontalPadding),
+
+    justifyContent: 'center',
+
+    flex: 1,
   },
   currentDayText: {
     fontWeight: 'bold',

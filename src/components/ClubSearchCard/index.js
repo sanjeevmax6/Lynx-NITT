@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: scale(HorizontalPadding),
     flexDirection: 'row',
-    marginTop: verticalScale(2),
-    marginBottom: verticalScale(3),
+    paddingVertical: verticalScale(6),
     flex: 1,
     backgroundColor: 'white',
   },
@@ -106,9 +105,10 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    borderBottomColor: color.GRAY_MEDIUM,
-    margin: moderateScale(2),
-    borderBottomWidth: verticalScale(1),
+    backgroundColor: color.GRAY_LIGHT,
+    margin: moderateScale(0),
+    height: verticalScale(1),
+    marginHorizontal: scale(10),
   },
 
   followText: {

@@ -46,7 +46,7 @@ const Images = ({images, navigation}) => {
                   navigation.push('ImageScreen', {imgUrl: NO_IMAGE_URL});
                 }}>
                 <Image
-                  resizeMode="contain"
+                  resizeMode="cover"
                   style={styles.wrap}
                   source={{
                     uri: NO_IMAGE_URL,

@@ -162,6 +162,7 @@ const ClubSearchResult = ({searchQuery, setScreen, navigation}) => {
                 <View>
                   <FlatList
                     data={DATA}
+                    showsVerticalScrollIndicator={false}
                     vertical={true}
                     ListEmptyComponent={
                       <LoaderPage LoadingAccent={ACCENT_SEARCH_SCREEN} />

@@ -88,9 +88,9 @@ const LoginScreen = observer(({navigation}) => {
                 {Platform.OS === 'android' ? (
                   <LottieView
                     style={{
-                      marginTop: getHeight(180),
+                      marginTop: getHeight(195),
                     }}
-                    resizeMode="cover"
+                    resizeMode="center"
                     source={lottieFile}
                     progress={1}
                     autoPlay
@@ -122,6 +122,7 @@ const LoginScreen = observer(({navigation}) => {
                             placeholder="Enter your username"
                             mode="outlined"
                             value={user}
+                            autoCapitalize="none"
                             style={{backgroundColor: 'white'}}
                             theme={{
                               colors: {

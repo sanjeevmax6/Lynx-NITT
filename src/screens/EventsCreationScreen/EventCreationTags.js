@@ -53,6 +53,7 @@ const EventCreationTag = observer(({scrollViewRef, callback}) => {
           label="Add Tags"
           style={textInputStyles.textInputStyle}
           placeholder="Add Tags"
+          autoCapitalize="none"
           multiline={true}
           value={EVENT_CREATION_STORE.getTag}
           theme={{

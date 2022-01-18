@@ -21,7 +21,7 @@ const AdminNoticeCard = props => {
       />
       <View style={styles.noticeInfo}>
         <Text style={styles.noticeName} numberOfLines={1}>
-          Admin : {Title}
+          {Title}
         </Text>
         <Text
           style={styles.noticeDescription}

@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import ImageView from '../../components/ImageView';
+import {getFormatedDate} from 'react-native-modern-datepicker';
+import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 const EventCard = ({
   isLive,
   name,
@@ -69,11 +71,14 @@ const EventCard = ({
           <Text
             style={{
               fontSize: scale(12),
+              fontWeight: '400',
             }}
             numberOfLines={1}>
             {description}
           </Text>
-          <Text style={{fontSize: scale(12)}}>{new Date(date).toString()}</Text>
+          <Text style={{fontSize: scale(12)}}>
+            {getFormatedDate(date)} | {getFormattedTime(date)}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

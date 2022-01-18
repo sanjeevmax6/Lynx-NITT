@@ -14,6 +14,7 @@ import {
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
+import {scale} from 'react-native-size-matters';
 
 const HomeTab = createMaterialBottomTabNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -32,6 +33,10 @@ const AppNavigator = observer(() => {
       labeled={false}
       sceneAnimationEnabled={true}
       barStyle={{
+        overflow: 'hidden',
+
+        borderTopLeftRadius: scale(12),
+        borderTopRightRadius: scale(12),
         backgroundColor: color.BottomNav,
         display: BOTTOM_NAV_STORE.getTabVisibility ? null : 'none',
       }}

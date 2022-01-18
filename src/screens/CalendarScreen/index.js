@@ -171,10 +171,12 @@ const CalendarScreen = observer(({navigation}) => {
         <View style={styles.calContainer}>
           <FlatList
             renderItem={Item}
+            showsVerticalScrollIndicator={false}
             ref={agendaList}
             data={filteredData}
             ListHeaderComponent={<TopLayout />}
             ListEmptyComponent={renderEmptyItem}
+            ListFooterComponent={<View style={{height: verticalScale(25)}} />}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

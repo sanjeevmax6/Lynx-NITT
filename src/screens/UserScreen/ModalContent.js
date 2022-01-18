@@ -47,8 +47,8 @@ const ModalContent = ({ModalVisible, navigation}) => {
           size={scale(ICON_SIZE_LARGE)}
           style={{
             alignSelf: 'flex-end',
-            paddingRight: scale(5),
-            // backgroundColor: 'red',
+            marginTop: scale(6),
+            marginRight: scale(6),
           }}
         />
       </TouchableOpacity>

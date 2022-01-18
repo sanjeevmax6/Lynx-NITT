@@ -21,8 +21,8 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
     return (
       <View
         style={{
-          height: verticalScale(0.5),
-          backgroundColor: 'grey',
+          height: verticalScale(1),
+          backgroundColor: colors.GRAY_LIGHT,
         }}
       />
     );
@@ -141,6 +141,7 @@ const AcademicSearchResult = ({searchQuery, setScreen, navigation}) => {
               {API != '' ? (
                 <FlatList
                   data={Data}
+                  showsVerticalScrollIndicator={false}
                   onScroll={() => {
                     Keyboard.dismiss();
                   }}

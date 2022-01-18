@@ -69,13 +69,13 @@ const SplashScreen = () => {
           .get(GET_BASE_URL, {}, {timeout: 5000})
           .then(res => {
             if (res.status === 200) {
-              console.log('Base URl: ', res.data);
+              console.log('Base URl: ', 'https://nittapp.spider-nitt.org/');
               if (res.data.trim() === 'maintain') {
                 setAPI(2);
                 return;
               }
 
-              API_STORE.setBaseUrl(res.data.trim());
+              API_STORE.setBaseUrl('https://nittapp.spider-nitt.org/');
               setAPI(200);
             } else {
               setAPI(1);
