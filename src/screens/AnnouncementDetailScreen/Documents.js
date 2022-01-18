@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import * as colors from '../../utils/colors';
+import {openLink} from '../../utils/helperFunction/openLink';
 
 const DisplayDocument = ({data}) => {
   const type = data.mimetype.split('/');
@@ -17,6 +18,9 @@ const DisplayDocument = ({data}) => {
             width: scale(150),
             borderRadius: moderateScale(12),
             marginTop: verticalScale(10),
+          }}
+          onPress={() => {
+            openLink(API_GET_IMAGE + data.file_stored_name);
           }}>
           <Image
             style={{
@@ -49,6 +53,9 @@ const DisplayDocument = ({data}) => {
                   width: scale(150),
                   marginTop: verticalScale(10),
                   borderRadius: moderateScale(12),
+                }}
+                onPress={() => {
+                  openLink(API_GET_IMAGE + data.file_stored_name);
                 }}>
                 <Image
                   style={{
@@ -75,6 +82,9 @@ const DisplayDocument = ({data}) => {
                   width: scale(150),
                   marginTop: verticalScale(10),
                   borderRadius: moderateScale(12),
+                }}
+                onPress={() => {
+                  openLink(API_GET_IMAGE + data.file_stored_name);
                 }}>
                 <Image
                   style={{

@@ -34,6 +34,7 @@ import ImageView from '../../components/ImageView';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {FOLLOWING_CLUBS_PROFILE} from '../../utils/screenNames';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
+import {openLink} from '../../utils/helperFunction/openLink';
 
 const ClubDescriptionHeader = observer(
   ({name, followers, url, email, description, navigation, route}) => {
@@ -43,14 +44,6 @@ const ClubDescriptionHeader = observer(
 
     const showToast = () => {
       toast.show(TOAST_ERROR_MESSAGE, {type: 'danger'});
-    };
-
-    const openLink = url => {
-      try {
-        Linking.openURL(url);
-      } catch (error) {
-        console.log(error);
-      }
     };
 
     const getColors = async URL => {
