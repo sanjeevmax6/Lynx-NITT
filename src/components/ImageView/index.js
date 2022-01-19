@@ -5,13 +5,12 @@ const loadingImage = require('../../res/images/loadingImage.jpg');
 export class ImageView extends Component {
   state = {
     image: NO_IMAGE_URL,
-    style: {},
   };
   componentDidMount() {
-    this.setState({image: this.props.src, style: this.props.style});
+    this.setState({image: this.props.src});
   }
   loadFallBack() {
-    this.props.resizeMode = 'center';
+    this.props.resizeMode = 'cover';
     this.setState({...this.state, image: NO_IMAGE_URL});
   }
   componentWillUpdate(nextProps, nextStates) {
@@ -26,7 +25,7 @@ export class ImageView extends Component {
             ? {uri: this.state.image}
             : this.state.image
         }
-        style={this.state.style}
+        style={this.props.style}
         resizeMode={this.props.resizeMode}
         onError={() => {
           this.loadFallBack();

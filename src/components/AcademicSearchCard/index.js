@@ -13,7 +13,7 @@ const AcademicSearchCard = ({title, desc, url, name, time}) => {
       <ImageView
         src={API_GET_IMAGE + url}
         style={styles.poster}
-        resizeMode={'center'}
+        resizeMode={'cover'}
       />
       <View style={{flex: 1, marginLeft: scale(HorizontalPadding)}}>
         <Text numberOfLines={3}>

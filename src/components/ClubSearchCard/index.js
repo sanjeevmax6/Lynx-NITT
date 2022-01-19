@@ -34,7 +34,7 @@ const ClubSearchCard = ({
             src={
               clubIconUrl === '' ? NO_IMAGE_URL : API_GET_IMAGE + clubIconUrl
             }
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
         <View style={styles.item}>

@@ -86,10 +86,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    borderRadius: moderateScale(50),
+    borderRadius: moderateScale(200),
     width: moderateScale(100),
     height: moderateScale(100),
-    backgroundColor: 'grey',
   },
   detailsBorder: {
     flex: 1,
