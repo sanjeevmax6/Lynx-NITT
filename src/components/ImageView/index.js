@@ -10,7 +10,7 @@ export class ImageView extends Component {
     this.setState({image: this.props.src});
   }
   loadFallBack() {
-    this.props.resizeMode = 'cover';
+    this.props.resizeMode = 'center';
     this.setState({...this.state, image: NO_IMAGE_URL});
   }
   componentWillUpdate(nextProps, nextStates) {

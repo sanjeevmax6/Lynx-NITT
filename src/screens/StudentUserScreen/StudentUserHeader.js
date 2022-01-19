@@ -43,11 +43,11 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
         <Icon name="menu" size={scale(25)} style={styles.iconStyle} />
       </TouchableOpacity>
       <View style={styles.userStyle}>
-        <View style={styles.imageStyle}>
+        <View style={{...styles.imageStyle, elevation: 1}}>
           <ImageView
             style={styles.imageStyle}
             src={studentDetails.coverPhotoUri}
-            resizeMode="stretch"
+            resizeMode="cover"
           />
         </View>
         <View style={styles.detailsBorder}>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    borderRadius: moderateScale(200),
+    borderRadius: moderateScale(100),
     width: moderateScale(100),
     height: moderateScale(100),
   },
