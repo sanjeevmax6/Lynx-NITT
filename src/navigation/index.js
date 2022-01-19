@@ -23,7 +23,7 @@ const Navigator = observer(() => {
       linking={
         DEEP_LINKING_STORE.getAllow === true
           ? {
-              prefixes: ['https://nittapp.spider.nitt.edu', 'nitt-app://'],
+              prefixes: ['https://nittapp.spider.nitt.edu'],
               config: {
                 screens: {
                   Home: {
@@ -33,7 +33,6 @@ const Navigator = observer(() => {
                         initialRouteName: 'Feeds',
                         screens: {
                           EventDescriptionScreen: 'event/:eventId',
-                          ClubDescription: 'club/:ClubId',
                         },
                       },
                     },
@@ -41,9 +40,7 @@ const Navigator = observer(() => {
                 },
               },
               async getInitialURL() {
-                // Check if app was opened from a deep link
                 const url = await Linking.getInitialURL();
-
                 console.log('URL: ' + url);
                 if (url != null) {
                   DEEP_LINKING_STORE.setAllow(false);

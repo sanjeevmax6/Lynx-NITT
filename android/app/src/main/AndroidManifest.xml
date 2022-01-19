@@ -31,19 +31,6 @@
             <data android:scheme="https"
                   android:host="nittapp.spider.nitt.edu"
                   android:pathPrefix="/event" />
-            <data android:scheme="https"
-                  android:host="nittapp.spider.nitt.edu"
-                  android:pathPrefix="/club" />
-            <!-- note that the leading "/" is required for pathPrefix-->
-        </intent-filter>
-        <intent-filter android:label="NITT App (Test)">
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="nitt-app"
-                    android:host="event" />
-            <data android:scheme="nitt-app"
-                    android:host="club" />
         </intent-filter>
       </activity>
       <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
