@@ -56,7 +56,7 @@ const ScreenHeader = ({navigation, isValid, handleApiCall}) => {
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.headerText}>Announcement</Text>
+      <Text style={styles.headerText}>Feedback</Text>
       <View style={styles.twoButtonRight}>
         <TouchableOpacity
           onPress={() => {

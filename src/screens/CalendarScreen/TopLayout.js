@@ -288,7 +288,7 @@ const TopLayout = observer(() => {
 const styles = ScaledSheet.create({
   calendar: {
     backgroundColor: colors.CalenderScreen_backgroundColor,
-    borderRadius: scale(40),
+    borderRadius: scale(20),
     borderTopWidth: verticalScale(5),
     borderBottomWidth: verticalScale(10),
     borderLeftWidth: scale(15),

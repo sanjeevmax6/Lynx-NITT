@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
 import {HorizontalPadding, ICON_SIZE_LARGE} from '../../utils/UI_CONSTANTS';
-
+import {STUDENT} from '../../utils/USER_TYPE';
+import {USER_STORE} from '../../mobx/USER_STORE';
 import {LogOutHandler} from '../../utils/helperFunction/logOutHandler';
 import CustomAlert from '../../components/customAlert';
 
@@ -52,31 +53,33 @@ const ModalContent = ({ModalVisible, navigation}) => {
           }}
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          {
-            navigation.navigate('Settings', {navigation});
-            ModalVisible(false);
-          }
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            padding: scale(10),
-            paddingTop: 0,
-            paddingLeft: scale(HorizontalPadding),
+      {USER_STORE.getUserType === STUDENT ? (
+        <TouchableOpacity
+          onPress={() => {
+            {
+              navigation.navigate('Settings', {navigation});
+              ModalVisible(false);
+            }
           }}>
-          <Icon
-            name="settings"
-            color={colors.EventCard_ShareIcon}
-            size={scale(ICON_SIZE_LARGE)}
-            style={{alignSelf: 'flex-end', paddingRight: scale(6)}}
-          />
-          <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
-            Settings
-          </Text>
-        </View>
-      </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              padding: scale(10),
+              paddingTop: 0,
+              paddingLeft: scale(HorizontalPadding),
+            }}>
+            <Icon
+              name="settings"
+              color={colors.EventCard_ShareIcon}
+              size={scale(ICON_SIZE_LARGE)}
+              style={{alignSelf: 'flex-end', paddingRight: scale(6)}}
+            />
+            <Text style={{flex: 1, alignSelf: 'center', fontSize: scale(14)}}>
+              Settings
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ) : null}
 
       <TouchableOpacity
         onPress={() => {

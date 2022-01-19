@@ -34,7 +34,7 @@ const ClubSearchCard = ({
             src={
               clubIconUrl === '' ? NO_IMAGE_URL : API_GET_IMAGE + clubIconUrl
             }
-            resizeMode="cover"
+            resizeMode="contain"
           />
         </View>
         <View style={styles.item}>
@@ -71,14 +71,15 @@ const styles = StyleSheet.create({
     marginLeft: scale(5),
     borderRadius: scale(150),
     justifyContent: 'center',
-    elevation: 1,
+    elevation: 0,
+    backgroundColor: color.WHITE,
   },
   clubIcon: {
     justifyContent: 'center',
     width: scale(60),
     height: scale(60),
     backgroundColor: color.WHITE,
-    borderRadius: scale(120),
+    borderRadius: scale(2),
     elevation: 0,
   },
 

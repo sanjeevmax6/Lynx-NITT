@@ -14,6 +14,7 @@ import {STUDENT} from '../../utils/USER_TYPE';
 import ImageView from '../ImageView';
 import {observer} from 'mobx-react';
 import {getAllStudentDetails} from '../../screens/StudentUserScreen/apiCalls';
+import {feedsAPI} from '../../screens/FeedScreen/feedsAPI';
 
 const EventsCard = observer(
   ({
@@ -87,7 +88,7 @@ const EventsCard = observer(
           <ImageView
             src={API_GET_IMAGE + eventImage}
             style={styles.image}
-            resizeMode={'contain'}
+            resizeMode={'cover'}
           />
         </View>
         <View style={styles.cardDetails}>
@@ -116,6 +117,7 @@ const EventsCard = observer(
                     toggleInterestedApi(
                       eventId,
                       () => {
+                        feedsAPI(true);
                         getAllStudentDetails(true);
                         if (!interest) {
                           showToast(
@@ -181,6 +183,7 @@ export default EventsCard;
 const styles = ScaledSheet.create({
   card: {
     marginVertical: '3@vs',
+    marginHorizontal: '5@s',
     display: 'flex',
     flexDirection: 'row',
     padding: scale(HorizontalPadding),

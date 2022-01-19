@@ -57,7 +57,7 @@ const EventCard = ({
         <ImageView
           style={styles.poster}
           src={API_GET_IMAGE + url}
-          resizeMode={'center'}
+          resizeMode={'cover'}
         />
         <View style={styles.eventInfo}>
           <Text

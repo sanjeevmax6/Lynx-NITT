@@ -91,11 +91,13 @@ const ClubCard = observer(({name, imgID, navigation, clubID, route}) => {
                     EVENT_DESCRIPTION_STORE.setDecrementFollower();
                     if (route.params.fromClubDescription) {
                       CLUB_DESCRIPTION_STORE.setDecrementFollower();
+                      CLUB_DESCRIPTION_STORE.setIsFollowingClub(false);
                     }
                   } else {
                     EVENT_DESCRIPTION_STORE.setIncrementFollower();
                     if (route.params.fromClubDescription) {
                       CLUB_DESCRIPTION_STORE.setIncrementFollower();
+                      CLUB_DESCRIPTION_STORE.setIsFollowingClub(true);
                     }
                   }
                   EVENT_DESCRIPTION_STORE.setIsFollowingClub(

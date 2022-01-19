@@ -163,13 +163,15 @@ const ClubDescriptionHeader = observer(
                     if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
                       CLUB_DESCRIPTION_STORE.setDecrementFollower();
 
-                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
                         EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                      }
                     } else {
                       CLUB_DESCRIPTION_STORE.setIncrementFollower();
 
-                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
                         EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                      }
                     }
                     if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
                       if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {

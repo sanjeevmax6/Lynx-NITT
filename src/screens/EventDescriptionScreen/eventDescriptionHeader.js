@@ -16,6 +16,7 @@ import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
+import {feedsAPI} from '../FeedScreen/feedsAPI';
 
 const EventDescriptionHeader = observer(({navigation, route}) => {
   const [Api, setApi] = useState(false);
@@ -93,6 +94,7 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
+                feedsAPI(true);
                 getAllStudentDetails(true);
                 // if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
                 //   if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {

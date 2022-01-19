@@ -31,7 +31,7 @@ const ListItem = ({clubItem, goToClub, refreshFlat}) => {
         <ImageView
           src={imageUrl}
           style={listItemStyles.imageStyle}
-          resizeMode={'center'}
+          resizeMode={'cover'}
         />
         <Text numberOfLines={2} style={listItemStyles.textStyle}>
           {clubItem.clubId.name}

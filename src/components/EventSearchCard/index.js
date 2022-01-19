@@ -102,20 +102,11 @@ const EventSearchCard = ({
           )}
         </>
       )}
-
-      <View
-        style={{
-          justifyContent: 'center',
-          elevation: 1,
-          backgroundColor: colors.Accent,
-          ...styles.image,
-        }}>
-        <ImageView
-          src={API_GET_IMAGE + eventImage}
-          style={styles.image}
-          resizeMode={'center'}
-        />
-      </View>
+      <ImageView
+        src={API_GET_IMAGE + eventImage}
+        style={styles.image}
+        resizeMode={'cover'}
+      />
       <View style={styles.cardDetails}>
         <Text numberOfLines={2} style={styles.title}>
           {name}

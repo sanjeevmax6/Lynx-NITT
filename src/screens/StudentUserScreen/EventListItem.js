@@ -19,7 +19,7 @@ const ListItem = ({eventItem, goToEvent}) => {
         <ImageView
           src={imageUrl}
           style={listItemStyles.imageStyle}
-          resizeMode={'center'}
+          resizeMode={'cover'}
         />
         <View style={{flex: 1}}>
           <Text style={listItemStyles.textStyle} numberOfLines={2}>

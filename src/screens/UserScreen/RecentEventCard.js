@@ -25,7 +25,7 @@ const RecentEventCard = ({eventItem, functions}) => {
       <ImageView
         style={styles.poster}
         src={API_GET_IMAGE + eventItem.poster}
-        resizeMode={'center'}
+        resizeMode={'cover'}
       />
       <View style={styles.eventInfo}>
         <Text
@@ -67,7 +67,7 @@ const styles = ScaledSheet.create({
   poster: {
     height: '60@msr',
     width: '60@msr',
-    borderRadius: '2@sr',
+    borderRadius: '4@sr',
     elevation: 0,
     backgroundColor: 'white',
   },

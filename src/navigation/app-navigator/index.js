@@ -34,9 +34,6 @@ const AppNavigator = observer(() => {
       sceneAnimationEnabled={true}
       barStyle={{
         overflow: 'hidden',
-
-        borderTopLeftRadius: scale(12),
-        borderTopRightRadius: scale(12),
         backgroundColor: color.BottomNav,
         display: BOTTOM_NAV_STORE.getTabVisibility ? null : 'none',
       }}

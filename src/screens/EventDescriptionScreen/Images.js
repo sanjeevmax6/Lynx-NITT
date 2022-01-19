@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 import {ScaledSheet} from 'react-native-size-matters';
@@ -41,7 +42,7 @@ const Images = ({images, navigation}) => {
           style={styles.wrap}>
           {images.length === 0 ? (
             <>
-              <TouchableOpacity
+              <Pressable
                 onPress={() => {
                   navigation.push('ImageScreen', {imgUrl: NO_IMAGE_URL});
                 }}>
@@ -52,13 +53,13 @@ const Images = ({images, navigation}) => {
                     uri: NO_IMAGE_URL,
                   }}
                 />
-              </TouchableOpacity>
+              </Pressable>
             </>
           ) : (
             <></>
           )}
           {images.map((e, index) => (
-            <TouchableOpacity
+            <Pressable
               style={styles.wrap}
               onPress={() => {
                 navigation.push('ImageScreen', {imgUrl: API_GET_IMAGE + e});
@@ -68,9 +69,9 @@ const Images = ({images, navigation}) => {
                 key={index}
                 src={API_GET_IMAGE + e}
                 style={styles.wrap}
-                resizeMode="contain"
+                resizeMode="cover"
               />
-            </TouchableOpacity>
+            </Pressable>
           ))}
         </ScrollView>
         {images.length > 1 ? (

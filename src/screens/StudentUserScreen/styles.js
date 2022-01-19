@@ -35,6 +35,7 @@ export const listItemStyles = StyleSheet.create({
     width: moderateScale(50),
     height: moderateScale(50),
     marginRight: scale(10),
+    elevation: 0,
   },
 });
 
