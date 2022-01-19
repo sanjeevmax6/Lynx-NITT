@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {verticalScale, ScaledSheet} from 'react-native-size-matters';
 import NextButton from './nextButton';
@@ -16,12 +21,9 @@ const Name = observer(({scrollViewRef, callback}) => {
   const [dateEr, setDateEr] = useState(false);
   const [addEr, setAddEr] = useState(false);
   const [datePicker, setDatePicker] = useState(false);
-
+  const [dateSelected, setDateSelected] = useState(false);
   const scroll = () => {
-    if (
-      STUDENT_REGISTRATION_STORE.getBirthDay.toDateString() ===
-      new Date().toDateString()
-    ) {
+    if (!dateSelected) {
       setDateEr(true);
       if (!STUDENT_REGISTRATION_STORE.getAddress) {
         setAddEr(true);
@@ -46,6 +48,7 @@ const Name = observer(({scrollViewRef, callback}) => {
       'Upload your profile photo. This photo will be used by NIT Trichy for official purposes.',
       2,
     );
+    Keyboard.dismiss();
   };
 
   const back = () => {
@@ -59,6 +62,7 @@ const Name = observer(({scrollViewRef, callback}) => {
   };
   const onChangeDate = newDate => {
     const currentDate = newDate || STUDENT_REGISTRATION_STORE.getBirthDay;
+    setDateSelected(true);
     setDatePicker(false);
     STUDENT_REGISTRATION_STORE.setBirthDay(currentDate);
   };
@@ -81,7 +85,10 @@ const Name = observer(({scrollViewRef, callback}) => {
           left={
             <TextInput.Icon name="calendar" size={25} color={colors.BLACK} />
           }>
-          Date of Birth: {STUDENT_REGISTRATION_STORE.getBirthDay.toDateString()}
+          {dateSelected
+            ? 'Date of Birth: ' +
+              STUDENT_REGISTRATION_STORE.getBirthDay.toDateString()
+            : 'Select your date of Birth'}
         </TextInput>
       </TouchableOpacity>
 
@@ -111,6 +118,14 @@ const Name = observer(({scrollViewRef, callback}) => {
           mode="date"
           onConfirm={onChangeDate}
           onCancel={() => setDatePicker(false)}
+          maximumDate={new Date(2000, 11, 31).setFullYear(
+            //the year given in first construct (ie 2000)is irrelevent
+            //as we r setting the year to the range 32 years to 12 years in past
+            new Date().getFullYear() - 12,
+          )}
+          minimumDate={new Date(2000, 0, 1).setFullYear(
+            new Date().getFullYear() - 32,
+          )}
         />
       )}
       <NextButton handler={scroll} />

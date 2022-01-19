@@ -7,7 +7,7 @@ class Registration {
     firstName: '',
     secondName: '',
     department: 'Department',
-    birthDay: new Date(new Date().setHours(0, 0, 0, 0)),
+    birthDay: new Date(new Date('January 1, 2000 00:00:00')),
     gender: 'Gender',
     nationality: 'India',
     address: '',
