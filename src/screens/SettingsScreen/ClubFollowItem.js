@@ -53,7 +53,7 @@ const ListItem = observer(({clubItem, goToClub}) => {
         ) : (
           <TouchableOpacity disabled={busy} onPress={onBellPress}>
             <MaterialCommunityIcons
-              name={clubItem.isSubscribed ? 'bell' : 'bell-outline'}
+              name={clubItem.isSubscribed ? 'bell' : 'bell-off-outline'}
               size={28}
               color={colors.Accent}
             />

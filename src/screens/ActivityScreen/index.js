@@ -150,7 +150,7 @@ const ActivityScreen = observer(({navigation}) => {
                     desc={item.body}
                     imageUrl={
                       item.type === 'event'
-                        ? item.imageUrl
+                        ? API_GET_IMAGE + item.imageUrl
                         : API_GET_IMAGE + item.sender_id.profilePic
                     }
                     type={item.type}

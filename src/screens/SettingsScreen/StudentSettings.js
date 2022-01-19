@@ -4,6 +4,7 @@ import {View, FlatList, StyleSheet, Text} from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {NO_FOLLOWED_CLUBS} from '../../utils/ERROR_MESSAGES';
+import {HorizontalPadding} from '../../utils/UI_CONSTANTS';
 import ClubFollowItem from './ClubFollowItem';
 
 const StudentSettings = observer(({navigation}) => {
@@ -33,9 +34,9 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: moderateScale(18),
-    marginHorizontal: scale(16),
+    marginHorizontal: scale(HorizontalPadding),
     marginTop: verticalScale(15),
-    marginBottom: verticalScale(4),
+    marginBottom: verticalScale(6),
     fontWeight: 'bold',
   },
   errorStyle: {

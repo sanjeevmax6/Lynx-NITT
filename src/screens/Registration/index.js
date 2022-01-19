@@ -69,11 +69,13 @@ const Registration = observer(({navigation}) => {
     formData.append('dob', '' + STUDENT_REGISTRATION_STORE.getBirthDay);
     formData.append('address', STUDENT_REGISTRATION_STORE.getAddress.trim());
     formData.append('aadhar_no', STUDENT_REGISTRATION_STORE.getAadhar.trim());
-    formData.append('profileImg', {
-      uri: STUDENT_REGISTRATION_STORE.getPicture.uri,
-      type: STUDENT_REGISTRATION_STORE.getPicture.type,
-      name: STUDENT_REGISTRATION_STORE.getPicture.name,
-    });
+    console.log('Profile picture:  ', STUDENT_REGISTRATION_STORE.getPicture);
+    if (STUDENT_REGISTRATION_STORE.getPicture)
+      formData.append('profileImg', {
+        uri: STUDENT_REGISTRATION_STORE.getPicture.uri,
+        type: STUDENT_REGISTRATION_STORE.getPicture.type,
+        name: STUDENT_REGISTRATION_STORE.getPicture.name,
+      });
 
     formData.append('reg_token', reg_token);
     formData.append(

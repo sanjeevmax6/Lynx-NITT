@@ -5,9 +5,10 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Text,
 } from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
-import {ScaledSheet} from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import * as colors from '../../utils/colors';
 import DocumentPicker from 'react-native-document-picker';
 import Error from '../../components/Error';
@@ -16,20 +17,19 @@ import BackButton from './backButton';
 
 import {observer} from 'mobx-react';
 import {STUDENT_REGISTRATION_STORE} from '../../mobx/STUDENT_REGISTRATION_STORE';
+import {NO_IMAGE_URL} from '../../utils/API_CONSTANTS';
 
 const WIDTH = Dimensions.get('window').width;
 
 const ProfilePic = observer(({scrollViewRef, callback}) => {
-  const [picEr, setpicEr] = useState(false);
-  const [URI, setURI] = useState(
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&usqp=CAU',
-  );
+  // const [picEr, setpicEr] = useState(false);
+  const [URI, setURI] = useState(NO_IMAGE_URL);
   const scroll = () => {
-    if (!STUDENT_REGISTRATION_STORE.getPicture) {
-      setpicEr(true);
-      return;
-    }
-    setpicEr(false);
+    // if (!STUDENT_REGISTRATION_STORE.getPicture) {
+    //   setpicEr(true);
+    //   return;
+    // }
+    //setpicEr(false);
     if (scrollViewRef.current !== null) {
       scrollViewRef.current.scrollTo({
         x: WIDTH * 3,
@@ -83,11 +83,30 @@ const ProfilePic = observer(({scrollViewRef, callback}) => {
           />
         </TouchableOpacity>
       </View>
-      {picEr && (
+      {/* {picEr && (
         <View>
           <Error text="Upload your photo" />
         </View>
-      )}
+      )} */}
+      <Text
+        style={{
+          fontSize: scale(12),
+          color: colors.GRAY_DARK,
+          fontWeight: '300',
+          paddingTop: verticalScale(18),
+          textTransform: 'uppercase',
+        }}>
+        Optional
+      </Text>
+      <Text
+        style={{
+          fontSize: scale(12),
+          color: colors.GRAY_DARK,
+          textTransform: 'uppercase',
+          fontWeight: '300',
+        }}>
+        Can be changed later
+      </Text>
       <NextButton handler={scroll} />
       <BackButton handler={back} />
     </SafeAreaView>

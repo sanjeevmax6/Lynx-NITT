@@ -43,10 +43,11 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
         <Icon name="menu" size={scale(25)} style={styles.iconStyle} />
       </TouchableOpacity>
       <View style={styles.userStyle}>
-        <View>
+        <View style={styles.imageStyle}>
           <ImageView
             style={styles.imageStyle}
             src={studentDetails.coverPhotoUri}
+            resizeMode="cover"
           />
         </View>
         <View style={styles.detailsBorder}>
