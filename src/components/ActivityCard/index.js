@@ -79,7 +79,7 @@ const ActivityCard = ({
           }
         }}>
         <View style={styles.cardLayout}>
-          <View style={{...styles.poster, elevation: 1}}>
+          <View style={{...styles.poster, elevation: 0}}>
             <ImageView style={styles.poster} src={imageUrl} />
           </View>
           <View style={styles.eventInfo}>

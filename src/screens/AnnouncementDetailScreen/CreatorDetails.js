@@ -19,7 +19,7 @@ const CreatorDetails = observer(({navigation}) => {
         alignItems: 'center',
       }}>
       <TouchableOpacity
-        style={{...styles.image, elevation: 1}}
+        style={{...styles.image, elevation: 0}}
         onPress={() => {
           navigation.navigate(
             'ClubDescription',
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     height: scale(70),
     width: scale(70),
     borderRadius: scale(35),
-    elevation: 0,
   },
 
   time: {

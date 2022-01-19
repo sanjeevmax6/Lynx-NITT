@@ -81,7 +81,7 @@ const EventsCard = observer(
         <View
           style={{
             justifyContent: 'center',
-            elevation: 1,
+            elevation: 0,
             backgroundColor: colors.Accent,
             ...styles.image,
           }}>
@@ -197,7 +197,6 @@ const styles = ScaledSheet.create({
     height: '100@s',
     borderRadius: '8@s',
     backgroundColor: 'white',
-    elevation: 0,
   },
   cardDetails: {
     flexGrow: 1,

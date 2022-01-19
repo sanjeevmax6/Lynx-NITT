@@ -92,7 +92,6 @@ const styles = ScaledSheet.create({
     height: '60@msr',
     width: '60@msr',
     borderRadius: '4@sr',
-    elevation: 0,
     backgroundColor: 'white',
   },
   eventInfo: {

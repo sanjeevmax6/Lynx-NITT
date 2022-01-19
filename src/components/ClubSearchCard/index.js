@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     height: scale(60),
     backgroundColor: color.WHITE,
     borderRadius: scale(2),
-    elevation: 0,
   },
 
   headerText: {

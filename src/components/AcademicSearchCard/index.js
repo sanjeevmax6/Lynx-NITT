@@ -85,7 +85,6 @@ const styles = ScaledSheet.create({
     width: '60@s',
     borderRadius: '30@s',
     alignSelf: 'center',
-    elevation: 0,
     backgroundColor: 'white',
   },
   notifier: {

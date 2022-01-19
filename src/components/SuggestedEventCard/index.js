@@ -63,7 +63,6 @@ const styles = ScaledSheet.create({
     width: scale(cardDimensions),
     backgroundColor: 'white',
     height: scale(cardDimensions),
-    elevation: 0,
     backgroundColor: 'white',
     borderTopLeftRadius: '8@s',
     borderTopRightRadius: '8@s',

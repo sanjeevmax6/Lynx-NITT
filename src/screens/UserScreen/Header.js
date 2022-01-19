@@ -166,9 +166,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: scale(HorizontalPadding),
-    elevation: 1,
     backgroundColor: 'transparent',
-    zIndex: 1,
   },
   image: {
     width: '120@s',
