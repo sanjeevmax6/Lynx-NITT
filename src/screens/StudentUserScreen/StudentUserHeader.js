@@ -47,7 +47,7 @@ const StudentUserHeader = ({studentDetails, navigation}) => {
           <ImageView
             style={styles.imageStyle}
             src={studentDetails.coverPhotoUri}
-            resizeMode="cover"
+            resizeMode="stretch"
           />
         </View>
         <View style={styles.detailsBorder}>
