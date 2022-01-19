@@ -16,20 +16,19 @@ import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
-
+export const isAuthorized = () => {
+  if (
+    USER_STORE.getUserType === CLUB &&
+    EVENT_DESCRIPTION_STORE.getData &&
+    USER_STORE.getClubId === EVENT_DESCRIPTION_STORE.getData.club.id
+  ) {
+    return true;
+  }
+  return false;
+};
 const EventDescriptionHeader = observer(({navigation, route}) => {
   console.log(EVENT_DESCRIPTION_STORE.getData.club.id);
 
-  const isAuthorized = () => {
-    if (
-      USER_STORE.getUserType === CLUB &&
-      EVENT_DESCRIPTION_STORE.getData &&
-      USER_STORE.getClubId === EVENT_DESCRIPTION_STORE.getData.club.id
-    ) {
-      return true;
-    }
-    return false;
-  };
   const toast = useToast();
 
   const showToast = (msg = '', success = false) => {

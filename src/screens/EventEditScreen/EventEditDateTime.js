@@ -88,10 +88,9 @@ const s = StyleSheet.create({
     height: verticalScale(25),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'orangered',
+    backgroundColor: color.Accent,
     borderRadius: moderateScale(9),
     marginHorizontal: scale(HorizontalPadding),
-    marginTop: verticalScale(4),
   },
   startEndDisplayText: {
     fontSize: 16,
@@ -99,9 +98,9 @@ const s = StyleSheet.create({
   },
   startEndDisplayBg: {
     borderRadius: moderateScale(9),
-    backgroundColor: 'tomato',
+    backgroundColor: color.Accent,
     marginHorizontal: scale(9),
-    paddingVertical: verticalScale(5),
+    paddingVertical: verticalScale(3),
     marginVertical: verticalScale(4),
   },
 });

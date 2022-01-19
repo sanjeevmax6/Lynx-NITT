@@ -6,16 +6,7 @@ import * as colors from '../../utils/colors';
 import {scale} from 'react-native-size-matters';
 
 const LiveEventComponent = ({isLive, onDeletePress}) => {
-  return isLive ? (
-    <View style={styles.container}>
-      <Icon
-        name={'circle'}
-        size={scale(10)}
-        style={{color: colors.EventCard_IsLive}}
-      />
-      <Text style={styles.textStyle}>LIVE</Text>
-    </View>
-  ) : (
+  return (
     <TouchableOpacity onPress={onDeletePress}>
       <Icon
         name={'delete'}

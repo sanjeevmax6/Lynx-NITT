@@ -107,7 +107,7 @@ const EventEditScreen = observer(({navigation}) => {
                       buttons={modalButtons}
                     />
                     <EventEditHeader navigation={navigation} />
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                       <EventEditImages navigation={navigation} />
                       <EventEditInput />
                       <EventEditDateTime />

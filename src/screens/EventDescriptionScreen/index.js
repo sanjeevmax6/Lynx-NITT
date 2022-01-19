@@ -33,6 +33,7 @@ import {getFormattedDate} from '../../utils/helperFunction/getFormattedDate';
 import {getFormattedTime} from '../../utils/helperFunction/getFormattedTime';
 import {useToast} from 'react-native-toast-notifications';
 
+import {isAuthorized} from './eventDescriptionHeader';
 const EventDescriptionScreen = observer(({route, navigation}) => {
   const isFocused = useIsFocused();
   if (isFocused) {
@@ -100,6 +101,7 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                 startTime={EVENT_DESCRIPTION_STORE.getData.startDate}
                 endTime={EVENT_DESCRIPTION_STORE.getData.endDate}
               />
+
               <View
                 style={{
                   paddingTop: verticalScale(27),
@@ -143,7 +145,31 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
                     color={colors.EventCard_ShareIcon}
                   />
                 </View>
-
+                {isAuthorized() ? (
+                  <>
+                    <Text
+                      style={{
+                        marginTop: verticalScale(-10),
+                        marginBottom: verticalScale(10),
+                        color: colors.Accent,
+                        fontWeight: '300',
+                        fontStyle: 'italic',
+                        fontSize: scale(14),
+                      }}>
+                      Number of Students Interested:{' '}
+                      <Text
+                        style={{
+                          color: colors.Accent,
+                          fontWeight: 'bold',
+                          fontStyle: 'italic',
+                        }}>
+                        {EVENT_DESCRIPTION_STORE.getData.student_interest}
+                      </Text>
+                    </Text>
+                  </>
+                ) : (
+                  <></>
+                )}
                 {EVENT_DESCRIPTION_STORE.getData.tags.length > 0 ? (
                   <>
                     <Tags

@@ -11,6 +11,9 @@ import {API_GET_IMAGE} from '../../utils/API_CONSTANTS';
 import ImageView from '../../components/ImageView';
 const DATE_FORMAT = 'DD/MM/YYYY';
 const TIME_FORMAT = 'hh:mm A';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ICON_SIZE} from '../../utils/UI_CONSTANTS';
+import * as colors from '../../utils/colors';
 
 const RecentEventCard = ({eventItem, functions}) => {
   const formattedDate = moment(eventItem.startDate).format(DATE_FORMAT);
@@ -22,6 +25,18 @@ const RecentEventCard = ({eventItem, functions}) => {
       onPress={() => {
         functions.onEventClick(eventItem.EventId);
       }}>
+      {liveCheck ? (
+        <>
+          <View style={styles.container}>
+            <Icon
+              name={'circle'}
+              size={scale(10)}
+              style={{color: colors.EventCard_IsLive}}
+            />
+            <Text style={styles.textStyle}> LIVE</Text>
+          </View>
+        </>
+      ) : null}
       <ImageView
         style={styles.poster}
         src={API_GET_IMAGE + eventItem.poster}
@@ -37,6 +52,7 @@ const RecentEventCard = ({eventItem, functions}) => {
           numberOfLines={1}>
           {eventItem.Title}
         </Text>
+
         <Text style={{fontSize: scale(12)}}>
           {formattedDate} | {formattedTime}
         </Text>
@@ -79,6 +95,13 @@ const styles = ScaledSheet.create({
   notificationView: {
     alignSelf: 'center',
     marginRight: 0,
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    right: scale(6),
+    top: scale(3),
   },
 });
 export default RecentEventCard;
