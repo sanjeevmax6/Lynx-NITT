@@ -36,7 +36,7 @@ const spiderLogo = require('../../res/images/spiderLogo.png');
 
 async function loadCache() {
   try {
-    DEEP_LINKING_STORE.setAllow(true);
+    // DEEP_LINKING_STORE.setAllow(true);
 
     const userToken = await EncryptedStorage.getItem(USER_TOKEN);
     const userType = await EncryptedStorage.getItem(USER_TYPE);

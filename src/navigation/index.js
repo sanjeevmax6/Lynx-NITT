@@ -43,7 +43,7 @@ const Navigator = observer(() => {
                 const url = await Linking.getInitialURL();
                 console.log('URL: ' + url);
                 if (url != null) {
-                  DEEP_LINKING_STORE.setAllow(false);
+                  // DEEP_LINKING_STORE.setAllow(false);
                   return url;
                 }
               },
