@@ -13,6 +13,7 @@ import {AUTH_NAV_STORE} from '../../mobx/AUTH_NAV_STORE';
 import {USER_STORE} from '../../mobx/USER_STORE';
 import {ADMIN, CLUB, STUDENT} from '../../utils/USER_TYPE';
 import {BOTTOM_NAV_STORE} from '../../mobx/BOTTOM_NAV_STORE';
+import {DEEP_LINKING_STORE} from '../../mobx/DEEP_LINKING_STORE';
 import {
   CLUB_REGISTERED,
   CLUB_USER_ID,
@@ -35,6 +36,8 @@ const spiderLogo = require('../../res/images/spiderLogo.png');
 
 async function loadCache() {
   try {
+    DEEP_LINKING_STORE.setAllow(true);
+
     const userToken = await EncryptedStorage.getItem(USER_TOKEN);
     const userType = await EncryptedStorage.getItem(USER_TYPE);
 
