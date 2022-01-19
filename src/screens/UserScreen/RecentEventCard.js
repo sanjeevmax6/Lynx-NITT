@@ -33,7 +33,15 @@ const RecentEventCard = ({eventItem, functions}) => {
               size={scale(10)}
               style={{color: colors.EventCard_IsLive}}
             />
-            <Text style={styles.textStyle}> LIVE</Text>
+            <Text
+              style={{
+                fontSize: scale(9),
+                color: colors.GRAY_DARK,
+                fontWeight: 'bold',
+              }}>
+              {' '}
+              LIVE
+            </Text>
           </View>
         </>
       ) : null}

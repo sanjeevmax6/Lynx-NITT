@@ -35,6 +35,8 @@ import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {FOLLOWING_CLUBS_PROFILE} from '../../utils/screenNames';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 import {openLink} from '../../utils/helperFunction/openLink';
+import {USER_STORE} from '../../mobx/USER_STORE';
+import {STUDENT} from '../../utils/USER_TYPE';
 
 const ClubDescriptionHeader = observer(
   ({name, followers, url, email, description, navigation, route}) => {
@@ -54,7 +56,7 @@ const ClubDescriptionHeader = observer(
       });
       switch (result.platform) {
         case 'android':
-          return {cover: result.lightVibrant, icon: result.darkVibrant};
+          return {cover: result.darkMuted, icon: result.lightMuted};
 
         case 'ios':
           return {cover: result.background, icon: result.primary};
@@ -65,7 +67,11 @@ const ClubDescriptionHeader = observer(
     };
     useEffect(() => {
       getColors(url ? API_GET_IMAGE + url : NO_IMAGE_URL).then(res => {
+        if (res.cover === '#000000') {
+          res.cover = res.icon;
+        }
         setCoverColor(res.cover);
+
         if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
           if (!CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
             route.params.func(true);
@@ -143,69 +149,83 @@ const ClubDescriptionHeader = observer(
               paddingTop: verticalScale(10),
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent:
+                USER_STORE.getUserType === STUDENT
+                  ? 'space-between'
+                  : 'flex-end',
             }}>
-            <Button
-              disabled={ApiCall}
-              loading={ApiCall}
-              onPress={() => {
-                setApiCall(true);
-                toggleFollowApi(
-                  CLUB_DESCRIPTION_STORE.getID,
-                  () => {
-                    getAllStudentDetails(true);
-                    setApiCall(false);
-                    console.log(
-                      'from event: ',
-                      CLUB_DESCRIPTION_STORE.getFromEventScreen,
+            {USER_STORE.getUserType === STUDENT ? (
+              <>
+                <Button
+                  disabled={ApiCall}
+                  loading={ApiCall}
+                  onPress={() => {
+                    setApiCall(true);
+                    toggleFollowApi(
+                      CLUB_DESCRIPTION_STORE.getID,
+                      () => {
+                        getAllStudentDetails(true);
+                        setApiCall(false);
+                        console.log(
+                          'from event: ',
+                          CLUB_DESCRIPTION_STORE.getFromEventScreen,
+                        );
+
+                        if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                          CLUB_DESCRIPTION_STORE.setDecrementFollower();
+
+                          if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
+                            EVENT_DESCRIPTION_STORE.setDecrementFollower();
+                          }
+                        } else {
+                          CLUB_DESCRIPTION_STORE.setIncrementFollower();
+
+                          if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
+                            EVENT_DESCRIPTION_STORE.setIncrementFollower();
+                          }
+                        }
+                        if (
+                          route.params.fromScreen === FOLLOWING_CLUBS_PROFILE
+                        ) {
+                          if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
+                            route.params.func(true);
+                          } else {
+                            route.params.func(false);
+                          }
+                        }
+
+                        CLUB_DESCRIPTION_STORE.setIsFollowingClub(
+                          !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                        );
+
+                        if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
+                          EVENT_DESCRIPTION_STORE.setIsFollowingClub(
+                            CLUB_DESCRIPTION_STORE.getIsFollowingClub,
+                          );
+                      },
+                      () => {
+                        showToast();
+
+                        setApiCall(false);
+                      },
                     );
-
-                    if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
-                      CLUB_DESCRIPTION_STORE.setDecrementFollower();
-
-                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
-                        EVENT_DESCRIPTION_STORE.setDecrementFollower();
-                      }
-                    } else {
-                      CLUB_DESCRIPTION_STORE.setIncrementFollower();
-
-                      if (CLUB_DESCRIPTION_STORE.getFromEventScreen) {
-                        EVENT_DESCRIPTION_STORE.setIncrementFollower();
-                      }
-                    }
-                    if (route.params.fromScreen === FOLLOWING_CLUBS_PROFILE) {
-                      if (CLUB_DESCRIPTION_STORE.getIsFollowingClub) {
-                        route.params.func(true);
-                      } else {
-                        route.params.func(false);
-                      }
-                    }
-
-                    CLUB_DESCRIPTION_STORE.setIsFollowingClub(
-                      !CLUB_DESCRIPTION_STORE.getIsFollowingClub,
-                    );
-
-                    if (CLUB_DESCRIPTION_STORE.getFromEventScreen)
-                      EVENT_DESCRIPTION_STORE.setIsFollowingClub(
-                        CLUB_DESCRIPTION_STORE.getIsFollowingClub,
-                      );
-                  },
-                  () => {
-                    showToast();
-
-                    setApiCall(false);
-                  },
-                );
-              }}
-              mode="outlined"
-              color={colors.EventDescriptionScreen_Follow}
-              labelStyle={{fontSize: scale(10), padding: 0, fontWeight: 'bold'}}
-              style={{alignSelf: 'baseline'}}>
-              {CLUB_DESCRIPTION_STORE.getIsFollowingClub
-                ? 'Following'
-                : 'Follow'}
-            </Button>
-
+                  }}
+                  mode="outlined"
+                  color={colors.EventDescriptionScreen_Follow}
+                  labelStyle={{
+                    fontSize: scale(10),
+                    padding: 0,
+                    fontWeight: 'bold',
+                  }}
+                  style={{alignSelf: 'baseline'}}>
+                  {CLUB_DESCRIPTION_STORE.getIsFollowingClub
+                    ? 'Following'
+                    : 'Follow'}
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
             <View style={styles.icons}>
               {CLUB_DESCRIPTION_STORE.getData.links.website ? (
                 <TouchableOpacity

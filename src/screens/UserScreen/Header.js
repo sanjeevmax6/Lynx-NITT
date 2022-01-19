@@ -43,7 +43,7 @@ const Header = ({name, followers, url, description, navigation}) => {
     });
     switch (result.platform) {
       case 'android':
-        return {cover: result.lightVibrant, icon: result.darkVibrant};
+        return {cover: result.darkMuted, icon: result.lightMuted};
 
       case 'ios':
         return {cover: result.background, icon: result.primary};
@@ -62,7 +62,8 @@ const Header = ({name, followers, url, description, navigation}) => {
   };
   getColors().then(res => {
     setCoverColor(res.cover);
-    setCoverIconColor(invertHex(res.cover));
+    const temp = res.icon === res.cover ? invertHex(res.cover) : res.icon;
+    setCoverIconColor(temp);
   });
 
   const onTextLayout = useCallback(e => {
