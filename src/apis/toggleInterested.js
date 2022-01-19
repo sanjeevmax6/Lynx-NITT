@@ -12,7 +12,7 @@ async function API_CALL(eventId, successCallback, failureCallBack) {
       const response = await axios.put(
         API_STORE.getBaseUrl + API_TOGGLE_INTERESTED + eventId,
         {},
-        {headers: {token: USER_STORE.getUserToken}},
+        {headers: {token: USER_STORE.getUserToken}, timeout: 5000},
       );
       console.log(response.data.message);
       successCallback();

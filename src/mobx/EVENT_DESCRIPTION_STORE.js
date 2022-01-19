@@ -10,6 +10,7 @@ class eventDescriptionStore {
     eventID: '',
     isFollowingClub: false,
     wasStudentInterested: false,
+    doingInterestedApi: false,
   };
 
   reset = () => {
@@ -21,7 +22,16 @@ class eventDescriptionStore {
     this.state.eventID = '';
     this.state.isFollowingClub = false;
     this.state.wasStudentInterested = false;
+    this.state.doingInterestedApi = false;
   };
+  setInterestedApi = val => {
+    this.state.doingInterestedApi = val;
+  };
+
+  get getInterestedApi() {
+    return this.state.doingInterestedApi;
+  }
+
   setWasStudentInterested = val => {
     this.state.wasStudentInterested = val;
   };
@@ -135,6 +145,9 @@ class eventDescriptionStore {
 
       setWasStudentInterested: action,
       getWasStudentInterested: computed,
+
+      setInterestedApi: action,
+      getInterestedApi: computed,
     });
   }
 }

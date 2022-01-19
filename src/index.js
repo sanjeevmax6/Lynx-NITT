@@ -77,7 +77,7 @@ class App extends Component {
           placement="top"
           duration={3500}
           animationType="slide-in"
-          offset={verticalScale(50)}
+          offset={verticalScale(300)}
           successColor={color.successColor}
           dangerColor={color.dangerColor}
           warningColor={color.warningColor}

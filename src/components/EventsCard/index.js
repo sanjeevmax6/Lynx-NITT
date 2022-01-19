@@ -119,12 +119,12 @@ const EventsCard = observer(
                       () => {
                         feedsAPI(true);
                         getAllStudentDetails(true);
-                        if (!interest) {
-                          showToast(
-                            'You will receive notifications and updates from this event!',
-                            true,
-                          );
-                        }
+                        // if (!interest) {
+                        //   showToast(
+                        //     'You will receive notifications and updates from this event!',
+                        //     true,
+                        //   );
+                        // }
                         setApiCall(false);
                         setInterest(!interest);
                       },

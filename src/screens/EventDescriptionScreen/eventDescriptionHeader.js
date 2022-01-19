@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity, Platform, Text} from 'react-native';
 import * as colors from '../../utils/colors';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -16,10 +16,8 @@ import {STUDENT_DETAILS_STORE} from '../../mobx/STUDENT_DETAILS_STORE';
 import {INTERESTED_EVENTS_PROFILE} from '../../utils/screenNames';
 import {getAllStudentDetails} from '../StudentUserScreen/apiCalls';
 import {TOAST_ERROR_MESSAGE} from '../../utils/ERROR_MESSAGES';
-import {feedsAPI} from '../FeedScreen/feedsAPI';
 
 const EventDescriptionHeader = observer(({navigation, route}) => {
-  const [Api, setApi] = useState(false);
   console.log(EVENT_DESCRIPTION_STORE.getData.club.id);
 
   const isAuthorized = () => {
@@ -62,6 +60,7 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
     <View style={styles.header}>
       <TouchableOpacity
         style={styles.button}
+        disabled={EVENT_DESCRIPTION_STORE.getInterestedApi}
         onPress={() => {
           // EVENT_DESCRIPTION_STORE.setLoading(true);
           EVENT_DESCRIPTION_STORE.reset();
@@ -90,11 +89,20 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
       {USER_STORE.getUserType === STUDENT ? (
         <IconButton
           onPress={() => {
-            setApi(true);
+            EVENT_DESCRIPTION_STORE.setInterestedApi(true);
+
             toggleInterestedApi(
               EVENT_DESCRIPTION_STORE.getID,
               () => {
-                feedsAPI(true);
+                FEEDS_STORE.setInterested(
+                  !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
+                  EVENT_DESCRIPTION_STORE.getID,
+                );
+
+                EVENT_DESCRIPTION_STORE.setWasStudentInterested(
+                  !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
+                );
+                // feedsAPI(true);
                 getAllStudentDetails(true);
                 // if (EVENT_DESCRIPTION_STORE.getWasStudentInterested) {
                 //   if (route.params.fromScreen === INTERESTED_EVENTS_PROFILE) {
@@ -116,26 +124,19 @@ const EventDescriptionHeader = observer(({navigation, route}) => {
                 //     true,
                 //   );
                 // }
-                FEEDS_STORE.setInterested(
-                  !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
-                  EVENT_DESCRIPTION_STORE.getID,
-                );
 
-                EVENT_DESCRIPTION_STORE.setWasStudentInterested(
-                  !EVENT_DESCRIPTION_STORE.getWasStudentInterested,
-                );
-                setApi(false);
+                EVENT_DESCRIPTION_STORE.setInterestedApi(false);
               },
               () => {
                 toast.show('Failed to process your request!', {
                   type: 'danger',
                 });
 
-                setApi(false);
+                EVENT_DESCRIPTION_STORE.setInterestedApi(false);
               },
             );
           }}
-          disabled={Api}
+          disabled={EVENT_DESCRIPTION_STORE.getInterestedApi}
           icon={
             EVENT_DESCRIPTION_STORE.getWasStudentInterested
               ? 'star'

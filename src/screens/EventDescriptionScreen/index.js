@@ -47,6 +47,9 @@ const EventDescriptionScreen = observer(({route, navigation}) => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
+        if (EVENT_DESCRIPTION_STORE.getInterestedApi === true) {
+          return true;
+        }
         if (!route.params.fromEventDescription) EVENT_DESCRIPTION_STORE.reset();
         // navigation.popToTop();
         navigation.pop();

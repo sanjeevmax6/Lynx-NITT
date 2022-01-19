@@ -43,7 +43,14 @@ const DropDownModal = observer(({modalType, data}) => {
             STUDENT_REGISTRATION_STORE.toggleModalVisible();
           }}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <View
+              style={{
+                ...styles.modalView,
+                height:
+                  modalType === MODAL_TYPE_GENDER
+                    ? Dimensions.get('window').height / 3
+                    : Dimensions.get('window').height / 1.25,
+              }}>
               {modalType != MODAL_TYPE_GENDER && (
                 <Searchbar
                   style={{
@@ -97,7 +104,7 @@ const DropDownModal = observer(({modalType, data}) => {
                           marginVertical: verticalScale(6),
                         }}>
                         <View style={{width: '80%'}}>
-                          <Text>
+                          <Text style={{fontSize: scale(14)}}>
                             {modalType === MODAL_TYPE_DEPARTMENT
                               ? item.name
                               : item.name.toUpperCase()}
@@ -105,7 +112,9 @@ const DropDownModal = observer(({modalType, data}) => {
                         </View>
                         {modalType === MODAL_TYPE_CODE && (
                           <View style={{width: '20%'}}>
-                            <Text>+{item.code}</Text>
+                            <Text style={{fontSize: scale(14)}}>
+                              +{item.code}
+                            </Text>
                           </View>
                         )}
                       </View>
@@ -138,7 +147,6 @@ const styles = StyleSheet.create({
   modalView: {
     marginVertical: scale(12),
     marginHorizontal: scale(8),
-    height: Dimensions.get('window').height / 1.8,
     backgroundColor: colors.WHITE,
     opacity: 0.99,
     borderRadius: scale(20),
