@@ -12,40 +12,27 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import NetInfo from '@react-native-community/netinfo';
 import {API_RESET_PASSWORD_VALIDATE_STUDENT} from '../../utils/API_CONSTANTS';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
-import ErrorScreen from '../../components/ErrorScreen';
-import Error from '../../components/Error';
-import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+
+import axios from 'axios';
+import {
+  NO_NETWORK,
+  SERVER_ERROR,
+  UNEXPECTED_ERROR,
+} from '../../utils/ERROR_MESSAGES';
 
 const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
   RESET_STORE.setErrorText('');
-  const axios = require('axios');
 
   const [password, setPass] = useState();
-  const [errorCode, setErrorCode] = useState(0);
-  const [Internet, setInternet] = useState(true);
 
   const setPassword = () => {
     RESET_STORE.setStudentPassword(password);
   };
 
-  const hasErrors = val => {
-    if (errorCode == 404) {
-      return val == 0 ? true : 'Invalid User';
-    } else if (errorCode == 400) {
-      return val == 0 ? true : 'Fill All Fields';
-    } else if (errorCode == 401) {
-      return val == 0 ? true : 'Invlaid Credentials';
-    } else if (errorCode == 500) {
-      return val == 0 ? true : 'Server Error ! Try Again';
-    } else {
-      return val == 0 ? false : 'No error';
-    }
-  };
-
   const validateStudentLogin = () => {
+    RESET_STORE.setLoading(true);
     NetInfo.fetch().then(state => {
       if (state.isConnected == true) {
-        setInternet(true);
         if (
           RESET_STORE.getStudentPassword != '' &&
           RESET_STORE.getUsername != ''
@@ -65,112 +52,96 @@ const StudentWebmailPassword = ({forwardAction, backwardAction}) => {
           axios
             .post(API_RESET_PASSWORD_VALIDATE_STUDENT, body, axiosHeaders)
             .then(response => {
-              if (response.data.message === 'Success') {
-                // console.log(response.data.token);
+              console.log(response.status);
+              if (response.status === 200) {
                 RESET_STORE.setStudentToken(response.data.token);
-                console.log(RESET_STORE.getStudentToken);
+                console.log('webmail verified successfully');
+                RESET_STORE.setLoading(false);
                 forwardAction();
               }
               // console.log(RESET_STORE.getStudentToken);
             })
             .catch(error => {
-              console.log(error.response.status);
-              setErrorCode(error.response.status);
-              console.log(typeof errorCode);
-              console.log(hasErrors(1));
+              if (error.response) {
+                RESET_STORE.setErrorText(error.response.data.message);
+              } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                RESET_STORE.setErrorText(SERVER_ERROR);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                RESET_STORE.setErrorText(UNEXPECTED_ERROR);
+              }
+              RESET_STORE.setError(true);
+              RESET_STORE.setLoading(false);
             });
         }
       } else {
-        // RESET_STORE.setErrorText(NO_NETWORK);
-        // RESET_STORE.setError(true);
-        setInternet(false);
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+        RESET_STORE.setLoading(false);
       }
     });
   };
 
   return (
     <>
-      {!Internet ? (
-        <>
-          <View
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-            }}>
-            <ErrorScreen
-              errorMessage={NO_NETWORK}
-              fn={() => {
-                NetInfo.fetch().then(state => {
-                  if (state.isConnected == true) {
-                    // RESET_STORE.setErrorText('');
-                    // RESET_STORE.setError(false);
-                    setInternet(true);
-                  }
-                });
-              }}
-            />
-          </View>
-        </>
-      ) : (
-        <>
-          <View
-            style={{
-              paddingHorizontal: moderateScale(20),
-              backgroundColor: 'white',
-              flex: 1,
-              paddingTop: verticalScale(25),
-            }}>
-            <Text style={styles.title}>Reset Password</Text>
-            <Text style={{...styles.title, fontSize: scale(14)}}>
-              Enter your webmail password
-            </Text>
+      <View
+        style={{
+          paddingHorizontal: moderateScale(20),
+          backgroundColor: 'white',
+          flex: 1,
+          paddingTop: verticalScale(25),
+        }}>
+        <Text style={styles.title}>Reset Password</Text>
+        <Text style={{...styles.title, fontSize: scale(14)}}>
+          Enter your webmail password
+        </Text>
 
-            <TextInput
-              label="Password"
-              placeholder="Enter your webmail password"
-              mode="outlined"
-              style={{backgroundColor: 'white', paddingTop: verticalScale(9)}}
-              theme={{
-                colors: {
-                  primary: 'black',
-                },
-              }}
-              selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-              onChangeText={pass => {
-                setPass(pass);
-              }}
+        <TextInput
+          label="Password"
+          placeholder="Enter your webmail password"
+          autoCapitalize="none"
+          mode="outlined"
+          style={{backgroundColor: 'white', paddingTop: verticalScale(9)}}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+          onChangeText={pass => {
+            setPass(pass);
+          }}
+        />
+
+        <View style={styles.loginBtnView}>
+          <Button
+            icon={'chevron-left'}
+            color={colors.Accent}
+            onPress={() => {
+              backwardAction();
+            }}>
+            Back
+          </Button>
+          <TouchableOpacity
+            style={{
+              backgroundColor: colors.Tertiary,
+              borderRadius: verticalScale(22),
+            }}
+            onPress={() => {
+              setPassword();
+              validateStudentLogin();
+            }}>
+            <Icon
+              name="chevron-right"
+              size={verticalScale(44)}
+              color={colors.WHITE}
             />
-            <HelperText type="error" visible={hasErrors(0)}>
-              <Text>{hasErrors(1)}</Text>
-            </HelperText>
-            <View style={styles.loginBtnView}>
-              <Button
-                icon={'chevron-left'}
-                color={colors.Accent}
-                onPress={() => {
-                  backwardAction();
-                }}>
-                Back
-              </Button>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: colors.Tertiary,
-                  borderRadius: verticalScale(22),
-                }}
-                onPress={() => {
-                  setPassword();
-                  validateStudentLogin();
-                }}>
-                <Icon
-                  name="chevron-right"
-                  size={verticalScale(44)}
-                  color={colors.WHITE}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </>
-      )}
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 };

@@ -15,6 +15,8 @@ import ClubEnterOTP from './ClubEnterOTP';
 import {observer} from 'mobx-react';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
 import SuccessScreen from '../../components/SuccessScreen/index';
+import LoaderPage from '../../components/LoadingScreen';
+import ErrorScreen from '../../components/ErrorScreen';
 
 const ResetPasswordScreen = observer(({navigation}) => {
   const ref = useRef(PagerView);
@@ -43,45 +45,78 @@ const ResetPasswordScreen = observer(({navigation}) => {
   }, []);
 
   return (
-    <PagerView
-      style={{flex: 1}}
-      initialPage={0}
-      scrollEnabled={false}
-      showPageIndicator={false}
-      ref={ref}
-      onPageSelected={event => {
-        setPage(event.nativeEvent.position);
-      }}>
-      <View style={{flex: 1}} key={1}>
-        <Username forward={buttonForwardAction} navigation={navigation} />
-      </View>
-      {RESET_STORE.getIsStudent ? (
-        <>
-          <View style={{flex: 1}} key={2}>
-            <StudentWebmailPassword
-              forwardAction={buttonForwardAction}
-              backwardAction={buttonBackwardAction}
-              buttonHome={buttonHomeAction}
-            />
-          </View>
-          <View key={3} style={{flex: 1}}>
-            <SetNewPassword navigation={navigation} />
-          </View>
-        </>
+    <>
+      {RESET_STORE.getLoading ? (
+        <LoaderPage />
       ) : (
         <>
-          <View key={2} style={{flex: 1}}>
-            <ClubEnterOTP
-              forwardAction={buttonForwardAction}
-              backwardAction={buttonBackwardAction}
+          {RESET_STORE.getError ? (
+            <ErrorScreen
+              errorMessage={RESET_STORE.getErrorText}
+              fn={() => {
+                RESET_STORE.setSuccess(false);
+                RESET_STORE.setErrorText('');
+                RESET_STORE.setError(false);
+              }}
             />
-          </View>
-          <View key={3} style={{flex: 1}}>
-            <SetNewPassword navigation={navigation} />
-          </View>
+          ) : (
+            <>
+              {RESET_STORE.getSuccess ? (
+                <SuccessScreen
+                  fn={() => {
+                    navigation.pop();
+                    RESET_STORE.reset();
+                  }}
+                />
+              ) : (
+                <PagerView
+                  style={{flex: 1}}
+                  initialPage={Page}
+                  scrollEnabled={false}
+                  showPageIndicator={false}
+                  ref={ref}
+                  onPageSelected={event => {
+                    setPage(event.nativeEvent.position);
+                  }}>
+                  <View style={{flex: 1}} key={1}>
+                    <Username
+                      forward={buttonForwardAction}
+                      navigation={navigation}
+                    />
+                  </View>
+                  {RESET_STORE.getIsStudent ? (
+                    <>
+                      <View style={{flex: 1}} key={2}>
+                        <StudentWebmailPassword
+                          forwardAction={buttonForwardAction}
+                          backwardAction={buttonBackwardAction}
+                          buttonHome={buttonHomeAction}
+                        />
+                      </View>
+                      <View key={3} style={{flex: 1}}>
+                        <SetNewPassword navigation={navigation} />
+                      </View>
+                    </>
+                  ) : (
+                    <>
+                      <View key={2} style={{flex: 1}}>
+                        <ClubEnterOTP
+                          forwardAction={buttonForwardAction}
+                          backwardAction={buttonBackwardAction}
+                        />
+                      </View>
+                      <View key={3} style={{flex: 1}}>
+                        <SetNewPassword navigation={navigation} />
+                      </View>
+                    </>
+                  )}
+                </PagerView>
+              )}
+            </>
+          )}
         </>
       )}
-    </PagerView>
+    </>
   );
 });
 

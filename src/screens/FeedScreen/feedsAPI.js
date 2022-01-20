@@ -41,9 +41,7 @@ export const feedsAPI = refreshing => {
             }
           })
           .catch(error => {
-            console.log(JSON.stringify(error));
             if (error.response) {
-              console.log(error);
               FEEDS_STORE.setErrorText(error.response.data.message);
             } else if (error.request) {
               console.log(error.request);

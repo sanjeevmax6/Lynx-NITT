@@ -72,6 +72,7 @@ const Username = ({forward, navigation}) => {
         label="Username"
         placeholder="Enter your username"
         mode="outlined"
+        autoCapitalize="none"
         style={{backgroundColor: 'white', paddingTop: verticalScale(9)}}
         theme={{
           colors: {

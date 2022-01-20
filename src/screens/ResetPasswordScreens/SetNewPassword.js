@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import {
   moderateScale,
@@ -15,52 +15,24 @@ import {
   API_RESET_PASSWORD_CLUBS,
   API_RESET_PASSWORD_STUDENT,
 } from '../../utils/API_CONSTANTS';
-import SuccessScreen from '../../components/SuccessScreen/index';
-import ErrorScreen from '../../components/ErrorScreen';
-import {NO_NETWORK} from '../../utils/ERROR_MESSAGES';
+
+import {
+  NO_NETWORK,
+  SERVER_ERROR,
+  UNEXPECTED_ERROR,
+} from '../../utils/ERROR_MESSAGES';
+import axios from 'axios';
 
 const SetNewPassword = ({navigation}) => {
-  const axios = require('axios');
   const [newPassword, setNewPass] = useState('');
   const [newConfirmPassword, setNewConfirmPass] = useState('');
-  const [errorCode, setErrorCode] = useState(0);
-  const [passSuccess, setPassSuccess] = useState(false);
-  const [Internet, setInternet] = useState(true);
-
-  // useEffect(() => {
-  //   NetInfo.fetch().then(state => {
-  //     if (state.isConnected == true) {
-  //       setInternet(true);
-  //     } else {
-  //       setInternet(false);
-  //     }
-  //   });
-  // });
-
-  const getSuccessBoolean = () => {
-    return RESET_STORE.getPasswordResetSuccess;
-  };
-
-  const hasErrors = val => {
-    if (errorCode == 404) {
-      return val == 0 ? true : 'User does not exist';
-    } else if (errorCode == 400) {
-      return val == 0 ? true : 'Password and Confirm Passwords do not match';
-    } else if (errorCode == 401) {
-      return val == 0 ? true : 'Unauthorized';
-    } else if (errorCode == 500) {
-      return val == 0 ? true : 'Server Error ! Try Again';
-    } else {
-      return val == 0 ? false : 'No error';
-    }
-  };
 
   const changePassword = () => {
+    RESET_STORE.setLoading(true);
     NetInfo.fetch().then(state => {
       if (state.isConnected == true) {
-        setInternet(true);
         //If it is a student account
-        token = null;
+        let token = null;
         if (RESET_STORE.getIsStudent) {
           token = RESET_STORE.getStudentToken;
         } else {
@@ -72,13 +44,12 @@ const SetNewPassword = ({navigation}) => {
             'Content-Type': 'application/json',
           },
         };
-        console.log(newPassword);
-        console.log(newConfirmPassword);
+
         const body = JSON.stringify({
           new_password: newPassword,
           new_cpassword: newConfirmPassword,
         });
-        url = null;
+        let url = null;
         if (RESET_STORE.getIsStudent) {
           url = API_RESET_PASSWORD_STUDENT;
         } else {
@@ -87,141 +58,105 @@ const SetNewPassword = ({navigation}) => {
         axios
           .post(url, body, axiosHeaders)
           .then(response => {
-            if (response.data.message === 'Success') {
-              RESET_STORE.setStudentToken('');
-              // RESET_STORE.setIsStudent(true);
-              RESET_STORE.setUsername('');
-              RESET_STORE.setError('');
-              RESET_STORE.setErrorText('');
-              RESET_STORE.setStudentPassword('');
-              RESET_STORE.setStudentToken('');
-              RESET_STORE.setClubsToken('');
-              setPassSuccess(true);
-              // handleScreen();
+            if (response.status === 200) {
+              RESET_STORE.setSuccess(true);
+              RESET_STORE.setLoading(false);
             }
-            // RESET_STORE.setStudentToken('');
           })
           .catch(error => {
-            console.log(error);
-            setErrorCode(error.response.status);
-            // RESET_STORE.setStudentToken('');
+            if (error.response) {
+              RESET_STORE.setErrorText(error.response.data.message);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              RESET_STORE.setErrorText(SERVER_ERROR);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              RESET_STORE.setErrorText(UNEXPECTED_ERROR);
+            }
+            RESET_STORE.setError(true);
+            RESET_STORE.setLoading(false);
           });
       } else {
-        // RESET_STORE.setErrorText(NO_NETWORK);
-        // RESET_STORE.setError(true);
-        setInternet(false);
+        RESET_STORE.setErrorText(NO_NETWORK);
+        RESET_STORE.setError(true);
+        RESET_STORE.setLoading(false);
       }
     });
   };
 
   return (
     <>
-      {!Internet ? (
-        <>
-          <View
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-            }}>
-            <ErrorScreen
-              errorMessage={NO_NETWORK}
-              fn={() => {
-                NetInfo.fetch().then(state => {
-                  if (state.isConnected == true) {
-                    // RESET_STORE.setErrorText('');
-                    // RESET_STORE.setError(false);
-                    setInternet(true);
-                  }
-                });
-              }}
-            />
-          </View>
-        </>
-      ) : (
-        <>
-          {passSuccess ? (
-            <>
-              <SuccessScreen
-                buttonText="LOGIN"
-                fn={navigation}
-                isResetPass={true}
-              />
-            </>
-          ) : (
-            <>
-              <View
-                style={{
-                  paddingHorizontal: moderateScale(20),
-                  backgroundColor: 'white',
-                  flex: 1,
-                  paddingTop: verticalScale(25),
-                }}>
-                <Text style={styles.title}>Set Password</Text>
-                <Text style={{...styles.title, fontSize: scale(14)}}>
-                  Enter your new password
-                </Text>
+      <View
+        style={{
+          paddingHorizontal: moderateScale(20),
+          backgroundColor: 'white',
+          flex: 1,
+          paddingTop: verticalScale(25),
+        }}>
+        <Text style={styles.title}>Set Password</Text>
+        <Text style={{...styles.title, fontSize: scale(14)}}>
+          Enter your new password
+        </Text>
 
-                <TextInput
-                  label="Password"
-                  placeholder="Enter your new password"
-                  mode="outlined"
-                  style={{
-                    backgroundColor: 'white',
-                    paddingTop: verticalScale(9),
-                  }}
-                  theme={{
-                    colors: {
-                      primary: 'black',
-                    },
-                  }}
-                  selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-                  onChangeText={pass => {
-                    setNewPass(pass);
-                  }}
-                />
-                <TextInput
-                  label="Confirm Password"
-                  placeholder="Confirm your password"
-                  mode="outlined"
-                  style={{
-                    backgroundColor: 'white',
-                    paddingTop: verticalScale(9),
-                  }}
-                  theme={{
-                    colors: {
-                      primary: 'black',
-                    },
-                  }}
-                  selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-                  onChangeText={pass => {
-                    setNewConfirmPass(pass);
-                  }}
-                />
-                <HelperText type="error" visible={hasErrors(0)}>
-                  <Text>{hasErrors(1)}</Text>
-                </HelperText>
-                <View style={styles.loginBtnView}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: colors.Tertiary,
-                      borderRadius: verticalScale(22),
-                    }}
-                    onPress={() => {
-                      // forwardAction();
-                      changePassword();
-                    }}>
-                    <Icon
-                      name="chevron-right"
-                      size={verticalScale(44)}
-                      color={colors.WHITE}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </>
-          )}
-        </>
-      )}
+        <TextInput
+          autoCapitalize="none"
+          label="Password"
+          placeholder="Enter your new password"
+          mode="outlined"
+          style={{
+            backgroundColor: 'white',
+            paddingTop: verticalScale(9),
+          }}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+          onChangeText={pass => {
+            setNewPass(pass);
+          }}
+        />
+        <TextInput
+          label="Confirm Password"
+          placeholder="Confirm your password"
+          mode="outlined"
+          style={{
+            backgroundColor: 'white',
+            paddingTop: verticalScale(9),
+          }}
+          theme={{
+            colors: {
+              primary: 'black',
+            },
+          }}
+          selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
+          autoCapitalize="none"
+          onChangeText={pass => {
+            setNewConfirmPass(pass);
+          }}
+        />
+
+        <View style={styles.loginBtnView}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: colors.Tertiary,
+              borderRadius: verticalScale(22),
+            }}
+            onPress={() => {
+              // forwardAction();
+              changePassword();
+            }}>
+            <Icon
+              name="chevron-right"
+              size={verticalScale(44)}
+              color={colors.WHITE}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 };

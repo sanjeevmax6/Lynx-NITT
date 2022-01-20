@@ -117,8 +117,11 @@ const EventsCard = observer(
                     toggleInterestedApi(
                       eventId,
                       () => {
-                        feedsAPI(true);
+                        //feedsAPI(true);
+
                         getAllStudentDetails(true);
+                        setInterest(!interest);
+
                         // if (!interest) {
                         //   showToast(
                         //     'You will receive notifications and updates from this event!',
@@ -126,7 +129,6 @@ const EventsCard = observer(
                         //   );
                         // }
                         setApiCall(false);
-                        setInterest(!interest);
                       },
                       () => {
                         showToast();

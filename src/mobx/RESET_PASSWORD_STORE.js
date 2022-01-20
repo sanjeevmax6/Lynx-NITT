@@ -4,20 +4,26 @@ class RESET_DATA {
   state = {
     isStudent: true,
     username: '',
-    error: true,
-    errorText: '',
+
     password: '',
     studentToken: '',
     tokenFetched: false,
     clubsToken: '',
     clubsTokenFetched: false,
     passResetSuccess: false,
+
+    loading: false,
+    error: false,
+    errorText: '',
+    success: false,
   };
 
   reset = () => {
+    this.state.loading = false;
+    this.state.success = false;
     this.state.isStudent = true;
     this.state.username = '';
-    this.state.error = true;
+    this.state.error = false;
     this.state.errorText = '';
     this.state.password = '';
     this.state.studentToken = '';
@@ -26,6 +32,22 @@ class RESET_DATA {
     this.state.clubsTokenFetched = false;
     this.state.passResetSuccess = false;
   };
+  setLoading = val => {
+    this.state.loading = val;
+  };
+
+  get getLoading() {
+    return this.state.loading;
+  }
+
+  setSuccess = val => {
+    this.state.success = val;
+  };
+
+  get getSuccess() {
+    return this.state.success;
+  }
+
   setIsStudent = val => {
     this.state.isStudent = val;
   };
@@ -140,6 +162,12 @@ class RESET_DATA {
 
       setPasswordResetSuccess: action,
       getPasswordResetSuccess: computed,
+
+      setSuccess: action,
+      getSuccess: computed,
+
+      setLoading: action,
+      getLoading: computed,
     });
   }
 }
