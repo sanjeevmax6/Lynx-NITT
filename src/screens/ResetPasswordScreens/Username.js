@@ -10,9 +10,15 @@ import * as colors from '../../utils/colors';
 import {HelperText, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RESET_STORE} from '../../mobx/RESET_PASSWORD_STORE';
+import NetInfo from '@react-native-community/netinfo';
+import {
+  API_RESET_PASSWORD_GENERATE_OTP_CLUBS,
+  API_RESET_PASSWORD_VALIDATE_OTP_CLUBS,
+} from '../../utils/API_CONSTANTS';
 
 const Username = ({forward, navigation}) => {
   const [error, setError] = useState('');
+  const [userDNE, setUserDNE] = useState(false);
 
   const hasErrors = () => {
     if (error == '') {
@@ -22,9 +28,62 @@ const Username = ({forward, navigation}) => {
     }
   };
 
+  const sendClubOTP = () => {
+    const axios = require('axios');
+    NetInfo.fetch().then(state => {
+      if (state.isConnected == true) {
+        // setInternet(true);
+        if (RESET_STORE.getUsername != '') {
+          userEmail = RESET_STORE.getUsername;
+          console.log('Processing');
+          const axiosHeaders = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
+          const body = JSON.stringify({
+            email: userEmail,
+          });
+          axios
+            .post(API_RESET_PASSWORD_GENERATE_OTP_CLUBS, body, axiosHeaders)
+            .then(response => {
+              console.log('Stat', response);
+              userDNE = false;
+              if (!userDNE) {
+                forwardAction();
+              } else {
+                setError('User Does not exist');
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+              // error = error.toString();
+              // console.log(error);
+              // // if (error.includes('404')) {
+              // userDNE = true;
+              setUserDNE(true);
+              setError('User Does not exist');
+              // }
+            });
+        }
+      } else {
+        // RESET_STORE.setErrorText(NO_NETWORK);
+        // RESET_STORE.setError(true);
+        // setInternet(false);
+      }
+    });
+  };
+
   const forwardAction = () => {
+    console.log('userdne', userDNE);
+    console.log('fvjfsnvsjnkn');
+    console.log('userdne', userDNE);
     if (RESET_STORE.getUsername === '') {
       setError('Please fill the field');
+      return;
+    }
+    if (userDNE) {
+      setError('User does not exist');
       return;
     }
     if (
@@ -46,9 +105,13 @@ const Username = ({forward, navigation}) => {
         setError('Not a valid Username');
         return;
       }
-      let email = RESET_STORE.getUsername.trim();
-      RESET_STORE.setIsStudent(false);
-      forward();
+      if (userDNE) {
+        setError('User Does not exist');
+      } else {
+        let email = RESET_STORE.getUsername.trim();
+        RESET_STORE.setIsStudent(false);
+        forward();
+      }
     } else {
       let rollNo = parseInt(RESET_STORE.getUsername);
       RESET_STORE.setIsStudent(true);
@@ -117,7 +180,11 @@ const Username = ({forward, navigation}) => {
             borderRadius: verticalScale(22),
           }}
           onPress={() => {
-            forwardAction();
+            sendClubOTP();
+            // if (!userDNE) {
+            //   setError('User does not exist');
+            //   forwardAction();
+            // }
           }}>
           <Icon
             name="chevron-right"

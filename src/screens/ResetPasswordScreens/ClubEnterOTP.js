@@ -29,14 +29,7 @@ const ClubEnterOTP = ({forwardAction, backwardAction}) => {
   const [Internet, setInternet] = useState(true);
 
   useEffect(() => {
-    // NetInfo.fetch().then(state => {
-    //   if (state.isConnected == true) {
-    //     setInternet(true);
-    //   } else {
-    //     setInternet(false);
-    //   }
-    // });
-    sendClubOTP();
+    // sendClubOTP();
     const sleepTimer = setTimeout(function () {
       sendResendButton(true);
     }, 30000);
