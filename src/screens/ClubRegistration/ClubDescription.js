@@ -55,7 +55,7 @@ const ClubDescription = observer(({forwardAction}) => {
           width: '90%',
           marginTop: verticalScale(10),
         }}
-        placeholder="Club Description (max 500)"
+        placeholder="Club Description"
         multiline={true}
         theme={{
           colors: {

@@ -28,7 +28,7 @@ const EventEditInput = observer(() => {
             },
           }}
           selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-          placeholder={`Event Title (max ${EVENT_TITLE_MAX_SIZE})`}
+          placeholder={`Event Title`}
           value={EVENT_EDIT_STORE.getEditTitle}
           onChangeText={nTitle => EVENT_EDIT_STORE.setEditTitle(nTitle)}
           left={<TextInput.Icon name={'lead-pencil'} color={colors.Accent} />}
@@ -58,7 +58,7 @@ const EventEditInput = observer(() => {
           style={styles.textInputStyles}
           underlineColor="transparent"
           label="Event Description"
-          placeholder={`Event Description (max ${EVENT_DESC_MAX_SIZE})`}
+          placeholder={`Event Description`}
           value={EVENT_EDIT_STORE.getEditDesc}
           theme={{
             colors: {

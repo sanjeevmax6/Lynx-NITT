@@ -243,7 +243,7 @@ const EditProfileInputs = observer(() => {
       /> */}
       <TEXT_INPUT
         label="Address"
-        placeholder="Address (max 300)"
+        placeholder="Address"
         showCharCount={true}
         icon={'map-marker'}
         multiline={true}

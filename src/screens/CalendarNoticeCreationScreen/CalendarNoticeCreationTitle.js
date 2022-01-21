@@ -56,7 +56,7 @@ const CalendarNoticeCreationTitle = observer(({scrollViewRef, callback}) => {
             borderBottomLeftRadius: moderateScale(9),
             borderBottomRightRadius: moderateScale(9),
           }}
-          placeholder="Notice Title (max 150)"
+          placeholder="Notice Title"
           multiline={true}
           value={CALENDAR_NOTICE_STORE.getTitle}
           theme={{

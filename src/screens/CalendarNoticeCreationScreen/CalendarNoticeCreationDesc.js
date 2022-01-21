@@ -77,7 +77,7 @@ const CalendarNoticeCreationDesc = observer(
                 primary: color.BLACK,
               },
             }}
-            placeholder="Notice Description (max 300)"
+            placeholder="Notice Description"
             value={CALENDAR_NOTICE_STORE.getDescription}
             onChangeText={nDesc => {
               CALENDAR_NOTICE_STORE.setDescription(nDesc);

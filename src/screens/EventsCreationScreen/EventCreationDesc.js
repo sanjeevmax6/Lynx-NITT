@@ -59,7 +59,7 @@ const EventCreationDesc = observer(
               },
             }}
             selectionColor={colors.TEXT_INPUT_SELECTION_COLOR}
-            placeholder={'Event Description (max ' + EVENT_DESC_MAX_SIZE + ')'}
+            placeholder={'Event Description'}
             value={EVENT_CREATION_STORE.getDesc}
             onChangeText={nDesc => {
               EVENT_CREATION_STORE.setDesc(nDesc);

@@ -36,7 +36,7 @@ const EventCreationTitle = observer(({scrollViewRef, callback}) => {
           underlineColor="transparent"
           label="Event Title"
           style={textInputStyles.textInputStyle}
-          placeholder="Event Title (max 150)"
+          placeholder="Event Title"
           multiline={true}
           value={EVENT_CREATION_STORE.getTitle}
           theme={{

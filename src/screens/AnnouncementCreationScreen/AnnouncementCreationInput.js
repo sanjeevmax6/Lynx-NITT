@@ -59,7 +59,7 @@ const AnnouncementCreationInputs = observer(() => {
             marginHorizontal: HorizontalPadding,
             borderTopLeftRadius: moderateScale(12),
           }}
-          placeholder="Announcement Title (max 150)"
+          placeholder="Announcement Title"
           value={ANNOUNCEMENT_CREATION_STORE.getTitle}
           multiline={true}
           theme={{
@@ -101,7 +101,7 @@ const AnnouncementCreationInputs = observer(() => {
           }}
           label="Announcement"
           value={ANNOUNCEMENT_CREATION_STORE.getDescription}
-          placeholder="Announcement (max 300)"
+          placeholder="Announcement"
           multiline={true}
           theme={{
             colors: {

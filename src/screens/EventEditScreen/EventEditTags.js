@@ -21,7 +21,7 @@ const EventEditTags = observer(() => {
         <TextInput
           underlineColor="transparent"
           label="Add Tags"
-          placeholder={`Event Tags (max ${MAX_EVENT_TAG_COUNT})`}
+          placeholder={`Event Tags`}
           multiline={true}
           style={styles.textInputStyles}
           value={EVENT_EDIT_STORE.getEditTag}
